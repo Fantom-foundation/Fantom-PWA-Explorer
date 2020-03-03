@@ -1,0 +1,38 @@
+@mixin fade-animation($_type, $_from, $_to) {
+    @keyframes fade-#{$_type} {
+        0% {
+            opacity: $_from;
+        }
+        100% {
+            opacity: $_to;
+        }
+    }
+}
+
+@mixin scale-center-fade-animation($_type, $_scaleFrom, $_scaleTo, $_fadeFrom, $_fadeTo) {
+    @keyframes scale-center-fade-#{$_type} {
+        0% {
+            opacity: $_fadeFrom;
+            -webkit-transform: scale($_scaleFrom);
+            transform: scale($_scaleFrom);
+        }
+        100% {
+            opacity: $_fadeTo;
+            -webkit-transform: scale($_scaleTo);
+            transform: scale($_scaleTo);
+        }
+    }
+}
+
+@mixin rotate-animation($_type: '', $_from: 0, $_to: 0) {
+    @keyframes rotate#{$_type} {
+        0% {
+            -webkit-transform: rotate($_from);
+            transform: rotate($_to);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+}

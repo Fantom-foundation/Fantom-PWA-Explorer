@@ -1,0 +1,13 @@
+@import "flexbox-layout";
+
+.narrow-container {
+    padding: 0 $grid-layout-gutter-width-2x;
+    max-width: $narrow-container-max-width;
+    margin: 0 auto;
+}
+
+@include media-max($bp-small) {
+    .narrow-container {
+        padding: 0 $grid-layout-gutter-width;
+    }
+}

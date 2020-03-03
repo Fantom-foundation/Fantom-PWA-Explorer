@@ -1,0 +1,10 @@
+{
+    "view_not_found": {
+        "title": "Page not found :(",
+        "text": "Looks like you've followed a broken link or entered a URL that doesn't exist on this site.",
+        "link_title": "Back to home"
+    },
+
+    "no_items": "No items.",
+    "loading": "Loading..."
+}

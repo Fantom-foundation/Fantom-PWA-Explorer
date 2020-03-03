@@ -1,0 +1,82 @@
+// layout
+// calcs
+$grid-layout-gutter-width-half: 0.5 * $grid-layout-gutter-width;
+$grid-layout-gutter-width-2x: 2 * $grid-layout-gutter-width;
+$grid-layout-gutter-width-4x: 4 * $grid-layout-gutter-width;
+
+// inputs
+$input-active-border-color: $theme-color !default;
+$outline-shadow-size: 0 0 0 2px !default;
+$outline-shadow-color: rgba($input-active-border-color, 0.5) !default;
+$outline-shadow: $outline-shadow-size $outline-shadow-color !default;
+$input-transition: $transition-length ease !default;
+$input-border-radius: $border-radius !default;
+$input-invalid-outline-shadow: $outline-shadow-size $input-invalid-outline-shadow-color !default;
+// calcs
+$input-padding: calc(#{$input-v-padding} - #{$input-border-width} - 2px) $input-h-padding !default;
+$input-sm-padding: calc(#{$input-sm-v-padding} - #{$input-border-width} - 2px) $input-sm-h-padding !default;
+$input-lg-padding: calc(#{$input-lg-v-padding} - #{$input-border-width} - 2px) $input-lg-h-padding !default;
+$input-select-padding: calc(#{$input-v-padding} - #{$input-border-width} - 1px) 2*$input-h-padding calc(#{$input-v-padding} - #{$input-border-width} - 1px) $input-h-padding !default;
+$input-select-sm-padding: calc(#{$input-sm-v-padding} - #{$input-border-width} - 1px) 3*$input-sm-h-padding calc(#{$input-sm-v-padding} - #{$input-border-width} - 1px) $input-sm-h-padding !default;
+$input-select-lg-padding: calc(#{$input-lg-v-padding} - #{$input-border-width} - 1px) 2*$input-lg-h-padding calc(#{$input-lg-v-padding} - #{$input-border-width} - 1px) $input-lg-h-padding !default;
+
+// buttons
+$button-bg-color: $theme-color !default;
+$button-hover-color: $button-color !default;
+$button-hover-bg-color: darken($button-bg-color, 10%) !default;
+$button-hover-border-color: $button-border-color !default;
+$button-active-color: $button-hover-color !default;
+$button-active-bg-color: darken($button-hover-bg-color, 10%) !default;
+$button-active-border-color: $button-hover-border-color !default;
+$button-disabled-bg-color: $button-bg-color !default;
+$button-disabled-color: $button-color !default;
+$button-disabled-border-color: $button-border-color !default;
+$button-secondary-color: $button-bg-color !default;
+$button-secondary-border-color: $button-bg-color !default;
+$button-light-color: $button-bg-color !default;
+$button-transition: $input-transition !default;
+$button-mi-border-radius: $button-border-radius !default;
+$button-sm-border-radius: $button-border-radius !default;
+$button-lg-border-radius: $button-border-radius !default;
+// calcs
+//$button-icon-size: $fs-button * 1.429;
+//$button-icon-size-sm: $fs-button * 1.143;
+$button-icon-size: $fs-button * 1.25 !default;
+$button-icon-size-mi: $fs-button * 0.75 !default;
+$button-icon-size-sm: $fs-button * 1 !default;
+$button-icon-size-lg: $fs-button-lg * 1.5 !default;
+
+// lists
+$lists-marker-color: $body-color !default;
+
+// elevations
+$elev1-shadow: nth($elev-shadow-sizes-list, 1) rgba($elev-color, nth($elev-shadow-opacities-list, 1)) !default;
+$elev2-shadow: nth($elev-shadow-sizes-list, 2) rgba($elev-color, nth($elev-shadow-opacities-list, 2)) !default;
+$elev3-shadow: nth($elev-shadow-sizes-list, 3) rgba($elev-color, nth($elev-shadow-opacities-list, 3)) !default;
+$elev4-shadow: nth($elev-shadow-sizes-list, 4) rgba($elev-color, nth($elev-shadow-opacities-list, 4)) !default;
+$elev5-shadow: nth($elev-shadow-sizes-list, 5) rgba($elev-color, nth($elev-shadow-opacities-list, 5)) !default;
+$elev6-shadow: nth($elev-shadow-sizes-list, 6) rgba($elev-color, nth($elev-shadow-opacities-list, 6)) !default;
+$elev7-shadow: nth($elev-shadow-sizes-list, 7) rgba($elev-color, nth($elev-shadow-opacities-list, 7)) !default;
+$elev8-shadow: nth($elev-shadow-sizes-list, 8) rgba($elev-color, nth($elev-shadow-opacities-list, 8)) !default;
+
+// boxes
+$box-gap: $grid-layout-gutter-width-2x !default;
+$box-gap-half: 0.5 * $box-gap !default;
+$box-padding: $box-gap !default;
+$box-padding-half: $box-gap-half !default;
+$box-padding-2x: 2 * $box-gap !default;
+$box-margin: 0 0 $box-gap 0 !default;
+$box-shadow: $elev1-shadow !default;
+
+// screen
+$screen-header-color: $theme-color !default;
+
+$bp-huge: $narrow-container-max-width !default;
+
+
+$breakpoints-map: (
+    'hu': $bp-huge,
+    'lg': $bp-large,
+    'md': $bp-medium,
+    'sm': $bp-small
+) !default;

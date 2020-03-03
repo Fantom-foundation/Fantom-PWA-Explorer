@@ -1,0 +1,18 @@
+@import "vars";
+@import "core/normalize";
+@import "core/reset";
+@import "core/all";
+
+//@include flexbox-layout(24);
+
+//@include media-max($bp-menu) {
+
+:root {
+    --f-header-height: 72px;
+}
+
+@include media-max($bp-menu) {
+    :root {
+        --f-header-height: 40px;
+    }
+}

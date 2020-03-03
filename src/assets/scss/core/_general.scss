@@ -1,0 +1,113 @@
+/**
+ * Style used in media queries loop.
+ *
+ * @param $_bp Breakpoint shortcut.
+ */
+@mixin general-media($_bp: '') {
+    .align-left-#{$_bp} {
+        text-align: left !important;
+    }
+
+    .align-center-#{$_bp} {
+        text-align: center !important;
+    }
+
+    .align-right-#{$_bp} {
+        text-align: right !important;
+    }
+
+    .hidden-#{$_bp} {
+        display: none;
+    }
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.no-padding-bottom {
+    padding-bottom: 0 !important;
+}
+
+.no-padding-top {
+    padding-top: 0 !important;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.no-margin-top {
+    margin-top: 0 !important;
+}
+
+.no-bg {
+    background: none;
+}
+
+.no-bg-color {
+    background-color: transparent;
+}
+
+.no-shadow {
+    box-shadow: none;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.fluid-img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.align-right {
+    text-align: right !important;
+}
+
+.align-left {
+    text-align: left !important;
+}
+
+.align-center {
+    text-align: center !important;
+}
+
+.pos-relative {
+    position: relative;
+}
+
+.margin {
+    margin: $size16f;
+}
+
+.margin-top {
+    margin-top: $size16f;
+}
+
+/*
+.margin-top-half {
+    margin-top: $size8f;
+}
+
+.margin-top-2 {
+    margin-top: $size32f;
+}
+*/
+
+
+@each $shortcut, $breakpoint in $breakpoints-map {
+    @include media-max($breakpoint) {
+        @include general-media($shortcut);
+    }
+}

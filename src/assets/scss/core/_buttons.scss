@@ -1,0 +1,254 @@
+@include buttons() {
+    cursor: pointer;
+    font-family: $button-font-family;
+    font-size: $fs-button;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    padding: $button-v-padding $button-h-padding;
+
+    //display: inline-block;
+    //padding: calc(#{$button-v-padding} - #{$button-border-width} - 2px) $button-h-padding;
+
+    //calc(50% - #{$grid-layout-gutter-width});
+    //padding: $button-padding;
+    border: $button-border-width solid $button-border-color;
+    //border: none;
+    vertical-align: middle;
+    //line-height: 1.6;
+    line-height: 1;
+    //height: 2.24rem; /* IE11 fix */
+    min-height: 2.25rem;
+    text-decoration: none;
+    white-space: $button-white-space;
+    text-align: $button-text-align;
+    text-transform: $button-text-transform;
+    text-shadow: $button-text-shadow;
+    font-weight: $button-font-weight;
+    color: $button-color;
+    background: $button-bg-color;
+    border-radius: $button-border-radius;
+    //border-radius: $border-radius;
+    transition: color $button-transition, background-color $button-transition, border-color $button-transition;
+
+    // test
+    //opacity: 0.99;
+    //position: relative;
+}
+
+// test
+//@include buttons('::after') {
+/*
+button:not(.def)::after, a.btn::after {
+    position: absolute;
+    content: '';
+    //width: 100px;
+    //height: 100px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    transform: scale(0.01, 0.5);
+    border-radius: 50%;
+    background: $button-hover-bg-color;
+    //border: $button-border-width solid $button-border-color;
+    transition: transform $button-transition, border-radius $button-transition, opacity $button-transition;
+    opacity: 0;
+}
+button:not(.def):hover::after, a.btn:hover::after {
+    opacity: 1;
+    transform: scale(1, 1);
+    border-radius: $button-border-radius;
+}
+*/
+
+@mixin button-hover() {
+    color: $button-hover-color;
+    background: $button-hover-bg-color;
+    border-color: $button-hover-border-color;
+}
+
+@include buttons(':not([disabled]):not(.disabled):hover') {
+    @include button-hover;
+}
+
+@include buttons(':not([disabled]):not(.disabled):focus') {
+    @include button-hover;
+}
+
+@include buttons(':not([disabled]):not(.disabled):active') {
+    color: $button-active-color;
+    background: $button-active-bg-color;
+    border-color: $button-active-border-color;
+}
+
+@mixin disabled-button() {
+    cursor: default;
+    color: $button-disabled-color;
+    background: $button-disabled-bg-color;
+    border-color: $button-disabled-border-color;
+    opacity: $button-disabled-opacity;
+}
+
+@include buttons('[disabled]') {
+    @include disabled-button;
+}
+
+@include buttons('.disabled') {
+    @include disabled-button;
+}
+
+@include buttons('.mini') {
+    min-height: 1.2rem;
+    font-size: $fs-button-mi;
+    padding: $button-mi-v-padding $button-mi-h-padding;
+    border-radius: $button-mi-border-radius;
+    //padding: calc(#{$button-sm-v-padding} - #{$button-border-width} - 2px) $button-sm-h-padding;
+}
+
+@include buttons('.small') {
+    min-height: 1.75rem;
+    font-size: $fs-button-sm;
+    padding: $button-sm-v-padding $button-sm-h-padding;
+    border-radius: $button-sm-border-radius;
+    //padding: calc(#{$button-sm-v-padding} - #{$button-border-width} - 2px) $button-sm-h-padding;
+}
+
+@include buttons('.large') {
+    min-height: 2.75rem;
+    line-height: 1.2;
+    font-size: $fs-button-lg;
+    padding: $button-lg-v-padding $button-lg-h-padding;
+    border-radius: $button-lg-border-radius;
+    //padding: calc(#{$button-lg-v-padding} - #{$button-border-width} - 2px) $button-lg-h-padding;
+}
+
+@include buttons('.secondary') {
+    color: $button-secondary-color;
+    border-color: $button-secondary-border-color;
+    background: $button-secondary-bg-color;
+}
+
+@include buttons('.light') {
+    color: $button-light-color;
+    border-color: $button-light-border-color;
+    background: $button-light-bg-color;
+}
+
+@include buttons(' zpe-icon') {
+    --zpe-icon-color: #{$button-color};
+    --zpe-icon-width: #{$fs-button};
+    --zpe-icon-height: #{$fs-button};
+    --zpe-icon-transition: #{$button-transition};
+    //margin-top: -2px;
+    margin-right: 0.2rem;
+}
+
+@include buttons('.large zpe-icon') {
+    --zpe-icon-width: #{$fs-button-lg};
+    --zpe-icon-height: #{$fs-button-lg};
+    //margin-top: -3px;
+    margin-right: 0.25rem;
+}
+
+@include buttons('.secondary zpe-icon') {
+    --zpe-icon-color: #{$button-secondary-color};
+}
+
+@include buttons('.light zpe-icon') {
+    --zpe-icon-color: #{$button-light-color};
+}
+
+@mixin button-hover-icon() {
+    --zpe-icon-color: #{$button-hover-color};
+}
+
+@include buttons(':not([disabled]):not(.disabled):hover zpe-icon') {
+    @include button-hover-icon;
+}
+
+@include buttons(':not([disabled]):not(.disabled):focus zpe-icon') {
+    @include button-hover-icon;
+}
+
+@include buttons('.same-size') {
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+}
+
+@include buttons('.mini.same-size') {
+    min-width: 1.2rem;
+}
+
+@include buttons('.small.same-size') {
+    min-width: 1.75rem;
+}
+
+@include buttons('.large.same-size') {
+    min-width: 2.75rem;
+}
+
+@include buttons('.round') {
+    border-radius: 50%;
+}
+
+@include buttons('.same-size zpe-icon') {
+    margin-right: 0;
+    margin-top: 0;
+}
+
+@include buttons(' zpe-icon') {
+    --zpe-icon-width: #{$button-icon-size};
+    --zpe-icon-height: #{$button-icon-size};
+}
+
+@include buttons('.mini zpe-icon') {
+    --zpe-icon-width: #{$button-icon-size-mi};
+    --zpe-icon-height: #{$button-icon-size-mi};
+}
+
+@include buttons('.small zpe-icon') {
+    --zpe-icon-width: #{$button-icon-size-sm};
+    --zpe-icon-height: #{$button-icon-size-sm};
+}
+
+@include buttons('.large zpe-icon') {
+    --zpe-icon-width: #{$button-icon-size};
+    --zpe-icon-height: #{$button-icon-size};
+}
+
+@include buttons('.large.same-size zpe-icon') {
+    --zpe-icon-width: #{$button-icon-size-lg};
+    --zpe-icon-height: #{$button-icon-size-lg};
+}
+
+/*
+@include buttons('.same-size zpe-icon') {
+    margin-right: 0;
+    margin-top: 0;
+    --zpe-icon-width: #{$button-icon-size};
+    --zpe-icon-height: #{$button-icon-size};
+}
+
+@include buttons('.mini zpe-icon') {
+    --zpe-icon-width: #{$button-icon-size-mi};
+    --zpe-icon-height: #{$button-icon-size-mi};
+}
+
+@include buttons('.small.same-size zpe-icon') {
+    --zpe-icon-width: #{$button-icon-size-sm};
+    --zpe-icon-height: #{$button-icon-size-sm};
+}
+
+@include buttons('.large.same-size zpe-icon') {
+    --zpe-icon-width: #{$button-icon-size-lg};
+    --zpe-icon-height: #{$button-icon-size-lg};
+}
+
+*/

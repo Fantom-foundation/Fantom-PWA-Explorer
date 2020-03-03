@@ -1,0 +1,402 @@
+@mixin media-min($_minWidth) {
+    @media (min-width: $_minWidth) {
+        @content
+    }
+}
+
+@mixin media-max($_maxWidth) {
+    //@media (max-width: $_maxWidth - 0.02) {
+    @media (max-width: $_maxWidth) {
+        @content
+    }
+}
+
+@mixin media-between($_minWidth, $_maxWidth) {
+    @media (min-width: $_minWidth) and (max-width: $_maxWidth - 0.02) {
+        @content
+    }
+}
+
+/*
+@mixin breakpoints-media-max($_m) {
+    @each $shortcut, $breakpoint in $breakpoints-map {
+        @include media-max($breakpoint) {
+            @content;
+        }
+    }
+}
+*/
+
+@mixin breakpoint-shortcuts() {
+
+}
+
+@mixin wrap-content($_selector, $_wrap: true) {
+    @if $_wrap {
+        #{$_selector} {
+            @content;
+        }
+    } @else {
+        @content;
+    }
+}
+
+@mixin flexbox-layout($_numCols: 12) {
+    $_flexbox: '.flexbox-#{$_numCols}';
+
+    //@for $i from 1 to $_numCols {
+    //    .col-#{$i} {
+    //        flex: 0 0 #{($i / $_numCols) * 100 + '%'};
+    //        max-width: #{($i / $_numCols) * 100 + '%'};
+    //    }
+    //}
+
+    @include wrap-content($_flexbox, $_numCols != 12) {
+        @for $i from 1 to $_numCols {
+            .col-#{$i} {
+                flex: 0 0 #{($i / $_numCols) * 100 + '%'};
+                max-width: #{($i / $_numCols) * 100 + '%'};
+            }
+
+            .offset-#{$i} {
+                margin-left: #{($i / $_numCols) * 100 + '%'};
+            }
+        }
+
+        .col-#{$_numCols} {
+            float: none;
+            flex: 0 0 100%;
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+
+    @include media-max($bp-large) {
+        @include wrap-content($_flexbox, $_numCols != 12) {
+            @for $i from 1 through $_numCols {
+                .col-#{$i}-lg {
+                    flex: 0 0 #{($i / $_numCols) * 100 + '%'};
+                    max-width: #{($i / $_numCols) * 100 + '%'};
+                }
+
+                .offset-#{$i}-lg {
+                    margin-left: #{($i / $_numCols) * 100 + '%'};
+                }
+            }
+        }
+    }
+
+    @include media-max($bp-medium) {
+        @include wrap-content($_flexbox, $_numCols != 12) {
+            @for $i from 1 through $_numCols {
+                .col-#{$i}-md {
+                    flex: 0 0 #{($i / $_numCols) * 100 + '%'};
+                    max-width: #{($i / $_numCols) * 100 + '%'};
+                }
+
+                .offset-#{$i}-md {
+                    margin-left: #{($i / $_numCols) * 100 + '%'};
+                }
+            }
+        }
+    }
+
+    @include media-max($bp-small) {
+        @include wrap-content($_flexbox, $_numCols != 12) {
+            @for $i from 1 through $_numCols {
+                .col-#{$i}-sm {
+                    flex: 0 0 #{($i / $_numCols) * 100 + '%'};
+                    max-width: #{($i / $_numCols) * 100 + '%'};
+                }
+
+                .offset-#{$i}-sm {
+                    margin-left: #{($i / $_numCols) * 100 + '%'};
+                }
+            }
+        }
+    }
+}
+
+@mixin flexbox-cols($_prefix: '', $_pfx: '') {
+    #{$_prefix}.col#{$_pfx}, #{$_prefix}[class^="col-"]#{$_pfx}, #{$_prefix}[class*=" col-"]#{$_pfx} {
+        @content
+    }
+}
+
+$grid-rows-selector: '.row, [class^="row-"], [class*=" row-"]';
+
+@mixin flexbox-rows($_prefix: '', $_pfx: '') {
+    #{$_prefix}.row#{$_pfx}, #{$_prefix}[class^="row-"]#{$_pfx}, #{$_prefix}[class*=" row-"]#{$_pfx} {
+        @content
+    }
+}
+
+@mixin flexbox-rows-cols($_bp: '', $_numCols: 12) {
+    @for $i from 1 through $_numCols {
+        .row-#{$i}-cols#{$_bp} > .col {
+            //@include grid-cols('> ') {
+                flex: 0 0 #{(($_numCols / $i) / $_numCols) * 100 + '%'};
+                max-width: #{(($_numCols / $i) / $_numCols) * 100 + '%'};
+            //}
+        }
+    }
+}
+
+@mixin fluid-items($_minMax: 150px, $_colGap: $grid-layout-gutter-width, $_rowGap: $grid-layout-gutter-width) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax($_minMax, 1fr));
+    grid-column-gap: $_colGap;
+    grid-row-gap: $_rowGap;
+}
+
+@mixin zpe-three-dots() {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@mixin main-focus() {
+    outline: none;
+    z-index: 10;
+    border-color: $input-active-border-color;
+    box-shadow: $outline-shadow;
+}
+
+@mixin clearfix() {
+    &::after {
+        display: block;
+        clear: both;
+        content: "";
+    }
+}
+
+@mixin buttons_old($_suffix: '') {
+    button:not(.def)#{$_suffix}, .btn#{$_suffix}, a.btn#{$_suffix}, a.btn#{$_suffix}:visited,
+    input[type="submit"]:not(.def)#{$_suffix}, button:not(.def)#{$_suffix}[data-checked] {
+        @content
+    }
+}
+
+@mixin buttons($_suffix: '') {
+    button:not(.def)#{$_suffix}, .btn#{$_suffix}, a.btn:visited#{$_suffix}, a.btn#{$_suffix},
+    input[type="submit"]:not(.def)#{$_suffix}, button[data-checked]:not(.def)#{$_suffix} {
+        @content
+    }
+}
+
+@mixin inputs($_suffix: '', $_prefix: '') {
+    #{$_prefix}input:not(.def):not([type="submit"])#{$_suffix}, #{$_prefix}textarea:not(.def)#{$_suffix}, #{$_prefix}select:not(.def)#{$_suffix} {
+        @content
+    }
+}
+
+@mixin checkbox-radio-size($_class: '', $_size: 1.5rem, $_radioSize: 14px) {  // $_radioSize: 0.875rem
+    label.option#{$_class} {
+        height: $_size;
+    }
+
+    label.option#{$_class} > span {
+        width: $_size;
+        height: $_size;
+    }
+
+    label.option#{$_class} > span.checkbox::before {
+        margin-top: -0.3 * $_size;
+    }
+
+    //label.option#{$_class} input:checked + span.checkbox::before {
+    label.option#{$_class} span.checkbox::before {
+        left: 0.145 * $_size;
+        width: 0.666 * $_size;
+        height: 0.4 * $_size;
+    }
+
+    label.option#{$_class} > span.radio::before {
+        margin-top: -0.5 * $_radioSize;
+        margin-left: -0.5 * $_radioSize;
+        width: $_radioSize;
+        height: $_radioSize;
+    }
+}
+
+@mixin elevations($_num, $_color, $_suffix: '') {
+    @for $i from 0 to $_num {
+        .elev-#{$i + 1}#{$_suffix} {
+            box-shadow: nth($elev-shadow-sizes-list, $i + 1) rgba($_color, nth($elev-shadow-opacities-list, $i + 1));
+        }
+    }
+}
+
+// positioning
+@mixin center-v() {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@mixin center-h() {
+    display: flex;
+    justify-content: center;
+}
+
+@mixin center-v-h() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// grid layout
+@mixin no-row-margins() {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+@mixin links($_prefix: '', $_suffix: '') {
+    #{$_prefix}a:not(.btn)#{$_suffix}, #{$_prefix}a:not(.btn):visited#{$_suffix}, #{$_prefix}a:not(.btn):hover#{$_suffix} {
+        @content
+    }
+}
+
+@mixin headings() {
+    h1, h2, h3, h4, h5, h6,
+    .h1, .h2, .h3, .h4, .h5, .h6 {
+        @content
+    }
+}
+
+
+@mixin container-theme($_class, $_frontColor, $_bg) {
+    #{$_class} {
+        color: $_frontColor;
+        background: $_bg;
+
+        zpe-icon {
+            --zpe-icon-color: #{$_frontColor};
+        }
+    }
+}
+
+@mixin container-theme-ie($_class, $_frontColor, $_bg) {
+    #{$_class} {
+        zpe-icon {
+            --zpe-icon-color: #{$_frontColor};
+        }
+    }
+}
+
+@mixin links-theme($_class, $_frontColor) {
+    #{$_class} {
+        @include links() {
+            color: $_frontColor;
+        }
+    }
+}
+
+@mixin lists-theme($_class, $_markerColor) {
+    #{$_class} {
+        ul li::before {
+            color: $_markerColor;
+        }
+    }
+}
+
+@mixin buttons-theme($_class, $_frontColor, $_bgColor) {
+    #{$_class} {
+        @include buttons() {
+            color: $_frontColor;
+            background-color: $_bgColor;
+        }
+
+        @include buttons(' zpe-icon') {
+            --zpe-icon-color: #{$_frontColor};
+        }
+
+        @include buttons('.secondary') {
+            color: $_bgColor;
+            border-color: $_bgColor;
+            background-color: transparent;
+        }
+
+        @include buttons('.secondary zpe-icon') {
+            --zpe-icon-color: #{$_bgColor};
+        }
+
+        @include buttons('.secondary:not([disabled]):not(.disabled):hover') {
+            color: $_frontColor;
+            background-color: $_bgColor;
+        }
+
+        @include buttons('.secondary:not([disabled]):not(.disabled):hover zpe-icon') {
+            --zpe-icon-color: #{$_frontColor};
+        }
+
+        @include buttons('.light') {
+            color: $_bgColor;
+            border-color: transparent;
+            background-color: transparent;
+        }
+
+        @include buttons('.light zpe-icon') {
+            --zpe-icon-color: #{$_bgColor};
+        }
+
+        @include buttons('.light:not([disabled]):not(.disabled):hover') {
+            color: $_frontColor;
+            background-color: $_bgColor;
+        }
+
+        @include buttons('.light:not([disabled]):not(.disabled):hover zpe-icon') {
+            --zpe-icon-color: #{$_frontColor};
+        }
+    }
+}
+
+@mixin buttons-theme-ie($_class, $_frontColor, $_bgColor) {
+    #{$_class} {
+        @include buttons(' zpe-icon') {
+            --zpe-icon-color: #{$_frontColor};
+        }
+
+        @include buttons('.secondary zpe-icon') {
+            --zpe-icon-color: #{$_bgColor};
+        }
+
+        @include buttons('.secondary:not([disabled]):not(.disabled):hover zpe-icon') {
+            --zpe-icon-color: #{$_frontColor};
+        }
+
+        @include buttons('.light zpe-icon') {
+            --zpe-icon-color: #{$_bgColor};
+        }
+
+        @include buttons('.light:not([disabled]):not(.disabled):hover zpe-icon') {
+            --zpe-icon-color: #{$_frontColor};
+        }
+    }
+}
+
+@mixin zpe-icon-sizes($_sizes_map: (
+    8: 0.5rem,
+    16: 1rem,
+    24: 1.5rem,
+    32: 2rem,
+    48: 3rem,
+    64: 4rem,
+    80: 5rem,
+    96: 6rem,
+    112: 7rem,
+    128: 8rem
+)) {
+    @each $size, $val in $_sizes_map {
+        zpe-icon.size#{$size} {
+            --zpe-icon-width: #{$val};
+            --zpe-icon-height: #{$val};
+
+            @if $size == 8 {
+                vertical-align: top;
+            } @else if $size == 16 {
+                vertical-align: text-top;
+            }
+        }
+    }
+}

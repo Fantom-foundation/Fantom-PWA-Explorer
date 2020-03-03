@@ -1,0 +1,39 @@
+ul, ol {
+    padding-left: $lists-padding-left;
+}
+
+ul, ul ul {
+    list-style-type: none;
+}
+
+ul li::before {
+    content: "\25cf";
+    color: $lists-marker-color;
+    //font-weight: bold;
+    font-size: 1.1em;
+    display: inline-block;
+    width: $lists-marker-width;
+    margin-left: -0.8em;
+}
+
+ul.list-marker-disc li::before {
+    content: "\25cf";
+}
+
+ul.list-marker-circle li::before {
+    content: "\25cb";
+}
+
+ul.list-marker-square li::before {
+    font-size: 0.8em;
+    width: $lists-marker-width * 1.5;
+    content: "\25a0";
+}
+
+ul.no-markers {
+    padding-left: 0;
+}
+
+ul.no-markers li::before {
+    display: none;
+}

@@ -1,0 +1,29 @@
+/**
+ * Style used in media queries loop.
+ *
+ * @param $_bp Breakpoint shortcut.
+ */
+/*
+@mixin pos-media($_bp) {
+}
+*/
+
+.center-v {
+    @include center-v;
+}
+
+.center-h {
+    @include center-h;
+}
+
+.center-v-h {
+    @include center-v-h;
+}
+
+/*
+@each $shortcut, $breakpoint in $breakpoints-map {
+    @include media-max($breakpoint) {
+        @include pos-media($shortcut);
+    }
+}
+*/

@@ -1,0 +1,51 @@
+<template>
+    <div class="narrow-container">
+        <div class="row">
+            <div class="col-6 col-12-md">
+                <f-card>
+                    <ul>
+                        <!--
+                                    <li><router-link :to="{name: 'apollo-test'}">Apollo test</router-link></li>
+                                    <li><router-link to="/test">Test Page</router-link></li>
+                        -->
+<!--                        <li><router-link to="/design">Design</router-link></li>-->
+                        <li><router-link to="/ffff">Not Found</router-link></li>
+                        <li><router-link to="/data-table-playground">FDataTable playground</router-link></li>
+                        <li><router-link to="/apollo-data-table-playground">FApolloDataTable playground</router-link></li>
+                    </ul>
+                </f-card>
+            </div>
+            <div class="col">
+                <f-card>
+                    <h3>Buttons</h3>
+                    <h4>Default</h4>
+                    <p>
+                        <button class="large">Large</button> <button>Default</button> <button class="small">Small</button>
+                    </p>
+                    <h4>Secondary</h4>
+                    <p>
+                        <button class="secondary large">Large</button> <button class="secondary">Default</button> <button class="secondary small">Small</button>
+                    </p>
+                    <h4>Light</h4>
+                    <p>
+                        <button class="light large">Large</button> <button class="light">Default</button> <button class="light small">Small</button>
+                    </p>
+                </f-card>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    import FCard from "../components/FCard.vue";
+
+    export default {
+        components: {
+            FCard
+        }
+    }
+</script>
+
+<style>
+
+</style>

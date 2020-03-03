@@ -1,0 +1,230 @@
+// font sizes
+$fs10: 0.625rem !default;
+$fs12: 0.75rem !default;
+$fs14: 0.875rem !default;
+$fs16: 1rem !default;
+$fs18: 1.125rem !default;
+$fs20: 1.25rem !default;
+$fs24: 1.5rem !default;
+$fs30: 1.875rem !default;
+$fs36: 2.25rem !default;
+$fs48: 3rem !default;
+$fs60: 3.75rem !default;
+$fs72: 4.5rem !default;
+
+$fs-caption: $fs12 !default;
+$fs-body: $fs16 !default;
+$fs-body-sm: $fs14 !default;
+$fs-button: $fs16 !default;
+$fs-button-mi: $fs12 !default;
+$fs-button-sm: $fs14 !default;
+$fs-button-lg: $fs16 !default;
+$fs-input: $fs16 !default;
+$fs-input-lg: $fs16 !default;
+$fs-input-sm: $fs14 !default;
+$fs-subtitle: $fs16 !default;
+$fs-subtitle-sm: $fs14 !default;
+
+// headings
+$fs-h1: $fs36 !default;
+$fs-h2: $fs30 !default;
+$fs-h3: $fs24 !default;
+$fs-h4: $fs20 !default;
+$fs-h5: $fs18 !default;
+$fs-h6: $fs16 !default;
+
+// margins
+$ma-h1: 2rem 0 1.5rem 0 !default;
+$ma-h2: 1.75rem 0 1.25rem 0 !default;
+$ma-h3: 1.5rem 0 1rem 0 !default;
+$ma-h4: 1.25rem 0 1rem 0 !default;
+$ma-h5: 1.25rem 0 1rem 0 !default;
+$ma-h6: 1rem 0 !default;
+
+// basic sizes
+$size8: 0.5rem;
+$size16: 1rem;
+$size24: 1.5rem;
+$size32: 2rem;
+$size8f: 8px;
+$size16f: 16px;
+$size24f: 24px;
+$size32f: 32px;
+
+// letter spacing
+
+
+// general
+$font-size: initial !default;
+$font-family: Arial, Tahoma, sans-serif !default;
+$line-height: 1.5 !default;
+$transition-length: 250ms !default;
+$transition-func: ease !default;
+$border-radius: 0.2rem !default;
+$opacity-medium: 0.5 !default;
+$p-padding: 0 0 $size16 0;
+
+
+// sizes
+$size-md: 1rem !default;
+
+
+/*
+$size-mini: 0.154rem !default;
+$size-small: 0.385rem !default;
+$size-medium: 0.77rem !default;
+$size-big: 1.155rem !default;
+$size-huge: 2.310rem !default;
+*/
+
+// breakpoints
+$bp-small: 576px !default;
+$bp-medium: 768px !default;
+$bp-large: 992px !default;
+
+// main colors
+$body-color: #444 !default;
+$body-bg-color: #fff !default;
+$link-color: #00c !default;
+$theme-color: #4e85bb !default;
+$theme-light-color: #f4f4f4 !default;
+$dark-theme-light-color: lighten(desaturate(adjust-hue($theme-color, 1), 17.19), 27.06) !default;
+$disabled-color: #585858 !default;
+$active-bg-color: #d7dce1 !default;
+$overlay-bg-color: rgba(30, 30, 30, 0.7) !default;
+
+
+
+// buttons
+$button-font-family: inherit !default;
+$button-font-weight: bold !default;
+$button-text-align: center !default;
+$button-text-transform: initial !default;
+$button-text-shadow: none !default;
+$button-white-space: nowrap !default;
+$button-color: #fff !default;
+$button-v-padding: 0.25rem !default;
+$button-h-padding: 1.5rem !default;
+$button-mi-v-padding: 0 !default;
+$button-mi-h-padding: 0.5rem !default;
+$button-sm-v-padding: 0 !default;
+$button-sm-h-padding: 0.75rem !default;
+$button-lg-v-padding: 0.5rem !default;
+$button-lg-h-padding: 2.25rem !default;
+/*
+$button-v-padding: 4px !default;
+$button-h-padding: 24px !default;
+$button-lg-v-padding: 8px !default;
+$button-lg-h-padding: 36px !default;
+$button-sm-v-padding: 0 !default;
+$button-sm-h-padding: 12px !default;
+*/
+$button-border-width: 1px !default;
+$button-border-color: transparent !default;
+$button-border-radius: 0 !default;
+$button-disabled-opacity: 0.5 !default;
+$button-secondary-bg-color: transparent !default;
+$button-light-border-color: transparent !default;
+$button-light-bg-color: transparent !default;
+
+// inputs
+$input-font-family: inherit !default;
+$input-color: inherit !default;
+$input-disabled-color: #888 !default;
+$input-disabled-border-color: #ccc !default;
+$input-disabled-bg-color: #f0f0f0 !default;
+$input-readonly-bg-color: #fefff2 !default;
+$input-bg-color: #fff !default;
+//$input-hover-bg-color: darken($input-bg-color, 10%) !default;
+$input-v-padding: 0.75rem !default;
+$input-h-padding: 0.75rem !default;
+$input-sm-v-padding: 0.5rem !default;
+$input-sm-h-padding: 0.5rem !default;
+$input-lg-v-padding: 0.875rem !default;
+$input-lg-h-padding: 1rem !default;
+$input-height: 2.25rem !default;
+$input-sm-height: 1.75rem !default;
+$input-lg-height: 2.75rem !default;
+/*
+$input-v-padding: 12px !default;
+$input-h-padding: 12px !default;
+$input-lg-v-padding: 14px !default;
+$input-lg-h-padding: 16px !default;
+$input-sm-v-padding: 8px !default;
+$input-sm-h-padding: 8px !default;
+*/
+$input-border-width: 1px !default;
+$input-border-color: #d7dce1 !default;
+$input-invalid-border-color: #c00 !default;
+$input-invalid-outline-shadow-color: rgba(200, 0, 0, 0.5) !default;
+
+// checkbox, radio
+$checkbox-color: #fff !default;
+$checkbox-bg-color: #fff !default;
+$checkbox-width: 0.2rem !default;
+$checkbox-radius: 0.2rem !default;
+$checkbox-transition-length: 150ms !default;
+$checkbox-radio-size: 1.5rem !default;
+$checkbox-radio-sm-size: 1.25rem !default;
+$checkbox-radio-lg-size: 1.75rem !default;
+$radio-dot-size: 14px !default;
+$radio-sm-dot-size: 12px !default;
+$radio-lg-dot-size: 18px !default;
+
+
+// headings
+$headings-font-weight: normal !default;
+$headings-padding: 0 !default;
+$headings-text-align: initial !default;
+
+// grid layout
+$grid-layout-gutter-width: $size8f !default;
+$grid-layout-row-border: 1px solid $theme-color !default;
+$grid-layout-cols-border: 1px solid #eee !default;
+$grid-layout-cols-border-dark-theme: 1px solid $dark-theme-light-color !default;
+$narrow-container-max-width: 1200px !default;
+
+// lists
+$lists-padding-left: 1.2em !default;
+$lists-marker-width: 0.9em !default;
+
+// elevations
+$elev-color: rgb(100, 100, 100) !default;
+$elev-shadow-sizes-list:
+    0 1px 2px 0,
+    0 1px 2px 0,
+    0 2px 4px 0,
+    0 3px 6px 0,
+    0 4px 8px 0,
+    0 6px 12px 0,
+    0 8px 16px 0,
+    0 12px 24px 0 !default;
+$elev-shadow-opacities-list:
+    0.1,
+    0.2,
+    0.2,
+    0.24,
+    0.28,
+    0.32,
+    0.36,
+    0.4 !default;
+
+// boxes
+$box-bg: #fff !default;
+$box-border: none !default;
+$box-border-radius: initial !default;
+$box-left-info-col-bg: #fff !default;
+$box-left-info-col-width: 180px !default;
+$box-left-info-col-bp-medium-width: 120px !default;
+$box-left-info-col-bp-small-width: 80px !default;
+
+
+// screen
+$screen-bg-color: #F3F0EA !default;
+$screen-header-bg-color: #000 !default;
+$screen-header-height: 3rem !default;
+$screen-footer-color: #fff !default;
+$screen-footer-bg-color: #000 !default;
+$screen-footer-height: 3rem !default;
+$screen-fixed-header-bg-color: rgba(20,20,20,0.6) !default;
+

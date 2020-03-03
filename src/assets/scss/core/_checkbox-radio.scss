@@ -1,0 +1,180 @@
+/*
+lg - input: 44px, checkbox: 32px
+dft - input: 36px, checkbox: 24px
+sm - input: 28px, checkbox: 20px
+ */
+
+label.option {
+    position: relative;
+    display: inline-block;
+}
+
+label.option > input {
+    position: absolute;
+    opacity: 0;
+    //width: 1.5rem;
+    //height: 1.5rem !important;
+}
+
+label.option > span {
+    //position: absolute;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    //top: 0;
+    //top: -10px;
+    /*top: -$size-mini;*/
+    //left: 1px;
+    background-color: $checkbox-bg-color;
+    cursor: pointer;
+}
+
+label.option > span::before {
+    /*display: none;*/
+    position: absolute;
+    content: "";
+    opacity: 0;
+}
+
+label.option input:checked + span::before {
+    display: block;
+    opacity: 1;
+}
+
+label.option input:checked + span,
+label.option input:focus + span,
+label.option:hover input:not(:disabled) + span {
+    border-color: $input-active-border-color;
+}
+
+label.option input:focus + span {
+    box-shadow: $outline-shadow;
+}
+
+label.option input:disabled + span {
+    cursor: default;
+    border-color: $input-disabled-border-color;
+    //background-color: $input-disabled-bg-color;
+}
+
+label.option input:checked:disabled + span {
+    opacity: $opacity-medium;
+}
+
+label.option > span.checkbox {
+    border: $input-border-width solid $input-border-color;
+    border-radius: $input-border-radius;
+}
+
+label.option > span.checkbox::before {
+    //top: 0.18rem;
+    top: 50%;
+    border-left: $checkbox-width solid $checkbox-color;
+    border-bottom: $checkbox-width solid $checkbox-color;
+    border-radius: $checkbox-radius;
+    /*opacity: 0;*/
+    transform: rotate(-45deg) scale(0, 0);
+}
+
+label.option input:checked + span.checkbox::before {
+    transform: rotate(-45deg) scale(1, 1);
+}
+
+label.option input:checked + span.checkbox {
+    background-color: $input-active-border-color;
+}
+
+label.option input:not(:checked):disabled + span.checkbox::before {
+    border-color: transparent !important;
+}
+
+label.option > span.radio {
+    //background-color: $checkbox-bg-color;
+    border: $input-border-width solid $input-border-color;
+    border-radius: 50%;
+}
+
+label.option > span.radio::before {
+    top: 50%;
+    left: 50%;
+    background-color: $input-active-border-color;
+    border-radius: 50%;
+    transform: scale(0, 0);
+}
+
+label.option input:checked + span.radio::before {
+    transform: scale(1, 1);
+}
+
+label.option input:checked + span.radio {
+    background-color: $checkbox-bg-color;
+}
+
+label.option > span, label.option > span::before {
+    transition: all $checkbox-transition-length $transition-func;
+}
+
+@mixin checkbox-radio-invalid($_prefix, $_suffix) {
+    #{$_prefix} label.option input#{$_suffix} + span,
+    #{$_prefix} label.option input#{$_suffix}:checked + span,
+    #{$_prefix} label.option input#{$_suffix}:focus + span {
+        border-color: $input-invalid-border-color;
+    }
+
+    #{$_prefix} label.option input#{$_suffix}:focus + span {
+        box-shadow: $input-invalid-outline-shadow;
+    }
+
+    #{$_prefix} label.option input#{$_suffix}:checked + span.checkbox,
+    #{$_prefix} label.option #{$_suffix} + span.radio::before {
+        background-color: $input-invalid-border-color;
+    }
+}
+
+@include checkbox-radio-invalid('', '[aria-invalid="true"]');
+@include checkbox-radio-invalid('.not-valid', '');
+
+/*
+label.option input[aria-invalid="true"] + span,
+label.option input[aria-invalid="true"]:checked + span,
+label.option input[aria-invalid="true"]:focus + span {
+    border-color: $input-invalid-border-color;
+}
+
+label.option input[aria-invalid="true"]:focus + span {
+    box-shadow: $input-invalid-outline-shadow;
+}
+
+label.option input[aria-invalid="true"]:checked + span.checkbox,
+label.option [aria-invalid="true"] + span.radio::before {
+    background-color: $input-invalid-border-color;
+}
+*/
+
+/*
+label.option.invalid > span, .invalid label.option > span,
+label.option.invalid input:checked + span, .invalid label.option input:checked + span,
+label.option.invalid input:focus + span, .invalid label.option input:focus + span,
+label.option.invalid:hover input:not(:disabled) + span, .invalid label.option:hover input:not(:disabled) + span {
+    border-color: $input-invalid-border-color;
+}
+
+label.option.invalid input:focus + span, .invalid label.option input:focus + span {
+    box-shadow: $input-invalid-outline-shadow;
+}
+
+label.option.invalid input:checked + span.checkbox, .invalid label.option input:checked + span.checkbox,
+label.option.invalid > span.radio::before, .invalid label.option > span.radio::before {
+    background-color: $input-invalid-border-color;
+}
+*/
+
+
+@include checkbox-radio-size('', $checkbox-radio-size, $radio-dot-size);
+@include checkbox-radio-size('.small', $checkbox-radio-sm-size, $radio-sm-dot-size);
+@include checkbox-radio-size('.large', $checkbox-radio-lg-size, $radio-lg-dot-size);
+/*
+@include checkbox-radio-size();
+@include checkbox-radio-size('.small', 1.25rem, 0.75rem);
+@include checkbox-radio-size('.large', 1.75rem, 1.125rem);
+*/

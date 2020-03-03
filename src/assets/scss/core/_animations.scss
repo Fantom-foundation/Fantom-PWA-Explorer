@@ -1,0 +1,10 @@
+@import "animations-mixins";
+
+@include rotate-animation('-360');
+
+/*
+@include fade-animation('in', 0, 1);
+@include fade-animation('out', 1, 0);
+@include scale-center-fade-animation('in', 0.75, 1, 0, 1);
+@include scale-center-fade-animation('out', 1, 0.75, 1, 0);
+*/

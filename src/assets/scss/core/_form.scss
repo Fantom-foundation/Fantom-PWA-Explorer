@@ -1,0 +1,10 @@
+form input:not(.def):not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+form textarea:not(.def), form select:not(.def),
+form zpe-input {
+    width: 100%;
+    min-width: 0;
+}
+
+@include flexbox-cols('form:not(.normal-cols-padding) ') {
+    padding: $grid-layout-gutter-width-half;
+}

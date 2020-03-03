@@ -1,0 +1,113 @@
+input:-webkit-autofill, input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+}
+
+@include inputs() {
+    font-family: $input-font-family;
+    font-size: $fs-input;
+    //padding: calc(#{$input-v-padding} - #{$input-border-width} - 2px) $input-h-padding;
+    padding: $input-padding;
+    border: $input-border-width solid $input-border-color;
+    //border: none;
+    display: inline-block;
+    vertical-align: middle;
+    //line-height: 1.6;
+    line-height: 1;
+    //height: 36px;
+    height: $input-height;
+    text-decoration: none;
+    //white-space: nowrap;
+    //text-transform: uppercase;
+    //font-weight: bold;
+    color: $input-color;
+    background-color: $input-bg-color;
+    border-radius: $input-border-radius;
+    outline: none;
+    //border-radius: $border-radius;
+    transition: border-color $input-transition, box-shadow $input-transition;
+}
+
+@include inputs('.small') {
+    //height: 28px;
+    height: $input-sm-height;
+    font-size: $fs-input-sm;
+    padding: $input-sm-padding;
+}
+
+@include inputs('.large') {
+    //height: 44px;
+    height: $input-lg-height;
+    font-size: $fs-input-lg;
+    padding: $input-lg-padding;
+}
+
+textarea:not(.def), textarea:not(.def).large, textarea:not(.def).small {
+    height: auto;
+}
+
+@include inputs('::-ms-clear') {
+    display: none;
+}
+
+@include inputs(':hover') {
+    border-color: $input-active-border-color;
+}
+
+@include inputs(':focus') {
+    @include main-focus;
+}
+
+input[type="submit"]:not(.def):focus {
+    outline: none;
+}
+
+@include inputs('[disabled]') {
+    border-color: $input-disabled-border-color !important;
+    color: $input-disabled-color;
+    background-color: $input-disabled-bg-color !important;
+}
+
+@include inputs('[readonly]') {
+    background: $input-readonly-bg-color;
+}
+
+@include inputs('[aria-invalid="true"]') {
+    border-color: $input-invalid-border-color;
+}
+
+@include inputs('', '.not-valid ') {
+    border-color: $input-invalid-border-color;
+}
+
+@include inputs('[aria-invalid="true"]:focus') {
+    box-shadow: $input-invalid-outline-shadow;
+}
+
+@include inputs(':focus', '.not-valid ') {
+    box-shadow: $input-invalid-outline-shadow;
+}
+
+select:not(.def) {
+    padding: $input-select-padding;
+
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-position: calc(100% - 8px) 50%;
+    background-repeat: no-repeat;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="9" viewBox="0 0 12 9"><path style="fill: rgb(140,140,140);" id="chevron-medium-big-4-01" d="M128,160v3l6,6,6-6v-2.952l-6,6Z" transform="translate(-128 -160)"/></svg>');
+}
+
+select:not(.def).small {
+    padding: $input-select-sm-padding;
+}
+
+select:not(.def).large {
+    padding: $input-select-lg-padding;
+}
+
+select:not(.def)[disabled] {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="9" viewBox="0 0 12 9"><path style="fill: rgb(180,180,180);" id="chevron-medium-big-4-01" d="M128,160v3l6,6,6-6v-2.952l-6,6Z" transform="translate(-128 -160)"/></svg>');
+}
+
+/** checkbox/radio tady - prepracovat trochu **/

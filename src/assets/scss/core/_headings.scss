@@ -1,0 +1,40 @@
+@include headings() {
+    font-weight: $headings-font-weight;
+    padding: $headings-padding;
+    text-align: $headings-text-align;
+    line-height: 1.3em;
+    //margin: $headings-margin;
+}
+
+h1, .h1 {
+    font-size: $fs-h1;
+    margin: $ma-h1;
+}
+
+h2, .h2 {
+    font-size: $fs-h2;
+    margin: $ma-h2;
+}
+
+h3, .h3 {
+    font-size: $fs-h3;
+    margin: $ma-h3;
+}
+
+h4, .h4 {
+    font-size: $fs-h4;
+    //font-weight: bold;
+    margin: $ma-h4;
+}
+
+h5, .h5 {
+    font-size: $fs-h5;
+    margin: $ma-h5;
+    //font-weight: bold;
+}
+
+h6, .h6 {
+    font-size: $fs-h6;
+    margin: $ma-h6;
+    font-weight: bold;
+}

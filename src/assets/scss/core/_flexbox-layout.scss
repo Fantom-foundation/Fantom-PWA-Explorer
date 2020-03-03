@@ -1,0 +1,384 @@
+/**
+ * Style for collapsed layout.
+ *
+ * @param $_bp Breakpoint shortcut.
+ */
+@mixin flex-layout-collapse($_bp: '') {
+    flex-direction: column;
+
+    &.equal-height {
+        align-items: initial;
+
+        > [class*=col] > * {
+            height: auto;
+        }
+    }
+
+    &.reverse, &.reverse-lg, &.reverse-md, &.reverse-sm {  // tady breakpoint-shortcuts
+        flex-direction: column-reverse;
+    }
+
+    @include flexbox-cols('& > ') {
+        //float: none;
+        //flex: 0 0 100%;
+        flex: 0 0 auto;
+        width: 100%;
+        min-width: 100%;
+    }
+}
+
+/**
+ * Style used in media queries loop.
+ *
+ * @param $_bp Breakpoint shortcut.
+ */
+@mixin layout-media($_bp: '') {
+    .reverse-#{$_bp} {
+        flex-direction: row-reverse;
+    }
+
+    .reverse-#{$_bp}.columns {
+        flex-direction: column-reverse;
+    }
+
+    .first-#{$_bp} {
+        order: -1;
+    }
+
+    .last-#{$_bp} {
+        order: 1;
+    }
+
+    .no-offset-#{$_bp} {
+        margin-left: 0;
+    }
+
+    @include flexbox-rows('', '.collapse-#{$_bp}') {
+        @include flex-layout-collapse('-#{$_bp}');
+    }
+
+    /*
+    @include flexbox-rows('', '.columns-' + $_bp) {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+    */
+
+    @include flexbox-rows-cols('-#{$_bp}');
+}
+
+
+@include flexbox-rows() {
+    /*
+    max-width: 1200px;
+    margin: 0 auto;
+    */
+    /*padding: 6px 0;*/
+    display: flex;
+
+    //width: 100%;
+
+    //padding: 0 $grid-layout-gutter-width;
+    //margin: 0;
+    margin-right: -$grid-layout-gutter-width;
+    margin-left: -$grid-layout-gutter-width;
+
+    &:not(.no-wrap) {
+        flex-wrap: wrap;
+    }
+
+    &.columns {
+        flex-direction: column;
+        //flex-wrap: initial;
+        flex-wrap: nowrap;
+
+        //min-height: 0;
+        //margin-top: -$grid-layout-gutter-width;
+        //margin-bottom: -$grid-layout-gutter-width;
+
+        /*
+        @include flexbox-cols('> ') {
+            //height: 100%;
+            //flex: 0 0 auto;
+        }
+        */
+    }
+
+    &.narrow-container {
+        padding: 0;
+    }
+
+    &.cols-h-border {
+        @include flexbox-cols() {
+            border-bottom: $grid-layout-cols-border;
+        }
+    }
+
+    &.cols-v-border {
+        @include flexbox-cols() {
+            border-right: $grid-layout-cols-border;
+        }
+
+        @include flexbox-cols('', ':last-child') {
+            border-right: none;
+        }
+    }
+
+    &.equal-height {
+        align-items: stretch;
+
+        @include flexbox-cols('> ', ' > *:not(.col):not([class^="col-"]):not([class*=" col-"])') {
+            height: 100%;
+        }
+    }
+
+    &.no-gap {
+        @include no-row-margins;
+
+        @include flexbox-cols('> ') {
+            padding: 0;
+        }
+    }
+
+    @include flexbox-cols('&') {
+        margin: 0;
+        padding: 0;
+    }
+
+    &.small-col-padding {
+        @include flexbox-cols('> ') {
+            padding: $grid-layout-gutter-width-half;
+            //padding: 0 $grid-layout-gutter-width-half $grid-layout-gutter-width;
+        }
+    }
+
+    &.double-col-padding {
+        @include flexbox-cols('> ') {
+            padding: $grid-layout-gutter-width-2x;
+            //padding: 0 $grid-layout-gutter-width-2x $grid-layout-gutter-width-4x;
+        }
+    }
+
+    /*
+    &.equal-col-padding {
+        @include flexbox-cols('> ') {
+            padding: $grid-layout-gutter-width;
+        }
+
+        &.small-col-padding {
+            @include flexbox-cols('> ') {
+                padding: $grid-layout-gutter-width-half;
+            }
+        }
+
+        &.double-col-padding {
+            @include flexbox-cols('> ') {
+                padding: $grid-layout-gutter-width-2x;
+            }
+        }
+    }
+    */
+
+}
+
+@include flexbox-cols() {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    //max-height: 100%;
+    //padding: 0 $grid-layout-gutter-width $grid-layout-gutter-width-2x;
+    padding: $grid-layout-gutter-width;
+}
+
+// for even nested cols
+@include flexbox-cols('.small-cols-padding ') {
+    //padding: 0 $grid-layout-gutter-width-half $grid-layout-gutter-width;
+    padding: $grid-layout-gutter-width-half;
+}
+
+// for even nested cols
+@include flexbox-cols('.double-cols-padding ') {
+    //padding: 0 $grid-layout-gutter-width-2x $grid-layout-gutter-width-4x;
+    padding: $grid-layout-gutter-width-2x;
+}
+
+// for even nested cols
+@include flexbox-cols('.nested-cols-padding ') {
+    padding: 0 $grid-layout-gutter-width $grid-layout-gutter-width-2x;
+    //padding: $grid-layout-gutter-width;
+}
+
+// for even nested cols
+@include flexbox-cols('.nested-cols-padding.small-cols-padding ') {
+    padding: 0 $grid-layout-gutter-width-half $grid-layout-gutter-width;
+    //padding: $grid-layout-gutter-width-half;
+}
+
+// for even nested cols
+@include flexbox-cols('.nested-cols-padding.double-cols-padding ') {
+    padding: 0 $grid-layout-gutter-width-2x $grid-layout-gutter-width-4x;
+    //padding: $grid-layout-gutter-width-2x;
+}
+
+@include flexbox-cols('', ' img:not(.not-fluid)') {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: $size8;
+}
+
+.align-items-start {
+    align-items: start;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.align-items-end {
+    align-items: flex-end;
+    //align-items: end;
+}
+
+.reverse {
+    flex-direction: row-reverse;
+}
+
+.reverse.columns {
+    flex-direction: column-reverse;
+}
+
+.justify-content-start {
+    justify-content: flex-start;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.justify-content-end {
+    justify-content: flex-end;
+}
+
+.first {
+    order: -1;
+}
+
+.last {
+    order: 1;
+}
+
+.no-row-margins {
+    @include no-row-margins;
+}
+
+.no-gutters {
+    @include no-row-margins;
+
+    @include flexbox-cols('> ') {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
+
+/* ?? nikde pouzite*/
+/*
+.no-col-padding {
+    @include no-row-margins;
+
+    > [class^="col-"], > [class*=" col-"], .col {
+        padding: 0;
+    }
+}
+*/
+
+.no-hor-col-padding {
+    @include flexbox-cols('> ') {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+/* ?? viz. header.hbs, pridat tam no-row-margins */
+/*
+.no-hor-col-padding {
+    @include no-row-margins;
+
+    > [class^="col-"], > [class*=" col-"], .col {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+*/
+
+.no-vert-col-padding {
+    @include flexbox-cols('> ') {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+/* ?? viz. tenebrio->row-detail->modal okno*/
+/*
+.no-vert-col-padding {
+    margin-top: 0;
+    margin-bottom: 0;
+
+    > [class^="col-"], > [class*=" col-"], .col {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+*/
+
+/*
+.row > [class^="col-"] .row [class^="col-"], .row > [class*=" col-"] .row [class*=" col-"] {
+  padding: 0 $grid-layout-gutter-width;
+}
+.row > [class^="col-"] .row, .row > [class*=" col-"] .row {
+  padding: $grid-layout-gutter-width 0;
+}
+*/
+
+/*
+.row.border-dark [class^="col-"], .row.border-dark [class^="col-"],
+.row.border-dark [class*=" col-"], .row.border-dark [class*=" col-"] {
+  border-right: 1px solid #e4e4e4;
+}
+*/
+
+/*
+.layout-flex-h {
+    display: flex;
+    height: 100%;
+    padding: 0;
+
+    > * {
+        flex: 1 1 100%;
+        padding: 2*$grid-layout-gutter-width;
+        //flex-basis: 100%;
+    }
+}
+*/
+
+@include flexbox-rows-cols();
+@include flexbox-layout(12);
+
+//@include flex-layout(24);
+//@include flex-layout(5);
+
+@include flexbox-rows('', '.collapse') {
+    @include flex-layout-collapse;
+}
+
+@include media-max($bp-small) {
+    @include flexbox-rows('', ':not(.no-collapse):not(.col)') {
+        @include flex-layout-collapse('-sm');
+    }
+}
+
+// loop through all media query breakpoints
+//@debug " ---- WTF? ---- #{$breakpoints-map}";
+@each $shortcut, $breakpoint in $breakpoints-map {
+    @include media-max($breakpoint) {
+        @include layout-media($shortcut);
+    }
+}
