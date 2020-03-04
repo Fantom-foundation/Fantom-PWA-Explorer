@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Home from './views/Home.vue';
 import NotFound from "./views/NotFound.vue";
 import DataTablePlayground from "./views/DataTablePlayground.vue";
-import ApolloDataTablePlayground from "./views/ApolloDataTablePlayground.vue";
+import Transactions from "./views/Transactions.vue";
 
 Vue.use(VueRouter);
 
@@ -14,14 +14,14 @@ const routes = [
         component: Home
     },
     {
+        name: 'transactions',
+        path: '/transactions',
+        component: Transactions
+    },
+    {
         name: 'data-table-playground',
         path: '/data-table-playground',
         component: DataTablePlayground
-    },
-    {
-        name: 'apollo-data-table-playground',
-        path: '/apollo-data-table-playground',
-        component: ApolloDataTablePlayground
     },
     {
         name: 'not-found',

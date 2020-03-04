@@ -10,12 +10,8 @@
             "title": "Home"
         },
         {
-            "url": "/data-table-playground",
-            "title": "FDataTable playground"
-        },
-        {
-            "url": "/apollo-data-table-playground",
-            "title": "FApolloDataTable playground"
+            "url": "/transactions",
+            "title": "Transaction"
         }
     ],
     "no_items": "No items.",

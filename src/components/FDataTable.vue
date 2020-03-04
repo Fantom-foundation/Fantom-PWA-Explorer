@@ -328,7 +328,7 @@
         }
 
         td, th {
-            padding: 0.5rem;
+            padding: 0.5rem 1rem;
         }
 
 /*
@@ -351,8 +351,9 @@
 
         thead {
             th {
+                color: #666;
                 background-color: #fff;
-                border-bottom: 1px solid #eee;
+                border-bottom: 1px solid #e6e6e6;
             }
         }
 
@@ -376,6 +377,10 @@
         .mobile-view {
             .mobile-item {
                 padding: 0.5rem;
+                background-color: #fff;
+                margin-bottom: 1rem;
+                border-radius: 0.5rem;
+                box-shadow: $elev2-shadow;
 
                 > div {
                     width: 100% !important;
