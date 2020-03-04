@@ -1,11 +1,11 @@
 <template>
-    <header class="f-header" :class="cssClass">
+    <header class="f-header" :class="cCssClass">
         <div class="narrow-container">
             <div class="row no-collapse align-items-center">
                 <div class="col-2">Logo</div>
                 <div class="col right-col">
                     <f-navigation
-                        :items="navigation"
+                        :items="cNavigation"
                     ></f-navigation>
                     <f-hamburger-switch
                         thickness="2"
@@ -23,7 +23,6 @@
 <script>
     import FNavigation from "../components/FNavigation.vue";
     import FHamburgerSwitch from "../components/FHamburgerSwitch.vue";
-    import { navigation } from "../navigation.js";
     import { mapState } from 'vuex';
 
     /**
@@ -37,15 +36,31 @@
 
         data() {
             return {
-                navigation,
-                drawerOn: false
+                /** Is drawer visible? */
+                dDrawerOn: false
             }
         },
 
         computed: {
-            cssClass() {
+            /**
+             * Get navigation by current language.
+             *
+             * @return {array}
+             */
+            cNavigation() {
+                const messages = this.$i18n.messages[this.$i18n.locale];
+
+                return messages.navigation || [];
+            },
+
+            /**
+             * Container's css classes.
+             *
+             * @retun {object}
+             */
+            cCssClass() {
                 return {
-                    'drawer-on': this.drawerOn
+                    'drawer-on': this.dDrawerOn
                 }
             },
 
@@ -111,11 +126,11 @@
 
             onHamburgerSwitchOn() {
                 this.moveNavigationToDrawer();
-                this.drawerOn = true;
+                this.dDrawerOn = true;
             },
 
             onHamburgerSwitchOff() {
-                this.drawerOn = false;
+                this.dDrawerOn = false;
                 setTimeout(() => {
                     this.moveNavigationFromDrawer();
                 }, 300);

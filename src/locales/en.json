@@ -4,7 +4,20 @@
         "text": "Looks like you've followed a broken link or entered a URL that doesn't exist on this site.",
         "link_title": "Back to home"
     },
-
+    "navigation": [
+        {
+            "url": "/",
+            "title": "Home"
+        },
+        {
+            "url": "/data-table-playground",
+            "title": "FDataTable playground"
+        },
+        {
+            "url": "/apollo-data-table-playground",
+            "title": "FApolloDataTable playground"
+        }
+    ],
     "no_items": "No items.",
     "loading": "Loading..."
 }

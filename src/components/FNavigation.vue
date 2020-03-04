@@ -3,7 +3,7 @@
         <nav>
             <slot>
                 <ul class="no-markers" v-if="cItems">
-                    <li v-for="item in cItems" :key="item.id"><router-link :to="item.link">{{ item.label }}</router-link></li>
+                    <li v-for="item in cItems" :key="item.id"><router-link :to="item.url">{{ item.title }}</router-link></li>
                 </ul>
             </slot>
         </nav>
@@ -19,6 +19,13 @@
         ],
 
         props: {
+            /**
+             * Array of navigation links.
+             *
+             * One item is an object with keys:
+             * `url` - link url
+             * `title` - link title
+             */
             items: {
                 type: Array,
                 default() {
