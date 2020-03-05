@@ -62,45 +62,6 @@
     import FDataTable from "../components/FDataTable.vue";
     import { WEIToFTM } from "../utils/transactions.js";
 
-    const columns = [
-        {
-            name: 'timeStamp',
-            label: 'Created',
-            width: '220px',
-            oneLineMode: true
-        },
-        {
-            name: 'amount',
-            label: 'Amount',
-            width: '130px',
-            css: {
-                textAlign: 'right'
-            },
-            oneLineMode: true
-        },
-        {
-            name: 'from',
-            label: 'From',
-            width: '200px',
-            oneLineMode: true
-        },
-        {
-            name: 'to',
-            label: 'To',
-            width: '200px',
-            css: {
-                textAlign: 'center'
-            },
-            oneLineMode: true
-        },
-        {
-            name: 'id',
-            label: 'TX Hash',
-            // width: '30%',
-            oneLineMode: true
-        }
-    ];
-
     const tmpData = {
         "data":{
             "burst":[
@@ -193,15 +154,60 @@
             FDataTable
         },
 
+        data() {
+            return {
+                columns: [
+                    {
+                        name: 'timeStamp',
+                        label: this.$t('transaction_list.created'),
+                        width: '220px',
+                        oneLineMode: true
+                    },
+                    {
+                        name: 'amount',
+                        label: this.$t('transaction_list.amount'),
+                        width: '130px',
+                        css: {
+                            textAlign: 'right'
+                        },
+                        oneLineMode: true
+                    },
+                    {
+                        name: 'from',
+                        label: this.$t('transaction_list.from'),
+                        width: '200px',
+                        oneLineMode: true
+                    },
+                    {
+                        name: 'to',
+                        label: this.$t('transaction_list.to'),
+                        width: '200px',
+                        css: {
+                            textAlign: 'center'
+                        },
+                        oneLineMode: true
+                    },
+                    {
+                        name: 'id',
+                        label: this.$t('transaction_list.tx_hash'),
+                        // width: '30%',
+                        oneLineMode: true
+                    }
+                ]
+            }
+        },
+
         computed: {
             items() {
                 return tmpData.data.burst || [];
             }
         },
 
+/*
         created() {
             this.columns = columns;
         },
+*/
 
         methods: {
             WEIToFTM

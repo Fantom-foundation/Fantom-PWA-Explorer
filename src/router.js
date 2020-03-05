@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import NotFound from "./views/NotFound.vue";
 import DataTablePlayground from "./views/DataTablePlayground.vue";
 import Transactions from "./views/Transactions.vue";
+import TransactionDetail from "./views/TransactionDetail.vue";
 
 Vue.use(VueRouter);
 
@@ -19,6 +20,11 @@ const routes = [
         component: Transactions
     },
     {
+        name: 'transaction-detail',
+        path: '/tx/:id',
+        component: TransactionDetail
+    },
+    {
         name: 'data-table-playground',
         path: '/data-table-playground',
         component: DataTablePlayground
@@ -27,7 +33,7 @@ const routes = [
         name: 'not-found',
         path: '*',
         component: NotFound
-    },
+    }
 ];
 
 export const router = new VueRouter({

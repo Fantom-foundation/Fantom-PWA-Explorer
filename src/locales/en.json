@@ -1,4 +1,6 @@
 {
+    "no_items": "No items.",
+    "loading": "Loading...",
     "view_not_found": {
         "title": "Page not found :(",
         "text": "Looks like you've followed a broken link or entered a URL that doesn't exist on this site.",
@@ -11,9 +13,28 @@
         },
         {
             "url": "/transactions",
-            "title": "Transaction"
+            "title": "Transactions"
         }
     ],
-    "no_items": "No items.",
-    "loading": "Loading..."
+    "transaction_list": {
+        "title": "Transactions (local data)",
+        "created": "Created",
+        "amount": "Amount",
+        "from": "From",
+        "to": "To",
+        "tx_hash": "TX Hash"
+    },
+    "transaction_detail": {
+        "title": "Transaction detail",
+        "transaction_hash": "Transaction Hash",
+        "sender": "Sender",
+        "recipient": "Recipient",
+        "time_stamp": "Time Stamp",
+        "transaction_fee": "Transaction Fee (FTM)",
+        "block_number": "Block Number",
+        "gas_used": "Gas Used",
+        "gas_limit": "Gas Limit",
+        "gas_price": "Gas Price (WEI)",
+        "nonce": "Nonce"
+    }
 }

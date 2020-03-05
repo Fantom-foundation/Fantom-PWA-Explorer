@@ -67,6 +67,7 @@
                         &.router-link-exact-active, &:hover {
                             color: #fff !important;
                             background-color: lighten($theme-color, 3);
+                            text-decoration: none;
                         }
                     }
                 }

@@ -11,6 +11,18 @@
     --f-header-height: 72px;
 }
 
+@include links() {
+    text-decoration: none;
+}
+
+a:not(.btn):hover {
+    text-decoration: underline;
+}
+
+.three-dots {
+    @include zpe-three-dots;
+}
+
 @include media-max($bp-menu) {
     :root {
         --f-header-height: 40px;
