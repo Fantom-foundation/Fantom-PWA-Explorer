@@ -2,7 +2,7 @@
     <div class="f-hamburger-switch" role="switch" :class="[cCssClass, `thickness${thickness}`]" @click="toggle">
         <div class="cont">
             <div class="l1"></div>
-            <div class="l2"></div>
+            <div class="l2" v-if="!twoLines"></div>
             <div class="l3"></div>
         </div>
     </div>
@@ -25,6 +25,12 @@
             thickness: {
                 type: String,
                 default: '1'
+            },
+
+            /** Use just 2 lines instead of 3. */
+            twoLines: {
+                type: Boolean,
+                default: false
             }
         },
 
@@ -82,7 +88,7 @@
             width: 100%;
             height: 2px;
             background-color: #fff;
-            border-radius: 0;
+            border-radius: 3px;
             transition: all $transition-length ease;
         }
 

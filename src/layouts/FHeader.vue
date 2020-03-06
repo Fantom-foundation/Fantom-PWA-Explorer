@@ -10,7 +10,8 @@
                         :items="cNavigation"
                     ></f-navigation>
                     <f-hamburger-switch
-                        thickness="1"
+                        thickness="2"
+                        two-lines
                         @hamburger-switch-on="onHamburgerSwitchOn"
                         @hamburger-switch-off="onHamburgerSwitchOff"
                     ></f-hamburger-switch>
