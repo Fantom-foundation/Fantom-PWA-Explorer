@@ -5,6 +5,7 @@
             :items="items"
             :total-items="items.length"
             :items-per-page="20"
+            :mobile-view="cMobileView"
             height="auto"
             __use-pagination
             fixed-header
@@ -200,6 +201,17 @@
         computed: {
             items() {
                 return tmpData.data.burst || [];
+            },
+
+            /**
+             * Property is set to `true`, if 'ttransaction-list-dt-mobile-view' breakpoint is reached.
+             *
+             * @return {Boolean}
+             */
+            cMobileView() {
+                const dataTableBreakpoint = this.$store.state.breakpoints['transaction-list-dt-mobile-view'];
+
+                return (dataTableBreakpoint && dataTableBreakpoint.matches);
             }
         },
 

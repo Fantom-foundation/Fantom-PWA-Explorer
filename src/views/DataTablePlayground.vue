@@ -7,6 +7,7 @@
             <button @click="onPrependClick">Prepend item</button>
             <button @click="onUpdateClick">Update item on index 1</button>
             <button @click="onUpdateCellClick">Update cell on index 1</button>
+            <button @click="onMobileViewClick">Toggle mobile view</button>
         </div>
 
         <f-data-table
@@ -14,6 +15,7 @@
             :items="items"
             :total-items="items.length"
             :items-per-page="20"
+            :mobile-view="mobileView"
             height="400px"
             use-pagination
             fixed-header
@@ -160,7 +162,8 @@
 
         data() {
             return {
-                items: cloneObject(items)
+                items: cloneObject(items),
+                mobileView: false
             }
         },
 
@@ -215,6 +218,10 @@
 
             onUpdateCellClick() {
                 this.$children[0].updateCell(1, 'country_code', 'UPDATED CODE');
+            },
+
+            onMobileViewClick() {
+                this.mobileView = !this.mobileView;
             }
         }
     }

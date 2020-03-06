@@ -11,7 +11,7 @@
         </slot>
         <div class="f-loading-container" v-show="loading"><div class="f-loading">{{$t('loading')}}</div></div>
         <div class="table-container" :style="cHeight" v-if="columns.length">
-            <table v-if="!cMobile">
+            <table v-if="!cMobileView">
                 <slot name="header">
                     <thead>
                     <tr>
@@ -144,6 +144,12 @@
                 default: false
             },
 
+            /** Render data table in mobile view. */
+            mobileView: {
+                type: Boolean,
+                default: false
+            },
+
             ...FPagination.props
         },
 
@@ -162,10 +168,10 @@
              *
              * @return {Boolean}
              */
-            cMobile() {
+            cMobileView() {
                 const dataTableBreakpoint = this.$store.state.breakpoints['data-table-mobile-view'];
 
-                return (dataTableBreakpoint && dataTableBreakpoint.matches);
+                return (dataTableBreakpoint && dataTableBreakpoint.matches) || this.mobileView;
             },
 
             /**

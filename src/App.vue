@@ -8,8 +8,9 @@
         <f-footer></f-footer>
 
         <f-breakpoints>
-            <f-breakpoint value="768px" code="menu-mobile" />
-            <f-breakpoint value="600px" code="data-table-mobile-view" />
+            <f-breakpoint value="768px" code="menu-mobile"></f-breakpoint>
+            <f-breakpoint value="600px" code="data-table-mobile-view"></f-breakpoint>
+            <f-breakpoint value="1000px" code="transaction-list-dt-mobile-view"></f-breakpoint>
         </f-breakpoints>
     </div>
 </template>
