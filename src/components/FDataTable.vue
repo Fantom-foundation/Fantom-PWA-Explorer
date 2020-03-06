@@ -90,6 +90,7 @@
              * `label` {string} - label of column placed in the header of table
              * `width` {string} - minimum width of column
              * `css` {object} - style for whole column. Keys are css properties in camel case, values are valid css values.
+             * `cellChildrenCss` {object} - style for column cells direct children. Keys are css properties in camel case, values are valid css values.
              * `oneLineMode` {boolean} - if `true`, no line breaks are allowed in column's cells.
              */
             columns: {
@@ -228,6 +229,7 @@
 
                 columns.forEach((_column, _index) => {
                     const css = {};
+                    const cellChildrenCss = {};
 
                     if (_column.width) {
                         css.width = _column.width;
@@ -240,16 +242,27 @@
                         Object.assign(css, _column.css);
                     }
 
+                    if (_column.cellChildrenCss) {
+                        Object.assign(cellChildrenCss, _column.cellChildrenCss);
+                    }
+
                     if (this.oneLineMode || _column.oneLineMode) {
-                        Object.assign(css, {
+                        const threeDots = {
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis'
-                        });
+                        };
+
+                        Object.assign(css, threeDots);
+                        Object.assign(cellChildrenCss, threeDots);
                     }
 
                     if (!isObjectEmpty(css)) {
                         cssStr += `#${this.dId} .${this.getColumnClass(_index)} {${obj2css(css)}}`;
+                    }
+
+                    if (!isObjectEmpty(cellChildrenCss)) {
+                        cssStr += `#${this.dId} .${this.getColumnClass(_index)} > * {${obj2css(cellChildrenCss)}}`;
                     }
                 });
 
