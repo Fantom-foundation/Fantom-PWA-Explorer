@@ -7,44 +7,44 @@
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('transaction_detail.sender') }}:</div>
-                <div class="col"><div class="break-word" v-if="cTransation">{{ cTransation.from }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{ cTransaction.from }}</div></div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('transaction_detail.recipient') }}:</div>
-                <div class="col"><div class="break-word" v-if="cTransation">{{ cTransation.to }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{ cTransaction.to }}</div></div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('transaction_detail.time_stamp') }}:</div>
                 <div class="col">
-                    <div class="break-word" v-if="cTransation">
-                        <timeago :datetime="cTransation.block.timeStamp"></timeago>
-                        ({{ new Date(cTransation.block.timeStamp) }})
+                    <div class="break-word" v-show="cTransaction">
+                        <timeago :datetime="cTransaction.block.timeStamp"></timeago>
+                        ({{ new Date(cTransaction.block.timeStamp) }})
                     </div>
                 </div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('transaction_detail.transaction_fee') }}:</div>
-                <div class="col"><div class="break-word" v-if="cTransation">{{  WEIToFTM(cTransation.fee) }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  WEIToFTM(cTransaction.fee) }}</div></div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('transaction_detail.block_number') }}:</div>
-                <div class="col"><div class="break-word" v-if="cTransation">{{  cTransation.block.number }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.block.number }}</div></div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('transaction_detail.gas_used') }}:</div>
-                <div class="col"><div class="break-word" v-if="cTransation">{{  cTransation.gasUsed }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gasUsed }}</div></div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('transaction_detail.gas_limit') }}:</div>
-                <div class="col"><div class="break-word" v-if="cTransation">{{  cTransation.gasLimit }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gasLimit }}</div></div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('transaction_detail.gas_price') }}:</div>
-                <div class="col"><div class="break-word" v-if="cTransation">{{  cTransation.gasPrice }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gasPrice }}</div></div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('transaction_detail.nonce') }}:</div>
-                <div class="col"><div class="break-word" v-if="cTransation">{{  cTransation.nonce }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.nonce }}</div></div>
             </div>
         </f-card>
     </div>
@@ -102,13 +102,15 @@
         },
 
         computed: {
-            cTransation() {
-                return this.blockchainTransaction || {};
+            cTransaction() {
+                return this.blockchainTransaction || {block: {}};
             },
 
+/*
             cLoading() {
                 return this.$apollo.queries.transaction.loading;
             }
+*/
         },
 
         methods: {
