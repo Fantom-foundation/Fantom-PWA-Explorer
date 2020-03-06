@@ -176,7 +176,7 @@
 
         .f-hamburger-switch {
             position: fixed;
-            top: 8px;
+            top: 12px;
             right: 16px;
             z-index: 11;
             display: none;
@@ -206,7 +206,7 @@
         .f-header {
             .logo {
                 position: fixed;
-                top: 6px;
+                top: 10px;
                 left: 16px;
                 z-index: 11;
 

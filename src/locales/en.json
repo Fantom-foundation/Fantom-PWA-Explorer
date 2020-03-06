@@ -1,6 +1,13 @@
 {
     "no_items": "No items.",
     "loading": "Loading...",
+    "view_home": {
+        "search_input_placeholder": "Search by addresses, transactions, and blocks",
+        "block_height": "Block Height",
+        "active_validators": "Active Validators",
+        "total_accounts": "Total Accounts",
+        "total_transaction": "Total Transactions"
+    },
     "view_not_found": {
         "title": "Page not found :(",
         "text": "Looks like you've followed a broken link or entered a URL that doesn't exist on this site.",
