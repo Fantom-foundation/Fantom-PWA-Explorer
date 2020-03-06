@@ -14,16 +14,18 @@
             <table v-if="!cMobileView">
                 <slot name="header">
                     <thead>
-                    <tr>
-                        <th v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)">{{col.label}}</th>
-                    </tr>
+                        <tr>
+                            <th v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)" v-show="!col.hidden">{{col.label}}</th>
+                        </tr>
                     </thead>
                 </slot>
                 <slot>
                     <tbody v-if="cItems.length">
                         <tr v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''">
-                            <td v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)">
-                                <slot :name="`column-${col.name}`" :value="item[col.name]">{{item[col.name]}}</slot>
+                            <td v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)" v-show="!col.hidden">
+                                <slot :name="`column-${col.name}`" :value="(item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom])">
+                                    {{ (item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom]) }}
+                                </slot>
                             </td>
                         </tr>
                     </tbody>
@@ -45,9 +47,14 @@
                 <div v-if="cItems.length">
                     <div v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''" class="mobile-item">
                         <div v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)">
-                            <slot :name="`column-${col.name}`" :value="item[col.name]" :column="col">
-                                <span class="column-label">{{ col.label }}:</span> <span>{{ item[col.name] }}</span>
-                            </slot>
+                            <template v-if="!col.hidden">
+                                <slot :name="`column-${col.name}`" :value="(item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom])" :column="col">
+                                    <div class="row no-collapse no-vert-col-padding">
+                                        <div :class="`col-${firstMVColumnWidth} column-label`">{{ col.label }}:</div>
+                                        <div class="col">{{ (item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom]) }}</div>
+                                    </div>
+                                </slot>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -88,7 +95,9 @@
              * One item is an object with keys:
              * `name` {string} - unique name of column (required)
              * `label` {string} - label of column placed in the header of table
+             * `readValueFrom` {string} - if there is no key `name` in data item object, read value from column with name `value`
              * `width` {string} - minimum width of column
+             * `hidden` {boolean} - if `true`, column will be hidden
              * `css` {object} - style for whole column. Keys are css properties in camel case, values are valid css values.
              * `cellChildrenCss` {object} - style for column cells direct children. Keys are css properties in camel case, values are valid css values.
              * `oneLineMode` {boolean} - if `true`, no line breaks are allowed in column's cells.
@@ -121,6 +130,15 @@
                 default: 'auto'
             },
 
+            /**
+             * Width of first column in mobile view (from '1' to '12').
+             * Used in mobile view slot's default content only.
+             */
+            firstMVColumnWidth: {
+                type: String,
+                default: '4'
+            },
+
             /**  */
             fixedHeader: {
                 type: Boolean,
@@ -151,7 +169,7 @@
                 default: false
             },
 
-            /** Ff `true`, no line breaks are allowed in table cells. */
+            /** If `true`, no line breaks are allowed in table cells. */
             oneLineMode: {
                 type: Boolean,
                 default: false
@@ -254,7 +272,7 @@
                         };
 
                         Object.assign(css, threeDots);
-                        Object.assign(cellChildrenCss, threeDots);
+                        // Object.assign(cellChildrenCss, threeDots);
                     }
 
                     if (!isObjectEmpty(css)) {
@@ -353,7 +371,9 @@
         }
 
         td, th {
-            padding: 0.5rem 1rem;
+            padding: 12px 16px;
+            word-break: break-word;
+            line-height: 1.2;
         }
 
 /*
@@ -368,16 +388,18 @@
         }
 */
 
+/*
         tbody {
             tr:nth-child(2n) {
                 background-color: #fefefe;
             }
         }
+*/
 
         thead {
             th {
                 color: #666;
-                background-color: #fff;
+                background-color: $body-bg-color;
                 border-bottom: 1px solid #e6e6e6;
             }
         }
@@ -414,7 +436,7 @@
                 }
 
                 .column-label {
-                    font-size: 0.9em;
+                    /*font-size: 0.9em;*/
                     font-style: italic;
                 }
             }

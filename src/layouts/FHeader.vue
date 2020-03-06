@@ -2,13 +2,15 @@
     <header class="f-header" :class="cCssClass">
         <div class="narrow-container">
             <div class="row no-collapse align-items-center">
-                <div class="col-2">Logo</div>
+                <div class="col-2">
+                    <router-link to="/" class="logo"><img src="fantom-logo.svg" alt="" class="not-fluid"></router-link>
+                </div>
                 <div class="col right-col">
                     <f-navigation
                         :items="cNavigation"
                     ></f-navigation>
                     <f-hamburger-switch
-                        thickness="2"
+                        thickness="1"
                         @hamburger-switch-on="onHamburgerSwitchOn"
                         @hamburger-switch-off="onHamburgerSwitchOff"
                     ></f-hamburger-switch>
@@ -163,6 +165,14 @@
             padding-bottom: 0;
         }
 
+        .logo {
+            > img {
+                max-height: 36px;
+                margin-bottom: 0 !important;
+                transition: opacity $transition-length ease;
+            }
+        }
+
         .f-hamburger-switch {
             position: fixed;
             top: 8px;
@@ -193,6 +203,26 @@
 
     @include media-max($bp-menu) {
         .f-header {
+            .logo {
+                position: fixed;
+                top: 6px;
+                left: 16px;
+                z-index: 11;
+
+                > img {
+                    max-height: 28px;
+                }
+            }
+
+            &.drawer-on {
+                .logo {
+                    > img {
+                        opacity: 0.5;
+                    }
+                }
+            }
+
+
             .right-col {
                 text-align: right;
             }

@@ -1,50 +1,50 @@
 <template>
     <div class="f-transaction-detail">
         <f-card>
-            <div class="row collapse-md">
-                <div class="col-3 f-row-label">{{ $t('transaction_detail.transaction_hash') }}:</div>
-                <div class="col"><div class="three-dots">{{ id }}</div></div>
+            <div class="row no-collapse">
+                <div class="col-4 f-row-label">{{ $t('transaction_detail.transaction_hash') }}:</div>
+                <div class="col"><div class="break-word">{{ id }}</div></div>
             </div>
-            <div class="row collapse-md">
-                <div class="col-3 f-row-label">{{ $t('transaction_detail.sender') }}:</div>
-                <div class="col"><div class="three-dots" v-if="cTransation">{{ cTransation.from }}</div></div>
+            <div class="row no-collapse">
+                <div class="col-4 f-row-label">{{ $t('transaction_detail.sender') }}:</div>
+                <div class="col"><div class="break-word" v-if="cTransation">{{ cTransation.from }}</div></div>
             </div>
-            <div class="row collapse-md">
-                <div class="col-3 f-row-label">{{ $t('transaction_detail.recipient') }}:</div>
-                <div class="col"><div class="three-dots" v-if="cTransation">{{ cTransation.to }}</div></div>
+            <div class="row no-collapse">
+                <div class="col-4 f-row-label">{{ $t('transaction_detail.recipient') }}:</div>
+                <div class="col"><div class="break-word" v-if="cTransation">{{ cTransation.to }}</div></div>
             </div>
-            <div class="row collapse-md">
-                <div class="col-3 f-row-label">{{ $t('transaction_detail.time_stamp') }}:</div>
+            <div class="row no-collapse">
+                <div class="col-4 f-row-label">{{ $t('transaction_detail.time_stamp') }}:</div>
                 <div class="col">
-                    <div class="three-dots" v-if="cTransation">
+                    <div class="break-word" v-if="cTransation">
                         <timeago :datetime="cTransation.block.timeStamp"></timeago>
                         ({{ new Date(cTransation.block.timeStamp) }})
                     </div>
                 </div>
             </div>
-            <div class="row collapse-md">
-                <div class="col-3 f-row-label">{{ $t('transaction_detail.transaction_fee') }}:</div>
-                <div class="col"><div class="three-dots" v-if="cTransation">{{  WEIToFTM(cTransation.fee) }}</div></div>
+            <div class="row no-collapse">
+                <div class="col-4 f-row-label">{{ $t('transaction_detail.transaction_fee') }}:</div>
+                <div class="col"><div class="break-word" v-if="cTransation">{{  WEIToFTM(cTransation.fee) }}</div></div>
             </div>
-            <div class="row collapse-md">
-                <div class="col-3 f-row-label">{{ $t('transaction_detail.block_number') }}:</div>
-                <div class="col"><div class="three-dots" v-if="cTransation">{{  cTransation.block.number }}</div></div>
+            <div class="row no-collapse">
+                <div class="col-4 f-row-label">{{ $t('transaction_detail.block_number') }}:</div>
+                <div class="col"><div class="break-word" v-if="cTransation">{{  cTransation.block.number }}</div></div>
             </div>
-            <div class="row collapse-md">
-                <div class="col-3 f-row-label">{{ $t('transaction_detail.gas_used') }}:</div>
-                <div class="col"><div class="three-dots" v-if="cTransation">{{  cTransation.gasUsed }}</div></div>
+            <div class="row no-collapse">
+                <div class="col-4 f-row-label">{{ $t('transaction_detail.gas_used') }}:</div>
+                <div class="col"><div class="break-word" v-if="cTransation">{{  cTransation.gasUsed }}</div></div>
             </div>
-            <div class="row collapse-md">
-                <div class="col-3 f-row-label">{{ $t('transaction_detail.gas_limit') }}:</div>
-                <div class="col"><div class="three-dots" v-if="cTransation">{{  cTransation.gasLimit }}</div></div>
+            <div class="row no-collapse">
+                <div class="col-4 f-row-label">{{ $t('transaction_detail.gas_limit') }}:</div>
+                <div class="col"><div class="break-word" v-if="cTransation">{{  cTransation.gasLimit }}</div></div>
             </div>
-            <div class="row collapse-md">
-                <div class="col-3 f-row-label">{{ $t('transaction_detail.gas_price') }}:</div>
-                <div class="col"><div class="three-dots" v-if="cTransation">{{  cTransation.gasPrice }}</div></div>
+            <div class="row no-collapse">
+                <div class="col-4 f-row-label">{{ $t('transaction_detail.gas_price') }}:</div>
+                <div class="col"><div class="break-word" v-if="cTransation">{{  cTransation.gasPrice }}</div></div>
             </div>
-            <div class="row collapse-md">
-                <div class="col-3 f-row-label">{{ $t('transaction_detail.nonce') }}:</div>
-                <div class="col"><div class="three-dots" v-if="cTransation">{{  cTransation.nonce }}</div></div>
+            <div class="row no-collapse">
+                <div class="col-4 f-row-label">{{ $t('transaction_detail.nonce') }}:</div>
+                <div class="col"><div class="break-word" v-if="cTransation">{{  cTransation.nonce }}</div></div>
             </div>
         </f-card>
     </div>
@@ -120,6 +120,8 @@
 <style lang="scss">
     /*@import "../assets/scss/vars";*/
     .f-transaction-detail {
+        color: #000;
+
         .f-row-label {
             color: #666;
             font-weight: bold;

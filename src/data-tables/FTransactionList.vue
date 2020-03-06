@@ -7,53 +7,84 @@
             :items-per-page="20"
             :mobile-view="cMobileView"
             height="auto"
-            one-line-mode
             fixed-header
         >
-            <template v-slot:column-timeStamp="{ value, column }">
-                <div v-if="column">
-                    <span class="column-label">{{ column.label }}:</span> &nbsp;
-                    <span><timeago :datetime="value" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago></span>
-                </div>
-                <div v-else>
-                    <timeago :datetime="value" :auto-update="5" :converter-options="{includeSeconds: true}"></timeago>
-                </div>
-            </template>
-
-            <template v-slot:column-amount="{ value, column }">
-                <div v-if="column">
-                    <span class="column-label">{{ column.label }}:</span> <span>{{ WEIToFTM(value) }}</span>
-                </div>
-                <div v-else>
-                    {{ WEIToFTM(value) }}
-                </div>
-            </template>
-
-            <template v-slot:column-from="{ value, column }">
-                <div v-if="column">
-                    <span class="column-label">{{ column.label }}:</span> <span>{{ value.name }}</span>
-                </div>
-                <div v-else>
-                    {{ value.name }}
-                </div>
-            </template>
-
-            <template v-slot:column-to="{ value, column }">
-                <div v-if="column">
-                    <span class="column-label">{{ column.label }}:</span> <span>{{ value.name }}</span>
-                </div>
-                <div v-else>
-                    {{ value.name }}
-                </div>
+            <template v-slot:column-created="{ value, column }">
+                <template v-if="column">
+                    {{ value | formatDate }}
+                </template>
+                <template v-else>
+                    {{ value | formatDate }}
+                </template>
             </template>
 
             <template v-slot:column-id="{ value, column }">
-                <div v-if="column">
-                    <span class="column-label">{{ column.label }}:</span> <span><router-link :to="`/tx/${value}`">{{ value }}</router-link></span>
-                </div>
-                <div v-else>
+                <div v-if="column" class="three-dots">
                     <router-link :to="`/tx/${value}`">{{ value }}</router-link>
                 </div>
+                <template v-else>
+                    <router-link :to="`/tx/${value}`">{{ value }}</router-link>
+                </template>
+            </template>
+
+            <template v-slot:column-block="{ value, column }">
+                <div v-if="column" class="row no-collapse no-vert-col-padding">
+                    <div class="col-4 column-label">{{ column.label }}:</div>
+                    <div class="col">{{ value }}</div>
+                </div>
+                <template v-else>
+                    {{ value }}
+                </template>
+            </template>
+
+            <template v-slot:column-timeStamp="{ value, column }">
+                <div v-if="column" class="row no-collapse no-vert-col-padding">
+                    <div class="col-4 column-label">{{ column.label }}:</div>
+                    <div class="col"><timeago :datetime="value" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago></div>
+                </div>
+                <template v-else>
+                    <timeago :datetime="value" :auto-update="5" :converter-options="{includeSeconds: true}"></timeago>
+                </template>
+            </template>
+
+            <template v-slot:column-from="{ value, column }">
+                <div v-if="column" class="row no-collapse no-vert-col-padding">
+                    <div class="col-4 column-label">{{ column.label }}:</div>
+                    <div class="col">{{ value.name }}</div>
+                </div>
+                <template v-else>
+                    {{ value.name }}
+                </template>
+            </template>
+
+            <template v-slot:column-to="{ value, column }">
+                <div v-if="column" class="row no-collapse no-vert-col-padding">
+                    <div class="col-4 column-label">{{ column.label }}:</div>
+                    <div class="col">{{ value.name }}</div>
+                </div>
+                <template v-else>
+                    {{ value.name }}
+                </template>
+            </template>
+
+            <template v-slot:column-amount="{ value, column }">
+                <div v-if="column" class="row no-collapse no-vert-col-padding">
+                    <div class="col-4 column-label">{{ column.label }}:</div>
+                    <div class="col">{{ WEIToFTM(value) }} FTM</div>
+                </div>
+                <template v-else>
+                    {{ WEIToFTM(value) }} FTM
+                </template>
+            </template>
+
+            <template v-slot:column-fee="{ value, column }">
+                <div v-if="column" class="row no-collapse no-vert-col-padding">
+                    <div class="col-4 column-label">{{ column.label }}:</div>
+                    <div class="col">{{ WEIToFTM(value) }} FTM</div>
+                </div>
+                <template v-else>
+                    {{ WEIToFTM(value) }} FTM
+                </template>
             </template>
         </f-data-table>
     </div>
@@ -78,6 +109,8 @@
                         "name":"Aquamarine",
                         "__typename":"Account"
                     },
+                    "block": 73898,
+                    "fee":"23300000000000",
                     "amount":"80000000000000000",
                     "timeStamp":"2020-03-04T15:19:36.248306248+01:00",
                     "__typename":"Transaction"
@@ -94,6 +127,8 @@
                         "name":"Amaranth",
                         "__typename":"Account"
                     },
+                    "block": 73898,
+                    "fee":"49271000000000",
                     "amount":"80000000000000000",
                     "timeStamp":"2020-03-04T13:30:56.271151761+01:00",
                     "__typename":"Transaction"
@@ -110,6 +145,8 @@
                         "name":"Alexandrite",
                         "__typename":"Account"
                     },
+                    "block": 73898,
+                    "fee":"21000000000000",
                     "amount":"80000000000000000",
                     "timeStamp":"2020-03-04T13:30:56.295990851+01:00",
                     "__typename":"Transaction"
@@ -126,6 +163,8 @@
                         "name":"Hypersthene",
                         "__typename":"Account"
                     },
+                    "block": 73898,
+                    "fee":"21000000000000",
                     "amount":"80000000000000000",
                     "timeStamp":"2020-03-04T13:30:56.318284912+01:00",
                     "__typename":"Transaction"
@@ -142,6 +181,8 @@
                         "name":"Yellow Turqoise",
                         "__typename":"Account"
                     },
+                    "block": 73898,
+                    "fee":"21000000000000",
                     "amount":"80000000000000000",
                     "timeStamp":"2020-03-04T13:30:56.341292701+01:00",
                     "__typename":"Transaction"
@@ -155,45 +196,53 @@
             FDataTable
         },
 
-        data() {
-            return {
-                columns: [
+        computed: {
+            columns() {
+                return [
                     {
-                        name: 'timeStamp',
-                        label: this.$t('transaction_list.created'),
-                        width: '220px'
+                        name: 'created',
+                        readValueFrom: 'timeStamp',
+                        hidden: !this.cMobileView
                     },
                     {
-                        name: 'amount',
-                        label: this.$t('transaction_list.amount'),
-                        width: '130px',
-                        css: {
-                            textAlign: 'right'
-                        }
+                        name: 'id',
+                        label: this.$t('transaction_list.tx_hash'),
+                        oneLineMode: true
+                    },
+                    {
+                        name: 'block',
+                        label: this.$t('transaction_list.block'),
+                        width: '100px',
+                        hidden: this.cMobileView
+                    },
+                    {
+                        name: 'timeStamp',
+                        label: this.$t('transaction_list.age'),
+                        width: '220px',
+                        hidden: this.cMobileView
                     },
                     {
                         name: 'from',
                         label: this.$t('transaction_list.from'),
-                        width: '200px'
+                        width: '180px'
                     },
                     {
                         name: 'to',
                         label: this.$t('transaction_list.to'),
-                        width: '200px',
-                        css: {
-                            textAlign: 'center'
-                        }
+                        width: '180px'
                     },
                     {
-                        name: 'id',
-                        label: this.$t('transaction_list.tx_hash')
-                        // width: '30%',
+                        name: 'amount',
+                        label: this.$t('transaction_list.amount'),
+                        width: '130px'
+                    },
+                    {
+                        name: 'fee',
+                        label: this.$t('transaction_list.fee')
                     }
                 ]
-            }
-        },
+            },
 
-        computed: {
             items() {
                 return tmpData.data.burst || [];
             },
@@ -224,6 +273,7 @@
 
 <style lang="scss">
     /*@import "../assets/scss/vars";*/
+/*
     .transactions-dt {
         .f-data-table {
             .mobile-view {
@@ -237,4 +287,5 @@
             }
         }
     }
+*/
 </style>

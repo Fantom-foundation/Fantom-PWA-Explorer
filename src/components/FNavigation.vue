@@ -66,7 +66,7 @@
 
                         &.router-link-exact-active, &:hover {
                             color: #fff !important;
-                            background-color: lighten($theme-color, 3);
+                            // background-color: lighten($theme-color, 3);
                             text-decoration: none;
                         }
                     }
@@ -82,7 +82,7 @@
                     li {
                         display: block;
                         a {
-
+                            font-size: 1.5em;
                         }
                     }
                 }

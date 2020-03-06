@@ -5,6 +5,7 @@ import {apolloProvider} from "./apollo-provider.js";
 import i18n from './i18n';
 import './vue-timeago.js';
 import {store} from "./store";
+import './filters.js';
 
 Vue.config.productionTip = false;
 

@@ -23,6 +23,10 @@ a:not(.btn):hover {
     @include zpe-three-dots;
 }
 
+.break-word {
+    word-break: break-word;
+}
+
 @include media-max($bp-menu) {
     :root {
         --f-header-height: 40px;
