@@ -7,7 +7,7 @@
             :items-per-page="20"
             :mobile-view="cMobileView"
             height="auto"
-            __use-pagination
+            one-line-mode
             fixed-header
         >
             <template v-slot:column-timeStamp="{ value, column }">
@@ -161,8 +161,7 @@
                     {
                         name: 'timeStamp',
                         label: this.$t('transaction_list.created'),
-                        width: '220px',
-                        oneLineMode: true
+                        width: '220px'
                     },
                     {
                         name: 'amount',
@@ -170,14 +169,12 @@
                         width: '130px',
                         css: {
                             textAlign: 'right'
-                        },
-                        oneLineMode: true
+                        }
                     },
                     {
                         name: 'from',
                         label: this.$t('transaction_list.from'),
-                        width: '200px',
-                        oneLineMode: true
+                        width: '200px'
                     },
                     {
                         name: 'to',
@@ -185,14 +182,12 @@
                         width: '200px',
                         css: {
                             textAlign: 'center'
-                        },
-                        oneLineMode: true
+                        }
                     },
                     {
                         name: 'id',
-                        label: this.$t('transaction_list.tx_hash'),
+                        label: this.$t('transaction_list.tx_hash')
                         // width: '30%',
-                        oneLineMode: true
                     }
                 ]
             }

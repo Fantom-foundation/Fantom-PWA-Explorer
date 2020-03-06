@@ -90,7 +90,7 @@
              * `label` {string} - label of column placed in the header of table
              * `width` {string} - minimum width of column
              * `css` {object} - style for whole column. Keys are css properties in camel case, values are valid css values.
-             * `oneLineMode` {boolean} - if `true`,
+             * `oneLineMode` {boolean} - if `true`, no line breaks are allowed in column's cells.
              */
             columns: {
                 type: Array,
@@ -146,6 +146,12 @@
 
             /** Render data table in mobile view. */
             mobileView: {
+                type: Boolean,
+                default: false
+            },
+
+            /** Ff `true`, no line breaks are allowed in table cells. */
+            oneLineMode: {
                 type: Boolean,
                 default: false
             },
@@ -234,7 +240,7 @@
                         Object.assign(css, _column.css);
                     }
 
-                    if (_column.oneLineMode) {
+                    if (this.oneLineMode || _column.oneLineMode) {
                         Object.assign(css, {
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
