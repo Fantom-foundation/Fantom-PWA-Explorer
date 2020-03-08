@@ -3,10 +3,10 @@
     "loading": "Loading...",
     "view_home": {
         "search_input_placeholder": "Search by addresses, transactions, and blocks",
-        "block_height": "Block Height",
-        "active_validators": "Active Validators",
-        "total_accounts": "Total Accounts",
-        "total_transaction": "Total Transactions"
+        "blocks": "Blocks",
+        "validators": "Validators",
+        "accounts": "Accounts",
+        "transactions": "Transactions"
     },
     "view_not_found": {
         "title": "Page not found :(",

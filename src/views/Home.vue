@@ -11,26 +11,26 @@
         <div class="row row-2-cols-lg no-collapse equal-height">
             <div class="col">
                 <f-card class="home-block">
-                    <h2 class="h3">{{ $t('view_home.block_height') }}</h2>
+                    <h2 class="h3">{{ $t('view_home.blocks') }}</h2>
                     <div class="num">73968</div>
                 </f-card>
             </div>
             <div class="col">
                 <f-card class="home-block">
-                    <h2 class="h3">{{ $t('view_home.active_validators') }}</h2>
+                    <h2 class="h3">{{ $t('view_home.validators') }}</h2>
                     <div class="num">32</div>
                 </f-card>
             </div>
             <div class="col">
                 <f-card class="home-block">
-                    <h2 class="h3">{{ $t('view_home.total_accounts') }}</h2>
+                    <h2 class="h3">{{ $t('view_home.accounts') }}</h2>
                     <div class="num">4546</div>
                 </f-card>
             </div>
             <div class="col">
                 <router-link to="/transactions" class="no-effect">
                     <f-card class="home-block" hover>
-                        <h2 class="h3">{{ $t('view_home.total_transaction') }}</h2>
+                        <h2 class="h3">{{ $t('view_home.transactions') }}</h2>
                         <div class="num">563900</div>
                     </f-card>
                 </router-link>
