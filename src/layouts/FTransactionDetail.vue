@@ -1,5 +1,5 @@
 <template>
-    <div class="f-transaction-detail">
+    <div class="f-transaction-detail f-data-layout">
         <f-card>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('transaction_detail.transaction_hash') }}:</div>
@@ -121,13 +121,4 @@
 
 <style lang="scss">
     /*@import "../assets/scss/vars";*/
-    .f-transaction-detail {
-        color: #000;
-
-        .f-row-label {
-            color: #666;
-            font-weight: bold;
-            /*font-style: italic;*/
-        }
-    }
 </style>

@@ -1,72 +1,87 @@
 <template>
-    <div class="f-data-table" :class="cCssClass" :id="dId" @page-change="onPageChange">
-        <slot name="before-table">
-            <div class="before-table" v-if="usePagination">
-                <f-pagination
-                    :total-items="this.totalItems"
-                    :items-per-page="this.itemsPerPage"
-                    :curr-page="this.currPage"
-                ></f-pagination>
+    <f-card :off="fCardOff">
+        <div class="f-data-table" :class="cCssClass" :id="dId" @page-change="onPageChange">
+            <slot name="before-table">
+                <div class="before-table" v-if="usePagination">
+                    <f-pagination
+                        :total-items="this.totalItems"
+                        :items-per-page="this.itemsPerPage"
+                        :curr-page="this.currPage"
+                    ></f-pagination>
+                </div>
+            </slot>
+            <div class="f-loading-container" v-show="loading">
+                <div class="f-loading">{{$t('loading')}}</div>
             </div>
-        </slot>
-        <div class="f-loading-container" v-show="loading"><div class="f-loading">{{$t('loading')}}</div></div>
-        <div class="table-container" :style="cHeight" v-if="columns.length">
-            <table v-if="!cMobileView">
-                <slot name="header">
-                    <thead>
+            <div class="table-container" :style="cHeight" v-if="columns.length">
+                <table v-if="!cMobileView">
+                    <slot name="header">
+                        <thead>
                         <tr>
-                            <th v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)" v-show="!col.hidden">{{col.label}}</th>
+                            <th v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)"
+                                v-show="!col.hidden">{{col.label}}
+                            </th>
                         </tr>
-                    </thead>
-                </slot>
-                <slot>
-                    <tbody v-if="cItems.length">
+                        </thead>
+                    </slot>
+                    <slot>
+                        <tbody v-if="cItems.length">
                         <tr v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''">
-                            <td v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)" v-show="!col.hidden">
-                                <slot :name="`column-${col.name}`" :value="(item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom])">
+                            <td v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)"
+                                v-show="!col.hidden">
+                                <slot :name="`column-${col.name}`"
+                                      :value="(item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom])">
                                     {{ (item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom]) }}
                                 </slot>
                             </td>
                         </tr>
-                    </tbody>
-                    <tbody v-else-if="!loading">
+                        </tbody>
+                        <tbody v-else-if="!loading">
                         <tr>
                             <td :colspan="columns.length">
-                                <slot name="no-items"><div class="no-items">{{$t('no_items')}}</div></slot>
+                                <slot name="no-items">
+                                    <div class="no-items">{{$t('no_items')}}</div>
+                                </slot>
                             </td>
                         </tr>
-                    </tbody>
-                </slot>
-                <slot name="footer">
-                    <tfoot>
+                        </tbody>
+                    </slot>
+                    <slot name="footer">
+                        <tfoot>
 
-                    </tfoot>
-                </slot>
-            </table>
-            <div v-else class="mobile-view">
-                <div v-if="cItems.length">
-                    <div v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''" class="mobile-item">
-                        <div v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)">
-                            <template v-if="!col.hidden">
-                                <slot :name="`column-${col.name}`" :value="(item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom])" :column="col">
-                                    <div class="row no-collapse no-vert-col-padding">
-                                        <div :class="`col-${firstMVColumnWidth} column-label`">{{ col.label }}:</div>
-                                        <div class="col">{{ (item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom]) }}</div>
-                                    </div>
-                                </slot>
-                            </template>
+                        </tfoot>
+                    </slot>
+                </table>
+                <div v-else class="mobile-view f-data-layout">
+                    <div v-if="cItems.length">
+                        <div v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''"
+                             class="mobile-item">
+                            <div v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)">
+                                <template v-if="!col.hidden">
+                                    <slot :name="`column-${col.name}`"
+                                          :value="(item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom])"
+                                          :column="col">
+                                        <div class="row no-collapse no-vert-col-padding">
+                                            <div :class="`col-${firstMVColumnWidth} f-row-label`">{{ col.label }}:</div>
+                                            <div class="col">{{ (item[col.name] !== undefined ? item[col.name] :
+                                                item[col.readValueFrom]) }}
+                                            </div>
+                                        </div>
+                                    </slot>
+                                </template>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div v-else-if="!loading">
-                    <div class="no-items">{{$t('no_items')}}</div>
+                    <div v-else-if="!loading">
+                        <div class="no-items">{{$t('no_items')}}</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <slot name="after-table"></slot>
+            <slot name="after-table"></slot>
 
-        <f-head-style :css="dCss"></f-head-style>
-    </div>
+            <f-head-style :css="dCss"></f-head-style>
+        </div>
+    </f-card>
 </template>
 
 <script>
@@ -77,6 +92,7 @@
     import {obj2css} from "../utils/index.js";
     import helpers from "../mixins/helpers.js";
     import events from "../mixins/events.js";
+    import FCard from "./FCard.vue";
 
     export default {
         mixins: [
@@ -84,6 +100,7 @@
         ],
 
         components: {
+            FCard,
             FHeadStyle,
             FPagination
         },
@@ -175,6 +192,12 @@
                 default: false
             },
 
+            /** If `true`, f-card element will be without any style. */
+            fCardOff: {
+                type: Boolean,
+                default: false
+            },
+
             ...FPagination.props
         },
 
@@ -230,6 +253,7 @@
              */
             cCssClass() {
                 return {
+                    'f-card-on': !this.fCardOff,
                     'height-set': (this.height !== 'auto'),
                     'fixed-header': this.fixedHeader
                 }
@@ -376,25 +400,25 @@
             line-height: 1.2;
         }
 
-/*
-        td {
-            &:first-child {
-                border-radius: 5px 0 0 5px;
-            }
+        /*
+                td {
+                    &:first-child {
+                        border-radius: 5px 0 0 5px;
+                    }
 
-            &:last-child {
-                border-radius: 0 5px 5px 0;
-            }
-        }
-*/
+                    &:last-child {
+                        border-radius: 0 5px 5px 0;
+                    }
+                }
+        */
 
-/*
-        tbody {
-            tr:nth-child(2n) {
-                background-color: #fefefe;
-            }
-        }
-*/
+        /*
+                tbody {
+                    tr:nth-child(2n) {
+                        background-color: #fefefe;
+                    }
+                }
+        */
 
         thead {
             th {
@@ -425,19 +449,14 @@
             .mobile-item {
                 padding: 0.5rem;
                 background-color: #fff;
-                margin-bottom: 1rem;
                 border-radius: 0.5rem;
                 box-shadow: $elev2-shadow;
+                margin-bottom: 1rem;
 
                 > div {
                     width: 100% !important;
                     min-width: 100% !important;
                     text-align: left !important;
-                }
-
-                .column-label {
-                    /*font-size: 0.9em;*/
-                    font-style: italic;
                 }
             }
         }
@@ -473,16 +492,38 @@
             text-align: center;
         }
 
+        &.f-card-on {
+            thead th {
+                background-color: #fff;
+            }
+
+            .mobile-view {
+                .mobile-item {
+                    border-radius: 0;
+                    box-shadow: none;
+                    margin-bottom: 1rem;
+                    padding: 0 0 1rem 0;
+                    border-bottom: 1px solid #e6e6e6;
+
+                    &:last-child {
+                        border-bottom: none;
+                        margin-bottom: 0;
+                        padding-bottom: 0;
+                    }
+                }
+            }
+        }
+
         &.height-set {
             .table-container {
                 overflow: auto;
             }
 
-/*
-            .f-loading-container {
-                top: 0;
-            }
-*/
+            /*
+                        .f-loading-container {
+                            top: 0;
+                        }
+            */
         }
     }
 </style>

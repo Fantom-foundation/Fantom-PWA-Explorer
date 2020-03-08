@@ -1,7 +1,7 @@
 <template>
     <div class="narrow-container">
         <div class="row">
-            <div class="col-6 offset-3 col-8-lg offset-2-lg col-12-sm no-offset-sm">
+            <div class="col-8 offset-2 col-10-lg offset-1-lg col-12-sm no-offset-sm">
                 <div class="search-input">
                     <input type="text" name="search" class="large" :placeholder="$t('view_home.search_input_placeholder')">
                 </div>
@@ -28,10 +28,12 @@
                 </f-card>
             </div>
             <div class="col">
-                <f-card class="home-block">
-                    <h2 class="h3">{{ $t('view_home.total_transaction') }}</h2>
-                    <div class="num">563900</div>
-                </f-card>
+                <router-link to="/transactions" class="no-effect">
+                    <f-card class="home-block" hover>
+                        <h2 class="h3">{{ $t('view_home.total_transaction') }}</h2>
+                        <div class="num">563900</div>
+                    </f-card>
+                </router-link>
             </div>
         </div>
     </div>
@@ -54,9 +56,10 @@
         padding: 64px 0;
         text-align: center;
 
-        input {
+        input:not(.def):not([type=submit]).large {
             width: 100%;
-            border-radius: 16px !important;
+            height: 3.5rem;
+            border-radius: 3.5rem !important;
             box-shadow: $elev3-shadow;
         }
     }

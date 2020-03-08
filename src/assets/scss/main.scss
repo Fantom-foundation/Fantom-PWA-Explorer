@@ -19,6 +19,11 @@ a:not(.btn):hover {
     text-decoration: underline;
 }
 
+@include links('', '.no-effect') {
+    color: inherit;
+    text-decoration: none;
+}
+
 .three-dots {
     @include zpe-three-dots;
 }
@@ -27,8 +32,18 @@ a:not(.btn):hover {
     word-break: break-word;
 }
 
+.f-data-layout {
+    color: #000;
+
+    .f-row-label {
+        color: #666;
+        font-weight: bold;
+        /*font-style: italic;*/
+    }
+}
+
 @include media-max($bp-menu) {
     :root {
-        --f-header-height: 48px;
+        --f-header-height: 52px;
     }
 }

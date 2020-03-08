@@ -7,6 +7,12 @@
 <script>
     export default {
         props: {
+            /** No card style. */
+            off: {
+                type: Boolean,
+                default: false
+            },
+
             /** Use hover animation. */
             hover: {
                 type: Boolean,
@@ -29,6 +35,7 @@
         computed: {
             cssClass() {
                 return {
+                    'off': this.off,
                     'f-card-hover': this.pHover,
                     'zoom': this.zoomHover
                 }
@@ -40,7 +47,7 @@
 <style lang="scss">
     @import "../assets/scss/vars";
 
-    .f-card {
+    .f-card:not(.off) {
         padding: 20px;
         /*border: 1px solid #f8f8f8;*/
         border-radius: 20px;
