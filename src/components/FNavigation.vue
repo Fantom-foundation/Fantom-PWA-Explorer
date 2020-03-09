@@ -56,7 +56,7 @@
                     margin-left: 0.25rem;
 
                     a {
-                        color: lighten($theme-color, 26) !important;
+                        color: #a0bffd !important;
                         /*font-weight: bold;*/
                         display: inline-block;
                         padding: 1rem;

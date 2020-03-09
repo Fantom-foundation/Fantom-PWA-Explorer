@@ -8,6 +8,7 @@
             :mobile-view="cMobileView"
             height="auto"
             fixed-header
+            first-m-v-column-width="6"
         >
             <template v-slot:column-created="{ value, column }">
                 <template v-if="column">
@@ -29,7 +30,7 @@
 
             <template v-slot:column-block="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                    <div class="col-5 f-row-label">{{ column.label }}:</div>
                     <div class="col">{{ value }}</div>
                 </div>
                 <template v-else>
@@ -39,7 +40,7 @@
 
             <template v-slot:column-timeStamp="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                    <div class="col-5 f-row-label">{{ column.label }}:</div>
                     <div class="col"><timeago :datetime="value" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago></div>
                 </div>
                 <template v-else>
@@ -49,7 +50,7 @@
 
             <template v-slot:column-from="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                    <div class="col-5 f-row-label">{{ column.label }}:</div>
                     <div class="col">{{ value.name }}</div>
                 </div>
                 <template v-else>
@@ -59,7 +60,7 @@
 
             <template v-slot:column-to="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                    <div class="col-5 f-row-label">{{ column.label }}:</div>
                     <div class="col">{{ value.name }}</div>
                 </div>
                 <template v-else>
@@ -69,7 +70,7 @@
 
             <template v-slot:column-amount="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                    <div class="col-5 f-row-label">{{ column.label }}:</div>
                     <div class="col">{{ WEIToFTM(value) }}</div>
                 </div>
                 <template v-else>
@@ -79,7 +80,7 @@
 
             <template v-slot:column-fee="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                    <div class="col-5 f-row-label">{{ column.label }}:</div>
                     <div class="col">{{ WEIToFTM(value) }}</div>
                 </div>
                 <template v-else>

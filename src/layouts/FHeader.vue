@@ -19,13 +19,19 @@
             </div>
         </div>
 
-        <div class="f-drawer" @click="onDrawerClick"></div>
+        <div class="f-drawer" @click="onDrawerClick">
+            <div class="body"></div>
+            <div class="footer">
+                <f-social-media-links></f-social-media-links>
+            </div>
+        </div>
     </header>
 </template>
 
 <script>
     import FNavigation from "../components/FNavigation.vue";
     import FHamburgerSwitch from "../components/FHamburgerSwitch.vue";
+    import FSocialMediaLinks from "../components/FSocialMediaLinks.vue";
     import { mapState } from 'vuex';
 
     /**
@@ -34,7 +40,8 @@
     export default {
         components: {
             FNavigation,
-            FHamburgerSwitch
+            FHamburgerSwitch,
+            FSocialMediaLinks
         },
 
         data() {
@@ -99,7 +106,7 @@
                 }
 
                 const eFNavigation = this.$el.querySelector('.f-navigation');
-                const eDrawer = this.$el.querySelector('.f-drawer');
+                const eDrawer = this.$el.querySelector('.f-drawer .body');
 
                 if (eFNavigation && eDrawer) {
                     eDrawer.appendChild(eFNavigation);
@@ -188,11 +195,22 @@
             width: 100%;
             height: 100%;
             top: 0;
-            padding: 64px 8px 24px 8px;
+            padding: 64px 8px 16px 8px;
             background-color: $theme-color;
             transform: translateX(100%);
             transition: all $transition-length ease;
             display: none;
+            flex-direction: column;
+
+            .body {
+                flex: 1;
+            }
+
+            .footer {
+                .f-social-media-links {
+                    text-align: center;
+                }
+            }
         }
 
         &.drawer-on {
@@ -236,7 +254,7 @@
             }
 
             .f-drawer {
-                display: block;
+                display: flex;
             }
 
             .right-col {
