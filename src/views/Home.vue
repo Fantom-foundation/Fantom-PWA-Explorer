@@ -30,7 +30,7 @@
             <div class="col">
                 <router-link :to="{name: 'transactions'}" class="no-effect">
                     <f-card class="home-block" hover>
-                        <h2 class="h3">{{ $t('view_home.transactions') }}</h2>
+                        <h2 class="h3">{{ $t('view_home.transactions') }} <icon data="@/assets/svg/angle-right.svg"></icon></h2>
                         <div class="num">563900</div>
                     </f-card>
                 </router-link>
