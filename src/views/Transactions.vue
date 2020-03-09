@@ -1,30 +1,18 @@
 <template>
     <div class="narrow-container">
-        <div class="row">
-            <div class="col">
-                <div class="row">
-                    <div class="col">
-                        <h1>{{ $t('view_transaction_list.title') }}</h1>
-                    </div>
-                    <div class="col">
-                        <f-breadcrumbs :curr-route="$router.currentRoute.name"></f-breadcrumbs>
-                    </div>
-                </div>
-
-                <f-transaction-list></f-transaction-list>
-            </div>
-        </div>
+        <f-view-heading :title="$t('view_transaction_list.title')"></f-view-heading>
+        <f-transaction-list></f-transaction-list>
     </div>
 </template>
 
 <script>
+    import FViewHeading from "../components/FViewHeading.vue";
     import FTransactionList from "../data-tables/FTransactionList.vue";
-    import FBreadcrumbs from "../components/FBreadcrumbs.vue";
 
     export default {
         components: {
-            FTransactionList,
-            FBreadcrumbs
+            FViewHeading,
+            FTransactionList
         }
     }
 </script>

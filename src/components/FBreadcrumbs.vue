@@ -19,9 +19,15 @@
             }
         },
 
+        data() {
+            return {
+                dCurrRoute: this.currRoute || this.$router.currentRoute.name
+            }
+        },
+
         computed: {
             cItems() {
-                const parents = appStructureTree.getParents(this.currRoute);
+                const parents = appStructureTree.getParents(this.dCurrRoute);
                 const items = [];
                 let parent;
 
