@@ -2,7 +2,7 @@
     <div class="narrow-container">
         <div class="row">
             <div class="col">
-                <h1>{{ $t('transaction_detail.title') }}</h1>
+                <h1>{{ $t('view_transaction_detail.title') }}</h1>
             </div>
         </div>
 

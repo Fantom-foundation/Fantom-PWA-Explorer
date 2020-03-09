@@ -20,10 +20,10 @@
 
             <template v-slot:column-id="{ value, column }">
                 <div v-if="column" class="three-dots">
-                    <router-link :to="`/tx/${value}`">{{ value }}</router-link>
+                    <router-link :to="{name: 'transaction-detail', params: {id: value}}">{{ value }}</router-link>
                 </div>
                 <template v-else>
-                    <router-link :to="`/tx/${value}`">{{ value }}</router-link>
+                    <router-link :to="{name: 'transaction-detail', params: {id: value}}">{{ value }}</router-link>
                 </template>
             </template>
 
@@ -206,39 +206,39 @@
                     },
                     {
                         name: 'id',
-                        label: this.$t('transaction_list.tx_hash'),
+                        label: this.$t('view_transaction_list.tx_hash'),
                         oneLineMode: true
                     },
                     {
                         name: 'block',
-                        label: this.$t('transaction_list.block'),
+                        label: this.$t('view_transaction_list.block'),
                         width: '100px',
                         hidden: this.cMobileView
                     },
                     {
                         name: 'timeStamp',
-                        label: this.$t('transaction_list.age'),
+                        label: this.$t('view_transaction_list.age'),
                         width: '220px',
                         hidden: this.cMobileView
                     },
                     {
                         name: 'from',
-                        label: this.$t('transaction_list.from'),
+                        label: this.$t('view_transaction_list.from'),
                         width: '180px'
                     },
                     {
                         name: 'to',
-                        label: this.$t('transaction_list.to'),
+                        label: this.$t('view_transaction_list.to'),
                         width: '180px'
                     },
                     {
                         name: 'amount',
-                        label: this.$t('transaction_list.amount'),
+                        label: this.$t('view_transaction_list.amount'),
                         width: '130px'
                     },
                     {
                         name: 'fee',
-                        label: this.$t('transaction_list.fee')
+                        label: this.$t('view_transaction_list.fee')
                     }
                 ]
             },
