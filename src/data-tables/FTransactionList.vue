@@ -20,10 +20,10 @@
 
             <template v-slot:column-id="{ value, column }">
                 <div v-if="column" class="three-dots">
-                    <router-link :to="{name: 'transaction-detail', params: {id: value}}">{{ value }}</router-link>
+                    <router-link :to="{name: 'transaction-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
                 </div>
                 <template v-else>
-                    <router-link :to="{name: 'transaction-detail', params: {id: value}}">{{ value }}</router-link>
+                    <router-link :to="{name: 'transaction-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
                 </template>
             </template>
 
