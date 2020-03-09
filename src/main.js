@@ -4,6 +4,7 @@ import {router} from "./router.js";
 import {apolloProvider} from "./apollo-provider.js";
 import i18n from './i18n';
 import './vue-timeago.js';
+import './vue-svgicon.js';
 import {store} from "./store";
 import './filters.js';
 
