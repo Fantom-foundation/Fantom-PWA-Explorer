@@ -28,7 +28,7 @@
                 </f-card>
             </div>
             <div class="col">
-                <router-link to="/transactions" class="no-effect">
+                <router-link :to="{name: 'transactions'}" class="no-effect">
                     <f-card class="home-block" hover>
                         <h2 class="h3">{{ $t('view_home.transactions') }}</h2>
                         <div class="num">563900</div>
@@ -54,11 +54,11 @@
 
     .search-input {
         padding: 64px 0;
-        text-align: center;
 
         input:not(.def):not([type=submit]).large {
             width: 100%;
             height: 3.5rem;
+            text-align: center;
             border-radius: 3.5rem !important;
             box-shadow: $elev3-shadow;
         }
@@ -67,6 +67,7 @@
     .home-block {
         h2 {
             text-align: center;
+            margin-bottom: 4px;
         }
 
         .num {

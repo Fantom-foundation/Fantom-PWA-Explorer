@@ -70,20 +70,20 @@
             <template v-slot:column-amount="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
                     <div class="col-4 f-row-label">{{ column.label }}:</div>
-                    <div class="col">{{ WEIToFTM(value) }} FTM</div>
+                    <div class="col">{{ WEIToFTM(value) }}</div>
                 </div>
                 <template v-else>
-                    {{ WEIToFTM(value) }} FTM
+                    {{ WEIToFTM(value) }}
                 </template>
             </template>
 
             <template v-slot:column-fee="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
                     <div class="col-4 f-row-label">{{ column.label }}:</div>
-                    <div class="col">{{ WEIToFTM(value) }} FTM</div>
+                    <div class="col">{{ WEIToFTM(value) }}</div>
                 </div>
                 <template v-else>
-                    {{ WEIToFTM(value) }} FTM
+                    {{ WEIToFTM(value) }}
                 </template>
             </template>
         </f-data-table>
@@ -207,6 +207,7 @@
                     {
                         name: 'id',
                         label: this.$t('view_transaction_list.tx_hash'),
+                        width: '200px',
                         oneLineMode: true
                     },
                     {
@@ -217,28 +218,29 @@
                     },
                     {
                         name: 'timeStamp',
-                        label: this.$t('view_transaction_list.age'),
-                        width: '220px',
+                        label: this.$t('view_transaction_list.time'),
+                        // width: '220px',
                         hidden: this.cMobileView
                     },
                     {
                         name: 'from',
-                        label: this.$t('view_transaction_list.from'),
-                        width: '180px'
+                        label: this.$t('view_transaction_list.from')
+                        // width: '180px'
                     },
                     {
                         name: 'to',
-                        label: this.$t('view_transaction_list.to'),
-                        width: '180px'
+                        label: this.$t('view_transaction_list.to')
+                        // width: '180px'
                     },
                     {
                         name: 'amount',
-                        label: this.$t('view_transaction_list.amount'),
-                        width: '130px'
+                        label: `${this.$t('view_transaction_list.amount')} (FTM)`,
+                        width: '150px'
                     },
                     {
                         name: 'fee',
-                        label: this.$t('view_transaction_list.fee')
+                        label: `${this.$t('view_transaction_list.fee')} (FTM)`,
+                        width: '130px'
                     }
                 ]
             },

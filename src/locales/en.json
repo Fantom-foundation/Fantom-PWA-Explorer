@@ -1,6 +1,10 @@
 {
     "no_items": "No items.",
     "loading": "Loading...",
+    "from": "From",
+    "to": "To",
+    "block": "Block",
+
     "navigation": [
         {
             "url": "/",
@@ -26,25 +30,25 @@
     },
     "view_transaction_list": {
         "title": "Transactions (local data)",
-        "age": "Age",
+        "time": "Time",
         "fee": "Fee",
         "amount": "Amount",
-        "from": "From",
-        "to": "To",
-        "block": "Block",
+        "from": "@:from",
+        "to": "@:to",
+        "block": "@:block",
         "tx_hash": "TX Hash"
     },
     "view_transaction_detail": {
         "title": "Transaction detail",
-        "transaction_hash": "Transaction Hash",
-        "sender": "Sender",
-        "recipient": "Recipient",
-        "time_stamp": "Time Stamp",
-        "transaction_fee": "Transaction Fee (FTM)",
-        "block_number": "Block Number",
+        "hash": "Hash",
+        "from": "@:from",
+        "to": "@:to",
+        "time": "Time",
+        "fee": "Fee",
+        "block": "@:block",
         "gas_used": "Gas Used",
         "gas_limit": "Gas Limit",
-        "gas_price": "Gas Price (WEI)",
+        "gas_price": "Gas Price",
         "nonce": "Nonce"
     }
 }

@@ -2,19 +2,19 @@
     <div class="f-transaction-detail f-data-layout">
         <f-card>
             <div class="row no-collapse">
-                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.transaction_hash') }}:</div>
+                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.hash') }}:</div>
                 <div class="col"><div class="break-word">{{ id }}</div></div>
             </div>
             <div class="row no-collapse">
-                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.sender') }}:</div>
+                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.from') }}:</div>
                 <div class="col"><div class="break-word" v-show="cTransaction">{{ cTransaction.from }}</div></div>
             </div>
             <div class="row no-collapse">
-                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.recipient') }}:</div>
+                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.to') }}:</div>
                 <div class="col"><div class="break-word" v-show="cTransaction">{{ cTransaction.to }}</div></div>
             </div>
             <div class="row no-collapse">
-                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.time_stamp') }}:</div>
+                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.time') }}:</div>
                 <div class="col">
                     <div class="break-word" v-show="cTransaction">
                         <timeago :datetime="cTransaction.block.timeStamp"></timeago>
@@ -23,11 +23,11 @@
                 </div>
             </div>
             <div class="row no-collapse">
-                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.transaction_fee') }}:</div>
-                <div class="col"><div class="break-word" v-show="cTransaction">{{  WEIToFTM(cTransaction.fee) }}</div></div>
+                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.fee') }}:</div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  WEIToFTM(cTransaction.fee) }} FTM</div></div>
             </div>
             <div class="row no-collapse">
-                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.block_number') }}:</div>
+                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.block') }}:</div>
                 <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.block.number }}</div></div>
             </div>
             <div class="row no-collapse">
@@ -40,7 +40,7 @@
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('view_transaction_detail.gas_price') }}:</div>
-                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gasPrice }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gasPrice }} WEI</div></div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('view_transaction_detail.nonce') }}:</div>
