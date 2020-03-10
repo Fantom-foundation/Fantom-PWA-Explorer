@@ -48,6 +48,8 @@
     @import "../assets/scss/vars";
 
     .f-navigation {
+        display: inline-block;
+
         nav {
             ul {
                 text-align: right;

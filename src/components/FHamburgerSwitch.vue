@@ -41,17 +41,21 @@
             }
         },
 
-        computed: {
-            /**
-             * Container's css classes.
-             */
-            cCssClass() {
+        watch: {
+            dOn() {
                 if (this.dOn) {
                     this.$emit('hamburger-switch-on');
                 } else {
                     this.$emit('hamburger-switch-off');
                 }
+            }
+        },
 
+        computed: {
+            /**
+             * Container's css classes.
+             */
+            cCssClass() {
                 return {
                     'on': this.dOn
                 }

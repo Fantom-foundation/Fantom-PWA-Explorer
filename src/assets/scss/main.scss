@@ -44,6 +44,7 @@ a:not(.btn):hover {
 
 @include media-max($bp-menu) {
     :root {
-        --f-header-height: 52px;
+        //--f-header-height: 52px;
+        --f-header-height: 72px;
     }
 }

@@ -6,6 +6,7 @@
                     <router-link to="/" class="logo"><img src="fantom-logo.svg" alt="" class="not-fluid"></router-link>
                 </div>
                 <div class="col right-col">
+                    <f-search-box class="dark-theme" expandable v-show="!cHomeView"></f-search-box>
                     <f-navigation
                         :items="cNavigation"
                     ></f-navigation>
@@ -23,6 +24,9 @@
             <div class="body"></div>
             <div class="footer">
                 <f-social-media-links></f-social-media-links>
+                <div class="copyright">
+                    <a href="https://fantom.foundation/" target="_blank" rel="nofollow">©2020 Fantom Foundation</a>
+                </div>
             </div>
         </div>
     </header>
@@ -33,12 +37,14 @@
     import FHamburgerSwitch from "../components/FHamburgerSwitch.vue";
     import FSocialMediaLinks from "../components/FSocialMediaLinks.vue";
     import { mapState } from 'vuex';
+    import FSearchBox from "../components/FSearchBox.vue";
 
     /**
      * Renderes header and takes care of navigation.
      */
     export default {
         components: {
+            FSearchBox,
             FNavigation,
             FHamburgerSwitch,
             FSocialMediaLinks
@@ -72,6 +78,15 @@
                 return {
                     'drawer-on': this.dDrawerOn
                 }
+            },
+
+            /**
+             * Is current route home view?
+             *
+             * @retun {boolean}
+             */
+            cHomeView() {
+                return (this.$route.name === 'home');
             },
 
             ...mapState(['breakpoints'])
@@ -183,7 +198,8 @@
 
         .f-hamburger-switch {
             position: fixed;
-            top: 12px;
+            /*top: 12px;*/
+            top: 22px;
             right: 16px;
             z-index: 11;
             display: none;
@@ -211,7 +227,33 @@
                     text-align: center;
                 }
             }
+
+            @include links() {
+                color: $secondary-color-lighter;
+                transition: color $transition-length ease;
+            }
+
+            a:not(.btn):hover {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .copyright {
+                padding-top: 8px;
+                text-align: center;
+            }
         }
+
+        .f-search-box {
+            color: $body-color;
+            margin-right: 16px;
+        }
+
+        .right-col {
+            /*display: flex;*/
+            text-align: right;
+        }
+
 
         &.drawer-on {
             .f-drawer {
@@ -224,7 +266,8 @@
         .f-header {
             .logo {
                 position: fixed;
-                top: 10px;
+                /*top: 10px;*/
+                top: 20px;
                 left: 16px;
                 z-index: 11;
 
@@ -239,11 +282,10 @@
                         opacity: 0.5;
                     }
                 }
-            }
 
-
-            .right-col {
-                text-align: right;
+                .f-search-box:not(.expanded) {
+                    opacity: 0.5;
+                }
             }
 
             .f-hamburger-switch {
@@ -261,6 +303,14 @@
                 .f-navigation {
                     display: none;
                 }
+            }
+
+            .f-search-box {
+                position: fixed;
+                z-index: 12;
+                left: 47%;
+                margin-right: 0;
+                /*transform: scale(0.5);*/
             }
 
             &.drawer-on {

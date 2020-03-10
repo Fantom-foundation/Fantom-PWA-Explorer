@@ -195,7 +195,7 @@
             /** If `true`, f-card element will be without any style. */
             fCardOff: {
                 type: Boolean,
-                default: false
+                default: true
             },
 
             ...FPagination.props
@@ -386,7 +386,8 @@
         table {
             width: 100%;
             border-collapse: initial;
-            border-spacing: 0;
+            /*border-spacing: 0;*/
+            border-spacing: 0 8px;
             table-layout: fixed;
         }
 
@@ -400,31 +401,27 @@
             line-height: 1.2;
         }
 
-        /*
-                td {
-                    &:first-child {
-                        border-radius: 5px 0 0 5px;
-                    }
+        tr {
+            td {
+                background-color: #fff;
 
-                    &:last-child {
-                        border-radius: 0 5px 5px 0;
-                    }
+/*
+                &:first-child {
+                    border-radius: 8px 0 0 8px;
                 }
-        */
 
-        /*
-                tbody {
-                    tr:nth-child(2n) {
-                        background-color: #fefefe;
-                    }
+                &:last-child {
+                    border-radius: 0 8px 8px 0;
                 }
-        */
+*/
+            }
+        }
 
         thead {
             th {
                 color: #666;
                 background-color: $body-bg-color;
-                border-bottom: 1px solid #e6e6e6;
+                /*border-bottom: 1px solid #e6e6e6;*/
             }
         }
 

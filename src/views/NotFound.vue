@@ -1,5 +1,5 @@
 <template>
-    <div class="not-found-page center-v-h">
+    <div class="view-not-found center-v-h">
         <div class="message">
             <h1 class="h4">{{ $t('view_not_found.title') }}</h1>
             {{ $t('view_not_found.text') }}
@@ -24,7 +24,7 @@
 <style lang="scss">
     @import "../assets/scss/vars";
 
-    .not-found-page {
+    .view-not-found {
         .message {
             width: 90%;
             max-width: 400px;
