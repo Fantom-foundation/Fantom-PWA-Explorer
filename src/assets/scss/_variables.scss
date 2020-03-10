@@ -1,7 +1,10 @@
+@import "fantom-color-palette";
+
 $font-family: 'Work Sans', Helvetica, sans-serif;
-$theme-color: #1969ff;
-$body-color: #2c3b57;
-$body-bg-color: #f7f8fc;
+$theme-color: $primary-color;
+$body-color: $primary-color-darkest;
+//$body-bg-color: #f7f8fc;
+$body-bg-color: $primary-color-lightest;
 $border-radius: 8px;
 
 $fs-h1: $fs24;

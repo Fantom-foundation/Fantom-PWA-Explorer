@@ -42,7 +42,7 @@
     @import "../assets/scss/vars";
 
     .f-social-media-links {
-        color: #a0bffd;
+        color: $secondary-color-lighter;
 
         li {
             display: inline-block;

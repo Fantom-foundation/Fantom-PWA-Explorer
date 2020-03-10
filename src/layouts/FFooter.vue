@@ -34,7 +34,7 @@
         }
 
         @include links() {
-            color: #a0bffd;
+            color: $secondary-color-lighter;
             transition: color $transition-length ease;
         }
 

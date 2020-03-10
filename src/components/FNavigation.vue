@@ -55,9 +55,8 @@
                     display: inline-block;
                     margin-left: 0.25rem;
 
-                    a {
-                        color: #a0bffd !important;
-                        /*font-weight: bold;*/
+                    @include links() {
+                        color: $secondary-color-lighter;
                         display: inline-block;
                         padding: 1rem;
                         text-decoration: none;
@@ -65,8 +64,7 @@
                         border-radius: $border-radius;
 
                         &.router-link-exact-active, &:hover {
-                            color: #fff !important;
-                            // background-color: lighten($theme-color, 3);
+                            color: #fff;
                             text-decoration: none;
                         }
                     }
