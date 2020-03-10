@@ -3,7 +3,7 @@
         <li v-for="item in cItems" :key="item.id">
             <router-link v-if="item.name" :to="{name: item.name}">{{ item.title }}</router-link>
             <span v-else class="curr-route">{{ item.title }}</span>
-            <icon v-if="item.name" data="@/assets/svg/angle-right.svg"></icon>
+            <icon v-if="item.name" data="@/assets/svg/angle-right.svg" color="#999"></icon>
         </li>
     </ul>
 </template>
@@ -67,7 +67,6 @@
 
             .curr-route {
                 padding-left: 4px;
-                font-weight: bold;
             }
         }
     }

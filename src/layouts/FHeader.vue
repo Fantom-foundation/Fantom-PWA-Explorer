@@ -195,7 +195,7 @@
             width: 100%;
             height: 100%;
             top: 0;
-            padding: 64px 8px 16px 8px;
+            padding: 64px 8px 20px 8px;
             background-color: $theme-color;
             transform: translateX(100%);
             transition: all $transition-length ease;

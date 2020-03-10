@@ -43,6 +43,7 @@
 
         main {
             flex: 1 1;
+            min-height: 700px;
         }
     }
 

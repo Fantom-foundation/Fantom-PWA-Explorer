@@ -6,6 +6,13 @@ Vue.use(VueRouter);
 
 
 export const router = new VueRouter({
-    routes
+    routes,
+    scrollBehavior (_to, _from, _savedPosition) {
+        if (_savedPosition) {
+            return _savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
+    }
     // mode: 'history'
 });

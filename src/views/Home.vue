@@ -67,6 +67,7 @@
     .home-block {
         h2 {
             text-align: center;
+            margin-top: 16px;
             margin-bottom: 4px;
         }
 
@@ -77,11 +78,13 @@
         }
     }
 
-    @include media-max($bp-small) {
+    @include media-max($bp-menu) {
         .search-input {
-            padding: 48px 0;
+            padding: 32px 0;
         }
+    }
 
+    @include media-max($bp-small) {
         .home-block {
             h2 {
                 font-size: $fs16;
