@@ -1,5 +1,4 @@
 import Vue from 'vue';
-// import web3utils from 'web3-utils';
 import web3utils from 'web3-utils';
 
 /**

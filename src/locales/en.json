@@ -18,6 +18,9 @@
             "title": "Transactions"
         }
     ],
+    "alerts": {
+        "bad_search_string": "Invalid address, block number, or transaction hash. Please enter a valid address, block number, or transaction hash."
+    },
     "view_home": {
         "title": "Home",
         "search_input_placeholder": "Search by addresses, transactions, and blocks",

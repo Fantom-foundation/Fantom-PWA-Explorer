@@ -22,6 +22,7 @@
     import events from "../mixins/events.js";
     import { throttle } from "../utils";
     import { clientInfo } from "../utils/client-info.js";
+    import {getTypeByStr} from "../utils/transactions.js";
 
     export default {
         mixins: [events],
@@ -105,6 +106,26 @@
         },
 
         methods: {
+            /**
+             * Process search string.
+             *
+             * @param {string} _text
+             */
+            search(_text) {
+                const type = getTypeByStr(_text);
+
+                switch (type) {
+                    case 'transaction_hash':
+                        this.$router.push({name: 'transaction-detail', params: {id: _text}}, null, () => {});
+                        break;
+                    case 'address': alert('go to address detail'); break;
+                    case 'block': alert('go to block detail'); break;
+                    default:
+                        // temporary alert
+                        alert(this.$t('alerts.bad_search_string'));
+                }
+            },
+
             expand() {
                 const parentElem = this.$el.parentNode;
 
@@ -157,6 +178,9 @@
                 }, 250);
             },
 
+            /**
+             * Trigger focus event on search input.
+             */
             focusInput() {
                 const eInput = this.$el.querySelector('input');
 
@@ -165,6 +189,11 @@
                 }
             },
 
+            /**
+             * Trigger blur event on search input.
+             *
+             * @param {boolean} [_clear]
+             */
             blurInput(_clear) {
                 const eInput = this.$el.querySelector('input');
 
@@ -190,7 +219,7 @@
                     searchText = this.searchText.trim();
 
                     if (searchText) {
-                        console.log('search', searchText);
+                        this.search(searchText);
                     }
 
                     this.searchText = '';
