@@ -6,6 +6,10 @@
                 <div class="col"><div class="break-word">{{ id }}</div></div>
             </div>
             <div class="row no-collapse">
+                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.status') }}:</div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{ cTransaction.status | formatHexToInt }}</div></div>
+            </div>
+            <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('view_transaction_detail.from') }}:</div>
                 <div class="col"><div class="break-word" v-show="cTransaction">{{ cTransaction.from }}</div></div>
             </div>
@@ -16,35 +20,41 @@
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('view_transaction_detail.time') }}:</div>
                 <div class="col">
-                    <div class="break-word" v-show="cTransaction">
-                        <timeago :datetime="cTransaction.block.timeStamp"></timeago>
-                        ({{ new Date(cTransaction.block.timeStamp) }})
+                    <div class="break-word" v-show="cTransaction && cTransaction.block.timestamp">
+                        <timeago :datetime="timestampToDate(cTransaction.block.timestamp)"></timeago>
+                        ({{ timestampToDate(cTransaction.block.timestamp) }})
                     </div>
                 </div>
             </div>
             <div class="row no-collapse">
+                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.amount') }}:</div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  WEIToFTM(cTransaction.value) }} FTM</div></div>
+            </div>
+<!--
+            <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('view_transaction_detail.fee') }}:</div>
                 <div class="col"><div class="break-word" v-show="cTransaction">{{  WEIToFTM(cTransaction.fee) }} FTM</div></div>
             </div>
+-->
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('view_transaction_detail.block') }}:</div>
-                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.block.number }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.block.number | formatHexToInt }}</div></div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('view_transaction_detail.gas_used') }}:</div>
-                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gasUsed }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gasUsed | formatHexToInt }}</div></div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('view_transaction_detail.gas_limit') }}:</div>
-                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gasLimit }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gas | formatHexToInt }}</div></div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('view_transaction_detail.gas_price') }}:</div>
-                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gasPrice }} WEI</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gasPrice | formatHexToInt }} WEI</div></div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('view_transaction_detail.nonce') }}:</div>
-                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.nonce }}</div></div>
+                <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.nonce | formatHexToInt }}</div></div>
             </div>
         </f-card>
     </div>
@@ -54,6 +64,7 @@
     import FCard from "../components/FCard.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
+    import { formatHexToInt, timestampToDate } from "../filters.js";
 
     export default {
         components: {
@@ -70,25 +81,43 @@
         },
 
         apollo: {
-            blockchainTransaction: {
+            transaction: {
                 query: gql`
-                    query BlockchainTransaction($hash: ID!){
-                        blockchainTransaction(hash: $hash){
+                    query TransactionByHash($hash: Hash!) {
+                        transaction (hash: $hash) {
                             hash
-                            from
-                            to
-                            value
-                            input
+                            index
                             nonce
-                            fee
-                            gasLimit
+                            from
+                            sender {
+                                address
+                                balance
+                            }
+                            to
+                            recipient {
+                                address
+                                balance
+                            }
+                            value
+                            gas
                             gasUsed
                             gasPrice
-                            txIndex
+                            inputData
+                            status
+                            blockHash
+                            blockNumber
                             block {
                                 hash
                                 number
-                                timeStamp
+                                timestamp
+                                transactionCount
+                                txList {
+                                    hash
+                                    index
+                                    from
+                                    to
+                                    nonce
+                                }
                             }
                         }
                     }
@@ -103,7 +132,8 @@
 
         computed: {
             cTransaction() {
-                return this.blockchainTransaction || {block: {}};
+                console.log((this.transaction ? new Date(this.formatHexToInt(this.transaction.block.timestamp)) : ''));
+                return this.transaction || {block: {}};
             },
 
 /*
@@ -114,7 +144,9 @@
         },
 
         methods: {
-            WEIToFTM
+            WEIToFTM,
+            formatHexToInt,
+            timestampToDate
         }
     }
 </script>

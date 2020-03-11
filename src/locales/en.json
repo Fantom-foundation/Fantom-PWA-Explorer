@@ -4,6 +4,9 @@
     "from": "From",
     "to": "To",
     "block": "Block",
+    "fee": "Fee",
+    "amount": "Amount",
+    "time": "Time",
 
     "navigation": [
         {
@@ -30,9 +33,9 @@
     },
     "view_transaction_list": {
         "title": "Transactions (local data)",
-        "time": "Time",
-        "fee": "Fee",
-        "amount": "Amount",
+        "time": "@:time",
+        "fee": "@:fee",
+        "amount": "@:amount",
         "from": "@:from",
         "to": "@:to",
         "block": "@:block",
@@ -41,10 +44,12 @@
     "view_transaction_detail": {
         "title": "Transaction detail",
         "hash": "Hash",
+        "status": "Status",
         "from": "@:from",
         "to": "@:to",
-        "time": "Time",
-        "fee": "Fee",
+        "time": "@:time",
+        "amount": "@:amount",
+        "fee": "@:fee",
         "block": "@:block",
         "gas_used": "Gas Used",
         "gas_limit": "Gas Limit",

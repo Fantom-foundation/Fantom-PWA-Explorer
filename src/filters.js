@@ -1,4 +1,41 @@
 import Vue from 'vue';
+// import web3utils from 'web3-utils';
+import web3utils from 'web3-utils';
+
+/**
+ * @param {string|number} _value
+ * @return {int}
+ */
+export function timestampToDate(_value) {
+    if (!_value) {
+        return '';
+    }
+
+    let timestamp = _value;
+
+    if (web3utils.isHexStrict(_value)) {
+        timestamp = formatHexToInt(_value);
+    }
+
+
+    if (timestamp) {
+        return new Date (timestamp * 1000);
+    }
+
+    return '';
+}
+
+/**
+ * @param {string} _value
+ * @return {int}
+ */
+export function formatHexToInt(_value) {
+    if (!_value) {
+        return '';
+    }
+
+    return parseInt(_value, 16);
+}
 
 Vue.filter('formatDate', function (_value) {
     if (!_value) {
@@ -28,3 +65,5 @@ Vue.filter('formatHash', function (_value) {
 
     return _value;
 });
+
+Vue.filter('formatHexToInt', formatHexToInt);
