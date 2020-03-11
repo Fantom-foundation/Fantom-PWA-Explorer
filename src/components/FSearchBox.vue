@@ -11,7 +11,7 @@
                 @focus="onFocus"
                 @blur="onBlur"
             >
-            <button type="submit" class="light large same-size round">
+            <button type="submit" class="light large same-size round" :class="{'no-hover': expandable}">
                 <icon data="@/assets/svg/search.svg" width="24" height="24"></icon>
             </button>
         </form>
@@ -19,7 +19,12 @@
 </template>
 
 <script>
+    import events from "../mixins/events.js";
+    import { throttle } from "../utils";
+
     export default {
+        mixins: [events],
+
         props: {
             /** Is search box expandable? */
             expandable: {
@@ -72,12 +77,30 @@
                     'expandable': this.expandable,
                     'expanded': this.dExpanded
                 }
+            },
+
+            /**
+             * Property is set to `true`, if 'menu-mobile' breakpoint is reached.
+             *
+             * @return {Boolean}
+             */
+            cMobileView() {
+                const menuBreakpoint = this.$store.state.breakpoints['menu-mobile'];
+
+                return (menuBreakpoint && menuBreakpoint.matches);
+            }
+        },
+
+        mounted() {
+            if (this.expandable) {
+                this.bindEvent(window, 'blur', () => {this.blurInput(true);});
+                this.bindEvent(window, 'resize', throttle(() => {this.blurInput(true);}, 300, true));
             }
         },
 
         methods: {
             expand() {
-                const parentElem = this.$el.closest('.narrow-container')
+                const parentElem = this.$el.parentNode;
 
                 if (!parentElem) {
                     return;
@@ -85,16 +108,19 @@
 
                 const inlineStyle = this.inlineStyle;
 
-/*
                 inlineStyle.position = '';
                 inlineStyle.top = '';
                 inlineStyle.left = '';
-*/
 
+                const winWidth = window.innerWidth;
                 const parentElemRect = parentElem.getBoundingClientRect();
-                const width = parentElemRect.width * 0.8;
                 const elRect = this.$el.getBoundingClientRect();
-                const tx = elRect.left - (parentElemRect.left + ((parentElemRect.width - width) / 2));
+                const width = (this.cMobileView ? winWidth * 0.98 : (elRect.left - parentElemRect.left + elRect.width));
+                const tx = (this.cMobileView ? elRect.left - winWidth * 0.01 : elRect.left - parentElemRect.left);
+                // const width = parentElemRect.width * 0.98;
+                // const tx = elRect.left - (parentElemRect.left + ((parentElemRect.width - width) / 2));
+
+                document.body.classList.add('search-box-on');
 
                 inlineStyle.position = 'fixed';
                 inlineStyle.top = `${elRect.top}px`;
@@ -102,6 +128,10 @@
                 inlineStyle.transform = `translateX(-${tx}px)`;
 
                 inlineStyle.width = `${width}px`;
+
+                setTimeout(() => {
+                    document.body.classList.add('search-box-on-anim-end');
+                }, 250);
             },
 
             collapse() {
@@ -110,7 +140,11 @@
                 inlineStyle.width = '';
                 inlineStyle.transform = '';
 
+                document.body.classList.remove('search-box-on-anim-end');
+
                 setTimeout(() => {
+                    document.body.classList.remove('search-box-on');
+
                     inlineStyle.position = '';
                     inlineStyle.top = '';
                     inlineStyle.left = '';
@@ -125,8 +159,13 @@
                 }
             },
 
-            blurInput() {
+            blurInput(_clear) {
                 const eInput = this.$el.querySelector('input');
+
+                if (_clear) {
+                    this.dExpanded = false;
+                    this.searchText = '';
+                }
 
                 if (eInput) {
                     eInput.blur();
@@ -217,12 +256,6 @@
             background-color: transparent !important;
         }
 
-        &.dark-theme {
-            button[type="submit"] {
-                /*color: #fff;*/
-            }
-        }
-
         &.expandable {
             width: 56px;
             transition: all $transition-length ease;
@@ -239,33 +272,46 @@
             }
 
             &.expanded {
+                margin-left: 0;
+
                 input:not(.def):not([type=submit]).large {
-                    padding-right: 48px;
+                    /*padding-right: 48px;*/
 
                     &::placeholder {
                         color: #666;
                     }
                 }
             }
+        }
 
-/*
-            &.expanded {
-                width: 100%;
-                transform: translateX(50%);
+        &.small {
+            input:not(.def):not([type=submit]).large {
+                height: 44px;
+            }
 
-                form {
-                    !*width: 100%;*!
-                    !*transform: translateX(10%);*!
-                }
+            button[type="submit"] {
+                top: 0;
+                right: 0;
+            }
 
-                input:not(.def):not([type=submit]).large {
-                    padding-right: 48px;
-                    background-color: $input-bg-color;
-                    border-color: $input-border-color;
-                    box-shadow: $elev3-shadow;
+            &.expandable {
+                width: 44px;
+
+                &:not(.expanded) {
+                    input:not(.def):not([type=submit]).large {
+                        background-color: $secondary-color-lightest;
+                        border-color: transparent;
+                    }
+
+                    button[type="submit"]:hover {
+                        background-color: #fff !important;
+                    }
                 }
             }
-*/
         }
+    }
+
+    .search-box-on-anim-end .f-search-box.expandable.expanded input:not(.def):not([type=submit]).large {
+        padding-right: 48px;
     }
 </style>

@@ -226,3 +226,88 @@ export function inArray(_i, _a, _deep) {
 
     return idx;
 }
+
+/**
+ *
+ * @param {Function} _callback
+ * @param {int} _wait
+ * @param {object} _options
+ * @return {Function}
+ */
+export function debounce(_callback, _wait = 250, _options) {
+    let timeoutId = -1;
+    let leading = false;
+    let trailing = true;
+    let wait = 0;
+    let maxWait = 0;
+    let lastCallTime = 0;
+    let callTime = 0;
+
+    if (typeof _options === 'object') {
+        if ('maxWait' in _options) {
+            // eslint-disable-next-line radix
+            maxWait = parseInt(_options.maxWait) || 0;
+        }
+        if ('leading' in _options) {
+            leading = !!_options.leading;
+        }
+        if ('trailing' in _options) {
+            trailing = !!_options.trailing;
+        }
+    }
+
+    if (maxWait > 0) {
+        trailing = true;
+    }
+
+    return (..._args) => {
+        callTime = Date.now();
+
+        if (maxWait > 0) {
+            wait = _wait;
+            if (callTime - lastCallTime < maxWait) {
+                wait = Math.min(lastCallTime + maxWait - callTime, _wait);
+            } else {
+                lastCallTime = callTime;
+
+                if (timeoutId > -1) {
+                    _callback(..._args);
+                }
+            }
+        } else {
+            wait = _wait;
+        }
+
+        if (timeoutId > -1) {
+            clearTimeout(timeoutId);
+            timeoutId = -1;
+        } else if (leading && (maxWait === 0 || lastCallTime === callTime)) {
+            lastCallTime = Date.now();
+            _callback(..._args);
+        }
+
+        if (timeoutId === -1) {
+            timeoutId = setTimeout(() => {
+                timeoutId = -1;
+                if (trailing) {
+                    lastCallTime = Date.now();
+                    _callback(..._args);
+                }
+            }, wait); // (maxWait > 0 ? () : _wait));
+        }
+    };
+}
+
+/**
+ * @param {Function} _callback
+ * @param {int} _interval
+ * @param {boolean} [_leading]
+ * @return {Function}
+ */
+export function throttle(_callback, _interval, _leading) {
+    return debounce(_callback, _interval, {
+        maxWait: _interval,
+        leading: _leading || false,
+        trailing: true
+    });
+}

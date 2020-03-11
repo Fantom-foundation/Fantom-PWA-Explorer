@@ -71,15 +71,15 @@ button:not(.def):hover::after, a.btn:hover::after {
     border-color: $button-hover-border-color;
 }
 
-@include buttons(':not([disabled]):not(.disabled):hover') {
+@include buttons(':not([disabled]):not(.disabled):not(.no-hover):hover') {
     @include button-hover;
 }
 
-@include buttons(':not([disabled]):not(.disabled):focus') {
+@include buttons(':not([disabled]):not(.disabled):not(.no-hover):focus') {
     @include button-hover;
 }
 
-@include buttons(':not([disabled]):not(.disabled):active') {
+@include buttons(':not([disabled]):not(.disabled):not(.no-hover):active') {
     color: $button-active-color;
     background: $button-active-bg-color;
     border-color: $button-active-border-color;
@@ -166,11 +166,11 @@ button:not(.def):hover::after, a.btn:hover::after {
     --zpe-icon-color: #{$button-hover-color};
 }
 
-@include buttons(':not([disabled]):not(.disabled):hover zpe-icon') {
+@include buttons(':not([disabled]):not(.disabled):not(.no-hover):hover zpe-icon') {
     @include button-hover-icon;
 }
 
-@include buttons(':not([disabled]):not(.disabled):focus zpe-icon') {
+@include buttons(':not([disabled]):not(.disabled):not(.no-hover):focus zpe-icon') {
     @include button-hover-icon;
 }
 

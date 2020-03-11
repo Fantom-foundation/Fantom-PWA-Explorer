@@ -6,10 +6,10 @@
                     <router-link to="/" class="logo"><img src="fantom-logo.svg" alt="" class="not-fluid"></router-link>
                 </div>
                 <div class="col right-col">
-                    <f-search-box class="dark-theme" expandable v-show="!cHomeView"></f-search-box>
                     <f-navigation
                         :items="cNavigation"
                     ></f-navigation>
+                    <f-search-box class="small" expandable v-show="!cHomeView"></f-search-box>
                     <f-hamburger-switch
                         thickness="2"
                         two-lines
@@ -137,7 +137,8 @@
                 const eRightCol = this.$el.querySelector('.right-col');
 
                 if (eFNavigation && eRightCol) {
-                    eRightCol.appendChild(eFNavigation);
+                    eRightCol.insertBefore(eFNavigation, eRightCol.firstChild);
+                    // eRightCol.appendChild(eFNavigation);
                 }
             },
 
@@ -199,7 +200,7 @@
         .f-hamburger-switch {
             position: fixed;
             /*top: 12px;*/
-            top: 22px;
+            top: 16px;
             right: 16px;
             z-index: 11;
             display: none;
@@ -246,12 +247,15 @@
 
         .f-search-box {
             color: $body-color;
-            margin-right: 16px;
         }
 
         .right-col {
             /*display: flex;*/
             text-align: right;
+
+            .f-navigation {
+                margin-right: 16px;
+            }
         }
 
 
@@ -262,17 +266,25 @@
         }
     }
 
+    .search-box-on {
+        .f-header {
+            .right-col {
+                padding-right: 52px;
+            }
+        }
+    }
+
     @include media-max($bp-menu) {
         .f-header {
             .logo {
                 position: fixed;
                 /*top: 10px;*/
-                top: 20px;
+                top: 14px;
                 left: 16px;
                 z-index: 11;
 
                 > img {
-                    max-height: 28px;
+                    max-height: 30px;
                 }
             }
 
@@ -302,14 +314,16 @@
             .right-col {
                 .f-navigation {
                     display: none;
+                    margin-right: 0;
                 }
             }
 
             .f-search-box {
                 position: fixed;
                 z-index: 12;
-                left: 47%;
+                left: 50%;
                 margin-right: 0;
+                margin-left: 0;
                 /*transform: scale(0.5);*/
             }
 
