@@ -12,7 +12,7 @@
                 @blur="onBlur"
             >
             <button type="submit" class="light large same-size round" :class="{'no-hover': expandable}">
-                <icon data="@/assets/svg/search.svg" width="24" height="24"></icon>
+                <icon data="@/assets/svg/search.svg" width="20" height="20"></icon>
             </button>
         </form>
     </div>
@@ -21,6 +21,7 @@
 <script>
     import events from "../mixins/events.js";
     import { throttle } from "../utils";
+    import { clientInfo } from "../utils/client-info.js";
 
     export default {
         mixins: [events],
@@ -94,7 +95,12 @@
         mounted() {
             if (this.expandable) {
                 this.bindEvent(window, 'blur', () => {this.blurInput(true);});
-                this.bindEvent(window, 'resize', throttle(() => {this.blurInput(true);}, 300, true));
+
+                if (clientInfo.mobile) {
+                    this.bindEvent(window, 'orientationchange', () => {this.blurInput(true);}, 300, true);
+                } else {
+                    this.bindEvent(window, 'resize', throttle(() => {this.blurInput(true);}, 300, true));
+                }
             }
         },
 
