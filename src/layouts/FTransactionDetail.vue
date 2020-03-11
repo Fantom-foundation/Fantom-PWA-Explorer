@@ -8,7 +8,9 @@
                 </div>
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_transaction_detail.status') }}:</div>
-                    <div class="col"><div class="break-word" v-show="cTransaction">{{ cTransaction.status | formatHexToInt }}</div></div>
+                    <div class="col">
+                        <div v-show="cTransaction && ('status' in cTransaction)"><f-transaction-status :status="cStatus"></f-transaction-status></div>
+                    </div>
                 </div>
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_transaction_detail.from') }}:</div>
@@ -70,9 +72,11 @@
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
     import { formatHexToInt, timestampToDate } from "../filters.js";
+    import FTransactionStatus from "../components/FTransactionStatus.vue";
 
     export default {
         components: {
+            FTransactionStatus,
             FCard
         },
 
@@ -94,35 +98,17 @@
                             index
                             nonce
                             from
-                            sender {
-                                address
-                                balance
-                            }
                             to
-                            recipient {
-                                address
-                                balance
-                            }
                             value
                             gas
                             gasUsed
                             gasPrice
                             inputData
                             status
-                            blockHash
-                            blockNumber
                             block {
                                 hash
                                 number
                                 timestamp
-                                transactionCount
-                                txList {
-                                    hash
-                                    index
-                                    from
-                                    to
-                                    nonce
-                                }
                             }
                         }
                     }
@@ -146,10 +132,20 @@
 
         computed: {
             cTransaction() {
-                console.log((this.transaction ? new Date(this.formatHexToInt(this.transaction.block.timestamp)) : ''));
                 return this.transaction || {block: {}};
             },
 
+            cStatus() {
+                let status = 2;
+
+                if (this.transaction) {
+                    if (this.transaction.status !== null) {
+                        status = this.formatHexToInt(this.transaction.status);
+                    }
+                }
+
+                return status;
+            }
 /*
             cLoading() {
                 return this.$apollo.queries.transaction.loading;

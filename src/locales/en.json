@@ -7,6 +7,9 @@
     "fee": "Fee",
     "amount": "Amount",
     "time": "Time",
+    "success": "Success",
+    "error": "Error",
+    "pending": "Pending",
 
     "navigation": [
         {
