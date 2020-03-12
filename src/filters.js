@@ -3,7 +3,7 @@ import web3utils from 'web3-utils';
 
 /**
  * @param {string|number} _value
- * @return {int}
+ * @return {Date|null}
  */
 export function timestampToDate(_value) {
     if (!_value) {
@@ -21,7 +21,46 @@ export function timestampToDate(_value) {
         return new Date (timestamp * 1000);
     }
 
-    return '';
+    return null;
+}
+
+/**
+ * @param {string|Date} _value
+ * @return {string}
+ */
+export function formatDate(_value) {
+    if (!_value) {
+        return '';
+    }
+
+    const date = (_value instanceof Date ? _value : new Date(_value));
+
+    // TODO: use i18n current locale
+    return date.toLocaleDateString('en-GB', {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+/**
+ * @param {string} _value
+ * @return {string}
+ */
+export function formatHash(_value) {
+    if (!_value) {
+        return '';
+    }
+
+    const leftChars = 8;
+    const rightChars = 6;
+
+    if (_value.length > (leftChars + rightChars + 3)) {
+        return `${_value.slice(0, leftChars)} ... ${_value.slice(-rightChars)}`;
+    }
+
+    return _value;
 }
 
 /**
@@ -36,33 +75,7 @@ export function formatHexToInt(_value) {
     return parseInt(_value, 16);
 }
 
-Vue.filter('formatDate', function (_value) {
-    if (!_value) {
-        return '';
-    }
 
-    // TODO: use i18n current locale
-    return new Date(_value).toLocaleDateString('en-GB', {
-        weekday: 'short',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-});
-
-Vue.filter('formatHash', function (_value) {
-    if (!_value) {
-        return '';
-    }
-
-    const leftChars = 8;
-    const rightChars = 6;
-
-    if (_value.length > (leftChars + rightChars + 3)) {
-        return `${_value.slice(0, leftChars)} ... ${_value.slice(-rightChars)}`;
-    }
-
-    return _value;
-});
-
+Vue.filter('formatDate', formatDate);
+Vue.filter('formatHash', formatHash);
 Vue.filter('formatHexToInt', formatHexToInt);

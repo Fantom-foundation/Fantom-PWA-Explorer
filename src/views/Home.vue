@@ -8,10 +8,12 @@
 
         <div class="row row-2-cols-lg no-collapse equal-height">
             <div class="col">
-                <f-card class="home-block">
-                    <h2 class="h3">{{ $t('view_home.blocks') }}</h2>
-                    <div class="num">73968</div>
-                </f-card>
+                <router-link :to="{name: 'blocks'}" class="no-effect">
+                    <f-card class="home-block" hover>
+                        <h2 class="h3">{{ $t('view_home.blocks') }} <icon data="@/assets/svg/angle-right.svg" color="#999"></icon></h2>
+                        <div class="num">73968</div>
+                    </f-card>
+                </router-link>
             </div>
             <div class="col">
                 <f-card class="home-block">

@@ -4,6 +4,7 @@ import DataTablePlayground from "./views/DataTablePlayground.vue";
 import Transactions from "./views/Transactions.vue";
 import TransactionDetail from "./views/TransactionDetail.vue";
 import AddressDetail from "./views/AddressDetail.vue";
+import Blocks from "./views/Blocks.vue";
 
 export const routes = [
     {
@@ -25,6 +26,11 @@ export const routes = [
         name: 'address-detail',
         path: '/address/:id',
         component: AddressDetail
+    },
+    {
+        name: 'blocks',
+        path: '/blocks',
+        component: Blocks
     },
     {
         name: 'data-table-playground',

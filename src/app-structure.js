@@ -26,7 +26,11 @@ const appStructure = [
             {
                 id: 'address-detail',
                 translation: 'view_address_detail.title'
-            }
+            },
+            {
+                id: 'blocks',
+                translation: 'view_block_list.title'
+            },
         ]
     }
 ];

@@ -311,3 +311,29 @@ export function throttle(_callback, _interval, _leading) {
         trailing: true
     });
 }
+
+/**
+ * Get object's nested property value.
+ *
+ * @param {object} _obj
+ * @param {string} _path Property names, separated by `.`
+ * @return {*|null}
+ */
+export function getNestedProp(_obj, _path) {
+    const path = (_path ? _path.split('.') : []);
+    const pathLen = path.length;
+    let value = null;
+
+    if (_obj && (pathLen > 0)) {
+        if (pathLen === 1) {
+            value = _obj[path[0]];
+        } else {
+            value = _obj;
+            for (let i = 0; i < pathLen; i++) {
+                value = value[path[i]];
+            }
+        }
+    }
+
+    return value;
+}

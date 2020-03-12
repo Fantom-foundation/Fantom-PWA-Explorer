@@ -30,8 +30,8 @@
                             <td v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)"
                                 v-show="!col.hidden">
                                 <slot :name="`column-${col.name}`"
-                                      :value="(item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom])">
-                                    {{ (item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom]) }}
+                                      :value="getItemPropValue(item, col)">
+                                    {{ getItemPropValue(item, col) }}
                                 </slot>
                             </td>
                         </tr>
@@ -59,12 +59,11 @@
                             <div v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)">
                                 <template v-if="!col.hidden">
                                     <slot :name="`column-${col.name}`"
-                                          :value="(item[col.name] !== undefined ? item[col.name] : item[col.readValueFrom])"
+                                          :value="getItemPropValue(item, col)"
                                           :column="col">
                                         <div class="row no-collapse no-vert-col-padding">
                                             <div :class="`col-${firstMVColumnWidth} f-row-label`">{{ col.label }}:</div>
-                                            <div class="col">{{ (item[col.name] !== undefined ? item[col.name] :
-                                                item[col.readValueFrom]) }}
+                                            <div class="col">{{ getItemPropValue(item, col) }}
                                             </div>
                                         </div>
                                     </slot>
@@ -87,7 +86,7 @@
 <script>
     import FHeadStyle from "./FHeadStyle.vue";
     import FPagination from "./FPagination.vue";
-    import {isValidIndex} from "../utils/index.js";
+    import {getNestedProp, isValidIndex} from "../utils/index.js";
     import {cloneObject, isObjectEmpty} from "../utils/index.js";
     import {obj2css} from "../utils/index.js";
     import helpers from "../mixins/helpers.js";
@@ -110,8 +109,10 @@
              * Array of columns descriptions.
              *
              * One item is an object with keys:
-             * `name` {string} - unique name of column (required)
+             * `name` {string} - unique name of column (required). Can be used as a data item property.
              * `label` {string} - label of column placed in the header of table
+             * `itemProp` {string} - can be used to get data from nested data item property - 'prop1.prop2' for example
+             * `formatter` {function} - apply this formatter to data item value
              * `readValueFrom` {string} - if there is no key `name` in data item object, read value from column with name `value`
              * `width` {string} - minimum width of column
              * `hidden` {boolean} - if `true`, column will be hidden
@@ -350,6 +351,31 @@
              */
             getColumnClass(_index) {
                 return `_c${_index}`;
+            },
+
+            /**
+             * Get data item value.
+             *
+             * @param {object} _item
+             * @param {object} _col
+             * @return {*}
+             */
+            getItemPropValue(_item, _col) {
+                let value;
+
+                if (_col.itemProp) {
+                    value = getNestedProp(_item, _col.itemProp);
+                } else if (_col.readValueFrom) {
+                    value = _item[_col.readValueFrom];
+                } else {
+                    value = _item[_col.name];
+                }
+
+                if (_col.formatter) {
+                    value = _col.formatter(value);
+                }
+
+                return value;
             },
 
             /**

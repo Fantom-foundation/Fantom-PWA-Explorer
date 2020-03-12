@@ -19,8 +19,13 @@
         {
             "url": "/transactions",
             "title": "Transactions"
+        },
+        {
+            "url": "/blocks",
+            "title": "Blocks"
         }
     ],
+
     "alerts": {
         "bad_search_string": "Invalid address, block number, or transaction hash. Please enter a valid address, block number, or transaction hash."
     },
@@ -66,5 +71,12 @@
         "title": "Address",
         "value_in_ftm": "Value in FTM",
         "value_in_usd": "Value in USD"
+    },
+    "view_block_list": {
+        "title": "Blocks",
+        "block": "@:block",
+        "time": "@:time",
+        "age": "Age",
+        "transaction_count": "Txns"
     }
 }
