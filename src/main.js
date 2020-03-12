@@ -8,6 +8,9 @@ import '@/plugins/vue-svgicon.js';
 import {store} from "./store";
 import './filters.js';
 
+// polyfills
+import 'intersection-observer';
+
 Vue.config.productionTip = false;
 
 // measure performance
