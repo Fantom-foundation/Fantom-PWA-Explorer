@@ -3,10 +3,14 @@
         <f-data-table
             :columns="columns"
             :items="cItems"
+            :disable-infinite-scroll="cLoading || !hasNext"
+            infinite-scroll
+            fixed-header
+            @fetch-more="fetchMore"
         >
             <template v-slot:column-age="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-5 f-row-label">{{ column.label }}:</div>
+                    <div class="col-4 f-row-label">{{ column.label }}:</div>
                     <div class="col"><timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago></div>
                 </div>
                 <template v-else>
@@ -21,7 +25,7 @@
     import FDataTable from "../components/FDataTable.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
-    import { timestampToDate, formatHexToInt, formatDate } from "../filters.js";
+    import {timestampToDate, formatDate, formatHexToInt} from "../filters.js";
 
     export default {
         components: {
@@ -38,8 +42,8 @@
         apollo: {
             blocks: {
                 query: gql`
-                    query BlocksList($count: Int!) {
-                        blocks (count: $count) {
+                    query BlocksList($cursor: Cursor, $count: Int!) {
+                        blocks (cursor: $cursor, count: $count) {
                             totalCount
                             pageInfo {
                                 first
@@ -61,12 +65,20 @@
                 `,
                 variables() {
                     return {
+                        cursor: null,
                         count: this.itemsPerPage
                     }
                 },
                 error(_error) {
                     this.transactionByHashError = _error.message;
                 }
+            }
+        },
+
+        data() {
+            return {
+                cursor: null,
+                hasNext: true
             }
         },
 
@@ -93,7 +105,8 @@
                     {
                         name: 'transaction_count',
                         label: this.$t('view_block_list.transaction_count'),
-                        itemProp: 'block.transactionCount'
+                        itemProp: 'block.transactionCount',
+                        width: '80px'
                     }
                 ]
             },
@@ -103,25 +116,37 @@
                 return (this.blocks ? this.blocks.edges : []);
             },
 
-            /**
-             * Property is set to `true`, if 'ttransaction-list-dt-mobile-view' breakpoint is reached.
-             *
-             * @return {Boolean}
-             */
-            cMobileView() {
-                const dataTableBreakpoint = this.$store.state.breakpoints['transaction-list-dt-mobile-view'];
-
-                return (dataTableBreakpoint && dataTableBreakpoint.matches);
+            cLoading() {
+                return this.$apollo.queries.blocks.loading;
             }
         },
 
-/*
-        created() {
-            this.columns = columns;
-        },
-*/
-
         methods: {
+            fetchMore() {
+                const {blocks} = this;
+
+                if (blocks && blocks.pageInfo && blocks.pageInfo.hasNext) {
+                    const cursor = blocks.pageInfo.last;
+
+                    this.$apollo.queries.blocks.fetchMore({
+                        variables: {
+                            cursor,
+                            count: this.itemsPerPage
+                        },
+                        updateQuery: (previousResult, { fetchMoreResult }) => {
+                            this.hasNext = fetchMoreResult.blocks.pageInfo.hasNext;
+
+                            return {
+                                blocks: {
+                                    ...fetchMoreResult.blocks,
+                                    edges: [...previousResult.blocks.edges, ...fetchMoreResult.blocks.edges]
+                                }
+                            }
+                        }
+                    });
+                }
+            },
+
             WEIToFTM,
             timestampToDate
         }

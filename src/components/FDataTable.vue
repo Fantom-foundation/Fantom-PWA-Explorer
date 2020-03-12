@@ -48,10 +48,20 @@
                     </slot>
                     <slot name="footer">
                         <tfoot>
-
+                            <tr v-if="infiniteScroll" v-show="!disableInfiniteScroll"><td :colspan="columns.length">
+                                <div
+                                    v-infinite-scroll="fetchMore"
+                                    infinite-scroll-disabled="disableInfiniteScroll"
+                                    infinite-scroll-distance="infiniteScrollDistance"
+                                    class="f-loading-more"
+                                >
+                                    <pulse-loader color="#1969ff"></pulse-loader>
+                                </div>
+                            </td></tr>
                         </tfoot>
                     </slot>
                 </table>
+
                 <div v-else class="mobile-view f-data-layout">
                     <div v-if="cItems.length">
                         <div v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''"
@@ -74,6 +84,17 @@
                     <div v-else-if="!loading">
                         <div class="no-items">{{$t('no_items')}}</div>
                     </div>
+
+                    <div v-if="infiniteScroll" v-show="!disableInfiniteScroll">
+                        <div
+                            v-infinite-scroll="fetchMore"
+                            infinite-scroll-disabled="disableInfiniteScroll"
+                            infinite-scroll-distance="infiniteScrollDistance"
+                            class="f-loading-more"
+                        >
+                            <pulse-loader color="#1969ff"></pulse-loader>
+                        </div>
+                    </div>
                 </div>
             </div>
             <slot name="after-table"></slot>
@@ -92,6 +113,7 @@
     import helpers from "../mixins/helpers.js";
     import events from "../mixins/events.js";
     import FCard from "./FCard.vue";
+    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
     export default {
         mixins: [
@@ -101,7 +123,8 @@
         components: {
             FCard,
             FHeadStyle,
-            FPagination
+            FPagination,
+            PulseLoader
         },
 
         props: {
@@ -161,6 +184,27 @@
             fixedHeader: {
                 type: Boolean,
                 default: false
+            },
+
+            /** Enable infinite scrolling. */
+            infiniteScroll: {
+                type: Boolean,
+                default: false
+            },
+
+            /** */
+            infiniteScrollDistance: {
+                type: Number,
+                default: 400
+            },
+
+            /**
+             * The minimum distance between the bottom of the element and the bottom of the viewport
+             * before the v-infinite-scroll method is executed.
+             */
+            disableInfiniteScroll: {
+                type: Boolean,
+                default: true
             },
 
             /** Server side pagination and sorting. */
@@ -312,6 +356,13 @@
                 if (cssStr) {
                     this.dCss = cssStr;
                 }
+            },
+
+            /**
+             * Fetch more data.
+             */
+            fetchMore() {
+                this.$emit('fetch-more');
             },
 
             /**
@@ -512,6 +563,10 @@
         }
 
         .no-items {
+            text-align: center;
+        }
+
+        .f-loading-more {
             text-align: center;
         }
 

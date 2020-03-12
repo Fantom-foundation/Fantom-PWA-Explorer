@@ -5,11 +5,9 @@ import {apolloProvider} from "@/plugins/apollo-provider.js";
 import i18n from '@/plugins/i18n';
 import '@/plugins/vue-timeago.js';
 import '@/plugins/vue-svgicon.js';
+import '@/plugins/vue-infinite-scroll.js';
 import {store} from "./store";
 import './filters.js';
-
-// polyfills
-import 'intersection-observer';
 
 Vue.config.productionTip = false;
 
