@@ -54,6 +54,7 @@
     .f-breadcrumbs {
         color: #666;
         text-align: right;
+        font-size: 0.9em;
 
         li {
             display: inline-block;

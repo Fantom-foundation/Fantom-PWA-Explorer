@@ -23,6 +23,10 @@ const appStructure = [
                     }
                 ]
             },
+            {
+                id: 'address-detail',
+                translation: 'view_address_detail.title'
+            }
         ]
     }
 ];

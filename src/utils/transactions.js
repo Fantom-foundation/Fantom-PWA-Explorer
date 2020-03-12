@@ -17,6 +17,14 @@ export function FTMToWEI(_value) {
 }
 
 /**
+ * @param {*} _value
+ * @return {number}
+ */
+export function FTMToUSD(_value) {
+    return _value / 166.22;  // temporary
+}
+
+/**
  * Check if given string is transaction hash, address or block number.
  *
  * @return {'transaction_hash' | 'address' | 'block' | ''}

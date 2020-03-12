@@ -118,8 +118,12 @@
                     case 'transaction_hash':
                         this.$router.push({name: 'transaction-detail', params: {id: _text}}, null, () => {});
                         break;
-                    case 'address': alert('go to address detail'); break;
-                    case 'block': alert('go to block detail'); break;
+                    case 'address':
+                        this.$router.push({name: 'address-detail', params: {id: _text}}, null, () => {});
+                        break;
+                    case 'block':
+                        alert('go to block detail');
+                        break;
                     default:
                         // temporary alert
                         alert(this.$t('alerts.bad_search_string'));

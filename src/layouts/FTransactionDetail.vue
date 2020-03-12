@@ -14,11 +14,19 @@
                 </div>
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_transaction_detail.from') }}:</div>
-                    <div class="col"><div class="break-word" v-show="cTransaction">{{ cTransaction.from }}</div></div>
+                    <div class="col">
+                        <div class="break-word" v-show="cTransaction">
+                            <router-link :to="{name: 'address-detail', params: {id: cTransaction.from}}">{{ cTransaction.from }}</router-link>
+                        </div>
+                    </div>
                 </div>
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_transaction_detail.to') }}:</div>
-                    <div class="col"><div class="break-word" v-show="cTransaction">{{ cTransaction.to }}</div></div>
+                    <div class="col">
+                        <div class="break-word" v-show="cTransaction">
+                            <router-link :to="{name: 'address-detail', params: {id: cTransaction.to}}">{{ cTransaction.to }}</router-link>
+                        </div>
+                    </div>
                 </div>
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_transaction_detail.time') }}:</div>
@@ -160,7 +168,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-    /*@import "../assets/scss/vars";*/
-</style>

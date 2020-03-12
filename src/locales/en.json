@@ -61,5 +61,10 @@
         "gas_limit": "Gas Limit",
         "gas_price": "Gas Price",
         "nonce": "Nonce"
+    },
+    "view_address_detail": {
+        "title": "Address",
+        "value_in_ftm": "Value in FTM",
+        "value_in_usd": "Value in USD"
     }
 }

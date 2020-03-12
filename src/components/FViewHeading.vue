@@ -1,8 +1,8 @@
 <template>
     <div class="f-view-heading">
         <div class="row">
-            <div class="col-4 col-12-md">
-                <h1>{{ title }}</h1>
+            <div :class="`col-${firstColumnWidth} col-12-md`">
+                <slot><h1>{{ title }}</h1></slot>
             </div>
             <div class="col hidden-md">
                 <f-breadcrumbs :curr-route="currRoute"></f-breadcrumbs>
@@ -27,6 +27,14 @@
             title: {
                 type: String,
                 default: ''
+            },
+
+            /**
+             * Width of first grid column (from '1' to '12').
+             */
+            firstColumnWidth: {
+                type: String,
+                default: '4'
             },
 
             /** Name of current route. */
