@@ -50,9 +50,7 @@
                         <tfoot>
                             <tr v-if="infiniteScroll" v-show="!disableInfiniteScroll"><td :colspan="columns.length">
                                 <div
-                                    v-infinite-scroll="fetchMore"
-                                    infinite-scroll-disabled="disableInfiniteScroll"
-                                    infinite-scroll-distance="infiniteScrollDistance"
+                                    v-observe-visibility="dObserveVisibilityOptions"
                                     class="f-loading-more"
                                 >
                                     <pulse-loader color="#1969ff"></pulse-loader>
@@ -87,9 +85,7 @@
 
                     <div v-if="infiniteScroll" v-show="!disableInfiniteScroll">
                         <div
-                            v-infinite-scroll="fetchMore"
-                            infinite-scroll-disabled="disableInfiniteScroll"
-                            infinite-scroll-distance="infiniteScrollDistance"
+                            v-observe-visibility="dObserveVisibilityOptions"
                             class="f-loading-more"
                         >
                             <pulse-loader color="#1969ff"></pulse-loader>
@@ -192,16 +188,16 @@
                 default: false
             },
 
-            /** */
-            infiniteScrollDistance: {
-                type: Number,
-                default: 400
-            },
-
             /**
              * The minimum distance between the bottom of the element and the bottom of the viewport
              * before the v-infinite-scroll method is executed.
              */
+            infiniteScrollDistance: {
+                type: Number,
+                default: 1100
+            },
+
+            /**  */
             disableInfiniteScroll: {
                 type: Boolean,
                 default: true
@@ -250,7 +246,13 @@
             return {
                 dId: `tbl${this._uid}`,
                 dCss: '',
-                dPagination: {}
+                dPagination: {},
+                dObserveVisibilityOptions: {
+                    callback: this.fetchMore,
+                    intersection: {
+                        rootMargin: `${this.infiniteScrollDistance}px`
+                    }
+                }
                 // dItems: this.items
             }
         },
@@ -361,8 +363,12 @@
             /**
              * Fetch more data.
              */
-            fetchMore() {
-                this.$emit('fetch-more');
+            fetchMore(_visible) {
+                console.log('fetchmore', _visible);
+                if (_visible) {
+                    this.$emit('fetch-more');
+                }
+
             },
 
             /**

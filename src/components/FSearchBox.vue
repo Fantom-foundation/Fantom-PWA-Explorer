@@ -113,20 +113,25 @@
              */
             search(_text) {
                 const type = getTypeByStr(_text);
+                let routeName = '';
 
                 switch (type) {
                     case 'transaction_hash':
-                        this.$router.push({name: 'transaction-detail', params: {id: _text}}, null, () => {});
+                        routeName = 'transaction-detail';
                         break;
                     case 'address':
-                        this.$router.push({name: 'address-detail', params: {id: _text}}, null, () => {});
+                        routeName = 'address-detail';
                         break;
                     case 'block':
-                        alert('go to block detail');
+                        routeName = 'block-detail';
                         break;
                     default:
                         // temporary alert
                         alert(this.$t('alerts.bad_search_string'));
+                }
+
+                if (routeName) {
+                    this.$router.push({name: routeName, params: {id: _text}}, null, () => {});
                 }
             },
 

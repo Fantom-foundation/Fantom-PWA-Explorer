@@ -5,6 +5,7 @@ import Transactions from "./views/Transactions.vue";
 import TransactionDetail from "./views/TransactionDetail.vue";
 import AddressDetail from "./views/AddressDetail.vue";
 import Blocks from "./views/Blocks.vue";
+import BlockDetail from "./views/BlockDetail.vue";
 
 export const routes = [
     {
@@ -31,6 +32,11 @@ export const routes = [
         name: 'blocks',
         path: '/blocks',
         component: Blocks
+    },
+    {
+        name: 'block-detail',
+        path: '/block/:id',
+        component: BlockDetail
     },
     {
         name: 'data-table-playground',

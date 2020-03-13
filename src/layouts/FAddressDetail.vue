@@ -5,13 +5,13 @@
                 <div class="col-5 offset-1 no-offset-sm">
                     <f-card class="num-block">
                         <h2 class="h3">{{ $t('view_address_detail.value_in_ftm') }}</h2>
-                        <div class="num"><span v-show="cAccount">{{ Number(WEIToFTM(cAccount ? cAccount.balance : 1)).toFixed(2) }} FTM</span></div>
+                        <div class="num"><span v-show="cAccount">{{ Number(WEIToFTM(cAccount ? cAccount.balance : 1)).toFixed(2) }}</span></div>
                     </f-card>
                 </div>
                 <div class="col-5">
                     <f-card class="num-block">
                         <h2 class="h3">{{ $t('view_address_detail.value_in_usd') }}</h2>
-                        <div class="num"><span v-show="cAccount">{{ Number(FTMToUSD(WEIToFTM(cAccount ? cAccount.balance : 1))).toFixed(3) }} FTM</span></div>
+                        <div class="num"><span v-show="cAccount">{{ Number(FTMToUSD(WEIToFTM(cAccount ? cAccount.balance : 1))).toFixed(3) }}</span></div>
                     </f-card>
                 </div>
             </div>

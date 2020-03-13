@@ -29,7 +29,13 @@ const appStructure = [
             },
             {
                 id: 'blocks',
-                translation: 'view_block_list.title'
+                translation: 'view_block_list.title',
+                _c: [
+                    {
+                        id: 'block-detail',
+                        translation: 'view_block_detail.title'
+                    }
+                ]
             },
         ]
     }

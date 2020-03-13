@@ -7,9 +7,11 @@
     "fee": "Fee",
     "amount": "Amount",
     "time": "Time",
+    "timestamp": "Timestamp",
     "success": "Success",
     "error": "Error",
     "pending": "Pending",
+    "transactions": "Transactions",
 
     "navigation": [
         {
@@ -35,7 +37,7 @@
         "blocks": "Blocks",
         "validators": "Validators",
         "accounts": "Accounts",
-        "transactions": "Transactions"
+        "transactions": "@:transactions"
     },
     "view_not_found": {
         "title": "Page not found :(",
@@ -78,5 +80,14 @@
         "time": "@:time",
         "age": "Age",
         "transaction_count": "Txns"
+    },
+    "view_block_detail": {
+        "title": "Block detail",
+        "block": "@:block",
+        "block_hash": "Block Hash",
+        "parent_hash": "Parent Hash",
+        "timestamp": "@:timestamp",
+        "transactions": "@:transactions",
+        "transactions_in_block": "transactions in block"
     }
 }

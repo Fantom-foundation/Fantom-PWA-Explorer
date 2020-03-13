@@ -2,8 +2,8 @@
     <div class="block-list-dt">
         <f-data-table
             :columns="columns"
-            :items="cItems"
-            :disable-infinite-scroll="cLoading || !hasNext"
+            :items="items"
+            :disable-infinite-scroll="!hasNext"
             infinite-scroll
             fixed-header
             @fetch-more="fetchMore"
@@ -35,7 +35,7 @@
         props: {
             itemsPerPage: {
                 type: Number,
-                default: 25
+                default: 40
             }
         },
 
@@ -78,7 +78,22 @@
         data() {
             return {
                 cursor: null,
+                items: [],
                 hasNext: true
+            }
+        },
+
+        watch: {
+            blocks() {
+                const edges = this.blocks.edges;
+
+                if (this.items.length === 0) {
+                    this.items = edges;
+                } else {
+                    for (let i = 0, len1 = edges.length; i < len1; i++) {
+                        this.items.push(edges[i]);
+                    }
+                }
             }
         },
 
@@ -109,16 +124,13 @@
                         width: '80px'
                     }
                 ]
-            },
+            }
 
-            cItems() {
-                // console.log('blocks', this.blocks);
-                return (this.blocks ? this.blocks.edges : []);
-            },
-
+/*
             cLoading() {
                 return this.$apollo.queries.blocks.loading;
             }
+*/
         },
 
         methods: {
