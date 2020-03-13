@@ -49,7 +49,13 @@
                 -->
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_transaction_detail.block') }}:</div>
-                    <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.block.number | formatHexToInt }}</div></div>
+                    <div class="col">
+                        <div class="break-word" v-show="cTransaction">
+                            <router-link :to="{name: 'block-detail', params: {id: cTransaction.block.number | formatHexToInt}}" :title="value">
+                                {{cTransaction.block.number | formatHexToInt}}
+                            </router-link>
+                        </div>
+                    </div>
                 </div>
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_transaction_detail.gas_used') }}:</div>

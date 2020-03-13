@@ -1,14 +1,14 @@
 <template>
-    <div class="transactions-dt">
+    <div class="transaction-list-dt">
         <f-data-table
-            :columns="columns"
-            :items="items"
-            :total-items="items.length"
-            :items-per-page="20"
+            :columns="dColumns"
+            :hidden-columns="hiddenColumns"
+            :items="cItems"
             :mobile-view="cMobileView"
-            height="auto"
+            :disable-infinite-scroll="!dHasNext"
+            infinite-scroll
             fixed-header
-            first-m-v-column-width="6"
+            @fetch-more="fetchMore"
         >
             <template v-slot:column-created="{ value, column }">
                 <template v-if="column">
@@ -19,7 +19,7 @@
                 </template>
             </template>
 
-            <template v-slot:column-id="{ value, column }">
+            <template v-slot:column-hash="{ value, column }">
                 <div v-if="column" class="three-dots">
                     <router-link :to="{name: 'transaction-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
                 </div>
@@ -30,47 +30,49 @@
 
             <template v-slot:column-block="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-5 f-row-label">{{ column.label }}:</div>
-                    <div class="col">{{ value }}</div>
+                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                    <div class="col"><router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link></div>
                 </div>
                 <template v-else>
-                    {{ value }}
+                    <router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link>
                 </template>
             </template>
 
-            <template v-slot:column-timeStamp="{ value, column }">
+            <template v-slot:column-timestamp="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-5 f-row-label">{{ column.label }}:</div>
-                    <div class="col"><timeago :datetime="value" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago></div>
+                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                    <div class="col">
+                        <timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
+                    </div>
                 </div>
                 <template v-else>
-                    <timeago :datetime="value" :auto-update="5" :converter-options="{includeSeconds: true}"></timeago>
+                    <timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
                 </template>
             </template>
 
             <template v-slot:column-from="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-5 f-row-label">{{ column.label }}:</div>
-                    <div class="col">{{ value.name }}</div>
+                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                    <div class="col"><router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link></div>
                 </div>
                 <template v-else>
-                    {{ value.name }}
+                    <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
                 </template>
             </template>
 
             <template v-slot:column-to="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-5 f-row-label">{{ column.label }}:</div>
-                    <div class="col">{{ value.name }}</div>
+                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                    <div class="col"><router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link></div>
                 </div>
                 <template v-else>
-                    {{ value.name }}
+                    <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
                 </template>
             </template>
 
             <template v-slot:column-amount="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-5 f-row-label">{{ column.label }}:</div>
+                    <div class="col-4 f-row-label">{{ column.label }}:</div>
                     <div class="col">{{ WEIToFTM(value) }}</div>
                 </div>
                 <template v-else>
@@ -78,135 +80,109 @@
                 </template>
             </template>
 
+<!--
             <template v-slot:column-fee="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-5 f-row-label">{{ column.label }}:</div>
-                    <div class="col">{{ WEIToFTM(value) }}</div>
+                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                    <div class="col">{{ WEIToFTM(value | formatHexToInt) }}</div>
                 </div>
                 <template v-else>
-                    {{ WEIToFTM(value) }}
+                    {{ WEIToFTM(value | formatHexToInt) }}
                 </template>
             </template>
+-->
         </f-data-table>
     </div>
 </template>
 
 <script>
     import FDataTable from "../components/FDataTable.vue";
+    // import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
-
-    const tmpData = {
-        "data":{
-            "burst":[
-                {
-                    "id":"0xb63debdf2a72b0653c5b4018ec3b785f3342474a423ec4acb0367a86247cef8d",
-                    "from":{
-                        "id":"54",
-                        "name":"Pearl",
-                        "__typename":"Account"
-                    },
-                    "to":{
-                        "id":"11",
-                        "name":"Aquamarine",
-                        "__typename":"Account"
-                    },
-                    "block": 73898,
-                    "fee":"23300000000000",
-                    "amount":"80000000000000000",
-                    "timeStamp":"2020-03-04T15:19:36.248306248+01:00",
-                    "__typename":"Transaction"
-                },
-                {
-                    "id":"0xc523d34f0667eb854c08580b53c6739b1133bd0749aed1f045a5e64b3c1d115d",
-                    "from":{
-                        "id":"54",
-                        "name":"Pearl",
-                        "__typename":"Account"
-                    },
-                    "to":{
-                        "id":"1",
-                        "name":"Amaranth",
-                        "__typename":"Account"
-                    },
-                    "block": 73898,
-                    "fee":"49271000000000",
-                    "amount":"80000000000000000",
-                    "timeStamp":"2020-03-04T13:30:56.271151761+01:00",
-                    "__typename":"Transaction"
-                },
-                {
-                    "id":"0x6f6c47b5a2be4e51aaa041f35b84e306b5b0bfb4eb41b883918b7973134cf934",
-                    "from":{
-                        "id":"54",
-                        "name":"Pearl",
-                        "__typename":"Account"
-                    },
-                    "to":{
-                        "id":"43",
-                        "name":"Alexandrite",
-                        "__typename":"Account"
-                    },
-                    "block": 73898,
-                    "fee":"21000000000000",
-                    "amount":"80000000000000000",
-                    "timeStamp":"2020-03-04T13:30:56.295990851+01:00",
-                    "__typename":"Transaction"
-                },
-                {
-                    "id":"0xc49cca8cbfbef1339b88b38e96d617ae91341f2e996077680f8722deec3180c9",
-                    "from":{
-                        "id":"54",
-                        "name":"Pearl",
-                        "__typename":"Account"
-                    },
-                    "to":{
-                        "id":"62",
-                        "name":"Hypersthene",
-                        "__typename":"Account"
-                    },
-                    "block": 73898,
-                    "fee":"21000000000000",
-                    "amount":"80000000000000000",
-                    "timeStamp":"2020-03-04T13:30:56.318284912+01:00",
-                    "__typename":"Transaction"
-                },
-                {
-                    "id":"0xdbbf36aee263b33981fbc629fd150a88ccf5b169f1ba5cec005246a77b7f29f6",
-                    "from":{
-                        "id":"54",
-                        "name":"Pearl",
-                        "__typename":"Account"
-                    },
-                    "to":{
-                        "id":"36",
-                        "name":"Yellow Turqoise",
-                        "__typename":"Account"
-                    },
-                    "block": 73898,
-                    "fee":"21000000000000",
-                    "amount":"80000000000000000",
-                    "timeStamp":"2020-03-04T13:30:56.341292701+01:00",
-                    "__typename":"Transaction"
-                }
-            ]
-        }
-    };
+    import {formatHexToInt, timestampToDate} from "../filters.js";
 
     export default {
         components: {
             FDataTable
         },
 
-        computed: {
-            columns() {
-                return [
+        props: {
+            /** Array of column names to be hidden. */
+            hiddenColumns: {
+                type: Array,
+                default() {
+                    return [];
+                }
+            },
+
+            /** Data. */
+            items: {
+                type: Array,
+                default() {
+                    return [];
+                }
+            },
+
+            /** */
+            itemsPerPage: {
+                type: Number,
+                default: 40
+            }
+        },
+
+/*
+        apollo: {
+            blocks: {
+                query: gql`
+                    query BlocksList($cursor: Cursor, $count: Int!) {
+                        blocks (cursor: $cursor, count: $count) {
+                            totalCount
+                            pageInfo {
+                                first
+                                last
+                                hasNext
+                                hasPrevious
+                            }
+                            edges {
+                                block {
+                                    hash
+                                    number
+                                    timestamp
+                                    transactionCount
+                                }
+                                cursor
+                            }
+                        }
+                    }
+                `,
+                variables() {
+                    return {
+                        cursor: null,
+                        count: this.itemsPerPage
+                    }
+                },
+                skip () {
+                    return (this.items.length > 0);
+                },
+                error(_error) {
+                    this.transactionByHashError = _error.message;
+                }
+            }
+        },
+*/
+
+        data() {
+            return {
+                dItems: null,
+                dHasNext: false,
+                dColumns: [
                     {
                         name: 'created',
-                        readValueFrom: 'timeStamp',
+                        readValueFrom: 'timestamp',
                         hidden: !this.cMobileView
                     },
                     {
-                        name: 'id',
+                        name: 'hash',
                         label: this.$t('view_transaction_list.tx_hash'),
                         width: '200px',
                         oneLineMode: true
@@ -215,11 +191,14 @@
                         name: 'block',
                         label: this.$t('view_transaction_list.block'),
                         width: '100px',
+                        itemProp: 'block.number',
+                        formatter: formatHexToInt,
                         hidden: this.cMobileView
                     },
                     {
-                        name: 'timeStamp',
+                        name: 'timestamp',
                         label: this.$t('view_transaction_list.time'),
+                        itemProp: 'block.timestamp',
                         // width: '220px',
                         hidden: this.cMobileView
                     },
@@ -236,18 +215,40 @@
                     {
                         name: 'amount',
                         label: `${this.$t('view_transaction_list.amount')} (FTM)`,
+                        itemProp: 'value',
                         width: '150px'
-                    },
+                    }
+/*
                     {
                         name: 'fee',
                         label: `${this.$t('view_transaction_list.fee')} (FTM)`,
+                        itemProp: 'gasUsed',
                         width: '130px'
                     }
+*/
                 ]
-            },
+            }
+        },
 
-            items() {
-                return tmpData.data.burst || [];
+/*
+        watch: {
+            blocks() {
+                const edges = this.blocks.edges;
+
+                if (this.dItems.length === 0) {
+                    this.dItems = edges;
+                } else {
+                    for (let i = 0, len1 = edges.length; i < len1; i++) {
+                        this.dItems.push(edges[i]);
+                    }
+                }
+            }
+        },
+*/
+
+        computed: {
+            cItems() {
+                return this.dItems || this.items;
             },
 
             /**
@@ -260,35 +261,45 @@
 
                 return (dataTableBreakpoint && dataTableBreakpoint.matches);
             }
-        },
 
 /*
-        created() {
-            this.columns = columns;
-        },
+            cLoading() {
+                return this.$apollo.queries.blocks.loading;
+            }
 */
+        },
 
         methods: {
-            WEIToFTM
+            fetchMore() {
+                const {blocks} = this;
+
+                if (blocks && blocks.pageInfo && blocks.pageInfo.hasNext) {
+                    const cursor = blocks.pageInfo.last;
+
+                    this.$apollo.queries.blocks.fetchMore({
+                        variables: {
+                            cursor,
+                            count: this.itemsPerPage
+                        },
+                        updateQuery: (previousResult, { fetchMoreResult }) => {
+                            this.dHasNext = fetchMoreResult.blocks.pageInfo.hasNext;
+
+                            return fetchMoreResult;
+/*
+                            return {
+                                blocks: {
+                                    ...fetchMoreResult.blocks,
+                                    edges: [...previousResult.blocks.edges, ...fetchMoreResult.blocks.edges]
+                                }
+                            }
+*/
+                        }
+                    });
+                }
+            },
+
+            WEIToFTM,
+            timestampToDate
         }
     }
 </script>
-
-<style lang="scss">
-    /*@import "../assets/scss/vars";*/
-/*
-    .transactions-dt {
-        .f-data-table {
-            .mobile-view {
-                .mobile-item {
-                    > div._c2, > div._c3 {
-                        display: inline-block;
-                        width: 50% !important;
-                        min-width: 50% !important;
-                    }
-                }
-            }
-        }
-    }
-*/
-</style>

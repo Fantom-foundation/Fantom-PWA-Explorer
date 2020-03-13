@@ -163,6 +163,14 @@
                 default: 'auto'
             },
 
+            /** Array of column names to be hidden. */
+            hiddenColumns: {
+                type: Array,
+                default() {
+                    return [];
+                }
+            },
+
             /**
              * Width of first column in mobile view (from '1' to '12').
              * Used in mobile view slot's default content only.
@@ -314,12 +322,17 @@
              */
             prepareColumns() {
                 const {columns} = this;
+                const hiddenColumns = (this.hiddenColumns.length > 0 ? this.hiddenColumns : null);
                 let cssStr = '';
                 let dVisibleColumnsNum = 0;
 
                 columns.forEach((_column, _index) => {
                     const css = {};
                     const cellChildrenCss = {};
+
+                    if (hiddenColumns && (hiddenColumns.indexOf(_column.name) > -1)) {
+                        _column.hidden = true;
+                    }
 
                     if (!_column.hidden) {
                         dVisibleColumnsNum++;

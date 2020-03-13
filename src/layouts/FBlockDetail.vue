@@ -47,7 +47,8 @@
         <div class="block-transactions">
             <h2>{{ $t('view_block_detail.block_transactions') }}</h2>
             <f-transaction-list
-                :items="cWTF"
+                :items="cTransactionItems"
+                :hidden-columns="['block']"
             ></f-transaction-list>
         </div>
     </div>
@@ -120,8 +121,7 @@
         },
 
         computed: {
-            cWTF() {
-                console.log('blockchange', this.cBlock.txList);
+            cTransactionItems() {
                 return (this.cBlock.txList ? this.cBlock.txList : [])
             },
 
