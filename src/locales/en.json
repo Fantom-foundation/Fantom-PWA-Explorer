@@ -88,6 +88,7 @@
         "parent_hash": "Parent Hash",
         "timestamp": "@:timestamp",
         "transactions": "@:transactions",
-        "transactions_in_block": "transactions in block"
+        "transactions_in_block": "transactions in block",
+        "block_transactions": "@:transactions"
     }
 }

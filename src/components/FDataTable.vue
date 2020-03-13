@@ -38,7 +38,7 @@
                         </tbody>
                         <tbody v-else-if="!loading">
                         <tr>
-                            <td :colspan="columns.length">
+                            <td :colspan="dVisibleColumnsNum">
                                 <slot name="no-items">
                                     <div class="no-items">{{$t('no_items')}}</div>
                                 </slot>
@@ -48,14 +48,13 @@
                     </slot>
                     <slot name="footer">
                         <tfoot>
-                            <tr v-if="infiniteScroll" v-show="!disableInfiniteScroll"><td :colspan="columns.length">
-                                <div
-                                    v-observe-visibility="dObserveVisibilityOptions"
-                                    class="f-loading-more"
-                                >
-                                    <pulse-loader color="#1969ff"></pulse-loader>
-                                </div>
-                            </td></tr>
+                            <tr v-if="infiniteScroll && cItems.length" v-show="!disableInfiniteScroll">
+                                <td :colspan="dVisibleColumnsNum">
+                                    <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
+                                        <pulse-loader color="#1969ff"></pulse-loader>
+                                    </div>
+                                </td>
+                            </tr>
                         </tfoot>
                     </slot>
                 </table>
@@ -83,11 +82,8 @@
                         <div class="no-items">{{$t('no_items')}}</div>
                     </div>
 
-                    <div v-if="infiniteScroll" v-show="!disableInfiniteScroll">
-                        <div
-                            v-observe-visibility="dObserveVisibilityOptions"
-                            class="f-loading-more"
-                        >
+                    <div v-if="infiniteScroll && cItems.length" v-show="!disableInfiniteScroll">
+                        <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
                             <pulse-loader color="#1969ff"></pulse-loader>
                         </div>
                     </div>
@@ -252,7 +248,8 @@
                     intersection: {
                         rootMargin: `${this.infiniteScrollDistance}px`
                     }
-                }
+                },
+                dVisibleColumnsNum: 0
                 // dItems: this.items
             }
         },
@@ -308,17 +305,25 @@
         },
 
         created() {
-            this.setColumnsCss();
+            this.prepareColumns();
         },
 
         methods: {
-            setColumnsCss() {
+            /**
+             * Set columns css, ...
+             */
+            prepareColumns() {
                 const {columns} = this;
                 let cssStr = '';
+                let dVisibleColumnsNum = 0;
 
                 columns.forEach((_column, _index) => {
                     const css = {};
                     const cellChildrenCss = {};
+
+                    if (!_column.hidden) {
+                        dVisibleColumnsNum++;
+                    }
 
                     if (_column.width) {
                         css.width = _column.width;
@@ -357,6 +362,10 @@
 
                 if (cssStr) {
                     this.dCss = cssStr;
+                }
+
+                if (dVisibleColumnsNum > 0) {
+                    this.dVisibleColumnsNum = dVisibleColumnsNum;
                 }
             },
 

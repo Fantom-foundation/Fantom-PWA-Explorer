@@ -1,15 +1,18 @@
 <template>
-    <div class="f-address-detail f-data-layout">
+    <div class="f-block-detail f-data-layout">
         <f-card>
             <template v-if="!blockByNumberError">
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_block_detail.block') }}:</div>
-                    <div class="col"><div class="break-word">{{ id }} {{ cBlock.number | formatHexToInt }}</div></div>
+                    <div class="col"><div class="break-word">{{ id }}</div></div>
                 </div>
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_block_detail.timestamp') }}:</div>
                     <div class="col">
-                        <div v-show="cBlock && ('timestamp' in cBlock)">{{ cBlock.timestamp }}</div>
+                        <div v-show="cBlock && ('timestamp' in cBlock)">
+                            <timeago :datetime="timestampToDate(cBlock.timestamp)"></timeago>
+                            ({{ timestampToDate(cBlock.timestamp) }})
+                        </div>
                     </div>
                 </div>
                 <div class="row no-collapse">
@@ -23,13 +26,13 @@
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_block_detail.block_hash') }}:</div>
                     <div class="col">
-                        <div v-show="cBlock && ('hash' in cBlock)">{{ cBlock.hash }}</div>
+                        <div v-show="cBlock && ('hash' in cBlock)" class="break-word">{{ cBlock.hash }}</div>
                     </div>
                 </div>
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_block_detail.parent_hash') }}:</div>
                     <div class="col">
-                        <div v-show="cBlock && cBlock.parent && ('hash' in cBlock.parent)">{{ cBlock.parent.hash }}</div>
+                        <div v-show="cBlock && cBlock.parent && ('hash' in cBlock.parent)" class="break-word">{{ cBlock.parent.hash }}</div>
                     </div>
                 </div>
             </template>
@@ -41,19 +44,26 @@
             </template>
         </f-card>
 
-
+        <div class="block-transactions">
+            <h2>{{ $t('view_block_detail.block_transactions') }}</h2>
+            <f-transaction-list
+                :items="cWTF"
+            ></f-transaction-list>
+        </div>
     </div>
 </template>
 
 <script>
     import FCard from "../components/FCard.vue";
+    import FTransactionList from "../data-tables/FTransactionList.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM, FTMToUSD } from "../utils/transactions.js";
-    import { formatHexToInt } from "../filters.js";
+    import { formatHexToInt, timestampToDate } from "../filters.js";
 
     export default {
         components: {
-            FCard
+            FCard,
+            FTransactionList
         },
 
         props: {
@@ -67,10 +77,9 @@
 
         apollo: {
             block: {
-/*
                 query: gql`
-                    query BlockByNumber {
-                        block (number: "0x12c90") {
+                    query BlockByNumber($number: Long) {
+                        block (number: $number) {
                             number
                             transactionCount
                             hash
@@ -83,38 +92,18 @@
                                 from
                                 to
                                 value
-                            }
-                        }
-                    }
-                `,
-*/
-                query: gql`
-                    query BlockByNumber($num: Long) {
-                        block (number: $num) {
-                            number
-                            transactionCount
-                            hash
-                            parent {
-                                hash
-                            }
-                            timestamp
-                            txList {
-                                hash
-                                from
-                                to
-                                value
+                                gasUsed
+                                block {
+                                    number
+                                    timestamp
+                                }
                             }
                         }
                     }
                 `,
                 variables() {
-                    // const eee = this.id;
-                    // console.log('????', this.id, `0x${eee.toString(16)}`, formatHexToInt(`0x${eee.toString(16)}`), formatHexToInt("0x12c90"));
                     return {
-                        // $number: `0x${parseInt(this.id).toString(16)}`
-                        // $number: "0x12c90"
-                        // $number: "0x" + eee.toString(16)
-                        $num: this.id
+                        number: `0x${parseInt(this.id).toString(16)}`
                     }
                 },
                 error(_error) {
@@ -125,12 +114,25 @@
 
         data() {
             return {
-                blockByNumberError: ''
+                blockByNumberError: '',
+                dTransactions: []
             }
         },
 
         computed: {
+            cWTF() {
+                console.log('blockchange', this.cBlock.txList);
+                return (this.cBlock.txList ? this.cBlock.txList : [])
+            },
+
             cBlock() {
+/*
+                if (this.block) {
+                    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+                    this.dTransactions = this.block.txList;
+                }
+*/
+
                 return this.block || {parent: {}};
             }
         },
@@ -138,7 +140,8 @@
         methods: {
             WEIToFTM,
             FTMToUSD,
-            formatHexToInt
+            formatHexToInt,
+            timestampToDate
         }
     }
 </script>
@@ -146,9 +149,7 @@
 <style lang="scss">
     @import "../assets/scss/vars";
 
-    .f-address-detail {
-        padding-top: 16px;
-
+    .f-block-detail {
         .num-block {
             h2 {
                 text-align: center;
@@ -160,6 +161,13 @@
                 text-align: center;
                 font-weight: bold;
                 font-size: $fs48;
+            }
+        }
+
+        .block-transactions {
+            margin-top: 32px;
+
+            .transaction-list-dt {
             }
         }
     }

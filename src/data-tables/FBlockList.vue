@@ -1,17 +1,31 @@
 <template>
     <div class="block-list-dt">
         <f-data-table
-            :columns="columns"
-            :items="items"
-            :disable-infinite-scroll="!hasNext"
+            :columns="dColumns"
+            :items="dItems"
+            :disable-infinite-scroll="!dHasNext"
             infinite-scroll
             fixed-header
             @fetch-more="fetchMore"
         >
+            <template v-slot:column-block="{ value, column }">
+                <div v-if="column" class="row no-collapse no-vert-col-padding">
+                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                    <div class="col">
+                        <router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link>
+                    </div>
+                </div>
+                <template v-else>
+                    <router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link>
+                </template>
+            </template>
+
             <template v-slot:column-age="{ value, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
                     <div class="col-4 f-row-label">{{ column.label }}:</div>
-                    <div class="col"><timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago></div>
+                    <div class="col">
+                        <timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
+                    </div>
                 </div>
                 <template v-else>
                     <timeago :datetime="timestampToDate(value)" :auto-update="5" :converter-options="{includeSeconds: true}"></timeago>
@@ -77,29 +91,9 @@
 
         data() {
             return {
-                cursor: null,
-                items: [],
-                hasNext: true
-            }
-        },
-
-        watch: {
-            blocks() {
-                const edges = this.blocks.edges;
-
-                if (this.items.length === 0) {
-                    this.items = edges;
-                } else {
-                    for (let i = 0, len1 = edges.length; i < len1; i++) {
-                        this.items.push(edges[i]);
-                    }
-                }
-            }
-        },
-
-        computed: {
-            columns() {
-                return [
+                dItems: [],
+                dHasNext: false,
+                dColumns: [
                     {
                         name: 'block',
                         label: this.$t('view_block_list.block'),
@@ -125,7 +119,25 @@
                     }
                 ]
             }
+        },
 
+        watch: {
+            blocks() {
+                const edges = this.blocks.edges;
+
+                this.dHasNext = this.blocks.pageInfo.hasNext;
+
+                if (this.dItems.length === 0) {
+                    this.dItems = edges;
+                } else {
+                    for (let i = 0, len1 = edges.length; i < len1; i++) {
+                        this.dItems.push(edges[i]);
+                    }
+                }
+            }
+        },
+
+        computed: {
 /*
             cLoading() {
                 return this.$apollo.queries.blocks.loading;
@@ -146,14 +158,17 @@
                             count: this.itemsPerPage
                         },
                         updateQuery: (previousResult, { fetchMoreResult }) => {
-                            this.hasNext = fetchMoreResult.blocks.pageInfo.hasNext;
+                            // this.dHasNext = fetchMoreResult.blocks.pageInfo.hasNext;
 
+                            return fetchMoreResult;
+/*
                             return {
                                 blocks: {
                                     ...fetchMoreResult.blocks,
                                     edges: [...previousResult.blocks.edges, ...fetchMoreResult.blocks.edges]
                                 }
                             }
+*/
                         }
                     });
                 }
