@@ -1,20 +1,23 @@
 <template>
     <div class="f-address-detail">
         <template v-if="!accountByAddressError">
-            <div class="row">
-                <div class="col-5 offset-1 no-offset-sm">
-                    <f-card class="num-block">
-                        <h2 class="h3">{{ $t('view_address_detail.value_in_ftm') }}</h2>
-                        <div class="num"><span v-show="cAccount">{{ Number(WEIToFTM(cAccount ? cAccount.balance : 1)).toFixed(2) }}</span></div>
-                    </f-card>
+            <f-card>
+                <h2 class="break-word">{{ id }}</h2>
+                <div class="row">
+                    <div class="col-5 offset-1 no-offset-sm">
+                        <div class="num-block">
+                            <h2 class="h3">{{ $t('view_address_detail.value_in_ftm') }}</h2>
+                            <div class="num"><span v-show="cAccount">{{ Number(WEIToFTM(cAccount ? cAccount.balance : 1)).toFixed(2) }}</span></div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="num-block">
+                            <h2 class="h3">{{ $t('view_address_detail.value_in_usd') }}</h2>
+                            <div class="num"><span v-show="cAccount">{{ Number(FTMToUSD(WEIToFTM(cAccount ? cAccount.balance : 1))).toFixed(3) }}</span></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-5">
-                    <f-card class="num-block">
-                        <h2 class="h3">{{ $t('view_address_detail.value_in_usd') }}</h2>
-                        <div class="num"><span v-show="cAccount">{{ Number(FTMToUSD(WEIToFTM(cAccount ? cAccount.balance : 1))).toFixed(3) }}</span></div>
-                    </f-card>
-                </div>
-            </div>
+            </f-card>
         </template>
         <template v-else>
             <f-card>
@@ -88,7 +91,7 @@
     @import "../assets/scss/vars";
 
     .f-address-detail {
-        padding-top: 16px;
+        /*padding-top: 16px;*/
 
         .num-block {
             h2 {

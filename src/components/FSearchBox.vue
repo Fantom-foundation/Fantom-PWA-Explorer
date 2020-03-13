@@ -341,12 +341,14 @@
             &.expandable {
                 width: 44px;
 
-                &:not(.expanded) {
-                    input:not(.def):not([type=submit]).large {
-                        background-color: $secondary-color-lightest;
-                        border-color: transparent;
-                    }
+                input:not(.def):not([type=submit]).large {
+                    color: #000;
+                    background-color: $secondary-color-lightest;
+                    border-color: transparent;
+                    transition: background-color $transition-length ease;
+                }
 
+                &:not(.expanded) {
                     button[type="submit"]:hover {
                         background-color: #fff !important;
                     }

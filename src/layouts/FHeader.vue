@@ -212,7 +212,7 @@
             width: 100%;
             height: 100%;
             top: 0;
-            padding: 64px 8px 20px 8px;
+            padding: 64px 8px 8px 8px;
             background-color: $theme-color;
             transform: translateX(100%);
             transition: all $transition-length ease;
@@ -325,6 +325,23 @@
                 margin-right: 0;
                 margin-left: 0;
                 /*transform: scale(0.5);*/
+
+                &.small.expandable {
+                    &:not(.expanded) {
+                        input:not(.def):not([type=submit]).large {
+                            background-color: transparent;
+                            box-shadow: none;
+                        }
+
+                        button[type="submit"] {
+                            color: #fff;
+
+                            &:hover {
+                                background-color: transparent !important;
+                            }
+                        }
+                    }
+                }
             }
 
             &.drawer-on {

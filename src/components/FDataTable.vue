@@ -386,11 +386,9 @@
              * Fetch more data.
              */
             fetchMore(_visible) {
-                console.log('fetchmore', _visible);
                 if (_visible) {
                     this.$emit('fetch-more');
                 }
-
             },
 
             /**
