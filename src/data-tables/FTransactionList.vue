@@ -12,6 +12,7 @@
                 fixed-header
                 @fetch-more="onFetchMore"
             >
+<!--
                 <template v-slot:column-created="{ value, column }">
                     <template v-if="column">
                         {{ value | formatDate }}
@@ -20,10 +21,14 @@
                         {{ value | formatDate }}
                     </template>
                 </template>
+-->
 
                 <template v-slot:column-hash="{ value, column }">
-                    <div v-if="column" class="three-dots">
-                        <router-link :to="{name: 'transaction-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col">
+                            <router-link :to="{name: 'transaction-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
+                        </div>
                     </div>
                     <template v-else>
                         <router-link :to="{name: 'transaction-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
@@ -75,10 +80,10 @@
                 <template v-slot:column-amount="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-4 f-row-label">{{ column.label }}:</div>
-                        <div class="col">{{ WEIToFTM(value) }}</div>
+                        <div class="col">{{ numToFixed(WEIToFTM(value), 2) }}</div>
                     </div>
                     <template v-else>
-                        {{ WEIToFTM(value) }}
+                        {{ numToFixed(WEIToFTM(value), 2) }}
                     </template>
                 </template>
 
@@ -106,7 +111,7 @@
     import FDataTable from "../components/FDataTable.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
-    import {formatHexToInt, timestampToDate} from "../filters.js";
+    import {formatHexToInt, timestampToDate, numToFixed} from "../filters.js";
 
     export default {
         components: {
@@ -208,11 +213,13 @@
                 dOutsideData: !!this.items.action,
                 dTransactionListError: '',
                 dColumns: [
+/*
                     {
                         name: 'created',
                         readValueFrom: 'timestamp',
                         hidden: !this.cMobileView
                     },
+*/
                     {
                         name: 'hash',
                         label: this.$t('view_transaction_list.tx_hash'),
@@ -251,7 +258,10 @@
                         name: 'amount',
                         label: `${this.$t('view_transaction_list.amount')} (FTM)`,
                         itemProp: `${!this.withoutCursor ? 'transaction.' : ''}value`,
-                        width: '150px'
+                        width: '150px',
+                        css: {
+                            textAlign: 'right'
+                        }
                     }
 /*
                     {
@@ -345,7 +355,8 @@
             },
 
             WEIToFTM,
-            timestampToDate
+            timestampToDate,
+            numToFixed
         }
     }
 </script>

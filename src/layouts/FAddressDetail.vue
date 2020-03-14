@@ -23,7 +23,6 @@
                 <h2>{{ $t('view_block_detail.block_transactions') }}</h2>
                 <f-transaction-list
                     :items="cTransactionItems"
-                    :hidden-columns="['block']"
                     :loading="cLoading"
                     @fetch-more="onFetchMore"
                 ></f-transaction-list>

@@ -75,6 +75,20 @@ export function formatHexToInt(_value) {
     return parseInt(_value, 16);
 }
 
+/**
+ * @param {string|number} _value*
+ * @param {int} _digits
+ * @return {string}
+ */
+export function numToFixed(_value, _digits) {
+    let value = _value;
+
+    if (web3utils.isHexStrict(_value)) {
+        value = formatHexToInt(_value);
+    }
+
+    return Number.parseFloat(value).toFixed(_digits);
+}
 
 Vue.filter('formatDate', formatDate);
 Vue.filter('formatHash', formatHash);
