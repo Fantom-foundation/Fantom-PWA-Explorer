@@ -3,6 +3,7 @@
         <f-header></f-header>
         <main>
             <!--        <img alt="Vue logo" src="./assets/logo.png">-->
+<!--            <router-view :key="$route.path"></router-view>-->
             <router-view></router-view>
         </main>
         <f-footer></f-footer>

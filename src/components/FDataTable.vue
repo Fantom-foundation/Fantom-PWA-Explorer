@@ -521,14 +521,16 @@
             table-layout: fixed;
         }
 
-        th {
-            font-weight: bold;
-        }
-
         td, th {
             padding: 12px 16px;
             word-break: break-word;
             line-height: 1.2;
+        }
+
+        th {
+            font-weight: bold;
+            padding-top: 8px;
+            padding-bottom: 8px;
         }
 
         tr {

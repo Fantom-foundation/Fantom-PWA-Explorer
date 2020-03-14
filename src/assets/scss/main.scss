@@ -42,6 +42,10 @@ a:not(.btn):hover {
     }
 }
 
+.f-records-count {
+    color: $grey-color;
+}
+
 @include media-max($bp-menu) {
     :root {
         //--f-header-height: 52px;

@@ -1,7 +1,9 @@
 <template>
     <div class="narrow-container">
-        <f-view-heading :title="$t('view_block_list.title')"></f-view-heading>
-        <f-block-list></f-block-list>
+        <f-view-heading>
+            <h1>{{ $t('view_block_list.title') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h1>
+        </f-view-heading>
+        <f-block-list @records-count="onRecordsCount"></f-block-list>
     </div>
 </template>
 
@@ -13,6 +15,18 @@
         components: {
             FViewHeading,
             FBlockList
+        },
+
+        data() {
+            return {
+                dRecordsCount: 0
+            }
+        },
+
+        methods: {
+            onRecordsCount(_num) {
+                this.dRecordsCount = _num;
+            }
         }
     }
 </script>

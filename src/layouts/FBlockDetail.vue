@@ -1,7 +1,7 @@
 <template>
     <div class="f-block-detail f-data-layout">
         <f-card>
-            <template v-if="!blockByNumberError">
+            <template v-if="!dBlockByNumberError">
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_block_detail.block') }}:</div>
                     <div class="col"><div class="break-word">{{ id }}</div></div>
@@ -39,13 +39,13 @@
 
             <template v-else>
                 <f-card>
-                    error {{ blockByNumberError }}
+                    error {{ dBlockByNumberError }}
                 </f-card>
             </template>
         </f-card>
 
         <div class="block-transactions">
-            <h2>{{ $t('view_block_detail.block_transactions') }}</h2>
+            <h2 class="no-margin">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
             <f-transaction-list
                 :items="cTransactionItems"
                 :hidden-columns="['block']"
@@ -110,23 +110,31 @@
                     }
                 },
                 error(_error) {
-                    this.blockByNumberError = _error.message;
+                    this.dBlockByNumberError = _error.message;
                 }
             }
         },
 
         data() {
             return {
-                blockByNumberError: '',
+                dBlockByNumberError: '',
+                dRecordsCount: 0,
                 dTransactions: []
             }
         },
 
         computed: {
             cTransactionItems() {
+                const {cBlock} = this;
+
+                if (cBlock) {
+                    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+                    this.dRecordsCount = formatHexToInt(cBlock.transactionCount);
+                }
+
                 return {
                     action: 'replace',
-                    data: (this.cBlock.txList ? this.cBlock.txList : [])
+                    data: (cBlock && cBlock.txList ? cBlock.txList : [])
                 };
             },
 

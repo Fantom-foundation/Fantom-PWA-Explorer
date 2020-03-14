@@ -1,7 +1,9 @@
 <template>
     <div class="narrow-container">
-        <f-view-heading :title="$t('view_transaction_list.title')"></f-view-heading>
-        <f-transaction-list></f-transaction-list>
+        <f-view-heading>
+            <h1>{{ $t('view_transaction_list.title') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h1>
+        </f-view-heading>
+        <f-transaction-list @records-count="onRecordsCount"></f-transaction-list>
     </div>
 </template>
 
@@ -13,6 +15,18 @@
         components: {
             FTransactionList,
             FViewHeading
+        },
+
+        data() {
+            return {
+                dRecordsCount: 0
+            }
+        },
+
+        methods: {
+            onRecordsCount(_num) {
+                this.dRecordsCount = _num;
+            }
         }
     }
 </script>

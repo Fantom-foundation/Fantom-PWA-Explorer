@@ -135,6 +135,8 @@
                         this.dItems.push(edges[i]);
                     }
                 }
+
+                this.$emit('records-count', formatHexToInt(this.blocks.totalCount));
             }
         },
 

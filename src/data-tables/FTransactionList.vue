@@ -281,11 +281,27 @@
             },
 
             transactions(_data) {
+                this.$emit('records-count', formatHexToInt(_data.totalCount));
+
                 this.setItems({
                     action: (this.appendItems ? 'append' : 'replace'),
                     hasNext: _data.pageInfo.hasNext,
                     data: _data.edges
                 });
+            },
+
+            /**
+             * Watch route change and reset some properties, if only route parameter changes (whole component is reused,
+             * not rendered from scratch!).
+             *
+             * @param {object} _to
+             * @param {object} _from
+             */
+            $route(_to, _from) {
+                if (_to.name === _from.name) {
+                    this.appendItems = false;
+                    this.dHasNext = false;
+                }
             }
         },
 

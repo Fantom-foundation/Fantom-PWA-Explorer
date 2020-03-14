@@ -4,13 +4,13 @@
             <f-card>
                 <h2 class="break-word">{{ id }}</h2>
                 <div class="row">
-                    <div class="col-5 offset-1 no-offset-sm">
+                    <div class="col">
                         <div class="num-block">
                             <h2 class="h3">{{ $t('view_address_detail.value_in_ftm') }}</h2>
                             <div class="num"><span v-show="cAccount">{{ Number(WEIToFTM(cAccount ? cAccount.balance : 1)).toFixed(2) }}</span></div>
                         </div>
                     </div>
-                    <div class="col-5">
+                    <div class="col">
                         <div class="num-block">
                             <h2 class="h3">{{ $t('view_address_detail.value_in_usd') }}</h2>
                             <div class="num"><span v-show="cAccount">{{ Number(FTMToUSD(WEIToFTM(cAccount ? cAccount.balance : 1))).toFixed(3) }}</span></div>
@@ -20,7 +20,7 @@
             </f-card>
 
             <div class="address-transactions">
-                <h2>{{ $t('view_block_detail.block_transactions') }}</h2>
+                <h2 class="no-margin">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
                 <f-transaction-list
                     :items="cTransactionItems"
                     :loading="cLoading"
@@ -41,6 +41,7 @@
     import gql from 'graphql-tag';
     import { WEIToFTM, FTMToUSD } from "../utils/transactions.js";
     import FTransactionList from "../data-tables/FTransactionList.vue";
+    import {formatHexToInt} from "../filters.js";
 
     export default {
         components: {
@@ -112,7 +113,23 @@
 
         data() {
             return {
+                dRecordsCount: 0,
                 dAccountByAddressError: ''
+            }
+        },
+
+        watch: {
+            /**
+             * Watch route change and reset some properties, if only route parameter changes (whole component is reused,
+             * not rendered from scratch!).
+             *
+             * @param {object} _to
+             * @param {object} _from
+             */
+            $route(_to, _from) {
+                if (_to.name === _from.name) {
+                    this.appendItems = false;
+                }
             }
         },
 
@@ -123,7 +140,12 @@
 
             cTransactionItems() {
                 const {cAccount} = this;
-                const txList = (cAccount ? cAccount.txList : null)
+                const txList = (cAccount ? cAccount.txList : null);
+
+                if (txList) {
+                    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+                    this.dRecordsCount = formatHexToInt(txList.totalCount);
+                }
 
                 return {
                     action: (this.appendItems ? 'append' : 'replace'),
