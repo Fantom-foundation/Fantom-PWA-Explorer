@@ -15,7 +15,7 @@
                     <slot name="header">
                         <thead>
                         <tr>
-                            <th v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)"
+                            <th v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index, col)"
                                 v-show="!col.hidden">{{col.label}}
                             </th>
                         </tr>
@@ -24,7 +24,7 @@
                     <slot>
                         <tbody v-if="cItems.length">
                         <tr v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''">
-                            <td v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)"
+                            <td v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index, col)"
                                 v-show="!col.hidden">
                                 <slot :name="`column-${col.name}`"
                                       :value="getItemPropValue(item, col)">
@@ -68,7 +68,7 @@
                     <div v-if="cItems.length">
                         <div v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''"
                              class="mobile-item">
-                            <div v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index)">
+                            <div v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index, col)">
                                 <template v-if="!col.hidden">
                                     <slot :name="`column-${col.name}`"
                                           :value="getItemPropValue(item, col)"
@@ -143,6 +143,7 @@
              * `width` {string} - minimum width of column
              * `hidden` {boolean} - if `true`, column will be hidden
              * `css` {object} - style for whole column. Keys are css properties in camel case, values are valid css values.
+             * `cssClass` {string} - css class to be added to column
              * `cellChildrenCss` {object} - style for column cells direct children. Keys are css properties in camel case, values are valid css values.
              * `oneLineMode` {boolean} - if `true`, no line breaks are allowed in column's cells.
              */
@@ -336,6 +337,7 @@
                 const hiddenColumns = (this.hiddenColumns.length > 0 ? this.hiddenColumns : null);
                 let cssStr = '';
                 let dVisibleColumnsNum = 0;
+                let firstVisible = false;
 
                 columns.forEach((_column, _index) => {
                     const css = {};
@@ -347,6 +349,12 @@
 
                     if (!_column.hidden) {
                         dVisibleColumnsNum++;
+
+                        if (!firstVisible) {
+                            firstVisible = true;
+
+                            _column.cssClass = `${_column.cssClass || ''} f-col`;
+                        }
                     }
 
                     if (_column.width) {
@@ -383,6 +391,13 @@
                         cssStr += `#${this.dId} .${this.getColumnClass(_index)} > * {${obj2css(cellChildrenCss)}}`;
                     }
                 });
+
+                for (let i = columns.length - 1; i >= 0; i--) {
+                    if (!columns[i].hidden) {
+                        columns[i].cssClass = `${columns[i].cssClass || ''} l-col`;
+                        break;
+                    }
+                }
 
                 if (cssStr) {
                     this.dCss = cssStr;
@@ -435,10 +450,11 @@
              * Get column's css class.
              *
              * @param {int} _index
+             * @param {object} [_column]
              * @return {string}
              */
-            getColumnClass(_index) {
-                return `_c${_index}`;
+            getColumnClass(_index, _column) {
+                return `_c${_index}` + (_column && _column.cssClass ? _column.cssClass : '');
             },
 
             /**
@@ -519,15 +535,13 @@
             td {
                 background-color: #fff;
 
-/*
-                &:first-child {
+                &.f-col {
                     border-radius: 8px 0 0 8px;
                 }
 
-                &:last-child {
+                &.l-col {
                     border-radius: 0 8px 8px 0;
                 }
-*/
             }
         }
 
