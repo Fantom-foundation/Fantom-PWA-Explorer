@@ -49,6 +49,8 @@
             <f-transaction-list
                 :items="cTransactionItems"
                 :hidden-columns="['block']"
+                :loading="cLoading"
+                without-cursor
             ></f-transaction-list>
         </div>
     </div>
@@ -122,7 +124,10 @@
 
         computed: {
             cTransactionItems() {
-                return (this.cBlock.txList ? this.cBlock.txList : [])
+                return {
+                    action: 'replace',
+                    data: (this.cBlock.txList ? this.cBlock.txList : [])
+                };
             },
 
             cBlock() {
@@ -134,6 +139,10 @@
 */
 
                 return this.block || {parent: {}};
+            },
+
+            cLoading() {
+                return this.$apollo.queries.block.loading;
             }
         },
 

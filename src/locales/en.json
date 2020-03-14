@@ -45,7 +45,7 @@
         "link_title": "Back to home"
     },
     "view_transaction_list": {
-        "title": "Transactions (local data)",
+        "title": "Transactions",
         "time": "@:time",
         "fee": "@:fee",
         "amount": "@:amount",

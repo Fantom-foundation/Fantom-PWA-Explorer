@@ -1,103 +1,110 @@
 <template>
     <div class="transaction-list-dt">
-        <f-data-table
-            :columns="dColumns"
-            :hidden-columns="hiddenColumns"
-            :items="cItems"
-            :mobile-view="cMobileView"
-            :disable-infinite-scroll="!dHasNext"
-            infinite-scroll
-            fixed-header
-            @fetch-more="fetchMore"
-        >
-            <template v-slot:column-created="{ value, column }">
-                <template v-if="column">
-                    {{ value | formatDate }}
+        <template v-if="!dTransactionListError">
+            <f-data-table
+                :columns="dColumns"
+                :hidden-columns="hiddenColumns"
+                :items="dItems"
+                :mobile-view="cMobileView"
+                :disable-infinite-scroll="!dHasNext"
+                :loading="cLoading"
+                infinite-scroll
+                fixed-header
+                @fetch-more="onFetchMore"
+            >
+                <template v-slot:column-created="{ value, column }">
+                    <template v-if="column">
+                        {{ value | formatDate }}
+                    </template>
+                    <template v-else>
+                        {{ value | formatDate }}
+                    </template>
                 </template>
-                <template v-else>
-                    {{ value | formatDate }}
-                </template>
-            </template>
 
-            <template v-slot:column-hash="{ value, column }">
-                <div v-if="column" class="three-dots">
-                    <router-link :to="{name: 'transaction-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
-                </div>
-                <template v-else>
-                    <router-link :to="{name: 'transaction-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
-                </template>
-            </template>
-
-            <template v-slot:column-block="{ value, column }">
-                <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-4 f-row-label">{{ column.label }}:</div>
-                    <div class="col"><router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link></div>
-                </div>
-                <template v-else>
-                    <router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link>
-                </template>
-            </template>
-
-            <template v-slot:column-timestamp="{ value, column }">
-                <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-4 f-row-label">{{ column.label }}:</div>
-                    <div class="col">
-                        <timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
+                <template v-slot:column-hash="{ value, column }">
+                    <div v-if="column" class="three-dots">
+                        <router-link :to="{name: 'transaction-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
                     </div>
-                </div>
-                <template v-else>
-                    <timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
+                    <template v-else>
+                        <router-link :to="{name: 'transaction-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
+                    </template>
                 </template>
-            </template>
 
-            <template v-slot:column-from="{ value, column }">
-                <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-4 f-row-label">{{ column.label }}:</div>
-                    <div class="col"><router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link></div>
-                </div>
-                <template v-else>
-                    <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
+                <template v-slot:column-block="{ value, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col"><router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link></div>
+                    </div>
+                    <template v-else>
+                        <router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link>
+                    </template>
                 </template>
-            </template>
 
-            <template v-slot:column-to="{ value, column }">
-                <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-4 f-row-label">{{ column.label }}:</div>
-                    <div class="col"><router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link></div>
-                </div>
-                <template v-else>
-                    <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
+                <template v-slot:column-timestamp="{ value, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col">
+                            <timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
+                        </div>
+                    </div>
+                    <template v-else>
+                        <timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
+                    </template>
                 </template>
-            </template>
 
-            <template v-slot:column-amount="{ value, column }">
-                <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-4 f-row-label">{{ column.label }}:</div>
-                    <div class="col">{{ WEIToFTM(value) }}</div>
-                </div>
-                <template v-else>
-                    {{ WEIToFTM(value) }}
+                <template v-slot:column-from="{ value, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col"><router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link></div>
+                    </div>
+                    <template v-else>
+                        <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
+                    </template>
                 </template>
-            </template>
 
-<!--
-            <template v-slot:column-fee="{ value, column }">
-                <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-4 f-row-label">{{ column.label }}:</div>
-                    <div class="col">{{ WEIToFTM(value | formatHexToInt) }}</div>
-                </div>
-                <template v-else>
-                    {{ WEIToFTM(value | formatHexToInt) }}
+                <template v-slot:column-to="{ value, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col"><router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link></div>
+                    </div>
+                    <template v-else>
+                        <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
+                    </template>
                 </template>
-            </template>
--->
-        </f-data-table>
+
+                <template v-slot:column-amount="{ value, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col">{{ WEIToFTM(value) }}</div>
+                    </div>
+                    <template v-else>
+                        {{ WEIToFTM(value) }}
+                    </template>
+                </template>
+
+                <!--
+                            <template v-slot:column-fee="{ value, column }">
+                                <div v-if="column" class="row no-collapse no-vert-col-padding">
+                                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                                    <div class="col">{{ WEIToFTM(value | formatHexToInt) }}</div>
+                                </div>
+                                <template v-else>
+                                    {{ WEIToFTM(value | formatHexToInt) }}
+                                </template>
+                            </template>
+                -->
+            </f-data-table>
+        </template>
+
+        <template v-else>
+            <div>error {{ dTransactionListError }}</div>
+        </template>
     </div>
 </template>
 
 <script>
     import FDataTable from "../components/FDataTable.vue";
-    // import gql from 'graphql-tag';
+    import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
     import {formatHexToInt, timestampToDate} from "../filters.js";
 
@@ -107,6 +114,12 @@
         },
 
         props: {
+            /** No pagination, no 'transaction.' prefix on columns. */
+            withoutCursor: {
+                type: Boolean,
+                default: false
+            },
+
             /** Array of column names to be hidden. */
             hiddenColumns: {
                 type: Array,
@@ -115,11 +128,19 @@
                 }
             },
 
-            /** Data. */
+            /**
+             * Data and action.
+             * Actions:
+             * '' - replace items
+             * 'append' - append new items
+             */
             items: {
-                type: Array,
+                type: Object,
                 default() {
-                    return [];
+                    return {
+                        action: '',
+                        data: []
+                    };
                 }
             },
 
@@ -127,30 +148,40 @@
             itemsPerPage: {
                 type: Number,
                 default: 40
+            },
+
+            /** Display loading message. */
+            loading: {
+                type: Boolean,
+                default: false
             }
         },
 
-/*
         apollo: {
-            blocks: {
+            transactions: {
                 query: gql`
-                    query BlocksList($cursor: Cursor, $count: Int!) {
-                        blocks (cursor: $cursor, count: $count) {
-                            totalCount
+                    query TransactionList($cursor: Cursor, $count: Int!) {
+                        transactions (cursor: $cursor, count: $count) {
                             pageInfo {
                                 first
                                 last
                                 hasNext
                                 hasPrevious
                             }
+                            totalCount
                             edges {
-                                block {
-                                    hash
-                                    number
-                                    timestamp
-                                    transactionCount
-                                }
                                 cursor
+                                transaction {
+                                    hash
+                                    from
+                                    to
+                                    value
+                                    gasUsed
+                                    block {
+                                        number
+                                        timestamp
+                                    }
+                                }
                             }
                         }
                     }
@@ -161,20 +192,21 @@
                         count: this.itemsPerPage
                     }
                 },
-                skip () {
-                    return (this.items.length > 0);
+                skip() {
+                    return this.dOutsideData;
                 },
                 error(_error) {
-                    this.transactionByHashError = _error.message;
+                    this.dTransactionListError = _error.message;
                 }
             }
         },
-*/
 
         data() {
             return {
-                dItems: null,
+                dItems: [],
                 dHasNext: false,
+                dOutsideData: !!this.items.action,
+                dTransactionListError: '',
                 dColumns: [
                     {
                         name: 'created',
@@ -185,37 +217,40 @@
                         name: 'hash',
                         label: this.$t('view_transaction_list.tx_hash'),
                         width: '200px',
+                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}hash`,
                         oneLineMode: true
                     },
                     {
                         name: 'block',
                         label: this.$t('view_transaction_list.block'),
                         width: '100px',
-                        itemProp: 'block.number',
+                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}block.number`,
                         formatter: formatHexToInt,
                         hidden: this.cMobileView
                     },
                     {
                         name: 'timestamp',
                         label: this.$t('view_transaction_list.time'),
-                        itemProp: 'block.timestamp',
+                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}block.timestamp`,
                         // width: '220px',
                         hidden: this.cMobileView
                     },
                     {
                         name: 'from',
-                        label: this.$t('view_transaction_list.from')
+                        label: this.$t('view_transaction_list.from'),
+                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}from`
                         // width: '180px'
                     },
                     {
                         name: 'to',
-                        label: this.$t('view_transaction_list.to')
+                        label: this.$t('view_transaction_list.to'),
+                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}to`
                         // width: '180px'
                     },
                     {
                         name: 'amount',
                         label: `${this.$t('view_transaction_list.amount')} (FTM)`,
-                        itemProp: 'value',
+                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}value`,
                         width: '150px'
                     }
 /*
@@ -230,27 +265,21 @@
             }
         },
 
-/*
         watch: {
-            blocks() {
-                const edges = this.blocks.edges;
-
-                if (this.dItems.length === 0) {
-                    this.dItems = edges;
-                } else {
-                    for (let i = 0, len1 = edges.length; i < len1; i++) {
-                        this.dItems.push(edges[i]);
-                    }
-                }
-            }
-        },
-*/
-
-        computed: {
-            cItems() {
-                return this.dItems || this.items;
+            items(_newItems) {
+                this.setItems(_newItems);
             },
 
+            transactions(_data) {
+                this.setItems({
+                    action: (this.appendItems ? 'append' : 'replace'),
+                    hasNext: _data.pageInfo.hasNext,
+                    data: _data.edges
+                });
+            }
+        },
+
+        computed: {
             /**
              * Property is set to `true`, if 'ttransaction-list-dt-mobile-view' breakpoint is reached.
              *
@@ -260,41 +289,58 @@
                 const dataTableBreakpoint = this.$store.state.breakpoints['transaction-list-dt-mobile-view'];
 
                 return (dataTableBreakpoint && dataTableBreakpoint.matches);
-            }
+            },
 
-/*
             cLoading() {
-                return this.$apollo.queries.blocks.loading;
+                return this.loading || this.$apollo.queries.transactions.loading;
             }
-*/
+        },
+
+        created() {
+            /** If `true`, transaction items will be appended. */
+            this.appendItems = false;
         },
 
         methods: {
-            fetchMore() {
-                const {blocks} = this;
+            setItems(_items) {
+                const {action, data, hasNext} = _items;
 
-                if (blocks && blocks.pageInfo && blocks.pageInfo.hasNext) {
-                    const cursor = blocks.pageInfo.last;
+                if (action === 'replace') {
+                    this.dItems = data;
+                } else if (action === 'append') {
+                    for (let i = 0, len1 = data.length; i < len1; i++) {
+                        this.dItems.push(data[i]);
+                    }
+                } else {
+                    throw new Error(`Unknown items action '${action}'`);
+                }
 
-                    this.$apollo.queries.blocks.fetchMore({
-                        variables: {
-                            cursor,
-                            count: this.itemsPerPage
-                        },
-                        updateQuery: (previousResult, { fetchMoreResult }) => {
-                            this.dHasNext = fetchMoreResult.blocks.pageInfo.hasNext;
+                if (hasNext) {
+                    this.dHasNext = true;
+                }
+            },
 
-                            return fetchMoreResult;
-/*
-                            return {
-                                blocks: {
-                                    ...fetchMoreResult.blocks,
-                                    edges: [...previousResult.blocks.edges, ...fetchMoreResult.blocks.edges]
-                                }
+            onFetchMore() {
+                const {transactions} = this;
+
+                if (this.dOutsideData) {
+                    this.$emit('fetch-more');
+                } else {
+                    if (transactions && transactions.pageInfo && transactions.pageInfo.hasNext) {
+                        const cursor = transactions.pageInfo.last;
+
+                        this.$apollo.queries.transactions.fetchMore({
+                            variables: {
+                                cursor,
+                                count: this.itemsPerPage
+                            },
+                            updateQuery: (previousResult, { fetchMoreResult }) => {
+                                this.appendItems = true;
+
+                                return fetchMoreResult;
                             }
-*/
-                        }
-                    });
+                        });
+                    }
                 }
             },
 

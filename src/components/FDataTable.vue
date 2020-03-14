@@ -10,9 +10,6 @@
                     ></f-pagination>
                 </div>
             </slot>
-            <div class="f-loading-container" v-show="loading">
-                <div class="f-loading">{{$t('loading')}}</div>
-            </div>
             <div class="table-container" :style="cHeight" v-if="columns.length">
                 <table v-if="!cMobileView">
                     <slot name="header">
@@ -55,6 +52,14 @@
                                     </div>
                                 </td>
                             </tr>
+
+                            <tr v-if="loading && !cItems.length">
+                                <td :colspan="dVisibleColumnsNum">
+                                    <div class="f-loading-more">
+                                        <pulse-loader color="#1969ff"></pulse-loader>
+                                    </div>
+                                </td>
+                            </tr>
                         </tfoot>
                     </slot>
                 </table>
@@ -84,6 +89,12 @@
 
                     <div v-if="infiniteScroll && cItems.length" v-show="!disableInfiniteScroll">
                         <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
+                            <pulse-loader color="#1969ff"></pulse-loader>
+                        </div>
+                    </div>
+
+                    <div v-if="loading && !cItems.length">
+                        <div class="f-loading-more">
                             <pulse-loader color="#1969ff"></pulse-loader>
                         </div>
                     </div>
@@ -565,6 +576,7 @@
 
         }
 
+/*
         .f-loading-container {
             position: -webkit-sticky;
             position: sticky;
@@ -573,7 +585,7 @@
 
             .f-loading {
                 position: absolute;
-                /*top: 80px;*/
+                !*top: 80px;*!
                 top: 48px;
                 left: 50%;
                 margin-left: -60px;
@@ -587,6 +599,7 @@
                 z-index: 4;
             }
         }
+*/
 
         .no-items {
             text-align: center;
@@ -622,12 +635,6 @@
             .table-container {
                 overflow: auto;
             }
-
-            /*
-                        .f-loading-container {
-                            top: 0;
-                        }
-            */
         }
     }
 </style>

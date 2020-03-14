@@ -51,7 +51,7 @@
                     <div class="col-4 f-row-label">{{ $t('view_transaction_detail.block') }}:</div>
                     <div class="col">
                         <div class="break-word" v-show="cTransaction">
-                            <router-link :to="{name: 'block-detail', params: {id: cTransaction.block.number | formatHexToInt}}" :title="value">
+                            <router-link :to="{name: 'block-detail', params: {id: cTransaction.block.number | formatHexToInt}}">
                                 {{cTransaction.block.number | formatHexToInt}}
                             </router-link>
                         </div>

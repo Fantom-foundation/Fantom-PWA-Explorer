@@ -4,6 +4,7 @@
             :columns="dColumns"
             :items="dItems"
             :disable-infinite-scroll="!dHasNext"
+            :loading="cLoading"
             infinite-scroll
             fixed-header
             @fetch-more="fetchMore"
@@ -56,7 +57,7 @@
         apollo: {
             blocks: {
                 query: gql`
-                    query BlocksList($cursor: Cursor, $count: Int!) {
+                    query BlockList($cursor: Cursor, $count: Int!) {
                         blocks (cursor: $cursor, count: $count) {
                             totalCount
                             pageInfo {
@@ -138,11 +139,9 @@
         },
 
         computed: {
-/*
             cLoading() {
                 return this.$apollo.queries.blocks.loading;
             }
-*/
         },
 
         methods: {
