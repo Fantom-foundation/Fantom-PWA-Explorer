@@ -37,6 +37,10 @@ const appStructure = [
                     }
                 ]
             },
+            {
+                id: 'validators',
+                translation: 'view_validator_list.title'
+            }
         ]
     }
 ];

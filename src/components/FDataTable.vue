@@ -27,7 +27,9 @@
                             <td v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index, col)"
                                 v-show="!col.hidden">
                                 <slot :name="`column-${col.name}`"
-                                      :value="getItemPropValue(item, col)">
+                                      :value="getItemPropValue(item, col)"
+                                      :item="item"
+                                >
                                     {{ getItemPropValue(item, col) }}
                                 </slot>
                             </td>
@@ -75,7 +77,7 @@
                                           :column="col">
                                         <div class="row no-collapse no-vert-col-padding">
                                             <div :class="`col-${firstMVColumnWidth} f-row-label`">{{ col.label }}:</div>
-                                            <div class="col">{{ getItemPropValue(item, col) }}
+                                            <div class="col break-word">{{ getItemPropValue(item, col) }}
                                             </div>
                                         </div>
                                     </slot>

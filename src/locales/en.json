@@ -25,6 +25,10 @@
         {
             "url": "/blocks",
             "title": "Blocks"
+        },
+        {
+            "url": "/validators",
+            "title": "Validators"
         }
     ],
 
@@ -92,5 +96,16 @@
         "transactions": "@:transactions",
         "transactions_in_block": "transactions in block",
         "block_transactions": "@:transactions"
+    },
+    "view_validator_list": {
+        "title": "Validators",
+        "id": "Id",
+        "name": "Name",
+        "created_epoch": "Created Epoch",
+        "created_time": "Created Time",
+        "stake_amount": "Stake Amount (FTM)",
+        "delegated": "Delegated (FTM)",
+        "paid_until_epoch": "Paid Until Epoch",
+        "offline": "Offline"
     }
 }

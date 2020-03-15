@@ -6,6 +6,7 @@ import TransactionDetail from "./views/TransactionDetail.vue";
 import AddressDetail from "./views/AddressDetail.vue";
 import Blocks from "./views/Blocks.vue";
 import BlockDetail from "./views/BlockDetail.vue";
+import Validators from "./views/Validators.vue";
 
 export const routes = [
     {
@@ -37,6 +38,11 @@ export const routes = [
         name: 'block-detail',
         path: '/block/:id',
         component: BlockDetail
+    },
+    {
+        name: 'validators',
+        path: '/validators',
+        component: Validators
     },
     {
         name: 'data-table-playground',

@@ -45,6 +45,15 @@ export function formatDate(_value) {
 }
 
 /**
+ * @param {number} _number
+ * @return {*}
+ */
+export function formatNumberByLocale(_number) {
+    // TODO: use i18n current locale
+    return new Intl.NumberFormat('en-GB').format(_number);
+}
+
+/**
  * @param {string} _value
  * @return {string}
  */
