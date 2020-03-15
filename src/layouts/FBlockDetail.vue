@@ -38,13 +38,11 @@
             </template>
 
             <template v-else>
-                <f-card>
-                    error {{ dBlockByNumberError }}
-                </f-card>
+                <div class="query-error">{{ $t('view_block_detail.block_not_found') }}</div>
             </template>
         </f-card>
 
-        <div class="block-transactions">
+        <div class="block-transactions" v-if="!dBlockByNumberError">
             <h2 class="no-margin">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
             <f-transaction-list
                 :items="cTransactionItems"

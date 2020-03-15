@@ -46,6 +46,13 @@ a:not(.btn):hover {
     color: $grey-color;
 }
 
+.query-error {
+    color: $error-color-darker;
+    background-color: $error-color-lightest;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
 @include media-max($bp-menu) {
     :root {
         //--f-header-height: 52px;

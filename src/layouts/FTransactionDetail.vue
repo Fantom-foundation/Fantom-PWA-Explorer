@@ -1,7 +1,7 @@
 <template>
     <div class="f-transaction-detail f-data-layout">
         <f-card>
-            <template v-if="!transactionByHashError">
+            <template v-if="!dTransactionByHashError">
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_transaction_detail.hash') }}:</div>
                     <div class="col"><div class="break-word">{{ id }}</div></div>
@@ -75,7 +75,7 @@
                 </div>
             </template>
             <template v-else>
-                error message: {{ transactionByHashError }}
+                <div class="query-error">{{ $t('view_transaction_detail.transaction_not_found') }}</div>
             </template>
         </f-card>
     </div>
@@ -133,14 +133,14 @@
                     }
                 },
                 error(_error) {
-                    this.transactionByHashError = _error.message;
+                    this.dTransactionByHashError = _error.message;
                 }
             }
         },
 
         data() {
             return {
-                transactionByHashError: ''
+                dTransactionByHashError: ''
             }
         },
 

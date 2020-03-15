@@ -102,7 +102,7 @@
         </template>
 
         <template v-else>
-            <div>error {{ dTransactionListError }}</div>
+            <div class="query-error">{{ dTransactionListError }}</div>
         </template>
     </div>
 </template>
@@ -149,7 +149,7 @@
                 }
             },
 
-            /** */
+            /** Number of items per page. */
             itemsPerPage: {
                 type: Number,
                 default: 40
@@ -341,9 +341,7 @@
                     throw new Error(`Unknown items action '${action}'`);
                 }
 
-                if (hasNext) {
-                    this.dHasNext = true;
-                }
+                this.dHasNext = !!hasNext;
             },
 
             onFetchMore() {

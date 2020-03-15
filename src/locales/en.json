@@ -56,6 +56,7 @@
     },
     "view_transaction_detail": {
         "title": "Transaction detail",
+        "transaction_not_found": "Transaction not found",
         "hash": "Hash",
         "status": "Status",
         "from": "@:from",
@@ -83,6 +84,7 @@
     },
     "view_block_detail": {
         "title": "Block detail",
+        "block_not_found": "Block not found",
         "block": "@:block",
         "block_hash": "Block Hash",
         "parent_hash": "Parent Hash",

@@ -29,9 +29,7 @@
             </div>
         </template>
         <template v-else>
-            <f-card>
-                error {{ dAccountByAddressError }}
-            </f-card>
+            <div class="query-error">{{ dAccountByAddressError }}</div>
         </template>
     </div>
 </template>
@@ -57,7 +55,7 @@
                 default: ''
             },
 
-            /** */
+            /** Number of items per page. */
             itemsPerPage: {
                 type: Number,
                 default: 20
