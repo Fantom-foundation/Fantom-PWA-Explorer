@@ -11,13 +11,14 @@
                 <template v-slot:column-StakerAddress="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-4 f-row-label">{{ column.label }}:</div>
-                        <div class="col">
-                            {{ value }}
+                        <div class="col break-word">
+                            <div v-if="item.Status === '0x1'" class="offline">{{ $t('view_validator_list.offline') }}</div>
+                            {{ value | formatHash }}
                         </div>
                     </div>
                     <template v-else>
                         <div v-if="item.Status === '0x1'" class="offline">{{ $t('view_validator_list.offline') }}</div>
-                        {{ value }}
+                        {{ value | formatHash }}
                     </template>
                 </template>
             </f-data-table>
@@ -84,17 +85,23 @@
                             Id
                             StakerAddress
                             Status
-                            CreatedEpoch
                             CreatedTime
                             StakeAmount
-                            PaidUntilEpoch
                             DelegatedMe
                         }
                     }
                 `,
                 result(_data, _key) {
+                    let data;
+
                     if (_key === 'stakers') {
-                        this.dItems = _data.data.stakers;
+                        data = _data.data.stakers;
+
+                        data.forEach(_item => {
+                            _item.total_staked = WEIToFTM(_item.StakeAmount) + WEIToFTM(_item.DelegatedMe);
+                        });
+
+                        this.dItems = data;
 
                         this.$emit('records-count', this.dItems.length);
                     }
@@ -129,11 +136,6 @@
                     },
 */
                     {
-                        name: 'CreatedEpoch',
-                        label: this.$t('view_validator_list.created_epoch'),
-                        formatter: formatHexToInt
-                    },
-                    {
                         name: 'CreatedTime',
                         label: this.$t('view_validator_list.created_time'),
                         formatter: _value => formatDate(timestampToDate(_value))
@@ -148,10 +150,11 @@
                         label: this.$t('view_validator_list.delegated'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 2))
                     },
+                    // computed
                     {
-                        name: 'PaidUntilEpoch',
-                        label: this.$t('view_validator_list.paid_until_epoch'),
-                        formatter: formatHexToInt
+                        name: 'total_staked',
+                        label: this.$t('view_validator_list.total_staked'),
+                        formatter: _value => formatNumberByLocale(numToFixed(_value, 2))
                     }
                 ]
             }

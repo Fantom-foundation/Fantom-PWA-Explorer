@@ -101,11 +101,10 @@
         "title": "Validators",
         "id": "Id",
         "name": "Name",
-        "created_epoch": "Created Epoch",
         "created_time": "Created Time",
         "stake_amount": "Stake Amount (FTM)",
         "delegated": "Delegated (FTM)",
-        "paid_until_epoch": "Paid Until Epoch",
+        "total_staked": "Total Staked (FTM)",
         "offline": "Offline"
     }
 }

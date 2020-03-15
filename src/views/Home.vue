@@ -16,10 +16,12 @@
                 </router-link>
             </div>
             <div class="col">
-                <f-card class="home-block">
-                    <h2 class="h3">{{ $t('view_home.validators') }}</h2>
-                    <div class="num">32</div>
-                </f-card>
+                <router-link :to="{name: 'validators'}" class="no-effect">
+                    <f-card class="home-block" hover>
+                        <h2 class="h3">{{ $t('view_home.validators') }} <icon data="@/assets/svg/angle-right.svg" color="#999"></icon></h2>
+                        <div class="num">32</div>
+                    </f-card>
+                </router-link>
             </div>
             <div class="col">
                 <f-card class="home-block">

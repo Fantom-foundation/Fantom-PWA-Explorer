@@ -74,7 +74,9 @@
                                 <template v-if="!col.hidden">
                                     <slot :name="`column-${col.name}`"
                                           :value="getItemPropValue(item, col)"
-                                          :column="col">
+                                          :item="item"
+                                          :column="col"
+                                    >
                                         <div class="row no-collapse no-vert-col-padding">
                                             <div :class="`col-${firstMVColumnWidth} f-row-label`">{{ col.label }}:</div>
                                             <div class="col break-word">{{ getItemPropValue(item, col) }}
