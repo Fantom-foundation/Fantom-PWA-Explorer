@@ -225,12 +225,11 @@
 
             cCurrentRewardRate() {
                 const {dDailyRewards} = this;
-                const {dTotalSupply} = this;
+                const {dTotals} = this;
                 let rate = 0;
 
-                console.log('ddd', dDailyRewards, dTotalSupply);
-                if (dDailyRewards && dTotalSupply) {
-                    return ((dDailyRewards * 365) / dTotalSupply) * 100;
+                if (dDailyRewards && dTotals && dTotals.totalStaked) {
+                    return ((dDailyRewards * 365) / dTotals.totalStaked) * 100;
                 }
 
                 return rate;
