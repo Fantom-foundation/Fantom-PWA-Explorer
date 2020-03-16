@@ -1,114 +1,112 @@
 <template>
-    <f-card :off="fCardOff">
-        <div class="f-data-table" :class="cCssClass" :id="dId" @page-change="onPageChange">
-            <slot name="before-table">
-                <div class="before-table" v-if="usePagination">
-                    <f-pagination
-                        :total-items="this.totalItems"
-                        :items-per-page="this.itemsPerPage"
-                        :curr-page="this.currPage"
-                    ></f-pagination>
-                </div>
-            </slot>
-            <div class="table-container" :style="cHeight" v-if="columns.length">
-                <table v-if="!cMobileView">
-                    <slot name="header">
-                        <thead>
-                        <tr>
-                            <th v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index, col)"
-                                v-show="!col.hidden">{{col.label}}
-                            </th>
+    <div class="f-data-table" :class="cCssClass" :id="dId" @page-change="onPageChange">
+        <slot name="before-table">
+            <div class="before-table" v-if="usePagination">
+                <f-pagination
+                    :total-items="this.totalItems"
+                    :items-per-page="this.itemsPerPage"
+                    :curr-page="this.currPage"
+                ></f-pagination>
+            </div>
+        </slot>
+        <div class="table-container" :style="cHeight" v-if="columns.length">
+            <table v-if="!cMobileView">
+                <slot name="header">
+                    <thead>
+                    <tr>
+                        <th v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index, col)"
+                            v-show="!col.hidden">{{col.label}}
+                        </th>
+                    </tr>
+                    </thead>
+                </slot>
+                <slot>
+                    <tbody v-if="cItems.length">
+                    <tr v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''">
+                        <td v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index, col)"
+                            v-show="!col.hidden">
+                            <slot :name="`column-${col.name}`"
+                                  :value="getItemPropValue(item, col)"
+                                  :item="item"
+                            >
+                                {{ getItemPropValue(item, col) }}
+                            </slot>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody v-else-if="!loading">
+                    <tr>
+                        <td :colspan="dVisibleColumnsNum">
+                            <slot name="no-items">
+                                <div class="no-items">{{$t('no_items')}}</div>
+                            </slot>
+                        </td>
+                    </tr>
+                    </tbody>
+                </slot>
+                <slot name="footer">
+                    <tfoot>
+                        <tr v-if="infiniteScroll && cItems.length" v-show="!disableInfiniteScroll">
+                            <td :colspan="dVisibleColumnsNum">
+                                <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
+                                    <pulse-loader color="#1969ff"></pulse-loader>
+                                </div>
+                            </td>
                         </tr>
-                        </thead>
-                    </slot>
-                    <slot>
-                        <tbody v-if="cItems.length">
-                        <tr v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''">
-                            <td v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index, col)"
-                                v-show="!col.hidden">
+
+                        <tr v-if="loading && !cItems.length">
+                            <td :colspan="dVisibleColumnsNum">
+                                <div class="f-loading-more">
+                                    <pulse-loader color="#1969ff"></pulse-loader>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </slot>
+            </table>
+
+            <div v-else class="mobile-view f-data-layout">
+                <div v-if="cItems.length">
+                    <div v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''"
+                         class="mobile-item">
+                        <div v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index, col)">
+                            <template v-if="!col.hidden">
                                 <slot :name="`column-${col.name}`"
                                       :value="getItemPropValue(item, col)"
                                       :item="item"
+                                      :column="col"
                                 >
-                                    {{ getItemPropValue(item, col) }}
-                                </slot>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <tbody v-else-if="!loading">
-                        <tr>
-                            <td :colspan="dVisibleColumnsNum">
-                                <slot name="no-items">
-                                    <div class="no-items">{{$t('no_items')}}</div>
-                                </slot>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </slot>
-                    <slot name="footer">
-                        <tfoot>
-                            <tr v-if="infiniteScroll && cItems.length" v-show="!disableInfiniteScroll">
-                                <td :colspan="dVisibleColumnsNum">
-                                    <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
-                                        <pulse-loader color="#1969ff"></pulse-loader>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr v-if="loading && !cItems.length">
-                                <td :colspan="dVisibleColumnsNum">
-                                    <div class="f-loading-more">
-                                        <pulse-loader color="#1969ff"></pulse-loader>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </slot>
-                </table>
-
-                <div v-else class="mobile-view f-data-layout">
-                    <div v-if="cItems.length">
-                        <div v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''"
-                             class="mobile-item">
-                            <div v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index, col)">
-                                <template v-if="!col.hidden">
-                                    <slot :name="`column-${col.name}`"
-                                          :value="getItemPropValue(item, col)"
-                                          :item="item"
-                                          :column="col"
-                                    >
-                                        <div class="row no-collapse no-vert-col-padding">
-                                            <div :class="`col-${firstMVColumnWidth} f-row-label`">{{ col.label }}:</div>
-                                            <div class="col break-word">{{ getItemPropValue(item, col) }}
-                                            </div>
+                                    <div class="row no-collapse no-vert-col-padding">
+                                        <div :class="`col-${firstMVColumnWidth} f-row-label`">{{ col.label }}:</div>
+                                        <div class="col break-word">{{ getItemPropValue(item, col) }}
                                         </div>
-                                    </slot>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-else-if="!loading">
-                        <div class="no-items">{{$t('no_items')}}</div>
-                    </div>
-
-                    <div v-if="infiniteScroll && cItems.length" v-show="!disableInfiniteScroll">
-                        <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
-                            <pulse-loader color="#1969ff"></pulse-loader>
-                        </div>
-                    </div>
-
-                    <div v-if="loading && !cItems.length">
-                        <div class="f-loading-more">
-                            <pulse-loader color="#1969ff"></pulse-loader>
+                                    </div>
+                                </slot>
+                            </template>
                         </div>
                     </div>
                 </div>
-            </div>
-            <slot name="after-table"></slot>
+                <div v-else-if="!loading">
+                    <div class="no-items">{{$t('no_items')}}</div>
+                </div>
 
-            <f-head-style :css="dCss"></f-head-style>
+                <div v-if="infiniteScroll && cItems.length" v-show="!disableInfiniteScroll">
+                    <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
+                        <pulse-loader color="#1969ff"></pulse-loader>
+                    </div>
+                </div>
+
+                <div v-if="loading && !cItems.length">
+                    <div class="f-loading-more">
+                        <pulse-loader color="#1969ff"></pulse-loader>
+                    </div>
+                </div>
+            </div>
         </div>
-    </f-card>
+        <slot name="after-table"></slot>
+
+        <f-head-style :css="dCss"></f-head-style>
+    </div>
 </template>
 
 <script>
@@ -119,7 +117,6 @@
     import {obj2css} from "../utils/index.js";
     import helpers from "../mixins/helpers.js";
     import events from "../mixins/events.js";
-    import FCard from "./FCard.vue";
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
     export default {
@@ -128,7 +125,6 @@
         ],
 
         components: {
-            FCard,
             FHeadStyle,
             FPagination,
             PulseLoader
@@ -253,12 +249,6 @@
                 default: false
             },
 
-            /** If `true`, f-card element will be without any style. */
-            fCardOff: {
-                type: Boolean,
-                default: true
-            },
-
             ...FPagination.props
         },
 
@@ -321,7 +311,6 @@
              */
             cCssClass() {
                 return {
-                    'f-card-on': !this.fCardOff,
                     'height-set': (this.height !== 'auto'),
                     'fixed-header': this.fixedHeader
                 }
@@ -555,7 +544,6 @@
             th {
                 color: #666;
                 background-color: $body-bg-color;
-                /*border-bottom: 1px solid #e6e6e6;*/
             }
         }
 
@@ -629,9 +617,30 @@
             text-align: center;
         }
 
-        &.f-card-on {
+        &.height-set {
+            .table-container {
+                overflow: auto;
+            }
+        }
+    }
+
+    .f-card {
+        .f-data-table {
             thead th {
                 background-color: #fff;
+                border-bottom: 1px solid $grey-color-semi;
+            }
+
+            tr {
+                td, th {
+                    &.f-col {
+                        padding-left: 0;
+                    }
+
+                    &.l-col {
+                        padding-right: 0;
+                    }
+                }
             }
 
             .mobile-view {
@@ -640,7 +649,7 @@
                     box-shadow: none;
                     margin-bottom: 1rem;
                     padding: 0 0 1rem 0;
-                    border-bottom: 1px solid #e6e6e6;
+                    border-bottom: 1px solid $grey-color-semi;
 
                     &:last-child {
                         border-bottom: none;
@@ -648,12 +657,6 @@
                         padding-bottom: 0;
                     }
                 }
-            }
-        }
-
-        &.height-set {
-            .table-container {
-                overflow: auto;
             }
         }
     }

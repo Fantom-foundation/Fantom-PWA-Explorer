@@ -82,10 +82,10 @@
         "balance": "Balance",
         "value_in_ftm": "Value in FTM",
         "value_in_usd": "Value in USD",
-        "fantom": "Fantom",
-        "delegated": "Delegated",
-        "pending_rewards": "Pending Rewards",
-        "claimed_rewards": "Claimed Rewards"
+        "available": "FTM Available",
+        "delegated": "FTM Delegated",
+        "pending_rewards": "FTM Pending Rewards",
+        "claimed_rewards": "FTM Claimed Rewards"
     },
     "view_block_list": {
         "title": "Blocks",

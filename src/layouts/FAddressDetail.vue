@@ -19,24 +19,26 @@
                 </div>
             </f-card>
 
-            <div class="assets">
-                <h2 class="no-margin">{{ $t('view_address_detail.assets') }}</h2>
+            <f-card class="f-subsection">
+                <h2>{{ $t('view_address_detail.assets') }} <span v-if="cAssetItems.length" class="f-records-count">({{ cAssetItems.length }})</span></h2>
+
                 <f-data-table
                     :columns="dAssetColumns"
                     :items="cAssetItems"
                     fixed-header
                 >
                 </f-data-table>
-            </div>
+            </f-card>
 
-            <div class="address-transactions">
-                <h2 class="no-margin">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
+            <f-card class="f-subsection">
+                <h2>{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
+
                 <f-transaction-list
                     :items="cTransactionItems"
                     :loading="cLoading"
                     @fetch-more="onFetchMore"
                 ></f-transaction-list>
-            </div>
+            </f-card>
         </template>
         <template v-else>
             <div class="query-error">{{ dAccountByAddressError }}</div>
@@ -209,7 +211,7 @@
                 const items = [];
 
                 if (cAccount) {
-                    items.push(this.getAssetItem(this.$t('view_address_detail.fantom'), cAccount.balance));
+                    items.push(this.getAssetItem(this.$t('view_address_detail.available'), cAccount.balance));
 
                     const {delegation} = cAccount;
 
@@ -321,8 +323,8 @@
             }
         }
 
-        .address-transactions, .assets {
-            margin-top: 32px;
+        > .f-card {
+            margin-bottom: 24px;
         }
     }
 </style>

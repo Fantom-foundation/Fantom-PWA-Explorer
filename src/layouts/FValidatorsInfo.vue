@@ -93,8 +93,8 @@
             <div class="query-error">{{ dValidatorsInfoError }}</div>
         </template>
 
-        <div class="validator-list">
-            <h2 class="no-margin">{{ $t('view_validator_list.validators') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
+        <div class="f-subsection">
+            <h2>{{ $t('view_validator_list.validators') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
 
             <f-validator-list
                 @records-count="onRecordsCount"
@@ -261,13 +261,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-    @import "../assets/scss/vars";
-
-    .f-validators-info {
-        .validator-list {
-            margin-top: 32px;
-        }
-    }
-</style>

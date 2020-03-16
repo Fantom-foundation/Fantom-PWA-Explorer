@@ -42,8 +42,9 @@
             </template>
         </f-card>
 
-        <div class="block-transactions" v-if="!dBlockByNumberError">
-            <h2 class="no-margin">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
+        <div class="f-subsection" v-if="!dBlockByNumberError">
+            <h2>{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
+
             <f-transaction-list
                 :items="cTransactionItems"
                 :hidden-columns="['block']"
@@ -176,13 +177,6 @@
                 text-align: center;
                 font-weight: bold;
                 font-size: $fs48;
-            }
-        }
-
-        .block-transactions {
-            margin-top: 32px;
-
-            .transaction-list-dt {
             }
         }
     }

@@ -46,6 +46,14 @@ a:not(.btn):hover {
     color: $grey-color;
 }
 
+.f-subsection {
+    padding-top: 24px;
+
+    > h2 {
+        margin: 0;
+    }
+}
+
 .query-error {
     color: $error-color-darker;
     background-color: $error-color-lightest;
@@ -57,5 +65,13 @@ a:not(.btn):hover {
     :root {
         //--f-header-height: 52px;
         --f-header-height: 60px;
+    }
+}
+
+@include media-max($bp-medium) {
+    .f-subsection {
+        > h2 {
+            margin-bottom: 16px;
+        }
     }
 }
