@@ -8,16 +8,16 @@
                 :loading="cLoading"
                 fixed-header
             >
-                <template v-slot:column-StakerAddress="{ value, item, column }">
+                <template v-slot:column-stakerAddress="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-4 f-row-label">{{ column.label }}:</div>
                         <div class="col break-word">
-                            <div v-if="item.Status === '0x1'" class="offline">{{ $t('view_validator_list.offline') }}</div>
+                            <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
                             {{ value | formatHash }}
                         </div>
                     </div>
                     <template v-else>
-                        <div v-if="item.Status === '0x1'" class="offline">{{ $t('view_validator_list.offline') }}</div>
+                        <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
                         {{ value | formatHash }}
                     </template>
                 </template>
@@ -60,50 +60,43 @@
         },
 
         apollo: {
-            epoch: {
-                query: gql`
-                    query Epoch {
-                        epoch(id:"0x4") {
-                            Id
-                            EndTime
-                            Duration
-                            EpochFee
-                            TotalBaseRewardWeight
-                            TotalTxRewardWeight
-                            BaseRewardPerSecond
-                            StakeTotalAmount
-                            DelegationsTotalAmount
-                            TotalSupply
-                        }
-                    }
-                `
-            },
             stakers: {
                 query: gql`
                     query Stakers {
                         stakers {
-                            Id
-                            StakerAddress
-                            Status
-                            CreatedTime
-                            StakeAmount
-                            DelegatedMe
+                            id
+                            stakerAddress
+                            isOffline
+                            isCheater
+                            createdTime
+                            stake
+                            delegatedMe
                         }
                     }
                 `,
                 result(_data, _key) {
+                    const totals = {
+                        selfStaked: 0,
+                        totalDelegated: 0,
+                        totalStaked: 0
+                    };
                     let data;
 
                     if (_key === 'stakers') {
                         data = _data.data.stakers;
 
                         data.forEach(_item => {
-                            _item.total_staked = WEIToFTM(_item.StakeAmount) + WEIToFTM(_item.DelegatedMe);
+                            _item.total_staked = WEIToFTM(_item.stake) + WEIToFTM(_item.delegatedMe);
+
+                            totals.selfStaked += parseFloat(numToFixed(WEIToFTM(_item.stake), 2));
+                            totals.totalDelegated += parseFloat(numToFixed(WEIToFTM(_item.delegatedMe), 2));
+                            totals.totalStaked += _item.total_staked;
                         });
 
                         this.dItems = data;
 
                         this.$emit('records-count', this.dItems.length);
+                        this.$emit('validator-list-totals', totals);
                     }
                 },
                 error(_error) {
@@ -118,35 +111,35 @@
                 dValidatorListError: '',
                 dColumns: [
                     {
-                        name: 'Id',
+                        name: 'id',
                         label: this.$t('view_validator_list.id'),
                         formatter: formatHexToInt,
                         width: '60px'
                     },
                     {
-                        name: 'StakerAddress',
+                        name: 'stakerAddress',
                         label: this.$t('view_validator_list.name'),
                         width: '200px',
                     },
 /*
                     {
-                        name: 'Status',
+                        name: 'isOffline',
                         // hidden: true,
                         formatter: formatHexToInt
                     },
 */
                     {
-                        name: 'CreatedTime',
+                        name: 'createdTime',
                         label: this.$t('view_validator_list.created_time'),
-                        formatter: _value => formatDate(timestampToDate(_value))
+                        formatter: _value => formatDate(timestampToDate(formatHexToInt(_value) / 1000000000))
                     },
                     {
-                        name: 'StakeAmount',
+                        name: 'stake',
                         label: this.$t('view_validator_list.stake_amount'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 2))
                     },
                     {
-                        name: 'DelegatedMe',
+                        name: 'delegatedMe',
                         label: this.$t('view_validator_list.delegated'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 2))
                     },
@@ -188,8 +181,10 @@
 <style lang="scss">
     @import "../assets/scss/vars";
 
-    .offline {
-        color: $error-color;
-        font-weight: bold;
+    .validator-list-dt {
+        .offline {
+            color: $error-color;
+            font-weight: bold;
+        }
     }
 </style>

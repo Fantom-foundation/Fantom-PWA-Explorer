@@ -45,6 +45,29 @@ export function formatDate(_value) {
 }
 
 /**
+ * @param {string|number} _value
+ * @return {string}
+ */
+export function formatDuration(_value) {
+    if (!_value) {
+        return '';
+    }
+
+    let timestamp = _value;
+
+    if (web3utils.isHexStrict(_value)) {
+        timestamp = formatHexToInt(_value);
+    }
+
+
+    if (timestamp) {
+        return `${parseInt(timestamp / 3600) % 60}h ${parseInt(timestamp / 60) % 60}m ${timestamp % 60}s`;
+    }
+
+    return '';
+}
+
+/**
  * @param {number} _number
  * @return {*}
  */
@@ -81,6 +104,7 @@ export function formatHexToInt(_value) {
         return '';
     }
 
+    // return web3utils.toBN(_value);
     return parseInt(_value, 16);
 }
 
@@ -100,5 +124,6 @@ export function numToFixed(_value, _digits) {
 }
 
 Vue.filter('formatDate', formatDate);
+Vue.filter('formatDuration', formatDuration);
 Vue.filter('formatHash', formatHash);
 Vue.filter('formatHexToInt', formatHexToInt);

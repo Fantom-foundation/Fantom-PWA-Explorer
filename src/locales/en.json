@@ -106,5 +106,18 @@
         "delegated": "Delegated (FTM)",
         "total_staked": "Total Staked (FTM)",
         "offline": "Offline"
+    },
+    "view_validators_info": {
+        "last_epoch": "Last Epoch",
+        "epoch_number": "Epoch Number",
+        "end_time": "End Time",
+        "duration": "Duration",
+        "staking": "Staking",
+        "total_self_staked": "Total Self-Staked",
+        "total_delegated": "Total Delegated",
+        "total_staked": "Total Staked",
+        "daily_rewards": "Daily Rewards",
+        "total_supply": "Total Supply",
+        "fee": "@:fee"
     }
 }
