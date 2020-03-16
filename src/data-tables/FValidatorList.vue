@@ -6,11 +6,12 @@
                 :items="dItems"
                 :mobile-view="cMobileView"
                 :loading="cLoading"
+                first-m-v-column-width="6"
                 fixed-header
             >
                 <template v-slot:column-stakerAddress="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col-6 f-row-label">{{ column.label }}:</div>
                         <div class="col break-word">
                             <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
                             {{ value | formatHash }}

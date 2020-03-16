@@ -7,19 +7,19 @@
                     <div class="col">
                         <div class="num-block">
                             <h2 class="h3">{{ $t('view_address_detail.value_in_ftm') }}</h2>
-                            <div class="num"><span v-show="cAccount">{{ Number(WEIToFTM(cAccount ? cAccount.balance : 1)).toFixed(2) }}</span></div>
+                            <div class="num"><span v-show="cAccount">{{ Number(WEIToFTM(cAccount ? cAccount.totalValue : 1)).toFixed(2) }}</span></div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="num-block">
                             <h2 class="h3">{{ $t('view_address_detail.value_in_usd') }}</h2>
-                            <div class="num"><span v-show="cAccount">{{ Number(FTMToUSD(WEIToFTM(cAccount ? cAccount.balance : 1))).toFixed(3) }}</span></div>
+                            <div class="num"><span v-show="cAccount">{{ Number(FTMToUSD(WEIToFTM(cAccount ? cAccount.totalValue : 1))).toFixed(3) }}</span></div>
                         </div>
                     </div>
                 </div>
             </f-card>
 
-            <f-card class="f-subsection">
+            <div class="f-subsection">
                 <h2>{{ $t('view_address_detail.assets') }} <span v-if="cAssetItems.length" class="f-records-count">({{ cAssetItems.length }})</span></h2>
 
                 <f-data-table
@@ -28,9 +28,9 @@
                     fixed-header
                 >
                 </f-data-table>
-            </f-card>
+            </div>
 
-            <f-card class="f-subsection">
+            <div class="f-subsection">
                 <h2>{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
 
                 <f-transaction-list
@@ -38,7 +38,7 @@
                     :loading="cLoading"
                     @fetch-more="onFetchMore"
                 ></f-transaction-list>
-            </f-card>
+            </div>
         </template>
         <template v-else>
             <div class="query-error">{{ dAccountByAddressError }}</div>
@@ -83,6 +83,7 @@
                         account (address: $address) {
                             address
                             balance
+                            totalValue
                             txCount
                             txList(cursor: $cursor, count: $count) {
                                 pageInfo {
@@ -324,7 +325,6 @@
         }
 
         > .f-card {
-            margin-bottom: 24px;
         }
     }
 </style>

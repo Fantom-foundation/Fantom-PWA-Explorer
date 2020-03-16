@@ -11,6 +11,10 @@
     --f-header-height: 72px;
 }
 
+main {
+    padding-bottom: 16px;
+}
+
 @include links() {
     text-decoration: none;
 }
@@ -47,10 +51,10 @@ a:not(.btn):hover {
 }
 
 .f-subsection {
-    padding-top: 24px;
+    padding-top: 16px;
 
     > h2 {
-        margin: 0;
+        margin: 0 0 8px 0;
     }
 }
 

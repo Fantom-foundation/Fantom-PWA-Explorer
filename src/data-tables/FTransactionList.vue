@@ -8,6 +8,7 @@
                 :mobile-view="cMobileView"
                 :disable-infinite-scroll="!dHasNext"
                 :loading="cLoading"
+                :f-card-off="fCardOff"
                 infinite-scroll
                 fixed-header
                 @fetch-more="onFetchMore"
@@ -157,6 +158,12 @@
 
             /** Display loading message. */
             loading: {
+                type: Boolean,
+                default: false
+            },
+
+            /** If `true`, f-card element in data table will be without any style. */
+            fCardOff: {
                 type: Boolean,
                 default: false
             }
