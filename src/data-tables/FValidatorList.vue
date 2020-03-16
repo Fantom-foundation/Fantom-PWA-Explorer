@@ -70,6 +70,7 @@
                             isCheater
                             createdTime
                             stake
+                            totalStake
                             delegatedMe
                         }
                     }
@@ -86,11 +87,11 @@
                         data = _data.data.stakers;
 
                         data.forEach(_item => {
-                            _item.total_staked = WEIToFTM(_item.stake) + WEIToFTM(_item.delegatedMe);
+                            // _item.total_staked = WEIToFTM(_item.stake) + WEIToFTM(_item.delegatedMe);
 
                             totals.selfStaked += parseFloat(numToFixed(WEIToFTM(_item.stake), 2));
                             totals.totalDelegated += parseFloat(numToFixed(WEIToFTM(_item.delegatedMe), 2));
-                            totals.totalStaked += _item.total_staked;
+                            totals.totalStaked += parseFloat(numToFixed(WEIToFTM(_item.totalStake), 2));
                         });
 
                         this.dItems = data;
@@ -135,19 +136,22 @@
                     },
                     {
                         name: 'stake',
-                        label: this.$t('view_validator_list.stake_amount'),
-                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 2))
+                        label: this.$t('view_validator_list.self_staked'),
+                        css: {textAlign: 'right'},
+                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2)
                     },
                     {
                         name: 'delegatedMe',
                         label: this.$t('view_validator_list.delegated'),
-                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 2))
+                        css: {textAlign: 'right'},
+                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2)
                     },
                     // computed
                     {
-                        name: 'total_staked',
+                        name: 'totalStake',
                         label: this.$t('view_validator_list.total_staked'),
-                        formatter: _value => formatNumberByLocale(numToFixed(_value, 2))
+                        css: {textAlign: 'right'},
+                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2)
                     }
                 ]
             }

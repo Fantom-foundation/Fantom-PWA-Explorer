@@ -40,8 +40,8 @@ export const routes = [
         component: BlockDetail
     },
     {
-        name: 'validators',
-        path: '/validators',
+        name: 'staking',
+        path: '/staking',
         component: Validators
     },
     {

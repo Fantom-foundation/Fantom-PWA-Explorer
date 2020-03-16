@@ -12,6 +12,7 @@
     "error": "Error",
     "pending": "Pending",
     "transactions": "Transactions",
+    "validators": "Validators",
 
     "navigation": [
         {
@@ -27,8 +28,8 @@
             "title": "Blocks"
         },
         {
-            "url": "/validators",
-            "title": "Validators"
+            "url": "/staking",
+            "title": "Staking"
         }
     ],
 
@@ -39,7 +40,7 @@
         "title": "Home",
         "search_input_placeholder": "Search by addresses, transactions, and blocks",
         "blocks": "Blocks",
-        "validators": "Validators",
+        "validators": "@:validators",
         "accounts": "Accounts",
         "transactions": "@:transactions"
     },
@@ -76,8 +77,15 @@
     },
     "view_address_detail": {
         "title": "Address",
+        "assets": "Assets",
+        "asset": "Asset",
+        "balance": "Balance",
         "value_in_ftm": "Value in FTM",
-        "value_in_usd": "Value in USD"
+        "value_in_usd": "Value in USD",
+        "fantom": "Fantom",
+        "delegated": "Delegated",
+        "pending_rewards": "Pending Rewards",
+        "claimed_rewards": "Claimed Rewards"
     },
     "view_block_list": {
         "title": "Blocks",
@@ -98,11 +106,12 @@
         "block_transactions": "@:transactions"
     },
     "view_validator_list": {
-        "title": "Validators",
-        "id": "Id",
+        "title": "Staking",
+        "validators": "@:validators",
+        "id": "ID",
         "name": "Name",
         "created_time": "Created Time",
-        "stake_amount": "Stake Amount (FTM)",
+        "self_staked": "Self-Staked (FTM)",
         "delegated": "Delegated (FTM)",
         "total_staked": "Total Staked (FTM)",
         "offline": "Offline"
@@ -112,11 +121,12 @@
         "epoch_number": "Epoch Number",
         "end_time": "End Time",
         "duration": "Duration",
-        "staking": "Staking",
+        "staking_summary": "Staking Summary",
         "total_self_staked": "Total Self-Staked",
         "total_delegated": "Total Delegated",
         "total_staked": "Total Staked",
         "daily_rewards": "Daily Rewards",
+        "current_reward_rate": "Current Reward Rate",
         "total_supply": "Total Supply",
         "fee": "@:fee"
     }

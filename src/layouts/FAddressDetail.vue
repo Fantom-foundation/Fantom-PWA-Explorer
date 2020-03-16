@@ -19,6 +19,16 @@
                 </div>
             </f-card>
 
+            <div class="assets">
+                <h2 class="no-margin">{{ $t('view_address_detail.assets') }}</h2>
+                <f-data-table
+                    :columns="dAssetColumns"
+                    :items="cAssetItems"
+                    fixed-header
+                >
+                </f-data-table>
+            </div>
+
             <div class="address-transactions">
                 <h2 class="no-margin">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
                 <f-transaction-list
@@ -40,9 +50,11 @@
     import { WEIToFTM, FTMToUSD } from "../utils/transactions.js";
     import FTransactionList from "../data-tables/FTransactionList.vue";
     import {formatHexToInt} from "../filters.js";
+    import FDataTable from "../components/FDataTable.vue";
 
     export default {
         components: {
+            FDataTable,
             FTransactionList,
             FCard
         },
@@ -93,6 +105,22 @@
                                     }
                                 }
                             }
+                            staker {
+                                id
+                                createdTime
+                                isActive
+                            }
+                            delegation {
+                                toStakerId
+                                createdTime
+                                amount
+                                claimedReward
+                                pendingRewards {
+                                    amount
+                                    fromEpoch
+                                    toEpoch
+                                }
+                            }
                         }
                     }
                 `,
@@ -112,7 +140,28 @@
         data() {
             return {
                 dRecordsCount: 0,
-                dAccountByAddressError: ''
+                dAccountByAddressError: '',
+                dAssetColumns: [
+                    {
+                        name: 'asset',
+                        label: this.$t('view_address_detail.asset')
+                    },
+                    {
+                        name: 'balance',
+                        label: this.$t('view_address_detail.balance'),
+                        css: {textAlign: 'right'}
+                    },
+                    {
+                        name: 'valueInFTM',
+                        label: this.$t('view_address_detail.value_in_ftm'),
+                        css: {textAlign: 'right'}
+                    },
+                    {
+                        name: 'valueInUSD',
+                        label: this.$t('view_address_detail.value_in_usd'),
+                        css: {textAlign: 'right'}
+                    }
+                ]
             }
         },
 
@@ -152,6 +201,32 @@
                 };
             },
 
+            /**
+             * Get items for assets data table.
+             */
+            cAssetItems() {
+                const {cAccount} = this;
+                const items = [];
+
+                if (cAccount) {
+                    items.push(this.getAssetItem(this.$t('view_address_detail.fantom'), cAccount.balance));
+
+                    const {delegation} = cAccount;
+
+                    if (delegation) {
+                        items.push(this.getAssetItem(this.$t('view_address_detail.delegated'), delegation.amount));
+                        items.push(this.getAssetItem(this.$t('view_address_detail.pending_rewards'), delegation.pendingRewards.amount));
+                        items.push(this.getAssetItem(this.$t('view_address_detail.claimed_rewards'), delegation.claimedReward));
+                    } else {
+                        items.push(this.getAssetItem(this.$t('view_address_detail.delegated'), 0));
+                        items.push(this.getAssetItem(this.$t('view_address_detail.pending_rewards'), 0));
+                        items.push(this.getAssetItem(this.$t('view_address_detail.claimed_rewards'), 0));
+                    }
+                }
+
+                return items;
+            },
+
             cLoading() {
                 return this.$apollo.queries.account.loading;
             }
@@ -163,9 +238,44 @@
         },
 
         methods: {
+            /**
+             * Get one item for asset data table.
+             *
+             * @param {string} _assetName
+             * @param {string|number} _value
+             */
+            getAssetItem(_assetName, _value) {
+                return {
+                    asset: _assetName,
+                    balance: this.toFTM(_value),
+                    valueInFTM: this.toFTM(_value),
+                    valueInUSD: this.toUSD(_value)
+                }
+            },
+
+            /**
+             * Convert value to FTM.
+             *
+             * @param {string|number} _value
+             * @return {string}
+             */
+            toFTM(_value) {
+                return Number(WEIToFTM(_value)).toFixed(2);
+            },
+
+            /**
+             * Convert value to USD.
+             *
+             * @param {string|number} _value
+             * @return {string}
+             */
+            toUSD(_value) {
+                return Number(FTMToUSD(WEIToFTM(_value))).toFixed(3);
+            },
+
             onFetchMore() {
                 const {cAccount} = this;
-                const txList = (cAccount ? cAccount.txList : null)
+                const txList = (cAccount ? cAccount.txList : null);
 
                 if (txList && txList.pageInfo && txList.pageInfo.hasNext) {
                     const cursor = txList.pageInfo.last;
@@ -211,7 +321,7 @@
             }
         }
 
-        .address-transactions {
+        .address-transactions, .assets {
             margin-top: 32px;
         }
     }

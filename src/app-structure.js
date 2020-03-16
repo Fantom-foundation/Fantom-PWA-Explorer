@@ -38,7 +38,7 @@ const appStructure = [
                 ]
             },
             {
-                id: 'validators',
+                id: 'staking',
                 translation: 'view_validator_list.title'
             }
         ]

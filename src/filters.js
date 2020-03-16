@@ -1,6 +1,31 @@
 import Vue from 'vue';
 import web3utils from 'web3-utils';
 
+const zeroString = '00000000';
+
+/**
+ * @param {string|number} _number
+ * @param {int} _digits
+ * @return {string}
+ */
+export function addZeros(_number, _digits) {
+    // TODO: use i18n current locale
+    const parts =(new Intl.NumberFormat('en-GB')).formatToParts(_number);
+    let number = _number;
+
+    if (parts.length < 2) {
+        // console.log(parts.length, parts, _digits, Intl);
+        number = `${number}.${zeroString.slice(0, _digits)}`;
+    } else if (parts[parts.length - 2].type !== 'decimal') {
+        number = `${parts.map(_item => _item.value).join('')}.${zeroString.slice(0, _digits)}`;
+    } else {
+        const len = parts[parts.length - 1].value.length;
+        number = `${parts.map(_item => _item.value).join('')}${len < _digits ? `${zeroString.slice(0, _digits - len)}`  : ''}`;
+    }
+
+    return number;
+}
+
 /**
  * @param {string|number} _value
  * @return {Date|null}
@@ -69,11 +94,18 @@ export function formatDuration(_value) {
 
 /**
  * @param {number} _number
+ * @param {number} [_digits]
  * @return {*}
  */
-export function formatNumberByLocale(_number) {
+export function formatNumberByLocale(_number, _digits) {
     // TODO: use i18n current locale
-    return new Intl.NumberFormat('en-GB').format(_number);
+    let number = (new Intl.NumberFormat('en-GB')).format(_number);
+
+    if (_digits) {
+        number = addZeros(_number, _digits);
+    }
+
+    return number;
 }
 
 /**

@@ -4,7 +4,7 @@
             <div class="row f-data-layout equal-height collapse-md">
                 <div class="col">
                     <f-card>
-                        <h2>{{ $t('view_validators_info.staking') }}</h2>
+                        <h2>{{ $t('view_validators_info.staking_summary') }}</h2>
 
                         <div class="row no-collapse">
                             <div class="col-5 f-row-label">{{ $t('view_validators_info.total_self_staked') }}:</div>
@@ -35,9 +35,9 @@
                         </div>
 
                         <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.total_supply') }}:</div>
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.current_reward_rate') }}:</div>
                             <div class="col">
-                                <div v-show="dTotalSupply">{{ formatNumberByLocale(numToFixed(dTotalSupply, 2)) }} FTM</div>
+                                <div v-show="cCurrentRewardRate">{{ formatNumberByLocale(numToFixed(cCurrentRewardRate, 2)) }}%</div>
                             </div>
                         </div>
                     </f-card>
@@ -78,6 +78,12 @@
                             </div>
                         </div>
 
+                        <div class="row no-collapse">
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.total_supply') }}:</div>
+                            <div class="col">
+                                <div v-show="dTotalSupply">{{ formatNumberByLocale(numToFixed(dTotalSupply, 2)) }} FTM</div>
+                            </div>
+                        </div>
                     </f-card>
                 </div>
             </div>
@@ -87,11 +93,15 @@
             <div class="query-error">{{ dValidatorsInfoError }}</div>
         </template>
 
-        <f-validator-list
-            @records-count="onRecordsCount"
-            @validator-list-totals="onValidatorListTotals"
-        >
-        </f-validator-list>
+        <div class="validator-list">
+            <h2 class="no-margin">{{ $t('view_validator_list.validators') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
+
+            <f-validator-list
+                @records-count="onRecordsCount"
+                @validator-list-totals="onValidatorListTotals"
+            >
+            </f-validator-list>
+        </div>
     </div>
 </template>
 
@@ -179,7 +189,8 @@
                 dValidatorsInfoError: '',
                 dTotals: {},
                 dDailyRewards: 1423872,
-                dTotalSupply: 0
+                dTotalSupply: 0,
+                dRecordsCount: 0
             }
         },
 
@@ -210,17 +221,28 @@
                 }
 
                 return 0;
+            },
+
+            cCurrentRewardRate() {
+                const {dDailyRewards} = this;
+                const {dTotalSupply} = this;
+                let rate = 0;
+
+                console.log('ddd', dDailyRewards, dTotalSupply);
+                if (dDailyRewards && dTotalSupply) {
+                    return ((dDailyRewards * 365) / dTotalSupply) * 100;
+                }
+
+                return rate;
             }
         },
 
         methods: {
             /**
-             * Retrigger `records-count` event.
-             *
              * @param {int} _num
              */
             onRecordsCount(_num) {
-                this.$emit('records-count', _num);
+                this.dRecordsCount = _num;
             },
 
             onValidatorListTotals(_totals) {
@@ -245,8 +267,8 @@
     @import "../assets/scss/vars";
 
     .f-validators-info {
-        .validator-list-dt {
-            margin-top: 16px;
+        .validator-list {
+            margin-top: 32px;
         }
     }
 </style>
