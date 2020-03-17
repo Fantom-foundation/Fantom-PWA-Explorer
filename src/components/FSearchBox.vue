@@ -11,7 +11,7 @@
                 @focus="onFocus"
                 @blur="onBlur"
             >
-            <button type="submit" class="light large same-size round" :class="{'no-hover': expandable}">
+            <button type="submit" class="light large same-size round" :class="{'no-hover': expandable}" :aria-label="$t('view_home.search_button_label')">
                 <icon data="@/assets/svg/search.svg" width="20" height="20"></icon>
             </button>
         </form>

@@ -13,6 +13,7 @@
     "pending": "Pending",
     "transactions": "Transactions",
     "validators": "Validators",
+    "back_to_home": "Back to home",
 
     "navigation": [
         {
@@ -39,15 +40,17 @@
     "view_home": {
         "title": "Home",
         "search_input_placeholder": "Search by addresses, transactions, and blocks",
+        "search_button_label": "Search",
         "blocks": "Blocks",
         "validators": "@:validators",
         "accounts": "Accounts",
-        "transactions": "@:transactions"
+        "transactions": "@:transactions",
+        "back_to_home": "@:back_to_home"
     },
     "view_not_found": {
         "title": "Page not found :(",
         "text": "Looks like you've followed a broken link or entered a URL that doesn't exist on this site.",
-        "link_title": "Back to home"
+        "link_title": "@:back_to_home"
     },
     "view_transaction_list": {
         "title": "Transactions",

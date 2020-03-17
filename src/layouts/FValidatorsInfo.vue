@@ -1,7 +1,7 @@
 <template>
     <div class="f-validators-info">
         <template v-if="!dValidatorsInfoError">
-            <div class="row f-data-layout equal-height collapse-md">
+            <div class="row f-data-layout equal-height no-vert-col-padding collapse-md">
                 <div class="col">
                     <f-card>
                         <h2>{{ $t('view_validators_info.staking_summary') }}</h2>
