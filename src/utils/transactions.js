@@ -1,7 +1,6 @@
 import web3utils from 'web3-utils';
 
 const WEI_IN_FTM = 1000000000000000000;
-export const tokenPrice = 0.002;  // temporary
 
 /**
  * @return {number}
@@ -19,10 +18,11 @@ export function FTMToWEI(_value) {
 
 /**
  * @param {*} _value
+ * @param {number} [_tokenPrice]
  * @return {number}
  */
-export function FTMToUSD(_value) {
-    return _value * tokenPrice;
+export function FTMToUSD(_value, _tokenPrice = 0.002) {
+    return _value * _tokenPrice;
 }
 
 /**

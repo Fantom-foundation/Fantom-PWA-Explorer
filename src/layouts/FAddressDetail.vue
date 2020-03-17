@@ -273,7 +273,7 @@
              * @return {string}
              */
             toUSD(_value) {
-                return formatNumberByLocale(numToFixed(FTMToUSD(WEIToFTM(_value)), 2), 2);
+                return formatNumberByLocale(numToFixed(FTMToUSD(WEIToFTM(_value), this.$store.state.tokenPrice), 2), 2);
             },
 
             onFetchMore() {
@@ -320,7 +320,7 @@
             .num {
                 text-align: center;
                 font-weight: bold;
-                font-size: $fs48;
+                font-size: $fs36;
             }
         }
 

@@ -22,14 +22,50 @@
     import FBreakpoints from "./components/FBreakpoints.vue";
     import FHeader from "./layouts/FHeader.vue";
     import FFooter from "./layouts/FFooter.vue";
+    import gql from 'graphql-tag';
 
     export default {
         name: 'App',
+
         components: {
             FBreakpoint,
             FBreakpoints,
             FHeader,
             FFooter
+        },
+
+        apollo: {
+            price: {
+                query: gql`
+                    query Price($to: String!) {
+                        price(to: $to) {
+                            price
+                            open24
+                            high24
+                            low24
+                            change24
+                            changePct24
+                            volume24
+                            marketCap
+                            lastUpdate
+                        }
+                    }
+                `,
+
+                result(_data) {
+                    let tokenPrice =  parseFloat(_data.data.price.price);
+
+                    tokenPrice = (parseInt(tokenPrice * 100000) / 100000);
+
+                    this.$store.commit('setTokenPrice', tokenPrice);
+                },
+
+                variables() {
+                    return {
+                        to: 'USD'
+                    }
+                }
+            }
         }
     }
 </script>
@@ -52,17 +88,5 @@
     .narrow-container {
         padding-top: 1rem;
         padding-bottom: 1rem;
-    }
-
-    // TMP
-    .f-chip {
-        display: inline-block;
-        padding: 4px 8px;
-        color: #fff;
-        background-color: $theme-color;
-        border-radius: 4px;
-        margin-right: 2px;
-        margin-bottom: 2px;
-        font-size: 0.85em;
     }
 </style>
