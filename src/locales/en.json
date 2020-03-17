@@ -132,5 +132,21 @@
         "current_reward_rate": "Current Reward Rate",
         "total_supply": "Total Supply",
         "fee": "@:fee"
+    },
+    "view_validator_detail": {
+        "title": "Validator detail",
+        "address": "Delegate address",
+        "start_time": "Staking start time",
+        "start_epoch": "Staking start epoch",
+        "validating_power": "Validating power",
+        "amount_staked": "Amount staked",
+        "amount_delegated": "Amount delegated",
+        "staking_total": "Staking total",
+        "delegations": "Delegations"
+    },
+    "delegation_list_dt": {
+        "address": "Address",
+        "created": "Created (Epoch, Time)",
+        "amount": "Amount (FTM)"
     }
 }

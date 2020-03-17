@@ -7,6 +7,7 @@ import AddressDetail from "./views/AddressDetail.vue";
 import Blocks from "./views/Blocks.vue";
 import BlockDetail from "./views/BlockDetail.vue";
 import Validators from "./views/Validators.vue";
+import ValidatorDetail from "./views/ValidatorDetail.vue";
 
 export const routes = [
     {
@@ -43,6 +44,11 @@ export const routes = [
         name: 'staking',
         path: '/staking',
         component: Validators
+    },
+    {
+        name: 'validator-detail',
+        path: '/validator/:address',
+        component: ValidatorDetail
     },
     {
         name: 'data-table-playground',

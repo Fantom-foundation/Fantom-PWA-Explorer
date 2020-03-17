@@ -39,7 +39,13 @@ const appStructure = [
             },
             {
                 id: 'staking',
-                translation: 'view_validator_list.title'
+                translation: 'view_validator_list.title',
+                _c: [
+                    {
+                        id: 'validator-detail',
+                        translation: 'view_validator_detail.title'
+                    }
+                ]
             }
         ]
     }

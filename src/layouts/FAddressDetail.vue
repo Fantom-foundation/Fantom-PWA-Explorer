@@ -7,13 +7,13 @@
                     <div class="col">
                         <div class="num-block">
                             <h2 class="h3">{{ $t('view_address_detail.value_in_ftm') }}</h2>
-                            <div class="num"><span v-show="cAccount">{{ Number(WEIToFTM(cAccount ? cAccount.totalValue : 1)).toFixed(2) }}</span></div>
+                            <div class="num"><span v-show="cAccount">{{ toFTM(cAccount ? cAccount.totalValue : 1) }}</span></div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="num-block">
                             <h2 class="h3">{{ $t('view_address_detail.value_in_usd') }}</h2>
-                            <div class="num"><span v-show="cAccount">{{ Number(FTMToUSD(WEIToFTM(cAccount ? cAccount.totalValue : 1))).toFixed(3) }}</span></div>
+                            <div class="num"><span v-show="cAccount">{{ toUSD(cAccount ? cAccount.totalValue : 1) }}</span></div>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
     import gql from 'graphql-tag';
     import { WEIToFTM, FTMToUSD } from "../utils/transactions.js";
     import FTransactionList from "../data-tables/FTransactionList.vue";
-    import {formatHexToInt} from "../filters.js";
+    import {formatHexToInt, numToFixed, formatNumberByLocale} from "../filters.js";
     import FDataTable from "../components/FDataTable.vue";
 
     export default {
@@ -263,7 +263,7 @@
              * @return {string}
              */
             toFTM(_value) {
-                return Number(WEIToFTM(_value)).toFixed(2);
+                return formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2);
             },
 
             /**
@@ -273,7 +273,7 @@
              * @return {string}
              */
             toUSD(_value) {
-                return Number(FTMToUSD(WEIToFTM(_value))).toFixed(3);
+                return formatNumberByLocale(numToFixed(FTMToUSD(WEIToFTM(_value)), 2), 2);
             },
 
             onFetchMore() {

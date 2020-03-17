@@ -81,10 +81,10 @@
                 <template v-slot:column-amount="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-4 f-row-label">{{ column.label }}:</div>
-                        <div class="col">{{ numToFixed(WEIToFTM(value), 2) }}</div>
+                        <div class="col">{{ formatNumberByLocale(numToFixed(WEIToFTM(value), 2), 2) }}</div>
                     </div>
                     <template v-else>
-                        {{ numToFixed(WEIToFTM(value), 2) }}
+                        {{ formatNumberByLocale(numToFixed(WEIToFTM(value), 2), 2) }}
                     </template>
                 </template>
 
@@ -112,7 +112,7 @@
     import FDataTable from "../components/FDataTable.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
-    import {formatHexToInt, timestampToDate, numToFixed} from "../filters.js";
+    import {formatHexToInt, timestampToDate, numToFixed, formatNumberByLocale} from "../filters.js";
 
     export default {
         components: {
@@ -377,7 +377,8 @@
 
             WEIToFTM,
             timestampToDate,
-            numToFixed
+            numToFixed,
+            formatNumberByLocale
         }
     }
 </script>

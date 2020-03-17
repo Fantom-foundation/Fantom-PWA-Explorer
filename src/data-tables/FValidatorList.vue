@@ -14,12 +14,12 @@
                         <div class="col-6 f-row-label">{{ column.label }}:</div>
                         <div class="col break-word">
                             <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
-                            {{ value | formatHash }}
+                            <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value | formatHash }}</router-link>
                         </div>
                     </div>
                     <template v-else>
                         <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
-                        {{ value | formatHash }}
+                        <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value | formatHash }}</router-link>
                     </template>
                 </template>
             </f-data-table>

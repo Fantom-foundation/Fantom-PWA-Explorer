@@ -14,8 +14,8 @@ export function addZeros(_number, _digits) {
     let number = _number;
 
     if (parts.length < 2) {
-        // console.log(parts.length, parts, _digits, Intl);
-        number = `${number}.${zeroString.slice(0, _digits)}`;
+        // number = `${number}.${zeroString.slice(0, _digits)}`;
+        number = `${parts[0].value}.${zeroString.slice(0, _digits)}`;
     } else if (parts[parts.length - 2].type !== 'decimal') {
         number = `${parts.map(_item => _item.value).join('')}.${zeroString.slice(0, _digits)}`;
     } else {
@@ -51,22 +51,27 @@ export function timestampToDate(_value) {
 
 /**
  * @param {string|Date} _value
+ * @param {boolean} [_notWeekday]
  * @return {string}
  */
-export function formatDate(_value) {
+export function formatDate(_value, _notWeekday) {
     if (!_value) {
         return '';
     }
 
     const date = (_value instanceof Date ? _value : new Date(_value));
-
-    // TODO: use i18n current locale
-    return date.toLocaleDateString('en-GB', {
-        weekday: 'short',
+    const options = {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
-    });
+    };
+
+    if (!_notWeekday) {
+        options.weekday = 'short';
+    }
+
+    // TODO: use i18n current locale
+    return date.toLocaleDateString('en-GB', options);
 }
 
 /**
