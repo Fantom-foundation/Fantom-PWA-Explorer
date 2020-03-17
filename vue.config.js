@@ -4,6 +4,16 @@ const svgFilePath = path.join(__dirname, './src/assets/svg');
 module.exports = {
     publicPath: '',
 
+    pwa: {
+        name: 'Fantom Explorer',
+        themeColor: '#1969ff',
+        msTileColor: '#1969ff',
+        assetsVersion: '3',
+        manifestOptions: {
+            background_color: '#1969ff'
+        }
+    },
+
     pluginOptions: {
         i18n: {
             locale: 'en',

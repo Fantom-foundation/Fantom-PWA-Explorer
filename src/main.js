@@ -8,6 +8,7 @@ import '@/plugins/vue-svgicon.js';
 import '@/plugins/vue-observe-visibility.js';
 import {store} from "./store";
 import './filters.js';
+import './registerServiceWorker'
 
 
 Vue.config.productionTip = false;

@@ -40,14 +40,6 @@
                     query Price($to: String!) {
                         price(to: $to) {
                             price
-                            open24
-                            high24
-                            low24
-                            change24
-                            changePct24
-                            volume24
-                            marketCap
-                            lastUpdate
                         }
                     }
                 `,
