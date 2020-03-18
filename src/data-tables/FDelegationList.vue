@@ -18,18 +18,6 @@
                     <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
                 </template>
             </template>
-
-            <template v-slot:column-createdTime="{ value, item, column }">
-                <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-5 f-row-label">{{ column.label }}:</div>
-                    <div class="col break-word">
-                        {{ item.createdEpoch | formatHexToInt }}, {{ formatDate(timestampToDate(formatHexToInt(value) / 1000000000), true) }}
-                    </div>
-                </div>
-                <template v-else>
-                    {{ item.createdEpoch | formatHexToInt }}, {{ formatDate(timestampToDate(formatHexToInt(value) / 1000000000), true) }}
-                </template>
-            </template>
         </f-data-table>
     </div>
 </template>
@@ -78,7 +66,13 @@
                     },
                     {
                         name: 'createdTime',
-                        label: this.$t('delegation_list_dt.created')
+                        label: this.$t('delegation_list_dt.created_on'),
+                        formatter: _value => formatDate(timestampToDate(formatHexToInt(_value) / 1000000000), true)
+                    },
+                    {
+                        name: 'createdEpoch',
+                        label: this.$t('delegation_list_dt.created_epoch'),
+                        formatter: formatHexToInt
                     },
                     {
                         name: 'amount',

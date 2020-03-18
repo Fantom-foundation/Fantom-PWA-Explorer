@@ -14,6 +14,7 @@
     "transactions": "Transactions",
     "validators": "Validators",
     "back_to_home": "Back to home",
+    "created_on": "Created On",
 
     "navigation": [
         {
@@ -113,7 +114,7 @@
         "validators": "@:validators",
         "id": "ID",
         "name": "Name",
-        "created_time": "Created Time",
+        "created_on": "@:created_on",
         "self_staked": "Self-Staked (FTM)",
         "delegated": "Delegated (FTM)",
         "total_staked": "Total Staked (FTM)",
@@ -146,7 +147,8 @@
     },
     "delegation_list_dt": {
         "address": "Address",
-        "created": "Created (Epoch, Time)",
+        "created_on": "@:created_on",
+        "created_epoch": "Created Epoch",
         "amount": "Amount (FTM)"
     }
 }

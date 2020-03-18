@@ -132,7 +132,7 @@
 */
                     {
                         name: 'createdTime',
-                        label: this.$t('view_validator_list.created_time'),
+                        label: this.$t('view_validator_list.created_on'),
                         formatter: _value => formatDate(timestampToDate(formatHexToInt(_value) / 1000000000))
                     },
                     {
