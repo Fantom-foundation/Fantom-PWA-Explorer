@@ -52,7 +52,7 @@
     @import "../assets/scss/vars";
 
     .f-breadcrumbs {
-        color: #666;
+        color: $grey-color-lighter;
         text-align: right;
         font-size: 0.9em;
 

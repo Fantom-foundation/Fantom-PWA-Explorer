@@ -132,11 +132,11 @@
         .pages {
             display: inline-block;
             vertical-align: middle;
-            padding: 0 1rem;
+            padding: 0 16px;
         }
 
         button {
-            margin-right: 0.25rem;
+            margin-right: 4px;
 
             &:last-child {
                 margin-right: 0;

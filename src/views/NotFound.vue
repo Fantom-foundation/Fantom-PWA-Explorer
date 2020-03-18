@@ -28,10 +28,10 @@
         .message {
             width: 90%;
             max-width: 400px;
-            padding: 1.5rem 2rem;
-            border-radius: 0.5rem;
+            padding: 24px 32px;
+            border-radius: 8px;
             background-color: #fff;
-            margin: 2rem auto 0 auto;
+            margin: 32px auto 0 auto;
 
             h1 {
                 font-weight: bold;
@@ -41,7 +41,7 @@
 
             .router-link {
                 display: block;
-                margin-top: 1rem;
+                margin-top: 16px;
             }
         }
     }

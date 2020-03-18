@@ -286,6 +286,10 @@
             box-shadow: $elev3-shadow;
             /*background-color: transparent;*/
             /*border-color: transparent;*/
+
+            &::placeholder {
+                color: $grey-color-lighter;
+            }
         }
 
         button[type="submit"] {
@@ -322,7 +326,7 @@
                     /*padding-right: 48px;*/
 
                     &::placeholder {
-                        color: #666;
+                        color: $grey-color-lighter;
                     }
                 }
             }

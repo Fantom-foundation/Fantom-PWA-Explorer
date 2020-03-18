@@ -37,17 +37,17 @@ a:not(.btn):hover {
 }
 
 .f-data-layout {
-    color: #000;
+    //color: #000;
 
     .f-row-label {
-        color: #666;
+        color: $grey-color-lighter;
         font-weight: bold;
         /*font-style: italic;*/
     }
 }
 
 .f-records-count {
-    color: $grey-color;
+    color: $grey-color-lighter;
 }
 
 .f-subsection {

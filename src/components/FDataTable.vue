@@ -519,7 +519,7 @@
 
         .before-table {
             text-align: right;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
         }
 
         table {
@@ -558,7 +558,7 @@
 
         thead {
             th {
-                color: #666;
+                color: $grey-color-lighter;
                 background-color: $body-bg-color;
             }
         }
@@ -582,11 +582,11 @@
 
         .mobile-view {
             .mobile-item {
-                padding: 0.5rem;
+                padding: 8px;
                 background-color: #fff;
-                border-radius: 0.5rem;
+                border-radius: 8px;
                 box-shadow: $elev2-shadow;
-                margin-bottom: 1rem;
+                margin-bottom: 16px;
 
                 > div {
                     width: 100% !important;
@@ -615,7 +615,7 @@
                 margin-left: -60px;
                 width: 120px;
                 text-align: center;
-                padding: 0.5rem 1rem;
+                padding: 8px 16px;
                 color: #fff;
                 border-radius: 4px;
                 background-color: #555;
@@ -658,8 +658,8 @@
                 .mobile-item {
                     border-radius: 0;
                     box-shadow: none;
-                    margin-bottom: 1rem;
-                    padding: 0 0 1rem 0;
+                    margin-bottom: 16px;
+                    padding: 0 0 16px 0;
                     border-bottom: 1px solid $grey-color-semi;
 
                     &:last-child {

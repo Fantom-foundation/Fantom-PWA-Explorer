@@ -78,7 +78,7 @@
     }
 
     .narrow-container {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
+        padding-top: 16px;
+        padding-bottom: 16px;
     }
 </style>

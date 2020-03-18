@@ -55,12 +55,12 @@
                 text-align: right;
                 li {
                     display: inline-block;
-                    margin-left: 0.25rem;
+                    margin-left: 4px;
 
                     @include links() {
                         color: $secondary-color-lighter;
                         display: inline-block;
-                        padding: 1rem;
+                        padding: 16px;
                         text-decoration: none;
                         transition: all $transition-length ease;
                         border-radius: $border-radius;

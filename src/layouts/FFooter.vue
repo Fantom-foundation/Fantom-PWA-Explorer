@@ -29,8 +29,8 @@
         background-color: $theme-color;
 
         .narrow-container {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
+            padding-top: 8px;
+            padding-bottom: 8px;
         }
 
         @include links() {
