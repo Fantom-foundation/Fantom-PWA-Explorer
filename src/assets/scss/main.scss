@@ -45,9 +45,11 @@ a:not(.btn):hover {
         /*font-style: italic;*/
     }
 
-    @include flexbox-cols() {
-        //padding: 0 $grid-layout-gutter-width-2x $grid-layout-gutter-width-4x;
-        padding: 12px;
+    &:not(.normal-padding) {
+        @include flexbox-cols() {
+            //padding: 0 $grid-layout-gutter-width-2x $grid-layout-gutter-width-4x;
+            padding: 12px;
+        }
     }
 }
 

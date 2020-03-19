@@ -68,7 +68,7 @@
                     </div>
                     <template v-else>
                         <a v-if="value" :href="value" target="_blank" rel="nofollow">
-                            <icon data="@/assets/svg/external-link-alt.svg" width="20" height="20"></icon>
+                            <icon data="@/assets/svg/external-link-alt.svg"></icon>
                         </a>
                     </template>
                 </template>

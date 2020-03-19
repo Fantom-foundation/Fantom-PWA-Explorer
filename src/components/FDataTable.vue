@@ -66,7 +66,7 @@
                     </slot>
                 </table>
 
-                <div v-else class="mobile-view f-data-layout">
+                <div v-else class="mobile-view f-data-layout normal-padding">
                     <div v-if="cItems.length">
                         <div v-for="item in cItems" :key="item.id" :style="item.css ? obj2css(item.css) : ''"
                              class="mobile-item">
