@@ -9,6 +9,40 @@
                 first-m-v-column-width="6"
                 fixed-header
             >
+                <template v-slot:column-logo="{ value, item, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-6 f-row-label">{{ column.label }}:</div>
+                        <div class="col break-word">
+                            <div v-if="value" class="img"><img :src="value" :alt="item.stakerInfo.name"></div>
+                        </div>
+                    </div>
+                    <template v-else>
+                        <div v-if="value" class="img"><img :src="value" :alt="item.stakerInfo.name"></div>
+                    </template>
+                </template>
+
+                <template v-slot:column-name="{ value, item, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-6 f-row-label">{{ column.label }}:</div>
+                        <div class="col break-word">
+                            <template v-if="value">
+                                {{ value }}
+                            </template>
+                            <template v-else>
+                                {{ $t('view_validator_list.unknown') }}
+                            </template>
+                        </div>
+                    </div>
+                    <template v-else>
+                        <template v-if="value">
+                            {{ value }}
+                        </template>
+                        <template v-else>
+                            {{ $t('view_validator_list.unknown') }}
+                        </template>
+                    </template>
+                </template>
+
                 <template v-slot:column-stakerAddress="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-6 f-row-label">{{ column.label }}:</div>
@@ -20,6 +54,22 @@
                     <template v-else>
                         <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
                         <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value | formatHash }}</router-link>
+                    </template>
+                </template>
+
+                <template v-slot:column-link="{ value, item, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-6 f-row-label">{{ column.label }}:</div>
+                        <div class="col break-word">
+                            <a v-if="value" :href="value" target="_blank" rel="nofollow">
+                                <icon data="@/assets/svg/external-link-alt.svg" width="20" height="20"></icon>
+                            </a>
+                        </div>
+                    </div>
+                    <template v-else>
+                        <a v-if="value" :href="value" target="_blank" rel="nofollow">
+                            <icon data="@/assets/svg/external-link-alt.svg" width="20" height="20"></icon>
+                        </a>
                     </template>
                 </template>
             </f-data-table>
@@ -35,7 +85,7 @@
     import FDataTable from "../components/FDataTable.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
-    import {formatHexToInt, timestampToDate, numToFixed, formatDate, formatNumberByLocale} from "../filters.js";
+    import {formatHexToInt, timestampToDate, numToFixed, formatNumberByLocale} from "../filters.js";
 
     export default {
         components: {
@@ -73,6 +123,13 @@
                             stake
                             totalStake
                             delegatedMe
+                            poi
+                            stakerInfo {
+                                name
+                                website
+                                contact
+                                logoUrl
+                            }
                         }
                     }
                 `,
@@ -90,9 +147,9 @@
                         data.forEach(_item => {
                             // _item.total_staked = WEIToFTM(_item.stake) + WEIToFTM(_item.delegatedMe);
 
-                            totals.selfStaked += parseFloat(numToFixed(WEIToFTM(_item.stake), 2));
-                            totals.totalDelegated += parseFloat(numToFixed(WEIToFTM(_item.delegatedMe), 2));
-                            totals.totalStaked += parseFloat(numToFixed(WEIToFTM(_item.totalStake), 2));
+                            totals.selfStaked += parseFloat(numToFixed(WEIToFTM(_item.stake), 0));
+                            totals.totalDelegated += parseFloat(numToFixed(WEIToFTM(_item.delegatedMe), 0));
+                            totals.totalStaked += parseFloat(numToFixed(WEIToFTM(_item.totalStake), 0));
                         });
 
                         this.dItems = data;
@@ -119,40 +176,54 @@
                         width: '60px'
                     },
                     {
-                        name: 'stakerAddress',
+                        name: 'logo',
+                        label: this.$t('view_validator_list.logo'),
+                        itemProp: 'stakerInfo.logoUrl',
+                        width: '80px'
+                    },
+                    {
+                        name: 'name',
                         label: this.$t('view_validator_list.name'),
-                        width: '200px',
+                        itemProp: 'stakerInfo.name',
+                        width: '170px',
                     },
-/*
                     {
-                        name: 'isOffline',
-                        // hidden: true,
-                        formatter: formatHexToInt
+                        name: 'stakerAddress',
+                        label: this.$t('view_validator_list.address'),
+                        width: '180px',
                     },
-*/
                     {
-                        name: 'createdTime',
-                        label: this.$t('view_validator_list.created_on'),
-                        formatter: _value => formatDate(timestampToDate(formatHexToInt(_value) / 1000000000))
+                        name: 'poi',
+                        label: this.$t('view_validator_list.poi'),
+                        formatter: _value => formatNumberByLocale(numToFixed(_value, 0), 0),
+                        css: {textAlign: 'right'},
+                        width: '180px'
                     },
                     {
                         name: 'stake',
                         label: this.$t('view_validator_list.self_staked'),
                         css: {textAlign: 'right'},
-                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2)
+                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0)
                     },
                     {
                         name: 'delegatedMe',
                         label: this.$t('view_validator_list.delegated'),
                         css: {textAlign: 'right'},
-                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2)
+                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0)
                     },
                     // computed
                     {
                         name: 'totalStake',
                         label: this.$t('view_validator_list.total_staked'),
                         css: {textAlign: 'right'},
-                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2)
+                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0)
+                    },
+                    {
+                        name: 'link',
+                        label: this.$t('view_validator_list.link'),
+                        itemProp: 'stakerInfo.website',
+                        css: {textAlign: 'center'},
+                        width: '50px'
                     }
                 ]
             }
@@ -190,6 +261,11 @@
         .offline {
             color: $error-color;
             font-weight: bold;
+        }
+
+        .img img {
+            max-width: 48px;
+            max-height: 48px;
         }
     }
 </style>

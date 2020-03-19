@@ -30,14 +30,14 @@
                         <div class="row no-collapse">
                             <div class="col-5 f-row-label">{{ $t('view_validators_info.daily_rewards') }}:</div>
                             <div class="col">
-                                <div v-show="dDailyRewards">{{ formatNumberByLocale(numToFixed(dDailyRewards, 2)) }} FTM</div>
+                                <div v-show="dDailyRewards">{{ formatNumberByLocale(numToFixed(dDailyRewards, 0)) }} FTM</div>
                             </div>
                         </div>
 
                         <div class="row no-collapse">
                             <div class="col-5 f-row-label">{{ $t('view_validators_info.current_reward_rate') }}:</div>
                             <div class="col">
-                                <div v-show="cCurrentRewardRate">{{ formatNumberByLocale(numToFixed(cCurrentRewardRate, 2)) }}%</div>
+                                <div v-show="cCurrentRewardRate">{{ formatNumberByLocale(numToFixed(cCurrentRewardRate, 0)) }}%</div>
                             </div>
                         </div>
                     </f-card>
@@ -81,7 +81,7 @@
                         <div class="row no-collapse">
                             <div class="col-5 f-row-label">{{ $t('view_validators_info.total_supply') }}:</div>
                             <div class="col">
-                                <div v-show="dTotalSupply">{{ formatNumberByLocale(numToFixed(dTotalSupply, 2)) }} FTM</div>
+                                <div v-show="dTotalSupply">{{ formatNumberByLocale(numToFixed(dTotalSupply, 0)) }} FTM</div>
                             </div>
                         </div>
                     </f-card>
@@ -201,7 +201,7 @@
 
             cSelfStaked() {
                 if (this.dTotals.selfStaked && this.dTotalSupply) {
-                    return numToFixed((this.dTotals.selfStaked / this.dTotalSupply) * 100, 2);
+                    return numToFixed((this.dTotals.selfStaked / this.dTotalSupply) * 100, 0);
                 }
 
                 return 0;
@@ -209,7 +209,7 @@
 
             cDelegated() {
                 if (this.dTotals.totalDelegated && this.dTotalSupply) {
-                    return numToFixed((this.dTotals.totalDelegated / this.dTotalSupply) * 100, 2);
+                    return numToFixed((this.dTotals.totalDelegated / this.dTotalSupply) * 100, 0);
                 }
 
                 return 0;
@@ -217,7 +217,7 @@
 
             cStaked() {
                 if (this.dTotals.totalStaked && this.dTotalSupply) {
-                    return numToFixed((this.dTotals.totalStaked / this.dTotalSupply) * 100, 2);
+                    return numToFixed((this.dTotals.totalStaked / this.dTotalSupply) * 100, 0);
                 }
 
                 return 0;

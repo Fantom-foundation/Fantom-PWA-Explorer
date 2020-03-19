@@ -331,6 +331,10 @@ export function getNestedProp(_obj, _path) {
             value = _obj;
             for (let i = 0; i < pathLen; i++) {
                 value = value[path[i]];
+                if ((value === null) || (value === undefined)) {
+                    value = null;
+                    break;
+                }
             }
         }
     }

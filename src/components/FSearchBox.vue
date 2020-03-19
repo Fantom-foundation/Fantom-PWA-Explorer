@@ -285,7 +285,7 @@
             outline: none;
             box-shadow: $elev3-shadow;
             /*background-color: transparent;*/
-            /*border-color: transparent;*/
+            border-color: transparent;
 
             &::placeholder {
                 color: $grey-color-lighter;
@@ -334,7 +334,7 @@
 
         &.small {
             input:not(.def):not([type=submit]).large {
-                height: 44px;
+                height: 42px;
             }
 
             button[type="submit"] {
@@ -343,7 +343,7 @@
             }
 
             &.expandable {
-                width: 44px;
+                width: 42px;
 
                 input:not(.def):not([type=submit]).large {
                     color: #000;

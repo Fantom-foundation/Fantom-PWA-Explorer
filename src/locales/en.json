@@ -15,6 +15,8 @@
     "validators": "Validators",
     "back_to_home": "Back to home",
     "created_on": "Created On",
+    "address": "Address",
+    "name": "Name",
 
     "navigation": [
         {
@@ -113,12 +115,17 @@
         "title": "Staking",
         "validators": "@:validators",
         "id": "ID",
-        "name": "Name",
+        "logo": "Logo",
+        "name": "@:name",
+        "address": "@:address",
+        "poi": "Proof of Importance",
         "created_on": "@:created_on",
         "self_staked": "Self-Staked (FTM)",
         "delegated": "Delegated (FTM)",
         "total_staked": "Total Staked (FTM)",
-        "offline": "Offline"
+        "link": "Link",
+        "offline": "Offline",
+        "unknown": "Unknown"
     },
     "view_validators_info": {
         "last_epoch": "Last Epoch",
@@ -136,6 +143,8 @@
     },
     "view_validator_detail": {
         "title": "Validator detail",
+        "validator_id": "Validator ID",
+        "name": "@:name",
         "address": "Delegate address",
         "start_time": "Staking start time",
         "start_epoch": "Staking start epoch",
@@ -146,9 +155,9 @@
         "delegations": "Delegations"
     },
     "delegation_list_dt": {
-        "address": "Address",
+        "address": "@:address",
         "created_on": "@:created_on",
-        "created_epoch": "Created Epoch",
+        "created_epoch": "Created on Epoch",
         "amount": "Amount (FTM)"
     }
 }

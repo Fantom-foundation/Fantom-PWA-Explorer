@@ -77,7 +77,7 @@
                     {
                         name: 'amount',
                         label: this.$t('delegation_list_dt.amount'),
-                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2),
+                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
                         css: {textAlign: 'right'}
                     }
                 ]

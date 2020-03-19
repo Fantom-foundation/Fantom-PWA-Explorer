@@ -545,6 +545,7 @@
         tr {
             td {
                 background-color: #fff;
+                vertical-align: middle;
 
                 &.f-col {
                     border-radius: 8px 0 0 8px;
