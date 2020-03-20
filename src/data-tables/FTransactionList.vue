@@ -26,7 +26,7 @@
 
                 <template v-slot:column-hash="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col-4 f-row-label">{{ column.label }}</div>
                         <div class="col">
                             <router-link :to="{name: 'transaction-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
                         </div>
@@ -38,7 +38,7 @@
 
                 <template v-slot:column-block="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col-4 f-row-label">{{ column.label }}</div>
                         <div class="col"><router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link></div>
                     </div>
                     <template v-else>
@@ -48,7 +48,7 @@
 
                 <template v-slot:column-timestamp="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col-4 f-row-label">{{ column.label }}</div>
                         <div class="col">
                             <timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
                         </div>
@@ -60,7 +60,7 @@
 
                 <template v-slot:column-from="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col-4 f-row-label">{{ column.label }}</div>
                         <div class="col"><router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link></div>
                     </div>
                     <template v-else>
@@ -70,7 +70,7 @@
 
                 <template v-slot:column-to="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col-4 f-row-label">{{ column.label }}</div>
                         <div class="col"><router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link></div>
                     </div>
                     <template v-else>
@@ -80,7 +80,7 @@
 
                 <template v-slot:column-amount="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}:</div>
+                        <div class="col-4 f-row-label">{{ column.label }}</div>
                         <div class="col">{{ formatNumberByLocale(numToFixed(WEIToFTM(value), 2), 2) }}</div>
                     </div>
                     <template v-else>
@@ -91,7 +91,7 @@
                 <!--
                             <template v-slot:column-fee="{ value, column }">
                                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                                    <div class="col-4 f-row-label">{{ column.label }}:</div>
+                                    <div class="col-4 f-row-label">{{ column.label }}</div>
                                     <div class="col">{{ WEIToFTM(value | formatHexToInt) }}</div>
                                 </div>
                                 <template v-else>

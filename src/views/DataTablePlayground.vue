@@ -41,7 +41,7 @@
 
             <template v-slot:column-country_name="{ value, column }">
                 <div v-if="column">
-                    <span class="column-label">{{ column.label }}:</span> <span><a href="#">{{ value }}</a></span>
+                    <span class="column-label">{{ column.label }}</span> <span><a href="#">{{ value }}</a></span>
                 </div>
                 <div v-else>
                     <a href="#">{{ value }}</a>
@@ -50,7 +50,7 @@
 
             <template v-slot:column-country_code="{ value, column }">
                 <div v-if="column">
-                    <span class="column-label">{{ column.label }}:</span> {{ value }}
+                    <span class="column-label">{{ column.label }}</span> {{ value }}
                 </div>
                 <div v-else>
                     <div class="tpl-test">{{ value }}</div>

@@ -69,7 +69,7 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        padding-top: var(--f-header-height);
+        padding-top: $f-header-height;
 
         main {
             flex: 1 1;

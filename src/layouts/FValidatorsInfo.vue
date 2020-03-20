@@ -7,35 +7,35 @@
                         <h2>{{ $t('view_validators_info.staking_summary') }}</h2>
 
                         <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.total_self_staked') }}:</div>
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.total_self_staked') }}</div>
                             <div class="col">
                                 <div v-show="'fSelfStaked' in dTotals">{{ dTotals.fSelfStaked }} FTM <span v-if="cSelfStaked">({{ cSelfStaked }}%)</span></div>
                             </div>
                         </div>
 
                         <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.total_delegated') }}:</div>
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.total_delegated') }}</div>
                             <div class="col">
                                 <div v-show="'fTotalDelegated' in dTotals">{{ dTotals.fTotalDelegated }} FTM <span v-if="cDelegated">({{ cDelegated }}%)</span></div>
                             </div>
                         </div>
 
                         <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.total_staked') }}:</div>
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.total_staked') }}</div>
                             <div class="col">
                                 <div v-show="'fTotalStaked' in dTotals">{{ dTotals.fTotalStaked }} FTM <span v-if="cStaked">({{ cStaked }}%)</span></div>
                             </div>
                         </div>
 
                         <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.daily_rewards') }}:</div>
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.daily_rewards') }}</div>
                             <div class="col">
-                                <div v-show="dDailyRewards">{{ formatNumberByLocale(numToFixed(dDailyRewards, 0)) }} FTM</div>
+                                <div v-show="cDailyRewards">{{ formatNumberByLocale(numToFixed(cDailyRewards, 0)) }} FTM</div>
                             </div>
                         </div>
 
                         <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.current_reward_rate') }}:</div>
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.current_reward_rate') }}</div>
                             <div class="col">
                                 <div v-show="cCurrentRewardRate">{{ formatNumberByLocale(numToFixed(cCurrentRewardRate, 0)) }}%</div>
                             </div>
@@ -47,14 +47,14 @@
                         <h2>{{ $t('view_validators_info.last_epoch') }}</h2>
 
                         <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.epoch_number') }}:</div>
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.epoch_number') }}</div>
                             <div class="col">
                                 <div v-show="'id' in cEpoch">{{ cEpoch.id | formatHexToInt }}</div>
                             </div>
                         </div>
 
                         <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.end_time') }}:</div>
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.end_time') }}</div>
                             <div class="col">
                                 <div v-show="'endTime' in cEpoch">
                                     <timeago :datetime="timestampToDate(cEpoch.endTime)" :auto-update="1" :converter-options="{addSuffix: true}"></timeago>
@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.duration') }}:</div>
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.duration') }}</div>
                             <div class="col">
                                 <div v-show="'duration' in cEpoch && cEpoch.duration">
                                     {{ formatHexToInt(cEpoch.duration) | formatDuration }}
@@ -72,14 +72,14 @@
                         </div>
 
                         <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.fee') }}:</div>
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.fee') }}</div>
                             <div class="col">
                                 <div v-show="'epochFee' in cEpoch">{{  WEIToFTM(cEpoch.epochFee) }} FTM</div>
                             </div>
                         </div>
 
                         <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.total_supply') }}:</div>
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.total_supply') }}</div>
                             <div class="col">
                                 <div v-show="dTotalSupply">{{ formatNumberByLocale(numToFixed(dTotalSupply, 0)) }} FTM</div>
                             </div>
@@ -99,6 +99,16 @@
             <f-validator-list
                 @records-count="onRecordsCount"
                 @validator-list-totals="onValidatorListTotals"
+                @validator-list-flagged="onValidatorListFlagged"
+            >
+            </f-validator-list>
+        </div>
+
+        <div class="f-subsection" v-if="dFlaggedItems.length">
+            <h2>{{ $t('view_validator_list.flagged') }} <span class="f-records-count">({{ dFlaggedItems.length }})</span></h2>
+
+            <f-validator-list
+                :items="dFlaggedItems"
             >
             </f-validator-list>
         </div>
@@ -163,6 +173,7 @@
                             duration
                             epochFee
                             totalSupply
+                            baseRewardPerSecond
                         }
                     }
                 `,
@@ -186,9 +197,9 @@
         data() {
             return {
                 dItems: [],
+                dFlaggedItems: [],
                 dValidatorsInfoError: '',
                 dTotals: {},
-                dDailyRewards: 1423872,
                 dTotalSupply: 0,
                 dRecordsCount: 0
             }
@@ -223,13 +234,23 @@
                 return 0;
             },
 
+            cDailyRewards() {
+                const {epoch} = this;
+
+                if (epoch && epoch.baseRewardPerSecond) {
+                    return WEIToFTM(epoch.baseRewardPerSecond) * 86400;
+                }
+
+                return 0;
+            },
+
             cCurrentRewardRate() {
-                const {dDailyRewards} = this;
+                const {cDailyRewards} = this;
                 const {dTotals} = this;
                 let rate = 0;
 
-                if (dDailyRewards && dTotals && dTotals.totalStaked) {
-                    return ((dDailyRewards * 365) / dTotals.totalStaked) * 100;
+                if (cDailyRewards && dTotals && dTotals.totalStaked) {
+                    return ((cDailyRewards * 365) / dTotals.totalStaked) * 100;
                 }
 
                 return rate;
@@ -251,6 +272,10 @@
                     fTotalDelegated: formatNumberByLocale(numToFixed(_totals.totalDelegated, 2)),
                     fTotalStaked: formatNumberByLocale(numToFixed(_totals.totalStaked, 2))
                 };
+            },
+
+            onValidatorListFlagged(_flagged) {
+                this.dFlaggedItems = _flagged;
             },
 
             WEIToFTM,

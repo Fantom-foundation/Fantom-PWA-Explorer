@@ -294,8 +294,8 @@
 
 .no-hor-col-padding {
     @include flexbox-cols('> ') {
-        padding-left: 0;
-        padding-right: 0;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
     }
 }
 /* ?? viz. header.hbs, pridat tam no-row-margins */
@@ -312,8 +312,8 @@
 
 .no-vert-col-padding {
     @include flexbox-cols('> ') {
-        padding-top: 0;
-        padding-bottom: 0;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;;
     }
 }
 /* ?? viz. tenebrio->row-detail->modal okno*/

@@ -78,7 +78,7 @@
                                           :column="col"
                                     >
                                         <div class="row no-collapse no-vert-col-padding">
-                                            <div :class="`col-${firstMVColumnWidth} f-row-label`">{{ col.label }}:</div>
+                                            <div :class="`col-${firstMVColumnWidth} f-row-label`">{{ col.label }}</div>
                                             <div class="col break-word">{{ getItemPropValue(item, col) }}
                                             </div>
                                         </div>
@@ -570,7 +570,7 @@
             thead th {
                 position: -webkit-sticky;
                 position: sticky;
-                top: var(--f-header-height);
+                top: $f-header-height;
                 z-index: 2;
             }
 
@@ -595,6 +595,13 @@
                     text-align: left !important;
                 }
             }
+
+            &.f-data-layout {
+                @include flexbox-cols() {
+                    //padding: 0 $grid-layout-gutter-width-2x $grid-layout-gutter-width-4x;
+                    padding: 2px 8px;
+                }
+            }
         }
 
         .f-pagination {
@@ -605,7 +612,7 @@
         .f-loading-container {
             position: -webkit-sticky;
             position: sticky;
-            top: var(--f-header-height);
+            top: $f-header-height;
             z-index: 3;
 
             .f-loading {

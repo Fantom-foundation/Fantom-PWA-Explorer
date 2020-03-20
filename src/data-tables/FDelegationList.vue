@@ -9,7 +9,7 @@
         >
             <template v-slot:column-address="{ value, item, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-5 f-row-label">{{ column.label }}:</div>
+                    <div class="col-5 f-row-label">{{ column.label }}</div>
                     <div class="col break-word">
                         <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
                     </div>

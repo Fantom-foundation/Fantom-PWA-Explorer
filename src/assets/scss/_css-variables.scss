@@ -1,0 +1,12 @@
+:root {
+    --f-header-height: 72px;
+    --f-data-layout-cols-padding: 12px;
+}
+
+@include media-max($bp-menu) {
+    :root {
+        //--f-header-height: 52px;
+        --f-header-height: 60px;
+        --f-data-layout-cols-padding: 8px;
+    }
+}

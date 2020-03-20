@@ -179,7 +179,7 @@
         top: 0;
         z-index: 10;
         width: 100%;
-        height: var(--f-header-height);
+        height: $f-header-height;
         color: #fff;
         background-color: $theme-color;
         transition: height $transition-length ease;

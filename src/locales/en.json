@@ -125,7 +125,8 @@
         "total_staked": "Total Staked (FTM)",
         "link": "Link",
         "offline": "Offline",
-        "unknown": "Unknown"
+        "unknown": "Unknown",
+        "flagged": "Flagged"
     },
     "view_validators_info": {
         "last_epoch": "Last Epoch",

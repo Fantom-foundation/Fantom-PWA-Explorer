@@ -3,11 +3,11 @@
         <f-card>
             <template v-if="!dBlockByNumberError">
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_block_detail.block') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_block_detail.block') }}</div>
                     <div class="col"><div class="break-word">{{ id }}</div></div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_block_detail.timestamp') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_block_detail.timestamp') }}</div>
                     <div class="col">
                         <div v-show="cBlock && ('timestamp' in cBlock)">
                             <timeago :datetime="timestampToDate(cBlock.timestamp)"></timeago>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_block_detail.transactions') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_block_detail.transactions') }}</div>
                     <div class="col">
                         <div v-show="cBlock && ('transactionCount' in cBlock)">
                             <strong>{{ cBlock.transactionCount }}</strong> {{ $t('view_block_detail.transactions_in_block' )}}
@@ -24,13 +24,13 @@
                     </div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_block_detail.block_hash') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_block_detail.block_hash') }}</div>
                     <div class="col">
                         <div v-show="cBlock && ('hash' in cBlock)" class="break-word">{{ cBlock.hash }}</div>
                     </div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_block_detail.parent_hash') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_block_detail.parent_hash') }}</div>
                     <div class="col">
                         <div v-show="cBlock && cBlock.parent && ('hash' in cBlock.parent)" class="break-word">{{ cBlock.parent.hash }}</div>
                     </div>

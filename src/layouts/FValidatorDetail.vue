@@ -3,7 +3,7 @@
         <template v-if="!dStakerByAddressError">
             <f-card>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.validator_id') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.validator_id') }}</div>
                     <div class="col">
                         <div v-show="'id' in cStaker">
                             {{ cStaker.id | formatHexToInt }}
@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.name') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.name') }}</div>
                     <div class="col">
                         <div v-show="cStakerName">
                             <a v-if="cStakerWebsite" :href="cStakerWebsite" target="_blank" rel="nofollow" class="validator-website">
@@ -26,12 +26,12 @@
                 </div>
 
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.address') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.address') }}</div>
                     <div class="col"><div class="break-word">{{ address }}</div></div>
                 </div>
 
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.start_epoch') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.start_epoch') }}</div>
                     <div class="col">
                         <div v-show="'createdEpoch' in cStaker">
                             {{ cStaker.createdEpoch | formatHexToInt }}
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.start_time') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.start_time') }}</div>
                     <div class="col">
                         <div v-show="'createdTime' in cStaker">
                             {{ timestampToDate(formatHexToInt(cStaker.createdTime) / 1000000000) }}
@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.validating_power') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.validating_power') }}</div>
                     <div class="col">
                         <div v-show="'validationScore' in cStaker">
                             {{ formatNumberByLocale(numToFixed(formatHexToInt(cStaker.validationScore) / 10000000, 0)) }}
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.amount_staked') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.amount_staked') }}</div>
                     <div class="col">
                         <div v-show="'stake' in cStaker">
                             {{ formatNumberByLocale(numToFixed(WEIToFTM(cStaker.stake), 0)) }} FTM
@@ -67,7 +67,7 @@
                 </div>
 
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.amount_delegated') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.amount_delegated') }}</div>
                     <div class="col">
                         <div v-show="'delegatedMe' in cStaker">
                             {{ formatNumberByLocale(numToFixed(WEIToFTM(cStaker.delegatedMe), 0)) }} FTM <br>
@@ -76,7 +76,7 @@
                 </div>
 
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.staking_total') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.staking_total') }}</div>
                     <div class="col">
                         <div v-show="'totalStake' in cStaker">
                             {{ formatNumberByLocale(numToFixed(WEIToFTM(cStaker.totalStake), 0)) }} FTM <br>

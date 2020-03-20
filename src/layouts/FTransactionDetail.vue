@@ -3,17 +3,17 @@
         <f-card>
             <template v-if="!dTransactionByHashError">
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.hash') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.hash') }}</div>
                     <div class="col"><div class="break-word">{{ id }}</div></div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.status') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.status') }}</div>
                     <div class="col">
                         <div v-show="cTransaction && ('status' in cTransaction)"><f-transaction-status :status="cStatus"></f-transaction-status></div>
                     </div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.from') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.from') }}</div>
                     <div class="col">
                         <div class="break-word" v-show="cTransaction">
                             <router-link :to="{name: 'address-detail', params: {id: cTransaction.from}}">{{ cTransaction.from }}</router-link>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.to') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.to') }}</div>
                     <div class="col">
                         <div class="break-word" v-show="cTransaction">
                             <router-link :to="{name: 'address-detail', params: {id: cTransaction.to}}">{{ cTransaction.to }}</router-link>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.time') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.time') }}</div>
                     <div class="col">
                         <div class="break-word" v-show="cTransaction && cTransaction.block.timestamp">
                             <timeago :datetime="timestampToDate(cTransaction.block.timestamp)"></timeago>
@@ -38,17 +38,17 @@
                     </div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.amount') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.amount') }}</div>
                     <div class="col"><div class="break-word" v-show="cTransaction">{{  WEIToFTM(cTransaction.value) }} FTM</div></div>
                 </div>
                 <!--
                             <div class="row no-collapse">
-                                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.fee') }}:</div>
+                                <div class="col-4 f-row-label">{{ $t('view_transaction_detail.fee') }}</div>
                                 <div class="col"><div class="break-word" v-show="cTransaction">{{  WEIToFTM(cTransaction.fee) }} FTM</div></div>
                             </div>
                 -->
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.block') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.block') }}</div>
                     <div class="col">
                         <div class="break-word" v-show="cTransaction">
                             <router-link :to="{name: 'block-detail', params: {id: cTransaction.block.number | formatHexToInt}}">
@@ -58,19 +58,19 @@
                     </div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.gas_used') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.gas_used') }}</div>
                     <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gasUsed | formatHexToInt }}</div></div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.gas_limit') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.gas_limit') }}</div>
                     <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gas | formatHexToInt }}</div></div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.gas_price') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.gas_price') }}</div>
                     <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.gasPrice | formatHexToInt }} WEI</div></div>
                 </div>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.nonce') }}:</div>
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.nonce') }}</div>
                     <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.nonce | formatHexToInt }}</div></div>
                 </div>
             </template>

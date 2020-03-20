@@ -11,19 +11,21 @@
             >
                 <template v-slot:column-logo="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-6 f-row-label">{{ column.label }}:</div>
+                        <div class="col-6 f-row-label">{{ column.label }}</div>
                         <div class="col break-word">
                             <div v-if="value" class="img"><img :src="value" :alt="item.stakerInfo.name"></div>
+                            <template v-else>-</template>
                         </div>
                     </div>
                     <template v-else>
                         <div v-if="value" class="img"><img :src="value" :alt="item.stakerInfo.name"></div>
+                        <template v-else>-</template>
                     </template>
                 </template>
 
                 <template v-slot:column-name="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-6 f-row-label">{{ column.label }}:</div>
+                        <div class="col-6 f-row-label">{{ column.label }}</div>
                         <div class="col break-word">
                             <template v-if="value">
                                 {{ value }}
@@ -45,31 +47,33 @@
 
                 <template v-slot:column-stakerAddress="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-6 f-row-label">{{ column.label }}:</div>
+                        <div class="col-6 f-row-label">{{ column.label }}</div>
                         <div class="col break-word">
                             <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
-                            <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value | formatHash }}</router-link>
+                            <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value }}</router-link>
                         </div>
                     </div>
                     <template v-else>
                         <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
-                        <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value | formatHash }}</router-link>
+                        <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value }}</router-link>
                     </template>
                 </template>
 
                 <template v-slot:column-link="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-6 f-row-label">{{ column.label }}:</div>
+                        <div class="col-6 f-row-label">{{ column.label }}</div>
                         <div class="col break-word">
                             <a v-if="value" :href="value" target="_blank" rel="nofollow">
                                 <icon data="@/assets/svg/external-link-alt.svg" width="20" height="20"></icon>
                             </a>
+                            <template v-else>-</template>
                         </div>
                     </div>
                     <template v-else>
-                        <a v-if="value" :href="value" target="_blank" rel="nofollow">
+                        <a v-if="value || (item.stakerInfo && item.stakerInfo.contact)" :href="value || (item.stakerInfo && item.stakerInfo.contact)" target="_blank" rel="nofollow">
                             <icon data="@/assets/svg/external-link-alt.svg"></icon>
                         </a>
+                        <template v-else>-</template>
                     </template>
                 </template>
             </f-data-table>
@@ -100,12 +104,9 @@
              * 'append' - append new items
              */
             items: {
-                type: Object,
+                type: Array,
                 default() {
-                    return {
-                        action: '',
-                        data: []
-                    };
+                    return [];
                 }
             }
         },
@@ -140,12 +141,16 @@
                         totalStaked: 0
                     };
                     let data;
+                    const flagged = [];
 
                     if (_key === 'stakers') {
-                        data = _data.data.stakers;
+                        data = [..._data.data.stakers];
 
-                        data.forEach(_item => {
+                        data.forEach((_item, _idx) => {
                             // _item.total_staked = WEIToFTM(_item.stake) + WEIToFTM(_item.delegatedMe);
+                            if (_item.isCheater) {
+                                flagged.push(data.splice(_idx, 1)[0]);
+                            }
 
                             totals.selfStaked += parseFloat(numToFixed(WEIToFTM(_item.stake), 0));
                             totals.totalDelegated += parseFloat(numToFixed(WEIToFTM(_item.delegatedMe), 0));
@@ -156,11 +161,24 @@
 
                         this.$emit('records-count', this.dItems.length);
                         this.$emit('validator-list-totals', totals);
+
+                        if (flagged.length > 0) {
+                            this.$emit('validator-list-flagged', flagged);
+                        }
                     }
+                },
+                skip() {
+                    return (this.items.length > 0);
                 },
                 error(_error) {
                     this.dValidatorListError = _error.message;
                 }
+            }
+        },
+
+        created() {
+            if (this.items.length > 0) {
+                this.dItems = this.items;
             }
         },
 
@@ -179,6 +197,7 @@
                         name: 'logo',
                         label: this.$t('view_validator_list.logo'),
                         itemProp: 'stakerInfo.logoUrl',
+                        css: {textAlign: 'center'},
                         width: '80px'
                     },
                     {
@@ -190,6 +209,7 @@
                     {
                         name: 'stakerAddress',
                         label: this.$t('view_validator_list.address'),
+                        oneLineMode: true,
                         width: '180px',
                     },
                     {
@@ -263,9 +283,16 @@
             font-weight: bold;
         }
 
-        .img img {
-            max-width: 48px;
-            max-height: 48px;
+        .img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
         }
     }
 </style>
