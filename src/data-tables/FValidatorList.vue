@@ -23,32 +23,10 @@
                     </template>
                 </template>
 
-                <template v-slot:column-name="{ value, item, column }">
-                    <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-6 f-row-label">{{ column.label }}</div>
-                        <div class="col break-word">
-                            <template v-if="value">
-                                {{ value }}
-                            </template>
-                            <template v-else>
-                                {{ $t('view_validator_list.unknown') }}
-                            </template>
-                        </div>
-                    </div>
-                    <template v-else>
-                        <template v-if="value">
-                            {{ value }}
-                        </template>
-                        <template v-else>
-                            {{ $t('view_validator_list.unknown') }}
-                        </template>
-                    </template>
-                </template>
-
                 <template v-slot:column-stakerAddress="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-6 f-row-label">{{ column.label }}</div>
-                        <div class="col break-word">
+                        <div class="col break-word three-dots">
                             <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
                             <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value }}</router-link>
                         </div>
@@ -90,6 +68,7 @@
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
     import {formatHexToInt, timestampToDate, numToFixed, formatNumberByLocale} from "../filters.js";
+    import {sortByHex, sortByLocaleString, sortByString} from "../utils/array-sorting.js";
 
     export default {
         components: {
@@ -142,19 +121,26 @@
                     };
                     let data;
                     const flagged = [];
+                    const tUnknown = this.$t('view_validator_list.unknown');
 
                     if (_key === 'stakers') {
                         data = [..._data.data.stakers];
 
                         data.forEach((_item, _idx) => {
                             // _item.total_staked = WEIToFTM(_item.stake) + WEIToFTM(_item.delegatedMe);
-                            if (_item.isCheater) {
-                                flagged.push(data.splice(_idx, 1)[0]);
-                            }
-
                             totals.selfStaked += parseFloat(numToFixed(WEIToFTM(_item.stake), 0));
                             totals.totalDelegated += parseFloat(numToFixed(WEIToFTM(_item.delegatedMe), 0));
                             totals.totalStaked += parseFloat(numToFixed(WEIToFTM(_item.totalStake), 0));
+
+                            if (!_item.stakerInfo) {
+                                _item.stakerInfo = {
+                                    name: tUnknown
+                                }
+                            }
+
+                            if (_item.isCheater) {
+                                flagged.push(data.splice(_idx, 1)[0]);
+                            }
                         });
 
                         this.dItems = data;
@@ -191,6 +177,8 @@
                         name: 'id',
                         label: this.$t('view_validator_list.id'),
                         formatter: formatHexToInt,
+                        sortFunc: sortByHex,
+                        sortDir: 'asc',
                         width: '60px'
                     },
                     {
@@ -204,11 +192,13 @@
                         name: 'name',
                         label: this.$t('view_validator_list.name'),
                         itemProp: 'stakerInfo.name',
+                        sortFunc: sortByLocaleString,
                         width: '170px',
                     },
                     {
                         name: 'stakerAddress',
                         label: this.$t('view_validator_list.address'),
+                        sortFunc: sortByString,
                         oneLineMode: true,
                         width: '180px',
                     },
@@ -216,27 +206,31 @@
                         name: 'poi',
                         label: this.$t('view_validator_list.poi'),
                         formatter: _value => formatNumberByLocale(numToFixed(_value, 0), 0),
+                        sortFunc: sortByHex,
                         css: {textAlign: 'right'},
                         width: '180px'
                     },
                     {
                         name: 'stake',
                         label: this.$t('view_validator_list.self_staked'),
-                        css: {textAlign: 'right'},
-                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0)
+                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
+                        sortFunc: sortByHex,
+                        css: {textAlign: 'right'}
                     },
                     {
                         name: 'delegatedMe',
                         label: this.$t('view_validator_list.delegated'),
-                        css: {textAlign: 'right'},
-                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0)
+                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
+                        sortFunc: sortByHex,
+                        css: {textAlign: 'right'}
                     },
                     // computed
                     {
                         name: 'totalStake',
                         label: this.$t('view_validator_list.total_staked'),
-                        css: {textAlign: 'right'},
-                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0)
+                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
+                        sortFunc: sortByHex,
+                        css: {textAlign: 'right'}
                     },
                     {
                         name: 'link',
@@ -290,7 +284,7 @@
             overflow: hidden;
 
             img {
-                max-width: 100%;
+                width: auto;
                 max-height: 100%;
             }
         }

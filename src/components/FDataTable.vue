@@ -14,9 +14,10 @@
                 <table v-if="!cMobileView">
                     <slot name="header">
                         <thead>
-                        <tr>
-                            <th v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index, col)"
-                                v-show="!col.hidden">{{col.label}}
+                        <tr @click="onHeaderClick">
+                            <th v-for="(col, index) in columns" :key="col.name" :class="getColumnClass(index, col) + ' ' + getHeadingColumnClass(col)"
+                                v-show="!col.hidden">
+                                <div>{{col.label}}</div>
                             </th>
                         </tr>
                         </thead>
@@ -329,6 +330,9 @@
         },
 
         created() {
+            this.colClassRE = /\s*_c(\d)\s*/;
+            this._sortByCol = -1;
+
             this.prepareColumns();
         },
 
@@ -346,6 +350,12 @@
                 columns.forEach((_column, _index) => {
                     const css = {};
                     const cellChildrenCss = {};
+
+                    _column._index = _index;
+
+                    if (_column.sortDir) {
+                        this._sortByCol = _index;
+                    }
 
                     if (hiddenColumns && (hiddenColumns.indexOf(_column.name) > -1)) {
                         _column.hidden = true;
@@ -458,7 +468,38 @@
              * @return {string}
              */
             getColumnClass(_index, _column) {
-                return `_c${_index}` + (_column && _column.cssClass ? _column.cssClass : '');
+                return `_c${_index} ` + (_column && _column.cssClass ? _column.cssClass : '');
+            },
+
+            /**
+             * Get heading column's css classes.
+             *
+             * @param {object} [_column]
+             * @return {string}
+             */
+            getHeadingColumnClass(_column) {
+                if (_column.sortFunc) {
+                    return `sortable ${_column.sortDir || ''}`;
+                }
+
+                return '';
+            },
+
+            /**
+             * Get column by its css class.
+             *
+             * @param {string} _class
+             * @return {object}
+             */
+            getColumnByClass(_class) {
+                const match = this.colClassRE.exec(_class);
+                let column = null;
+
+                if (match && (match.length === 2)) {
+                    column = this.columns[parseInt(match[1])] || null;
+                }
+
+                return column;
             },
 
             /**
@@ -484,6 +525,30 @@
                 }
 
                 return value;
+            },
+
+            onHeaderClick(_event) {
+                let elem = _event.target.closest('th');
+                const column = (elem ? this.getColumnByClass(elem.className) : null);
+
+                if (column && column.sortFunc) {
+                    const sortByCol = this._sortByCol;
+
+                    if ((sortByCol > -1) && (sortByCol !== column._index)) {
+                        this.columns[sortByCol].sortDir = '';
+                    }
+
+                    // this.dSortBy
+                    if (column.sortDir === 'asc') {
+                        column.sortDir = 'desc';
+                    } else {
+                        column.sortDir = 'asc';
+                    }
+
+                    this._sortByCol = column._index;
+
+                    this.items.sort(column.sortFunc(column.itemProp || column.name, column.sortDir));
+                }
             },
 
             /**
@@ -639,6 +704,42 @@
 
         .f-loading-more {
             text-align: center;
+        }
+
+        .sortable {
+            cursor: pointer;
+
+            > div {
+                position: relative;
+                padding-right: 20px;
+
+                &::after {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 16px;
+                    height: 16px;
+                    opacity: 0.15;
+                    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"/></svg>');
+                    background-repeat: no-repeat;
+                    background-position: 100% 0;
+                    content: '';
+                }
+            }
+
+            &.asc {
+                > div::after {
+                    opacity: 1;
+                    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="%231969ff"><path d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"/></svg>');
+                }
+            }
+
+            &.desc {
+                > div::after {
+                    opacity: 1;
+                    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="%231969ff"><path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"/></svg>');
+                }
+            }
         }
 
         &.f-card-on {
