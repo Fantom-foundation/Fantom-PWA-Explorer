@@ -15,14 +15,14 @@
                         <div class="col break-word">
                             <div class="img">
                                 <img v-if="value"  :src="value" :alt="item.stakerInfo.name">
-                                <img v-else src="/img/fantom-logo.png" alt="fantom logo">
+                                <img v-else src="img/fantom-logo.png" alt="fantom logo">
                             </div>
                         </div>
                     </div>
                     <template v-else>
                         <div class="img">
                             <img v-if="value"  :src="value" :alt="item.stakerInfo.name">
-                            <img v-else src="/img/fantom-logo.png" alt="fantom logo">
+                            <img v-else src="img/fantom-logo.png" alt="fantom logo">
                         </div>
                     </template>
                 </template>
