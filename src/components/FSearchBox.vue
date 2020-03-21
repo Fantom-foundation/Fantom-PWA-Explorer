@@ -334,7 +334,7 @@
 
         &.small {
             input:not(.def):not([type=submit]).large {
-                height: 42px;
+                height: 44px;
             }
 
             button[type="submit"] {
@@ -343,7 +343,7 @@
             }
 
             &.expandable {
-                width: 42px;
+                width: 44px;
 
                 input:not(.def):not([type=submit]).large {
                     color: #000;

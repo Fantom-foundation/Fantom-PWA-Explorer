@@ -13,13 +13,17 @@
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-6 f-row-label">{{ column.label }}</div>
                         <div class="col break-word">
-                            <div v-if="value" class="img"><img :src="value" :alt="item.stakerInfo.name"></div>
-                            <template v-else>-</template>
+                            <div class="img">
+                                <img v-if="value"  :src="value" :alt="item.stakerInfo.name">
+                                <img v-else src="/img/fantom-logo.png" alt="fantom logo">
+                            </div>
                         </div>
                     </div>
                     <template v-else>
-                        <div v-if="value" class="img"><img :src="value" :alt="item.stakerInfo.name"></div>
-                        <template v-else>-</template>
+                        <div class="img">
+                            <img v-if="value"  :src="value" :alt="item.stakerInfo.name">
+                            <img v-else src="/img/fantom-logo.png" alt="fantom logo">
+                        </div>
                     </template>
                 </template>
 
@@ -200,15 +204,7 @@
                         label: this.$t('view_validator_list.address'),
                         sortFunc: sortByString,
                         oneLineMode: true,
-                        width: '180px',
-                    },
-                    {
-                        name: 'poi',
-                        label: this.$t('view_validator_list.poi'),
-                        formatter: _value => formatNumberByLocale(numToFixed(_value, 0), 0),
-                        sortFunc: sortByHex,
-                        css: {textAlign: 'right'},
-                        width: '180px'
+                        width: '160px',
                     },
                     {
                         name: 'stake',
