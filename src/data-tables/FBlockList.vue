@@ -54,12 +54,6 @@
         },
 
         props: {
-            /** Polling interval in milliseconds for fetching new items. */
-            pollingInterval: {
-                type: Number,
-                default: 0
-            },
-
             /** Number of items per page. */
             itemsPerPage: {
                 type: Number,
@@ -108,11 +102,6 @@
                         const edges = data.edges;
 
                         this.dHasNext = data.pageInfo.hasNext;
-
-                        if (!this.firstItem && edges && (edges.length >= 2)) {
-                            // this.firstItem = this.blocks.pageInfo.first;
-                            this.firstItem = edges[1].cursor;
-                        }
 
                         if (this.dItems.length === 0) {
                             this.dItems = edges;

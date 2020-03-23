@@ -4,6 +4,7 @@
 @import "core/normalize";
 @import "core/reset";
 @import "core/all";
+@import "core/_positioning.scss";
 
 //@include flexbox-layout(24);
 
@@ -91,11 +92,26 @@ a:not(.btn):hover {
 
 .validator-website {
     svg {
-        opacity: 0.65;
+        //opacity: 0.65;
         margin-left: 4px;
         margin-top: -2px;
     }
 }
+
+.validator-img {
+    display: inline-block;
+    vertical-align: middle;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+        width: auto;
+        max-height: 100%;
+    }
+}
+
 
 @include media-max($bp-medium) {
     .f-subsection {

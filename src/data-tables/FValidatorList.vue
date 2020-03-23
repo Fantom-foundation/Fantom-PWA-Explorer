@@ -13,19 +13,38 @@
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-6 f-row-label">{{ column.label }}</div>
                         <div class="col break-word">
-                            <div class="img">
-                                <img v-if="value"  :src="value" :alt="item.stakerInfo.name">
-                                <img v-else src="img/fantom-logo.png" alt="fantom logo">
+                            <div class="validator-img">
+                                <img v-if="value"  :src="value" :alt="item.stakerInfo.name" class="not-fluid">
+                                <img v-else src="img/fantom-logo.png" alt="fantom logo" class="not-fluid">
                             </div>
                         </div>
                     </div>
                     <template v-else>
-                        <div class="img">
-                            <img v-if="value"  :src="value" :alt="item.stakerInfo.name">
-                            <img v-else src="img/fantom-logo.png" alt="fantom logo">
+                        <div class="validator-img">
+                            <img v-if="value"  :src="value" :alt="item.stakerInfo.name" class="not-fluid">
+                            <img v-else src="img/fantom-logo.png" alt="fantom logo" class="not-fluid">
                         </div>
                     </template>
                 </template>
+
+                <template v-slot:column-name="{ value, item, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-6 f-row-label">{{ column.label }}</div>
+                        <div class="col break-word">
+                            {{ value }}
+                            <a v-if="(item.stakerInfo ? item.stakerInfo.website || item.stakerInfo.contact : '')" :href="(item.stakerInfo ? item.stakerInfo.website || item.stakerInfo.contact : '')" target="_blank" rel="nofollow" class="validator-website">
+                                <icon data="@/assets/svg/external-link-alt.svg"></icon>
+                            </a>
+                        </div>
+                    </div>
+                    <template v-else>
+                        {{ value }}
+                        <a v-if="(item.stakerInfo ? item.stakerInfo.website || item.stakerInfo.contact : '')" :href="(item.stakerInfo ? item.stakerInfo.website || item.stakerInfo.contact : '')" target="_blank" rel="nofollow" class="validator-website">
+                            <icon data="@/assets/svg/external-link-alt.svg"></icon>
+                        </a>
+                    </template>
+                </template>
+
 
                 <template v-slot:column-stakerAddress="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
@@ -41,6 +60,7 @@
                     </template>
                 </template>
 
+<!--
                 <template v-slot:column-link="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-6 f-row-label">{{ column.label }}</div>
@@ -58,6 +78,7 @@
                         <template v-else>-</template>
                     </template>
                 </template>
+-->
             </f-data-table>
         </template>
 
@@ -137,24 +158,34 @@
                             totals.totalStaked += parseFloat(numToFixed(WEIToFTM(_item.totalStake), 0));
 
                             if (!_item.stakerInfo) {
-                                _item.stakerInfo = {
-                                    name: tUnknown
-                                }
+                                _item.stakerInfo = {};
+                            }
+
+                            if (_item.id === '0x14') {
+                                console.log(_item.stakerAddress, JSON.stringify(_item.stakerInfo));
+                            }
+
+                            if (!_item.stakerInfo.name) {
+                                _item.stakerInfo.name = tUnknown;
                             }
 
                             if (_item.isCheater) {
-                                flagged.push(data.splice(_idx, 1)[0]);
+                                flagged.push(_idx);
                             }
                         });
+
+                        if (flagged.length > 0) {
+                            for (let i = flagged.length - 1; i >= 0; i--) {
+                                flagged[i] = data.splice(flagged[i], 1)[0];
+                            }
+
+                            this.$emit('validator-list-flagged', flagged);
+                        }
 
                         this.dItems = data;
 
                         this.$emit('records-count', this.dItems.length);
                         this.$emit('validator-list-totals', totals);
-
-                        if (flagged.length > 0) {
-                            this.$emit('validator-list-flagged', flagged);
-                        }
                     }
                 },
                 skip() {
@@ -197,7 +228,7 @@
                         label: this.$t('view_validator_list.name'),
                         itemProp: 'stakerInfo.name',
                         sortFunc: sortByLocaleString,
-                        width: '170px',
+                        width: '200px',
                     },
                     {
                         name: 'stakerAddress',
@@ -225,6 +256,7 @@
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
                         sortFunc: sortByHex
                     },
+/*
                     {
                         name: 'link',
                         label: this.$t('view_validator_list.link'),
@@ -232,6 +264,7 @@
                         css: {textAlign: 'center'},
                         width: '50px'
                     }
+*/
                 ]
             }
         },
@@ -268,18 +301,6 @@
         .offline {
             color: $error-color;
             font-weight: bold;
-        }
-
-        .img {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            overflow: hidden;
-
-            img {
-                width: auto;
-                max-height: 100%;
-            }
         }
     }
 </style>

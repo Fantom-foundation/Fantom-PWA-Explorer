@@ -3,24 +3,28 @@
         <template v-if="!dStakerByAddressError">
             <f-card>
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.validator_id') }}</div>
+                    <div class="col-4 f-row-label center-v">{{ $t('view_validator_detail.name') }}</div>
                     <div class="col">
-                        <div v-show="'id' in cStaker">
-                            {{ cStaker.id | formatHexToInt }}
+                        <div v-show="cStakerName">
+                            <div class="validator-img">
+                                <img v-if="cStakerLogoUrl"  :src="cStakerLogoUrl" :alt="cStakerName" class="not-fluid">
+                                <img v-else src="img/fantom-logo.png" alt="fantom logo" class="not-fluid">
+                            </div>
+
+                            {{ cStakerName }}
+
+                            <a v-if="cStakerWebsite" :href="cStakerWebsite" target="_blank" rel="nofollow" class="validator-website">
+                                <icon data="@/assets/svg/external-link-alt.svg"></icon>
+                            </a>
                         </div>
                     </div>
                 </div>
 
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.name') }}</div>
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.validator_id') }}</div>
                     <div class="col">
-                        <div v-show="cStakerName">
-                            <a v-if="cStakerWebsite" :href="cStakerWebsite" target="_blank" rel="nofollow" class="validator-website">
-                                {{ cStakerName }} <icon data="@/assets/svg/external-link-alt.svg" width="12" height="12"></icon>
-                            </a>
-                            <template v-else>
-                                {{ cStakerName }}
-                            </template>
+                        <div v-show="'id' in cStaker">
+                            {{ cStaker.id | formatHexToInt }}
                         </div>
                     </div>
                 </div>
@@ -86,13 +90,23 @@
             </f-card>
 
             <div class="f-subsection">
-                <h2 class="h1">{{ $t('view_validator_detail.delegations') }} <span v-if="cDelegationItems.length" class="f-records-count">({{ cDelegationItems.length }})</span></h2>
+                <h2 class="h1">{{ $t('view_validator_detail.delegations') }} <span v-if="dDelegationListRecordsCount" class="f-records-count">({{ dDelegationListRecordsCount }})</span></h2>
 
                 <f-delegation-list
+                    :staker-id="0"
+                    @records-count="onDelegationListRecordsCount"
+                />
+            </div>
+<!--
+            <div class="f-subsection">
+                <h2 class="h1">{{ $t('view_validator_detail.delegations') }} <span v-if="cDelegationItems.length" class="f-records-count">({{ cDelegationItems.length }})</span></h2>
+
+                <f-delegation-list-old
                     :items="cDelegationItems"
                     :loading="cLoading"
-                ></f-delegation-list>
+                ></f-delegation-list-old>
             </div>
+-->
         </template>
         <template v-else>
             <div class="query-error">{{ dStakerByAddressError }}</div>
@@ -106,10 +120,12 @@
     import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed} from "../filters.js";
     import { WEIToFTM } from "../utils/transactions.js";
     import FDelegationList from "../data-tables/FDelegationList.vue";
+    // import FDelegationListOld from "../data-tables/FDelegationListOld.vue";
 
     export default {
         components: {
             FDelegationList,
+            // FDelegationListOld,
             FCard
         },
 
@@ -147,12 +163,6 @@
                                 contact
                                 logoUrl
                             }
-                            delegations {
-                                address
-                                amount
-                                createdEpoch
-                                createdTime
-                            }
                         }
                     }
                 `,
@@ -169,7 +179,7 @@
 
         data() {
             return {
-                dRecordsCount: 0,
+                dDelegationListRecordsCount: 0,
                 dStakerByAddressError: ''
             }
         },
@@ -182,13 +192,19 @@
             cStakerName() {
                 const {staker} = this;
 
-                return staker && staker.stakerInfo && staker.stakerInfo.name ? staker.stakerInfo.name : '';
+                return staker && staker.stakerInfo && staker.stakerInfo.name ? staker.stakerInfo.name : this.$t('view_validator_list.unknown');
             },
 
             cStakerWebsite() {
                 const {staker} = this;
 
-                return staker && staker.stakerInfo && staker.stakerInfo.website ? staker.stakerInfo.website : '';
+                return staker && staker.stakerInfo ? staker.stakerInfo.website || staker.stakerInfo.contact : '';
+            },
+
+            cStakerLogoUrl() {
+                const {staker} = this;
+
+                return staker && staker.stakerInfo && staker.stakerInfo.logoUrl ? staker.stakerInfo.logoUrl : '';
             },
 
             cDelegationItems() {
@@ -208,6 +224,10 @@
         },
 
         methods: {
+            onDelegationListRecordsCount(_num) {
+                this.dDelegationListRecordsCount = _num;
+            },
+
             WEIToFTM,
             timestampToDate,
             formatHexToInt,
@@ -238,6 +258,10 @@
         }
 
         > .f-card {
+        }
+
+        .validator-img {
+            margin-right: 8px;
         }
     }
 </style>
