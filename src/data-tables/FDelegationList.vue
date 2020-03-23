@@ -1,32 +1,38 @@
 <template>
     <div class="delegation-list-dt">
-        <f-data-table
-            :columns="dColumns"
-            :items="items"
-            :loading="loading"
-            first-m-v-column-width="5"
-            infinite-scroll
-            fixed-header
-            @fetch-more="fetchMore"
-        >
-            <template v-slot:column-address="{ value, item, column }">
-                <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-5 f-row-label">{{ column.label }}</div>
-                    <div class="col break-word">
-                        <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
+        <template v-if="!dBlockListError">
+            <f-data-table
+                :columns="dColumns"
+                :items="dItems"
+                :disable-infinite-scroll="!dHasNext"
+                :loading="cLoading"
+                infinite-scroll
+                fixed-header
+                @fetch-more="fetchMore"
+            >
+                <template v-slot:column-address="{ value, item, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-5 f-row-label">{{ column.label }}</div>
+                        <div class="col break-word">
+                            <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
+                        </div>
                     </div>
-                </div>
-                <template v-else>
-                    <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
+                    <template v-else>
+                        <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
+                    </template>
                 </template>
-            </template>
-        </f-data-table>
+            </f-data-table>
+        </template>
+
+        <template v-else>
+            <div class="query-error">{{ dBlockListError }}</div>
+        </template>
     </div>
 </template>
 
 <script>
     import FDataTable from "../components/FDataTable.vue";
-    // import gql from 'graphql-tag';
+    import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
     import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed, formatDate} from "../filters.js";
 
@@ -36,23 +42,78 @@
         },
 
         props: {
-            /**
-             * Data and action.
-             * Actions:
-             * '' - replace items
-             * 'append' - append new items
-             */
-            items: {
-                type: Array,
-                default() {
-                    return [];
-                }
+            /** */
+            stakerId: {
+                type: String,
+                default: ''
             },
 
-            /** Display loading message. */
-            loading: {
-                type: Boolean,
-                default: false
+            /** Number of items per page. */
+            itemsPerPage: {
+                type: Number,
+                default: 40
+            }
+        },
+
+        apollo: {
+            delegationsOf: {
+                query: gql`
+                    query DelegationList($staker: Long!, $cursor: Cursor, $count: Int!) {
+                        delegationsOf(staker: $staker, cursor: $cursor, count: $count) {
+                            totalCount
+                            pageInfo {
+                                first
+                                last
+                                hasNext
+                                hasPrevious
+                            }
+                            edges {
+                                cursor
+                                delegator {
+                                    address
+                                    amount
+                                    createdEpoch
+                                    createdTime
+                                }
+                            }
+                        }
+                    }
+                `,
+                skip() {
+                    return (this.stakerId === 0);
+                },
+                variables() {
+                    return {
+                        staker: this.stakerId,
+                        cursor: null,
+                        count: this.itemsPerPage
+                    }
+                },
+                result(_data, _key) {
+                    let data;
+
+
+                    if (_key === 'delegationsOf') {
+                        data = _data.data.delegationsOf;
+
+                        const edges = data.edges;
+
+                        this.dHasNext = data.pageInfo.hasNext;
+
+                        if (this.dItems.length === 0) {
+                            this.dItems = edges;
+                        } else {
+                            for (let i = 0, len1 = edges.length; i < len1; i++) {
+                                this.dItems.push(edges[i]);
+                            }
+                        }
+
+                        this.$emit('records-count', formatHexToInt(data.totalCount));
+                    }
+                },
+                error(_error) {
+                    this.dBlockListError = _error.message;
+                }
             }
         },
 
@@ -60,28 +121,30 @@
             return {
                 dItems: [],
                 dHasNext: false,
-                dOutsideData: !!this.items.action,
-                dTransactionListError: '',
+                dBlockListError: '',
                 dColumns: [
                     {
                         name: 'address',
                         label: this.$t('delegation_list_dt.address'),
+                        itemProp: 'delegator.address'
                     },
                     {
                         name: 'createdTime',
                         label: this.$t('delegation_list_dt.created_on'),
+                        itemProp: 'delegator.createdTime',
                         formatter: _value => formatDate(timestampToDate(formatHexToInt(_value) / 1000000000), true)
                     },
                     {
                         name: 'createdEpoch',
                         label: this.$t('delegation_list_dt.created_epoch'),
+                        itemProp: 'delegator.createdEpoch',
                         formatter: formatHexToInt
                     },
                     {
                         name: 'amount',
                         label: this.$t('delegation_list_dt.amount'),
-                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
-                        css: {textAlign: 'right'}
+                        itemProp: 'delegator.amount',
+                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0)
                     }
                 ]
             }
@@ -89,9 +152,16 @@
 
         computed: {
             /**
+             * @return {boolean}
+             */
+            cLoading() {
+                return this.$apollo.queries.delegationsOf.loading;
+            },
+
+            /**
              * Property is set to `true`, if 'tdelegation-list-dt-mobile-view' breakpoint is reached.
              *
-             * @return {Boolean}
+             * @return {boolean}
              */
             cMobileView() {
                 const dataTableBreakpoint = this.$store.state.breakpoints['delegation-list-dt-mobile-view'];
@@ -106,6 +176,24 @@
         },
 
         methods: {
+            fetchMore() {
+                const {delegationsOf} = this;
+
+                if (delegationsOf && delegationsOf.pageInfo && delegationsOf.pageInfo.hasNext) {
+                    const cursor = delegationsOf.pageInfo.last;
+
+                    this.$apollo.queries.delegationsOf.fetchMore({
+                        variables: {
+                            cursor,
+                            count: this.itemsPerPage
+                        },
+                        updateQuery: (previousResult, { fetchMoreResult }) => {
+                            return fetchMoreResult;
+                        }
+                    });
+                }
+            },
+
             WEIToFTM,
             timestampToDate,
             formatHexToInt,

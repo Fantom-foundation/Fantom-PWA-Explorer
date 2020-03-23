@@ -93,20 +93,10 @@
                 <h2 class="h1">{{ $t('view_validator_detail.delegations') }} <span v-if="dDelegationListRecordsCount" class="f-records-count">({{ dDelegationListRecordsCount }})</span></h2>
 
                 <f-delegation-list
-                    :staker-id="0"
+                    :staker-id="cStaker.id"
                     @records-count="onDelegationListRecordsCount"
                 />
             </div>
-<!--
-            <div class="f-subsection">
-                <h2 class="h1">{{ $t('view_validator_detail.delegations') }} <span v-if="cDelegationItems.length" class="f-records-count">({{ cDelegationItems.length }})</span></h2>
-
-                <f-delegation-list-old
-                    :items="cDelegationItems"
-                    :loading="cLoading"
-                ></f-delegation-list-old>
-            </div>
--->
         </template>
         <template v-else>
             <div class="query-error">{{ dStakerByAddressError }}</div>
@@ -120,12 +110,10 @@
     import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed} from "../filters.js";
     import { WEIToFTM } from "../utils/transactions.js";
     import FDelegationList from "../data-tables/FDelegationList.vue";
-    // import FDelegationListOld from "../data-tables/FDelegationListOld.vue";
 
     export default {
         components: {
             FDelegationList,
-            // FDelegationListOld,
             FCard
         },
 
