@@ -285,7 +285,10 @@
             outline: none;
             box-shadow: $elev3-shadow;
             /*background-color: transparent;*/
-            border-color: transparent;
+
+            &:not(:focus) {
+                border-color: transparent;
+            }
 
             &::placeholder {
                 color: $grey-color-lighter;

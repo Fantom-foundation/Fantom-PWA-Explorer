@@ -187,6 +187,11 @@
         .narrow-container {
             padding-top: 0;
             padding-bottom: 0;
+            height: 100%;
+
+            > .row {
+                height: 100%;
+            }
         }
 
         .logo {
@@ -321,6 +326,7 @@
             .f-search-box {
                 position: fixed;
                 z-index: 12;
+                top: 8px;
                 left: 50%;
                 margin-right: 0;
                 margin-left: 0;

@@ -20,7 +20,7 @@
             </f-card>
 
             <div class="f-subsection">
-                <h2>{{ $t('view_address_detail.assets') }} <span v-if="cAssetItems.length" class="f-records-count">({{ cAssetItems.length }})</span></h2>
+                <h2 class="h1">{{ $t('view_address_detail.assets') }} <span v-if="cAssetItems.length" class="f-records-count">({{ cAssetItems.length }})</span></h2>
 
                 <f-data-table
                     :columns="dAssetColumns"
@@ -31,7 +31,7 @@
             </div>
 
             <div class="f-subsection">
-                <h2>{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
+                <h2 class="h1">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
 
                 <f-transaction-list
                     :items="cTransactionItems"

@@ -86,7 +86,7 @@
             </f-card>
 
             <div class="f-subsection">
-                <h2>{{ $t('view_validator_detail.delegations') }} <span v-if="cDelegationItems.length" class="f-records-count">({{ cDelegationItems.length }})</span></h2>
+                <h2 class="h1">{{ $t('view_validator_detail.delegations') }} <span v-if="cDelegationItems.length" class="f-records-count">({{ cDelegationItems.length }})</span></h2>
 
                 <f-delegation-list
                     :items="cDelegationItems"

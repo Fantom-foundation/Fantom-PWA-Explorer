@@ -210,23 +210,20 @@
                         name: 'stake',
                         label: this.$t('view_validator_list.self_staked'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
-                        sortFunc: sortByHex,
-                        css: {textAlign: 'right'}
+                        sortFunc: sortByHex
                     },
                     {
                         name: 'delegatedMe',
                         label: this.$t('view_validator_list.delegated'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
-                        sortFunc: sortByHex,
-                        css: {textAlign: 'right'}
+                        sortFunc: sortByHex
                     },
                     // computed
                     {
                         name: 'totalStake',
                         label: this.$t('view_validator_list.total_staked'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
-                        sortFunc: sortByHex,
-                        css: {textAlign: 'right'}
+                        sortFunc: sortByHex
                     },
                     {
                         name: 'link',

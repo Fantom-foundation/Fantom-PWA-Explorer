@@ -27,10 +27,16 @@
     .f-footer {
         color: #fff;
         background-color: $theme-color;
+        height: 64px;
 
         .narrow-container {
             padding-top: 8px;
             padding-bottom: 8px;
+            height: 100%;
+
+            > .row {
+                height: 100%;
+            }
         }
 
         @include links() {

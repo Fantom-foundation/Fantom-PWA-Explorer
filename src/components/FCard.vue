@@ -48,11 +48,12 @@
     @import "../assets/scss/vars";
 
     .f-card:not(.off) {
-        padding: 20px;
+        padding: $f-card-padding;
         /*border: 1px solid #f8f8f8;*/
-        border-radius: 20px;
+        border-radius: 16px;
         background-color: #fff;
-        box-shadow: 0 0 40px 0 rgba(0,0,0,.06);
+        /*box-shadow: 0 0 40px 0 rgba(0,0,0,.06);*/
+        box-shadow: 0 8px 16px 0 rgba(48, 49, 51, 0.1), 0 0 1px 0 rgba(48, 49, 51, 0.05);
         transition: box-shadow $transition-length ease, transform $transition-length ease;
 
         &.f-card-hover:hover {

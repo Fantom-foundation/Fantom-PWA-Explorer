@@ -59,8 +59,10 @@
 
                     @include links() {
                         color: $secondary-color-lighter;
+                        font-weight: bold;
+                        letter-spacing: normal;
                         display: inline-block;
-                        padding: 16px;
+                        padding: 16px 20px;
                         text-decoration: none;
                         transition: all $transition-length ease;
                         border-radius: $border-radius;

@@ -43,7 +43,7 @@
         </f-card>
 
         <div class="f-subsection" v-if="!dBlockByNumberError">
-            <h2>{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
+            <h2 class="h1">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
 
             <f-transaction-list
                 :items="cTransactionItems"

@@ -1,6 +1,8 @@
 :root {
-    --f-header-height: 72px;
-    --f-data-layout-cols-padding: 12px;
+    --f-header-height: 96px;
+    //--f-header-height: 72px;
+    --f-data-layout-cols-padding: 15px;
+    --f-card-padding: 40px;
 }
 
 @include media-max($bp-menu) {
@@ -8,5 +10,6 @@
         //--f-header-height: 52px;
         --f-header-height: 60px;
         --f-data-layout-cols-padding: 8px;
+        --f-card-padding: 24px;
     }
 }

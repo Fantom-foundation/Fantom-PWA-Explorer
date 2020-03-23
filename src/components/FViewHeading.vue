@@ -1,6 +1,6 @@
 <template>
     <div class="f-view-heading">
-        <div class="row">
+        <div class="row align-items-center">
             <div :class="`col-${firstColumnWidth} col-12-md`">
                 <slot><h1>{{ title }}</h1></slot>
             </div>
@@ -51,7 +51,7 @@
 
     .f-view-heading {
         h1 {
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
     }
 </style>

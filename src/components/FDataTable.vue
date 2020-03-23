@@ -527,6 +527,9 @@
                 return value;
             },
 
+            /**
+             * @param {Event} _event
+             */
             onHeaderClick(_event) {
                 let elem = _event.target.closest('th');
                 const column = (elem ? this.getColumnByClass(elem.className) : null);
@@ -538,11 +541,11 @@
                         this.columns[sortByCol].sortDir = '';
                     }
 
-                    // this.dSortBy
-                    if (column.sortDir === 'asc') {
-                        column.sortDir = 'desc';
-                    } else {
+                    // default sort on column header click is 'desc'
+                    if (column.sortDir === 'desc') {
                         column.sortDir = 'asc';
+                    } else {
+                        column.sortDir = 'desc';
                     }
 
                     this._sortByCol = column._index;
@@ -575,8 +578,8 @@
     @import "../assets/scss/vars";
 
     .f-data-table-card:not(.off) {
-        padding-top: 8px;
-        padding-bottom: 8px;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
 
     .f-data-table {
@@ -603,11 +606,13 @@
 
         th {
             font-weight: bold;
-            padding-top: 8px;
-            padding-bottom: 8px;
+            padding-top: 12px;
+            padding-bottom: 12px;
         }
 
         tr {
+            height: 48px;
+
             td {
                 background-color: #fff;
                 vertical-align: middle;
@@ -624,7 +629,7 @@
 
         thead {
             th {
-                color: $grey-color-lighter;
+                font-family: $font-family-proxima;
                 background-color: $body-bg-color;
             }
         }

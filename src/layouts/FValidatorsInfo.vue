@@ -2,7 +2,7 @@
     <div class="f-validators-info">
         <template v-if="!dValidatorsInfoError">
             <div class="row f-data-layout equal-height no-vert-col-padding collapse-md">
-                <div class="col">
+                <div class="col margin-bottom-menu">
                     <f-card>
                         <h2>{{ $t('view_validators_info.staking_summary') }}</h2>
 
@@ -94,7 +94,7 @@
         </template>
 
         <div class="f-subsection">
-            <h2>{{ $t('view_validator_list.validators') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
+            <h2 class="h1">{{ $t('view_validator_list.validators') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
 
             <f-validator-list
                 @records-count="onRecordsCount"
@@ -105,7 +105,7 @@
         </div>
 
         <div class="f-subsection" v-if="dFlaggedItems.length">
-            <h2>{{ $t('view_validator_list.flagged') }} <span class="f-records-count">({{ dFlaggedItems.length }})</span></h2>
+            <h2 class="h1">{{ $t('view_validator_list.flagged') }} <span class="f-records-count">({{ dFlaggedItems.length }})</span></h2>
 
             <f-validator-list
                 :items="dFlaggedItems"

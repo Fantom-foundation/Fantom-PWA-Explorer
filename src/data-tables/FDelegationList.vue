@@ -5,7 +5,9 @@
             :items="items"
             :loading="loading"
             first-m-v-column-width="5"
+            infinite-scroll
             fixed-header
+            @fetch-more="fetchMore"
         >
             <template v-slot:column-address="{ value, item, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
@@ -24,6 +26,7 @@
 
 <script>
     import FDataTable from "../components/FDataTable.vue";
+    // import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
     import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed, formatDate} from "../filters.js";
 

@@ -1,16 +1,19 @@
 @import "fantom-color-palette";
 
-$font-family: 'Work Sans', Helvetica, sans-serif;
+//$font-family: 'Work Sans', Helvetica, sans-serif;
+$font-family: WorkSans, Helvetica, sans-serif;
+$font-family-proxima: "proxima-nova", Helvetica, sans-serif;
+//$font-family-proxima: ProximaNova, Helvetica, sans-serif;
 $font-size: 16px;
 $theme-color: $primary-color;
 $body-color: #2B3954;
-$body-bg-color: #f7f8fc;
+$body-bg-color: #fbfcff;
 //$body-bg-color: $primary-color-lightest;
 $border-radius: 8px;
 $headings-font-weight: bold;
 
-$fs-h1: $fs24;
-$fs-h2: $fs20;
+$fs-h1: 31px;
+$fs-h2: 21px;
 $fs-h3: $fs18;
 $fs-h4: $fs16;
 $fs-h5: $fs16;
@@ -34,5 +37,8 @@ $button-font-weight: normal;
 
 $bp-menu: 768px;
 
+// css variables
 $f-header-height: var(--f-header-height);
 $f-data-layout-cols-padding: var(--f-data-layout-cols-padding);
+$f-data-layout-cols-padding-neg: calc(-1 * var(--f-data-layout-cols-padding));
+$f-card-padding: var(--f-card-padding);
