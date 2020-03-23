@@ -32,6 +32,10 @@ npm run serve
 npm run build
 ```
 
-##Localization
+## Localization
 
 Translations for views and components are located in `src/locales` directory.
+
+## Production notes
+
+You should disable HTTP caching for file `dist/service-worker.js`.

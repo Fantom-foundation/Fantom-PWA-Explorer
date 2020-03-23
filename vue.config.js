@@ -11,6 +11,9 @@ module.exports = {
         assetsVersion: '3',
         manifestOptions: {
             background_color: '#1969ff'
+        },
+        workboxOptions: {
+            skipWaiting: true
         }
     },
 

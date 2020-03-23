@@ -27,7 +27,7 @@
     .f-footer {
         color: #fff;
         background-color: $theme-color;
-        height: 64px;
+        min-height: 64px;
 
         .narrow-container {
             padding-top: 8px;
