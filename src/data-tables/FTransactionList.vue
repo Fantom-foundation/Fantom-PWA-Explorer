@@ -9,6 +9,7 @@
                 :disable-infinite-scroll="!dHasNext"
                 :loading="cLoading"
                 :f-card-off="fCardOff"
+                first-m-v-column-width="5"
                 infinite-scroll
                 fixed-header
                 @fetch-more="onFetchMore"
@@ -26,7 +27,7 @@
 
                 <template v-slot:column-hash="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}</div>
+                        <div class="col-5 f-row-label">{{ column.label }}</div>
                         <div class="col">
                             <router-link :to="{name: 'transaction-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
                         </div>
@@ -38,7 +39,7 @@
 
                 <template v-slot:column-block="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}</div>
+                        <div class="col-5 f-row-label">{{ column.label }}</div>
                         <div class="col"><router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link></div>
                     </div>
                     <template v-else>
@@ -48,7 +49,7 @@
 
                 <template v-slot:column-timestamp="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}</div>
+                        <div class="col-5 f-row-label">{{ column.label }}</div>
                         <div class="col">
                             <timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
                         </div>
@@ -60,7 +61,7 @@
 
                 <template v-slot:column-from="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}</div>
+                        <div class="col-5 f-row-label">{{ column.label }}</div>
                         <div class="col"><router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link></div>
                     </div>
                     <template v-else>
@@ -70,7 +71,7 @@
 
                 <template v-slot:column-to="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}</div>
+                        <div class="col-5 f-row-label">{{ column.label }}</div>
                         <div class="col"><router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link></div>
                     </div>
                     <template v-else>
@@ -80,7 +81,7 @@
 
                 <template v-slot:column-amount="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}</div>
+                        <div class="col-5 f-row-label">{{ column.label }}</div>
                         <div class="col">{{ formatNumberByLocale(numToFixed(WEIToFTM(value), 2), 2) }}</div>
                     </div>
                     <template v-else>
@@ -91,7 +92,7 @@
                 <!--
                             <template v-slot:column-fee="{ value, column }">
                                 <div v-if="column" class="row no-collapse no-vert-col-padding">
-                                    <div class="col-4 f-row-label">{{ column.label }}</div>
+                                    <div class="col-5 f-row-label">{{ column.label }}</div>
                                     <div class="col">{{ WEIToFTM(value | formatHexToInt) }}</div>
                                 </div>
                                 <template v-else>
@@ -122,6 +123,12 @@
         props: {
             /** No pagination, no 'transaction.' prefix on columns. */
             withoutCursor: {
+                type: Boolean,
+                default: false
+            },
+
+            /** Use address column instead of columns `from` and `to`. */
+            addressCol: {
                 type: Boolean,
                 default: false
             },
@@ -250,15 +257,24 @@
                         hidden: this.cMobileView
                     },
                     {
+                        name: 'address',
+                        label: this.$t('view_transaction_list.from'),
+                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}from`,
+                        hidden: !this.addressCol
+                        // width: '180px'
+                    },
+                    {
                         name: 'from',
                         label: this.$t('view_transaction_list.from'),
-                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}from`
+                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}from`,
+                        hidden: this.addressCol
                         // width: '180px'
                     },
                     {
                         name: 'to',
                         label: this.$t('view_transaction_list.to'),
-                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}to`
+                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}to`,
+                        hidden: this.addressCol
                         // width: '180px'
                     },
                     {

@@ -6,6 +6,7 @@
                 :items="dItems"
                 :disable-infinite-scroll="!dHasNext"
                 :loading="cLoading"
+                first-m-v-column-width="5"
                 infinite-scroll
                 fixed-header
                 @fetch-more="fetchMore"
@@ -144,7 +145,8 @@
                         name: 'amount',
                         label: this.$t('delegation_list_dt.amount'),
                         itemProp: 'delegator.amount',
-                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0)
+                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
+                        css: {textAlign: 'right'}
                     }
                 ]
             }

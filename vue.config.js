@@ -8,7 +8,7 @@ module.exports = {
         name: 'Fantom Explorer',
         themeColor: '#1969ff',
         msTileColor: '#1969ff',
-        assetsVersion: '3',
+        assetsVersion: '4',
         manifestOptions: {
             background_color: '#1969ff'
         },

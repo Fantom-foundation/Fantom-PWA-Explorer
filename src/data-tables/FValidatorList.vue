@@ -49,14 +49,14 @@
                 <template v-slot:column-stakerAddress="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-6 f-row-label">{{ column.label }}</div>
-                        <div class="col break-word three-dots">
+                        <div class="col break-word">
                             <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
-                            <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value }}</router-link>
+                            <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value | formatHash }}</router-link>
                         </div>
                     </div>
                     <template v-else>
                         <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
-                        <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value }}</router-link>
+                        <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value | formatHash }}</router-link>
                     </template>
                 </template>
 
@@ -161,10 +161,6 @@
                                 _item.stakerInfo = {};
                             }
 
-                            if (_item.id === '0x14') {
-                                console.log(_item.stakerAddress, JSON.stringify(_item.stakerInfo));
-                            }
-
                             if (!_item.stakerInfo.name) {
                                 _item.stakerInfo.name = tUnknown;
                             }
@@ -234,27 +230,29 @@
                         name: 'stakerAddress',
                         label: this.$t('view_validator_list.address'),
                         sortFunc: sortByString,
-                        oneLineMode: true,
-                        width: '160px',
+                        width: '200px',
                     },
                     {
                         name: 'stake',
                         label: this.$t('view_validator_list.self_staked'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
-                        sortFunc: sortByHex
+                        sortFunc: sortByHex,
+                        css: {textAlign: 'right'}
                     },
                     {
                         name: 'delegatedMe',
                         label: this.$t('view_validator_list.delegated'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
-                        sortFunc: sortByHex
+                        sortFunc: sortByHex,
+                        css: {textAlign: 'right'}
                     },
                     // computed
                     {
                         name: 'totalStake',
                         label: this.$t('view_validator_list.total_staked'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
-                        sortFunc: sortByHex
+                        sortFunc: sortByHex,
+                        css: {textAlign: 'right'}
                     },
 /*
                     {

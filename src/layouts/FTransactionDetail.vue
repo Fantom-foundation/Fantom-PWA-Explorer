@@ -73,6 +73,14 @@
                     <div class="col-4 f-row-label">{{ $t('view_transaction_detail.nonce') }}</div>
                     <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransaction.nonce | formatHexToInt }}</div></div>
                 </div>
+                <div class="row no-collapse">
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.transaction_fee') }}</div>
+                    <div class="col"><div class="break-word" v-show="cTransaction">{{  cTransactionFee }} FTM</div></div>
+                </div>
+                <div class="row no-collapse">
+                    <div class="col-4 f-row-label">{{ $t('view_transaction_detail.input_data') }}</div>
+                    <div class="col"><div class="break-word input-data" v-show="cTransaction">{{  encodeURIComponent(cTransaction.inputData) }}</div></div>
+                </div>
             </template>
             <template v-else>
                 <div class="query-error">{{ $t('view_transaction_detail.transaction_not_found') }}</div>
@@ -147,6 +155,16 @@
         computed: {
             cTransaction() {
                 return this.transaction || {block: {}};
+            },
+
+            cTransactionFee() {
+                const {transaction} = this;
+
+                if (transaction) {
+                    return WEIToFTM(this.formatHexToInt(transaction.gasPrice) * this.formatHexToInt(transaction.gasUsed));
+                }
+
+                return 0;
             },
 
             cStatus() {

@@ -79,6 +79,8 @@
         "gas_used": "Gas Used",
         "gas_limit": "Gas Limit",
         "gas_price": "Gas Price",
+        "transaction_fee": "Transaction Fee",
+        "input_data": "Input Data",
         "nonce": "Nonce"
     },
     "view_address_detail": {
