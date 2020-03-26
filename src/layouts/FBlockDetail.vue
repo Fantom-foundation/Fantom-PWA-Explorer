@@ -128,7 +128,7 @@
 
                 if (cBlock) {
                     // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-                    this.dRecordsCount = formatHexToInt(cBlock.transactionCount);
+                    this.dRecordsCount = cBlock.transactionCount;
                 }
 
                 return {

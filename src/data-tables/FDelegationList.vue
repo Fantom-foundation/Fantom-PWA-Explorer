@@ -81,7 +81,7 @@
                     }
                 `,
                 skip() {
-                    return (this.stakerId === 0);
+                    return !this.stakerId;
                 },
                 variables() {
                     return {
