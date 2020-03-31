@@ -1,6 +1,51 @@
 <template>
     <div class="f-address-detail">
         <template v-if="!dAccountByAddressError">
+            <div class="row f-data-layout equal-height no-vert-col-padding collapse-md">
+                <div class="col margin-bottom-menu">
+                    <f-card>
+                        <h2>{{ $t('view_address_detail.balance') }}</h2>
+
+                        <div class="balance center-v">
+                            <h3 class="h1"><span v-show="cAccount">{{ toFTM(cAccount ? cAccount.totalValue : 1) }} FTM</span></h3>
+                            <div v-show="cAccount" class="usd">${{ toUSD(cAccount ? cAccount.totalValue : 1) }}</div>
+                        </div>
+                    </f-card>
+                </div>
+                <div class="col">
+                    <f-card>
+                        <h2>{{ $t('view_address_detail.details') }}</h2>
+
+                        <div class="row no-collapse">
+                            <div class="col f-row-label">{{ $t('view_address_detail.available') }}</div>
+                            <div class="col">
+                                <div v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} FTM</div>
+                            </div>
+                        </div>
+                        <div class="row no-collapse">
+                            <div class="col f-row-label">{{ $t('view_address_detail.delegated') }}</div>
+                            <div class="col">
+                                <div v-show="'delegated' in cAssets">{{ toFTM(cAssets.delegated) }} FTM</div>
+                            </div>
+                        </div>
+                        <div class="row no-collapse">
+                            <div class="col f-row-label">{{ $t('view_address_detail.pending_rewards') }}</div>
+                            <div class="col">
+                                <div v-show="'pending_rewards' in cAssets">{{ toFTM(cAssets.pending_rewards) }} FTM</div>
+                            </div>
+                        </div>
+                        <div class="row no-collapse">
+                            <div class="col f-row-label">{{ $t('view_address_detail.claimed_rewards') }}</div>
+                            <div class="col">
+                                <div v-show="'claimed_rewards' in cAssets">{{ toFTM(cAssets.claimed_rewards) }} FTM</div>
+                            </div>
+                        </div>
+                    </f-card>
+                </div>
+            </div>
+
+<!--
+            <br><br>
             <f-card>
                 <h2 class="break-word">{{ id }}</h2>
                 <div class="row">
@@ -18,7 +63,9 @@
                     </div>
                 </div>
             </f-card>
+-->
 
+<!--
             <div class="f-subsection">
                 <h2 class="h1">{{ $t('view_address_detail.assets') }} <span v-if="cAssetItems.length" class="f-records-count">({{ cAssetItems.length }})</span></h2>
 
@@ -29,6 +76,7 @@
                 >
                 </f-data-table>
             </div>
+-->
 
             <div class="f-subsection">
                 <h2 class="h1">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
@@ -36,6 +84,7 @@
                 <f-transaction-list
                     :items="cTransactionItems"
                     :loading="cLoading"
+                    :address-col="id"
                     @fetch-more="onFetchMore"
                 ></f-transaction-list>
             </div>
@@ -52,11 +101,11 @@
     import { WEIToFTM, FTMToUSD } from "../utils/transactions.js";
     import FTransactionList from "../data-tables/FTransactionList.vue";
     import {formatHexToInt, numToFixed, formatNumberByLocale} from "../filters.js";
-    import FDataTable from "../components/FDataTable.vue";
+    // import FDataTable from "../components/FDataTable.vue";
 
     export default {
         components: {
-            FDataTable,
+            // FDataTable,
             FTransactionList,
             FCard
         },
@@ -143,7 +192,8 @@
         data() {
             return {
                 dRecordsCount: 0,
-                dAccountByAddressError: '',
+                dAccountByAddressError: ''
+/*
                 dAssetColumns: [
                     {
                         name: 'asset',
@@ -165,6 +215,7 @@
                         css: {textAlign: 'right'}
                     }
                 ]
+*/
             }
         },
 
@@ -204,9 +255,26 @@
                 };
             },
 
+            cAssets() {
+                const {cAccount} = this;
+                const assets = {};
+
+                if (cAccount) {
+                    const {delegation} = cAccount;
+
+                    assets.available = cAccount.balance;
+                    assets.delegated = (delegation ? delegation.amount : 0);
+                    assets.pending_rewards = (delegation ? delegation.pendingRewards.amount : 0);
+                    assets.claimed_rewards = (delegation ? delegation.claimedReward : 0);
+                }
+
+                return assets;
+            },
+
             /**
              * Get items for assets data table.
              */
+/*
             cAssetItems() {
                 const {cAccount} = this;
                 const items = [];
@@ -229,6 +297,7 @@
 
                 return items;
             },
+*/
 
             cLoading() {
                 return this.$apollo.queries.account.loading;
@@ -247,6 +316,7 @@
              * @param {string} _assetName
              * @param {string|number} _value
              */
+/*
             getAssetItem(_assetName, _value) {
                 return {
                     asset: _assetName,
@@ -255,6 +325,7 @@
                     valueInUSD: this.toUSD(_value)
                 }
             },
+*/
 
             /**
              * Convert value to FTM.
@@ -308,7 +379,20 @@
     @import "../assets/scss/vars";
 
     .f-address-detail {
-        /*padding-top: 16px;*/
+        .balance {
+            height: calc(100% - 48px);
+            text-align: right;
+
+            h3 {
+                text-align: right;
+                margin-bottom: 0;
+            }
+
+            .usd {
+                color: $light-gray-color;
+                font-size: 26px;
+            }
+        }
 
         .num-block {
             h2 {

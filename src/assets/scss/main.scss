@@ -69,10 +69,16 @@ a:not(.btn):hover {
 }
 
 .f-records-count {
+    /*
     color: $grey-color-lighter;
     font-family: $font-family;
-    font-weight: normal;
     font-size: 0.9em;
+    */
+    color: $light-gray-color;
+    font-weight: normal;
+    font-size: 26px;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .f-subsection {

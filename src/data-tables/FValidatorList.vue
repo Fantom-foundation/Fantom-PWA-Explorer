@@ -205,14 +205,6 @@
                 dValidatorListError: '',
                 dColumns: [
                     {
-                        name: 'id',
-                        label: this.$t('view_validator_list.id'),
-                        formatter: formatHexToInt,
-                        sortFunc: sortByHex,
-                        sortDir: 'asc',
-                        width: '60px'
-                    },
-                    {
                         name: 'logo',
                         label: this.$t('view_validator_list.logo'),
                         itemProp: 'stakerInfo.logoUrl',
@@ -225,6 +217,13 @@
                         itemProp: 'stakerInfo.name',
                         sortFunc: sortByLocaleString,
                         width: '200px',
+                    },
+                    {
+                        name: 'id',
+                        label: this.$t('view_validator_list.id'),
+                        formatter: formatHexToInt,
+                        sortFunc: sortByHex,
+                        width: '80px'
                     },
                     {
                         name: 'stakerAddress',
@@ -252,6 +251,7 @@
                         label: this.$t('view_validator_list.total_staked'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
                         sortFunc: sortByHex,
+                        sortDir: 'desc',
                         css: {textAlign: 'right'}
                     },
 /*

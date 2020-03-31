@@ -59,6 +59,7 @@
         "title": "Transactions",
         "time": "@:time",
         "fee": "@:fee",
+        "address": "@:address",
         "amount": "@:amount",
         "from": "@:from",
         "to": "@:to",
@@ -88,12 +89,13 @@
         "assets": "Assets",
         "asset": "Asset",
         "balance": "Balance",
+        "details": "Details",
         "value_in_ftm": "Value in FTM",
         "value_in_usd": "Value in USD",
-        "available": "FTM Available",
-        "delegated": "FTM Delegated",
-        "pending_rewards": "FTM Pending Rewards",
-        "claimed_rewards": "FTM Claimed Rewards"
+        "available": "Available",
+        "delegated": "Delegated",
+        "pending_rewards": "Pending Rewards",
+        "claimed_rewards": "Claimed Rewards"
     },
     "view_block_list": {
         "title": "Blocks",

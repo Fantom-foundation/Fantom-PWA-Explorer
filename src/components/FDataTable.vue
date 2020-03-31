@@ -302,6 +302,10 @@
                 if (!this.serverSide && this.usePagination) {
                     return (itemsIndices ? this.items.slice(itemsIndices.from, itemsIndices.to + 1) : []);
                 } else {
+                    if (this.items.length > 0) {
+                        this.initialSort();
+                    }
+
                     return this.items;
                 }
             },
@@ -332,11 +336,25 @@
         created() {
             this.colClassRE = /\s*_c(\d)\s*/;
             this._sortByCol = -1;
+            this._initialSort = true;
 
             this.prepareColumns();
         },
 
         methods: {
+            initialSort() {
+                if (this._initialSort) {
+                    this._initialSort = false;
+
+                    setTimeout(() => {
+                        if (this._sortByCol > -1) {
+                            const column = this.columns[this._sortByCol];
+                            this.sortByColumn(column, column.sortDir);
+                        }
+                    }, 10);
+                }
+            },
+
             /**
              * Set columns css, ...
              */
@@ -520,11 +538,42 @@
                     value = _item[_col.name];
                 }
 
-                if (_col.formatter) {
-                    value = _col.formatter(value);
+                if (_col.formatter && !_col.hidden) {
+                    value = _col.formatter(value, _item);
                 }
 
                 return value;
+            },
+
+            /**
+             * Sort table by column.
+             *
+             * @param {Object} _column
+             * @param {String} [_sortDir] 'asc'|'desc'
+             */
+            sortByColumn(_column, _sortDir) {
+                if (_column && _column.sortFunc) {
+                    const sortByCol = this._sortByCol;
+
+                    if ((sortByCol > -1) && (sortByCol !== _column._index)) {
+                        this.columns[sortByCol].sortDir = '';
+                    }
+
+                    if (_sortDir) {
+                        _column.sortDir = _sortDir;
+                    } else {
+                        // default sort on column header click is 'desc'
+                        if (_column.sortDir === 'desc') {
+                            _column.sortDir = 'asc';
+                        } else {
+                            _column.sortDir = 'desc';
+                        }
+                    }
+
+                    this._sortByCol = _column._index;
+
+                    this.items.sort(_column.sortFunc(_column.itemProp || _column.name, _column.sortDir));
+                }
             },
 
             /**
@@ -534,24 +583,7 @@
                 let elem = _event.target.closest('th');
                 const column = (elem ? this.getColumnByClass(elem.className) : null);
 
-                if (column && column.sortFunc) {
-                    const sortByCol = this._sortByCol;
-
-                    if ((sortByCol > -1) && (sortByCol !== column._index)) {
-                        this.columns[sortByCol].sortDir = '';
-                    }
-
-                    // default sort on column header click is 'desc'
-                    if (column.sortDir === 'desc') {
-                        column.sortDir = 'asc';
-                    } else {
-                        column.sortDir = 'desc';
-                    }
-
-                    this._sortByCol = column._index;
-
-                    this.items.sort(column.sortFunc(column.itemProp || column.name, column.sortDir));
-                }
+                this.sortByColumn(column);
             },
 
             /**

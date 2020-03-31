@@ -37,6 +37,7 @@
                     </template>
                 </template>
 
+<!--
                 <template v-slot:column-block="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-5 f-row-label">{{ column.label }}</div>
@@ -46,6 +47,7 @@
                         <router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link>
                     </template>
                 </template>
+-->
 
                 <template v-slot:column-timestamp="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
@@ -56,6 +58,16 @@
                     </div>
                     <template v-else>
                         <timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
+                    </template>
+                </template>
+
+                <template v-slot:column-address="{ value, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-5 f-row-label">{{ column.label }}</div>
+                        <div class="col"><router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link></div>
+                    </div>
+                    <template v-else>
+                        <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
                     </template>
                 </template>
 
@@ -79,13 +91,35 @@
                     </template>
                 </template>
 
-                <template v-slot:column-amount="{ value, column }">
+                <template v-slot:column-amount="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-5 f-row-label">{{ column.label }}</div>
-                        <div class="col">{{ formatNumberByLocale(numToFixed(WEIToFTM(value), 2), 2) }}</div>
+                        <div class="col">
+                            <template v-if="addressCol">
+                                <f-account-transaction-amount
+                                    :address="addressCol"
+                                    :from="getFrom(item)"
+                                    :to="getTo(item)"
+                                    :amount="value"
+                                />
+                            </template>
+                            <template v-else>
+                                {{ value }}
+                            </template>
+                        </div>
                     </div>
                     <template v-else>
-                        {{ formatNumberByLocale(numToFixed(WEIToFTM(value), 2), 2) }}
+                        <template v-if="addressCol">
+                            <f-account-transaction-amount
+                                :address="addressCol"
+                                :from="getFrom(item)"
+                                :to="getTo(item)"
+                                :amount="value"
+                            />
+                        </template>
+                        <template v-else>
+                            {{ value }}
+                        </template>
                     </template>
                 </template>
 
@@ -114,9 +148,12 @@
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
     import {formatHexToInt, timestampToDate, numToFixed, formatNumberByLocale} from "../filters.js";
+    import {getNestedProp} from "../utils";
+    import FAccountTransactionAmount from "../components/FAccountTransactionAmount.vue";
 
     export default {
         components: {
+            FAccountTransactionAmount,
             FDataTable
         },
 
@@ -129,8 +166,8 @@
 
             /** Use address column instead of columns `from` and `to`. */
             addressCol: {
-                type: Boolean,
-                default: false
+                type: String,
+                default: ''
             },
 
             /** Array of column names to be hidden. */
@@ -238,9 +275,9 @@
                         name: 'hash',
                         label: this.$t('view_transaction_list.tx_hash'),
                         width: '200px',
-                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}hash`,
-                        oneLineMode: true
+                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}hash`
                     },
+/*
                     {
                         name: 'block',
                         label: this.$t('view_transaction_list.block'),
@@ -249,6 +286,7 @@
                         formatter: formatHexToInt,
                         hidden: this.cMobileView
                     },
+*/
                     {
                         name: 'timestamp',
                         label: this.$t('view_transaction_list.time'),
@@ -258,8 +296,22 @@
                     },
                     {
                         name: 'address',
-                        label: this.$t('view_transaction_list.from'),
+                        label: this.$t('view_transaction_list.address'),
+                        // width: '460px',
                         itemProp: `${!this.withoutCursor ? 'transaction.' : ''}from`,
+                        formatter: (_value, _item) => {
+                            // const from = getNestedProp(_item, `${!this.withoutCursor ? 'transaction.' : ''}from`);
+                            // const to = getNestedProp(_item, `${!this.withoutCursor ? 'transaction.' : ''}to`);
+                            const from = this.getFrom(_item);
+                            const to = this.getTo(_item);
+
+                            if (this.addressCol !== from) {
+                                return from;
+                            } else {
+                                return to;
+                            }
+                        },
+                        oneLineMode: true,
                         hidden: !this.addressCol
                         // width: '180px'
                     },
@@ -267,20 +319,23 @@
                         name: 'from',
                         label: this.$t('view_transaction_list.from'),
                         itemProp: `${!this.withoutCursor ? 'transaction.' : ''}from`,
-                        hidden: this.addressCol
+                        hidden: !!this.addressCol
                         // width: '180px'
                     },
                     {
                         name: 'to',
                         label: this.$t('view_transaction_list.to'),
                         itemProp: `${!this.withoutCursor ? 'transaction.' : ''}to`,
-                        hidden: this.addressCol
+                        hidden: !!this.addressCol
                         // width: '180px'
                     },
                     {
                         name: 'amount',
                         label: `${this.$t('view_transaction_list.amount')} (FTM)`,
                         itemProp: `${!this.withoutCursor ? 'transaction.' : ''}value`,
+                        formatter: _value => {
+                            return formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2)
+                        },
                         width: '150px',
                         css: {
                             textAlign: 'right'
@@ -365,6 +420,26 @@
                 }
 
                 this.dHasNext = !!hasNext;
+            },
+
+            /**
+             * Get item's 'from' value.
+             *
+             * @param {Object} _item
+             * @return {*}
+             */
+            getFrom(_item) {
+                return getNestedProp(_item, `${!this.withoutCursor ? 'transaction.' : ''}from`)
+            },
+
+            /**
+             * Get item's 'to' value.
+             *
+             * @param {Object} _item
+             * @return {*}
+             */
+            getTo(_item) {
+                return getNestedProp(_item, `${!this.withoutCursor ? 'transaction.' : ''}to`)
             },
 
             onFetchMore() {
