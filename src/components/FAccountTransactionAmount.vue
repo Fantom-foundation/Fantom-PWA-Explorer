@@ -58,8 +58,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-account-t-amount {
         font-weight: bold;
         &.recieved {

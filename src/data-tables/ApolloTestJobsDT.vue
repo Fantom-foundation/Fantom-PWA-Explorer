@@ -121,8 +121,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .jobs-dt {
         .mobile-item {
             background-color: #fff;

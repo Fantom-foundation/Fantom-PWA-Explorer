@@ -45,8 +45,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-navigation {
         display: inline-block;
 

@@ -47,8 +47,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-view-heading {
         h1 {
             margin-bottom: 8px;

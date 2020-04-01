@@ -1,11 +1,24 @@
+const appConfig = require('./app.config.js');
 const path = require('path');
 const svgFilePath = path.join(__dirname, './src/assets/svg');
 
+console.log('--- app config ---');
+console.log(appConfig);
+
 module.exports = {
     publicPath: '',
+    outputDir: appConfig.build.outputDir,
+
+    css: {
+        loaderOptions: {
+            scss: {
+                prependData: appConfig.scssData
+            }
+        }
+    },
 
     pwa: {
-        name: 'Fantom Explorer',
+        name: appConfig.pwa.name,
         themeColor: '#1969ff',
         msTileColor: '#1969ff',
         assetsVersion: '4',
@@ -27,6 +40,12 @@ module.exports = {
     },
 
     chainWebpack: config => {
+
+        // sets page title
+        config.plugin('html').tap(_args => {
+            _args[0].title = appConfig.name;
+            return _args;
+        });
 
         config.module
             .rule('vue-svgicon')
@@ -54,5 +73,11 @@ module.exports = {
         config.resolve.alias.set('@icon', svgFilePath);
 
         config.resolve.symlinks(false);
+
+        if (!appConfig.usePWA) {
+            config.plugins.delete('pwa');
+            config.plugins.delete('workbox')
+        }
+
     }
 };

@@ -22,8 +22,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-footer {
         color: #fff;
         background-color: $theme-color;

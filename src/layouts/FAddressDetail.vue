@@ -376,8 +376,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-address-detail {
         .balance {
             height: calc(100% - 48px);

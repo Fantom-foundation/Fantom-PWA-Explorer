@@ -607,8 +607,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-data-table-card:not(.off) {
         padding-top: 20px;
         padding-bottom: 20px;

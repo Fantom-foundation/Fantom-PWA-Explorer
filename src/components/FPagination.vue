@@ -124,8 +124,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-pagination {
         display: inline-block;
 

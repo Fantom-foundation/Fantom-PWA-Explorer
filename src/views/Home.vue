@@ -113,8 +113,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .view-home {
         .f-search-box {
             width: 100%;

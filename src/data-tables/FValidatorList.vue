@@ -293,8 +293,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .validator-list-dt {
         .offline {
             color: $error-color;

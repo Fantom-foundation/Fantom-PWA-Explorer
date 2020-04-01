@@ -49,8 +49,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-breadcrumbs {
         color: $grey-color-lighter;
         text-align: right;

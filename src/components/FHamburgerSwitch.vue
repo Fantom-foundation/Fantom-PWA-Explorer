@@ -71,8 +71,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-hamburger-switch {
         display: inline-block;
         width: 24px;

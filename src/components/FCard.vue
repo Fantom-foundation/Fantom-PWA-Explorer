@@ -45,8 +45,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-card:not(.off) {
         padding: $f-card-padding;
         /*border: 1px solid #f8f8f8;*/

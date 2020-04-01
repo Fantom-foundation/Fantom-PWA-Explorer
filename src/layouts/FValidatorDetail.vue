@@ -226,8 +226,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-validator-detail {
         /*padding-top: 16px;*/
 

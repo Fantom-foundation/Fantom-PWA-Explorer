@@ -22,8 +22,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .view-not-found {
         .message {
             width: 90%;

@@ -39,8 +39,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-social-media-links {
         color: $secondary-color-lighter;
 

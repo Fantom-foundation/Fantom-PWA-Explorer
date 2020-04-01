@@ -42,8 +42,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-transaction-status {
         display: inline-block;
         padding: 4px 16px;

@@ -20,8 +20,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .address-detail {
         h1 {
             strong {

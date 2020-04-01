@@ -262,8 +262,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-search-box {
         display: inline-block;
 

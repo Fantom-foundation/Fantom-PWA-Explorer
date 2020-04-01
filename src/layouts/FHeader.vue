@@ -170,8 +170,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-header {
         /*position: -webkit-sticky;*/
         /*position: sticky;*/

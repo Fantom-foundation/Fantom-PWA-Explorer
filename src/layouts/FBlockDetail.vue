@@ -162,8 +162,6 @@
 </script>
 
 <style lang="scss">
-    @import "../assets/scss/vars";
-
     .f-block-detail {
         .num-block {
             h2 {
