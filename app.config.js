@@ -1,6 +1,19 @@
 const appConfig = {
     // app title
     name: 'Fantom Explorer',
+    // apollo client settings
+    apollo: {
+        // list of providers. if one of them is unavailable, another is randomly picked
+        providers: [
+            {
+                http: 'https://api.fantom.rocks/api',
+                // for subscriptions
+                ws: ''
+            }
+        ],
+        // index into providers array of default provider
+        defaultProviderIndex: 0
+    },
     // progressive web application
     usePWA: true,
     // pwa settings

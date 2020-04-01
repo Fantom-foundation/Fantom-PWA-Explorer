@@ -45,6 +45,10 @@
                 `,
 
                 result(_data) {
+                    if (!_data.data.price) {
+                        return;
+                    }
+
                     let tokenPrice =  parseFloat(_data.data.price.price);
 
                     tokenPrice = (parseInt(tokenPrice * 100000) / 100000);

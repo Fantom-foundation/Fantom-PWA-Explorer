@@ -1,13 +1,101 @@
 import Vue from 'vue'
-import VueApollo from 'vue-apollo'
-import ApolloClient from 'apollo-boost'
+import { ApolloClient } from 'apollo-client'
+import { HttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+// New Imports
+import { ApolloLink, concat } from 'apollo-link'
+import { RetryLink } from "apollo-link-retry";
+import { onError } from 'apollo-link-error';
 
-Vue.use(VueApollo);
+import VueApollo from 'vue-apollo'
+
+import appConfig from "../../app.config.js";
+import {shuffle} from "../utils/array.js";
+
+/**
+ * Create an array of shuffled http providers excluding default provider.
+ *
+ * @param {Array} _providers
+ * @return {Array}
+ */
+function setHttpApolloProviders(_providers) {
+    const providers = _providers.map(_item => _item.http).filter(_value => _value !== defaultHttpProvider);
+
+    shuffle(providers);
+
+    return providers;
+}
+
+const apolloProviders = appConfig.apollo.providers;
+const maxRetryLinkAttempts = apolloProviders.length;
+const defaultHttpProvider = apolloProviders[appConfig.apollo.defaultProviderIndex].http;
+let httpProvider = defaultHttpProvider;
+let httpApolloProviders = setHttpApolloProviders(apolloProviders);
+let lastOperationName = '';
+
+function resetHttpApolloProviders() {
+    httpApolloProviders = setHttpApolloProviders(apolloProviders);
+    lastOperationName = '';
+}
+
+const httpLink = new HttpLink({
+    uri: httpProvider
+});
+
+const httpProviderMiddleware = new ApolloLink((operation, forward) => {
+    // add the authorization to the headers
+    operation.setContext({
+        uri: httpProvider
+    });
+
+    return forward(operation);
+});
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+        graphQLErrors.forEach(({ message, locations, path }) =>
+            console.log(
+                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+            ),
+        );
+    if (networkError) {
+        console.log(`[Network error]: ${networkError}`);
+        resetHttpApolloProviders();
+    }
+});
+
+const retryLink = new RetryLink({
+    delay: {
+        initial: 350,
+        max: Infinity,
+        jitter: false
+    },
+    attempts: {
+        max: maxRetryLinkAttempts,
+        retryIf: (_error, _operation) => {
+            // change http provider
+            if ((httpApolloProviders.length > 0)
+                && (!lastOperationName || _operation.operationName === lastOperationName)) {
+                httpProvider = httpApolloProviders.pop();
+                lastOperationName = _operation.operationName;
+            }
+
+            return !!_error;
+        }
+    }
+});
 
 const apolloClient = new ApolloClient({
-    // You should use an absolute URL here
-    uri: 'https://api.fantom.rocks/api'
+    link: ApolloLink.from([
+        errorLink,
+        retryLink,
+        concat(httpProviderMiddleware, httpLink)
+    ]),
+    cache: new InMemoryCache(),
+    connectToDevTools: true
 });
+
+Vue.use(VueApollo);
 
 export const apolloProvider = new VueApollo({
     defaultClient: apolloClient,
@@ -17,5 +105,3 @@ export const apolloProvider = new VueApollo({
         }
     }
 });
-
-
