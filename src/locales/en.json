@@ -17,6 +17,8 @@
     "created_on": "Created On",
     "address": "Address",
     "name": "Name",
+    "yes": "Yes",
+    "no": "No",
 
     "navigation": [
         {
@@ -157,6 +159,9 @@
         "amount_staked": "Amount staked",
         "amount_delegated": "Amount delegated",
         "staking_total": "Staking total",
+        "active": "Active",
+        "online": "Online",
+        "downtime": "Downtime",
         "delegations": "Delegations"
     },
     "delegation_list_dt": {

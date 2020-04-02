@@ -74,7 +74,7 @@
                     <div class="col-4 f-row-label">{{ $t('view_validator_detail.amount_delegated') }}</div>
                     <div class="col">
                         <div v-show="'delegatedMe' in cStaker">
-                            {{ formatNumberByLocale(numToFixed(WEIToFTM(cStaker.delegatedMe), 0)) }} FTM <br>
+                            {{ formatNumberByLocale(numToFixed(WEIToFTM(cStaker.delegatedMe), 0)) }} FTM
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,34 @@
                     <div class="col-4 f-row-label">{{ $t('view_validator_detail.staking_total') }}</div>
                     <div class="col">
                         <div v-show="'totalStake' in cStaker">
-                            {{ formatNumberByLocale(numToFixed(WEIToFTM(cStaker.totalStake), 0)) }} FTM <br>
+                            {{ formatNumberByLocale(numToFixed(WEIToFTM(cStaker.totalStake), 0)) }} FTM
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row no-collapse">
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.active') }}</div>
+                    <div class="col">
+                        <div v-show="'isActive' in cStaker">
+                            <f-yes-no :value="cStaker.isActive" use-colors />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row no-collapse">
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.online') }}</div>
+                    <div class="col">
+                        <div v-show="'isOffline' in cStaker">
+                            <f-yes-no :value="!cStaker.isOffline" use-colors />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row no-collapse">
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.downtime') }}</div>
+                    <div class="col">
+                        <div v-show="'downtime' in cStaker">
+                            {{ cStaker.downtime | formatHexToInt }}
                         </div>
                     </div>
                 </div>
@@ -110,9 +137,11 @@
     import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed} from "../filters.js";
     import { WEIToFTM } from "../utils/transactions.js";
     import FDelegationList from "../data-tables/FDelegationList.vue";
+    import FYesNo from "../components/FYesNo.vue";
 
     export default {
         components: {
+            FYesNo,
             FDelegationList,
             FCard
         },
@@ -145,6 +174,9 @@
                             createdEpoch
                             createdTime
                             validationScore
+                            downtime
+                            isActive
+                            isOffline
                             stakerInfo {
                                 name
                                 website
