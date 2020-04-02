@@ -10,6 +10,11 @@ const appConfig = {
         // list of providers. if one of them is unavailable, another is randomly picked
         providers: [
             {
+                http: 'https://api2.fantom.rocks/api',
+                // for subscriptions
+                ws: ''
+            },
+            {
                 http: 'https://api.fantom.rocks/api',
                 // for subscriptions
                 ws: ''
