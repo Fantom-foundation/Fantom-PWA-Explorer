@@ -44,6 +44,8 @@ module.exports = {
         // sets page title
         config.plugin('html').tap(_args => {
             _args[0].title = appConfig.name;
+            _args[0].description = appConfig.description;
+            _args[0].keywords = appConfig.keywords;
             return _args;
         });
 
