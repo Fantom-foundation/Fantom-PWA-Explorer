@@ -16,10 +16,11 @@ import {shuffle} from "../utils/array.js";
  * Create an array of shuffled http providers excluding default provider.
  *
  * @param {Array} _providers
+ * @param {String} _defaultHttpProvider
  * @return {Array}
  */
-function setHttpApolloProviders(_providers) {
-    const providers = _providers.map(_item => _item.http).filter(_value => _value !== defaultHttpProvider);
+function setHttpApolloProviders(_providers, _defaultHttpProvider) {
+    const providers = _providers.map(_item => _item.http).filter(_value => _value !== _defaultHttpProvider);
 
     shuffle(providers);
 
@@ -28,13 +29,19 @@ function setHttpApolloProviders(_providers) {
 
 const apolloProviders = appConfig.apollo.providers;
 const maxRetryLinkAttempts = apolloProviders.length;
-const defaultHttpProvider = apolloProviders[appConfig.apollo.defaultProviderIndex].http;
+let defaultProviderIndex = appConfig.apollo.defaultProviderIndex;
+
+if (defaultProviderIndex === 'random') {
+    defaultProviderIndex = Math.floor(Math.random() * apolloProviders.length);
+}
+
+const defaultHttpProvider = apolloProviders[defaultProviderIndex].http;
 let httpProvider = defaultHttpProvider;
-let httpApolloProviders = setHttpApolloProviders(apolloProviders);
+let httpApolloProviders = setHttpApolloProviders(apolloProviders, defaultHttpProvider);
 let lastOperationName = '';
 
 function resetHttpApolloProviders() {
-    httpApolloProviders = setHttpApolloProviders(apolloProviders);
+    httpApolloProviders = setHttpApolloProviders(apolloProviders, defaultHttpProvider);
     lastOperationName = '';
 }
 

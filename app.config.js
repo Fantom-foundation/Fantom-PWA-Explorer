@@ -10,18 +10,18 @@ const appConfig = {
         // list of providers. if one of them is unavailable, another is randomly picked
         providers: [
             {
-                http: 'https://api2.fantom.rocks/api',
+                http: 'https://api.fantom.rocks/api',
                 // for subscriptions
                 ws: ''
             },
             {
-                http: 'https://api.fantom.rocks/api',
+                http: 'https://api2.fantom.rocks/api',
                 // for subscriptions
                 ws: ''
             }
         ],
-        // index into providers array of default provider
-        defaultProviderIndex: 0
+        // index into providers array of default provider or 'random' - takes index randomly
+        defaultProviderIndex: 'random'
     },
     // progressive web application
     usePWA: true,
