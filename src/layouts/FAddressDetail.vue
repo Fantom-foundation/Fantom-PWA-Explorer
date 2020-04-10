@@ -2,7 +2,7 @@
     <div class="f-address-detail">
         <template v-if="!dAccountByAddressError">
             <div class="row f-data-layout equal-height no-vert-col-padding collapse-md">
-                <div class="col margin-bottom-menu">
+                <div class="col col-6-lg margin-bottom-menu">
                     <f-card>
                         <h2>{{ $t('view_address_detail.balance') }}</h2>
 
@@ -12,16 +12,28 @@
                         </div>
                     </f-card>
                 </div>
+                <div class="col col-6-lg margin-bottom-menu">
+                    <f-card>
+                        <h2>{{ $t('view_address_detail.available') }}</h2>
+
+                        <div class="balance center-v">
+                            <h3 class="h1"><span v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} FTM</span></h3>
+                            <div v-show="'available' in cAssets" class="usd">${{ toUSD(cAssets.available) }}</div>
+                        </div>
+                    </f-card>
+                </div>
                 <div class="col">
                     <f-card>
-                        <h2>{{ $t('view_address_detail.details') }}</h2>
+                        <h2>{{ $t('view_address_detail.staking') }}</h2>
 
+<!--
                         <div class="row no-collapse">
                             <div class="col f-row-label">{{ $t('view_address_detail.available') }}</div>
                             <div class="col">
                                 <div v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} FTM</div>
                             </div>
                         </div>
+-->
                         <div class="row no-collapse">
                             <div class="col f-row-label">{{ $t('view_address_detail.delegated') }}</div>
                             <div class="col">

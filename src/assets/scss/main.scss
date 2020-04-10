@@ -118,6 +118,11 @@ a:not(.btn):hover {
     }
 }
 
+@include media-max($bp-large) {
+    .margin-bottom-menu {
+        margin-bottom: 30px;
+    }
+}
 
 @include media-max($bp-medium) {
     .f-subsection {
@@ -134,9 +139,5 @@ a:not(.btn):hover {
 
     .f-subsection {
         padding-top: 32px;
-    }
-
-    .margin-bottom-menu {
-        margin-bottom: 30px;
     }
 }

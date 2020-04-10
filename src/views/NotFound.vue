@@ -4,7 +4,7 @@
             <h1 class="h4">{{ $t('view_not_found.title') }}</h1>
             {{ $t('view_not_found.text') }}
 
-            <router-link :to="{name: 'home'}" class="router-link">{{  $t('view_not_found.link_title') }}</router-link>
+            <router-link to="/" class="router-link">{{  $t('view_not_found.link_title') }}</router-link>
         </div>
     </div>
 </template>
