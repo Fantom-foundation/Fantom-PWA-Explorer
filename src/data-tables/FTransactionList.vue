@@ -305,7 +305,7 @@
                             const from = this.getFrom(_item);
                             const to = this.getTo(_item);
 
-                            if (this.addressCol !== from) {
+                            if (this.addressCol.toLowerCase() !== from.toLowerCase()) {
                                 return from;
                             } else {
                                 return to;

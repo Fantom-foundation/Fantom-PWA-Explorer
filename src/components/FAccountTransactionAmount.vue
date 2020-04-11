@@ -37,7 +37,7 @@
 
         computed: {
             cRecieved() {
-                return (this.address === this.to);
+                return (this.address.toLocaleLowerCase() === this.to.toLocaleLowerCase());
             },
 
             cIsZero() {
