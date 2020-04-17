@@ -22,7 +22,7 @@ export const routes = [
     },
     {
         name: 'transaction-detail',
-        path: '/tx/:id',
+        path: '/transactions/:id',
         component: TransactionDetail
     },
     {
@@ -54,6 +54,10 @@ export const routes = [
         name: 'data-table-playground',
         path: '/data-table-playground',
         component: DataTablePlayground
+    },
+    {
+        path: '/validators',
+        redirect: {name: 'staking'}
     },
     {
         name: 'not-found',
