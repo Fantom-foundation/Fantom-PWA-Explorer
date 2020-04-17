@@ -2,7 +2,8 @@
     <div class="view-not-found center-v-h">
         <div class="message">
             <h1 class="h4">{{ $t('view_not_found.title') }}</h1>
-            {{ $t('view_not_found.text') }}
+            {{ $t('view_not_found.text') }} <br><br>
+            {{ $t('view_not_found.text2') }}
 
             <router-link to="/" class="router-link">{{  $t('view_not_found.link_title') }}</router-link>
         </div>

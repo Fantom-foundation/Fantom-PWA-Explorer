@@ -53,8 +53,9 @@
         "back_to_home": "@:back_to_home"
     },
     "view_not_found": {
-        "title": "Page not found :(",
+        "title": "Page not found",
         "text": "Looks like you've followed a broken link or entered a URL that doesn't exist on this site.",
+        "text2": "We recently redesigned the official explorer, so please ensure any links using the old structure are updated.",
         "link_title": "@:back_to_home"
     },
     "view_transaction_list": {

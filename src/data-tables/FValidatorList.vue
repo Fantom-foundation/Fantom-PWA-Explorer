@@ -15,14 +15,14 @@
                         <div class="col break-word">
                             <div class="validator-img">
                                 <img v-if="value"  :src="value" :alt="item.stakerInfo.name" class="not-fluid">
-                                <img v-else src="img/fantom-logo.png" alt="fantom logo" class="not-fluid">
+                                <img v-else src="/img/fantom-logo.png" alt="fantom logo" class="not-fluid">
                             </div>
                         </div>
                     </div>
                     <template v-else>
                         <div class="validator-img">
                             <img v-if="value"  :src="value" :alt="item.stakerInfo.name" class="not-fluid">
-                            <img v-else src="img/fantom-logo.png" alt="fantom logo" class="not-fluid">
+                            <img v-else src="/img/fantom-logo.png" alt="fantom logo" class="not-fluid">
                         </div>
                     </template>
                 </template>
