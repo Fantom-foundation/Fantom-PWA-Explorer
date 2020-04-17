@@ -37,7 +37,7 @@ export const routes = [
     },
     {
         name: 'block-detail',
-        path: '/block/:id',
+        path: '/blocks/:id',
         component: BlockDetail
     },
     {
