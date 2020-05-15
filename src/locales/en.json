@@ -19,6 +19,7 @@
     "name": "Name",
     "yes": "Yes",
     "no": "No",
+    "contract": "Contract",
 
     "navigation": [
         {
@@ -36,6 +37,10 @@
         {
             "url": "/staking",
             "title": "Staking"
+        },
+        {
+            "url": "/contracts",
+            "title": "Contracts"
         }
     ],
 
@@ -170,5 +175,11 @@
         "created_on": "@:created_on",
         "created_epoch": "Created on Epoch",
         "amount": "Amount (FTM)"
+    },
+    "view_contract_list": {
+        "title": "Contracts",
+        "address": "@:address",
+        "name": "@:name",
+        "compiler": "Compiler"
     }
 }

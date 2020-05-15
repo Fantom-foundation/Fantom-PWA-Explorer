@@ -46,7 +46,11 @@ const appStructure = [
                         translation: 'view_validator_detail.title'
                     }
                 ]
-            }
+            },
+            {
+                id: 'contracts',
+                translation: 'view_contract_list.title',
+            },
         ]
     }
 ];

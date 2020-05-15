@@ -26,7 +26,7 @@
             </a>
         </li>
         <li>
-            <a href="https://www.linkedin.com/company/fantom-foundation/" target="_blank" rel="nofollow" title="Fantom on Linkedin">
+            <a href="https://www.linkedin.com/company/fantom-foundation/" target="_blank" rel="nofollow" title="Fantom on Linkedin" class="linkedin">
                 <icon data="@/assets/svg/social-media/linkedin.svg" width="24" height="24"></icon>
             </a>
         </li>
@@ -58,6 +58,11 @@
             a:not(.btn):hover {
                 color: #fff;
             }
+        }
+
+        .linkedin {
+            position: relative;
+            top: -3px;
         }
     }
 </style>

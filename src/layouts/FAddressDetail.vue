@@ -143,6 +143,9 @@
                     query AccountByAddress($address: Address!, $cursor: Cursor, $count: Int!) {
                         account (address: $address) {
                             address
+                            contract {
+                                address
+                            }
                             balance
                             totalValue
                             txCount
@@ -248,6 +251,12 @@
 
         computed: {
             cAccount() {
+                if (this.account && this.account.contract) {
+                    this.$emit('is-contract');
+                } else {
+                    this.$emit('is-address');
+                }
+
                 return this.account;
             },
 
