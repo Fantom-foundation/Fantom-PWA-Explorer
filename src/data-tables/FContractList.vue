@@ -32,7 +32,7 @@
 import FDataTable from "../components/FDataTable.vue";
 import gql from "graphql-tag";
 import { WEIToFTM } from "../utils/transactions.js";
-import { timestampToDate, formatHexToInt } from "../filters.js";
+import {timestampToDate, formatHexToInt} from "../filters.js";
 
 export default {
     name: "FContractList",
@@ -127,7 +127,6 @@ export default {
                     label: this.$t("view_contract_list.address"),
                     itemProp: "contract.address",
                 },
-/*
                 {
                     name: "name",
                     label: this.$t("view_contract_list.name"),
@@ -138,7 +137,22 @@ export default {
                     label: this.$t("view_contract_list.compiler"),
                     itemProp: "contract.compiler",
                 },
-*/
+                {
+                    name: "version",
+                    label: this.$t("view_contract_list.version"),
+                    itemProp: "contract.version",
+                },
+                {
+                    name: "validated",
+                    label: this.$t("view_contract_list.validated"),
+                    itemProp: "contract.validated",
+                },
+                {
+                    name: "timestamp",
+                    label: this.$t("view_contract_list.timestamp"),
+                    itemProp: "contract.timestamp",
+                    formatter: (_value) => timestampToDate(_value),
+                },
             ]
         };
     },

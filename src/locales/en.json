@@ -180,6 +180,9 @@
         "title": "Contracts",
         "address": "@:address",
         "name": "@:name",
-        "compiler": "Compiler"
+        "compiler": "Compiler",
+        "version": "Version",
+        "validated": "Validated",
+        "timestamp": "Timestamp"
     }
 }
