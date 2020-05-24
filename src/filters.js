@@ -41,9 +41,16 @@ export function timestampToDate(_value) {
         timestamp = formatHexToInt(_value);
     }
 
+    if (timestamp >= 1e16 || timestamp <= -1e16) {
+        timestamp = Math.floor(timestamp / 1000000);
+    } else if (timestamp >= 1e14 || timestamp <= -1e14) {
+        timestamp /= 1000;
+    } else {
+        timestamp *= 1000;
+    }
 
     if (timestamp) {
-        return new Date (timestamp * 1000);
+        return new Date(timestamp);
     }
 
     return null;

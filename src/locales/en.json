@@ -138,6 +138,7 @@
         "link": "Link",
         "offline": "Offline",
         "unknown": "Unknown",
+        "downtime": "Downtime",
         "flagged": "Flagged"
     },
     "view_validators_info": {

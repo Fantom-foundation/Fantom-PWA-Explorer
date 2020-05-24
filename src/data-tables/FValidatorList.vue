@@ -129,6 +129,7 @@
                             totalStake
                             delegatedMe
                             poi
+                            downtime
                             stakerInfo {
                                 name
                                 website
@@ -230,6 +231,13 @@
                         label: this.$t('view_validator_list.address'),
                         sortFunc: sortByString,
                         width: '200px',
+                    },
+                    {
+                        name: 'downtime',
+                        label: this.$t('view_validator_list.downtime'),
+                        formatter: _value => formatHexToInt(_value),
+                        sortFunc: sortByHex,
+                        width: '140px',
                     },
                     {
                         name: 'stake',
