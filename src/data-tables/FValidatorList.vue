@@ -235,7 +235,7 @@
                     {
                         name: 'downtime',
                         label: this.$t('view_validator_list.downtime'),
-                        formatter: _value => `${formatHexToInt(_value) / 1000000000} s`,
+                        formatter: _value => `${Math.round(formatHexToInt(_value) / 10000000) / 100} s`,
                         sortFunc: sortByHex,
                         width: '140px',
                     },
