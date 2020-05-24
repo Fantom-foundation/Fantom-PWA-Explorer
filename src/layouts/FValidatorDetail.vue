@@ -110,7 +110,7 @@
                     <div class="col-4 f-row-label">{{ $t('view_validator_detail.downtime') }}</div>
                     <div class="col">
                         <div v-show="'downtime' in cStaker">
-                            {{ cStaker.downtime | formatHexToInt }}
+                            {{ formatHexToInt(cStaker.downtime) / 1000000000 }} s
                         </div>
                     </div>
                 </div>
