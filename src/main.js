@@ -9,7 +9,7 @@ import '@/plugins/vue-observe-visibility.js';
 import {store} from "./store";
 import './filters.js';
 import './registerServiceWorker'
-
+import 'focus-visible';
 
 Vue.config.productionTip = false;
 

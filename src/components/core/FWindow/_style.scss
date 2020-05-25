@@ -1,0 +1,82 @@
+@import "variables";
+
+.f-window {
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    width: 100%;
+    outline: none;
+    border-radius: $f-window-border-radius;
+    background: $f-window-background;
+    overflow: hidden;
+
+    /*
+    &.visible {
+        display: flex;
+    }
+    */
+
+    &.pos-fixed {
+        position: fixed;
+        max-height: 100%;
+    }
+
+    &.pos-absolute {
+        position: absolute;
+    }
+
+    .doc {
+        display: flex;
+        flex-direction: column;
+        //width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
+
+    header {
+        display: flex;
+        align-items: center;
+        padding: $f-window-header-padding;
+        background: $f-window-header-background;
+        //border-radius: $f-window-header-border-radius;
+
+        .title {
+            //font-size: var(--zpe-window-label-font-size);
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            padding-right: 1rem;
+            outline: none;
+
+            h1, h2, h3, h4, h5 {
+                margin-bottom: 0;
+                text-align: center;
+                padding-left: 36px;
+            }
+        }
+
+        .controls {
+            white-space: nowrap;
+            margin-left: auto;
+
+            > * {
+                display: inline-block;
+            }
+        }
+    }
+
+    .body {
+        /*max-height: 150px;*/
+        height: 100%;
+        overflow: auto;
+        padding: $f-window-body-padding;
+        background: $f-window-body-background;
+    }
+
+    footer {
+        padding: $f-window-footer-padding;
+        background: $f-window-footer-background;
+    }
+}

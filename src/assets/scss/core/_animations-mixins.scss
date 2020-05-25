@@ -24,6 +24,26 @@
     }
 }
 
+@mixin scale-center-fade-in-animation($_type, $_scaleFrom, $_scaleTo) {
+    @keyframes scale-center-fade-in-#{$_type} {
+        0% {
+            opacity: 0;
+            -webkit-transform: scale($_scaleTo);
+            transform: scale($_scaleTo);
+        }
+        0.1% {
+            opacity: 0;
+            -webkit-transform: scale($_scaleFrom);
+            transform: scale($_scaleFrom);
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform: scale($_scaleTo);
+            transform: scale($_scaleTo);
+        }
+    }
+}
+
 @mixin rotate-animation($_type: '', $_from: 0, $_to: 0) {
     @keyframes rotate#{$_type} {
         0% {

@@ -12,11 +12,17 @@
             >
                 <template v-slot:column-address="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-5 f-row-label">{{ column.label }}</div>
-                        <div class="col"><router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value }}</router-link></div>
+                        <div class="col-4 f-row-label">{{ column.label }}</div>
+                        <div class="col-8">
+                            <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">
+                                <f-ellipsis :text="value" overflow="middle" />
+                            </router-link>
+                        </div>
                     </div>
                     <template v-else>
-                        <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value }}</router-link>
+                        <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">
+                            {{ value }}
+                        </router-link>
                     </template>
                 </template>
             </f-data-table>
@@ -33,11 +39,13 @@ import FDataTable from "../components/FDataTable.vue";
 import gql from "graphql-tag";
 import { WEIToFTM } from "../utils/transactions.js";
 import {timestampToDate, formatHexToInt} from "../filters.js";
+import FEllipsis from "../components/core/FEllipsis/FEllipsis.vue";
 
 export default {
     name: "FContractList",
 
     components: {
+        FEllipsis,
         FDataTable
     },
 

@@ -4,6 +4,7 @@
 @import "core/normalize";
 @import "core/reset";
 @import "core/all";
+@import "core/vue-animations";
 @import "core/_positioning.scss";
 
 //@include flexbox-layout(24);
@@ -115,6 +116,73 @@ a:not(.btn):hover {
     img {
         width: auto;
         max-height: 100%;
+    }
+}
+
+.f-tabs {
+    ul {
+        li {
+            &:not([aria-selected="true"]) {
+                opacity: 0.6;
+            }
+
+            .f-records-count {
+                font-size: 1em;
+            }
+
+            h2, .h2 {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+form {
+    .f-input, .f-select {
+        margin-bottom: 16px;
+
+        label {
+            display: block;
+            font-weight: bold;
+            padding-bottom: 4px;
+            text-align: left;
+        }
+    }
+
+    .form-label {
+        display: block;
+        font-weight: bold;
+        padding-bottom: 4px;
+        text-align: left;
+    }
+}
+
+.f-message {
+    width: fit-content;
+    margin: 0 auto;
+    padding-top: 8px;
+    font-weight: bold;
+    line-height: 1;
+    align-items: start;
+}
+
+.f-input, .f-select {
+    .f-message {
+        font-size: 14px;
+        width: auto;
+        margin: 0;
+    }
+}
+
+.form-buttons {
+    padding-top: 16px;
+
+    .btn {
+        margin-right: 16px;
+
+        &:last-child {
+            margin-right: 0;
+        }
     }
 }
 

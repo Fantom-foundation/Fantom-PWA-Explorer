@@ -1,0 +1,58 @@
+@import "variables";
+
+.f-input {
+    display: inline-block;
+    vertical-align: middle;
+
+    .inp {
+        display: flex;
+        align-items: center;
+        align-content: center;
+
+        input, textarea {
+            width: 100%;
+            font-family: inherit;
+            font-size: inherit;
+            background: none;
+            padding: 0;
+            border: none;
+
+            &:focus {
+                box-shadow: none;
+                outline: none;
+            }
+
+            &:invalid {
+                box-shadow: none;
+                outline: none;
+                border: none;
+            }
+        }
+    }
+
+    &.is-textarea {
+        .inp {
+            height: auto;
+        }
+    }
+
+    &.prefix-slot {
+        .inp {
+            padding-left: 0.25rem;
+
+            input {
+                padding-left: 0.5rem;
+            }
+        }
+    }
+
+    &.suffix-slot {
+        .inp {
+            padding-right: 0.25rem;
+
+            input {
+                padding-right: 0.5rem;
+            }
+        }
+    }
+}

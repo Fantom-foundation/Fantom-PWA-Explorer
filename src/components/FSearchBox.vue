@@ -4,14 +4,14 @@
             <input
                 type="search"
                 name="search"
-                class="large"
+                class="inp large"
                 :placeholder="$t('view_home.search_input_placeholder')"
                 :aria-label="$t('view_home.search_input_placeholder')"
                 v-model="searchText"
                 @focus="onFocus"
                 @blur="onBlur"
             >
-            <button type="submit" class="light large same-size round" :class="{'no-hover': expandable}" :aria-label="$t('view_home.search_button_label')">
+            <button type="submit" class="btn light large same-size round" :class="{'no-hover': expandable}" :aria-label="$t('view_home.search_button_label')">
                 <icon data="@/assets/svg/search.svg" width="20" height="20"></icon>
             </button>
         </form>

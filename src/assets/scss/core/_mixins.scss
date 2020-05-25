@@ -177,15 +177,14 @@ $grid-rows-selector: '.row, [class^="row-"], [class*=" row-"]';
     }
 }
 
-@mixin buttons($_suffix: '') {
-    button:not(.def)#{$_suffix}, .btn#{$_suffix}, a.btn:visited#{$_suffix}, a.btn#{$_suffix},
-    input[type="submit"]:not(.def)#{$_suffix}, button[data-checked]:not(.def)#{$_suffix} {
+@mixin buttons($_suffix: '', $_prefix: '') {
+    #{$_prefix}.btn#{$_suffix}, #{$_prefix}a.btn:visited#{$_suffix} {
         @content
     }
 }
 
 @mixin inputs($_suffix: '', $_prefix: '') {
-    #{$_prefix}input:not(.def):not([type="submit"])#{$_suffix}, #{$_prefix}textarea:not(.def)#{$_suffix}, #{$_prefix}select:not(.def)#{$_suffix} {
+    #{$_prefix}.inp#{$_suffix} {
         @content
     }
 }

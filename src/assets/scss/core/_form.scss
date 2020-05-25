@@ -1,8 +1,8 @@
-form input:not(.def):not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
-form textarea:not(.def), form select:not(.def),
-form zpe-input {
-    width: 100%;
-    min-width: 0;
+form {
+    .inp, textarea, select, .f-input, .f-select, .f-password-field {
+        width: 100%;
+        min-width: 0;
+    }
 }
 
 @include flexbox-cols('form:not(.normal-cols-padding) ') {

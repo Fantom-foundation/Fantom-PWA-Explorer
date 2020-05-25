@@ -1,0 +1,36 @@
+.f-ellipsis {
+    display: block;
+
+    &:not(.overflow-middle) {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &.overflow-start {
+        direction: rtl;
+        text-align: left;
+    }
+
+    &.overflow-middle {
+        display: flex;
+
+        &:not(.fixed-char-pos-start) > .left-chars {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        &.fixed-char-pos-start > .right-chars {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            direction: rtl;
+            text-align: left;
+        }
+
+        &.f-ellipsis-align-right {
+            justify-content: flex-end;
+        }
+    }
+}

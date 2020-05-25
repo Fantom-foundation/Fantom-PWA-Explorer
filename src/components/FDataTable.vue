@@ -118,14 +118,14 @@
     import {getNestedProp, isValidIndex} from "../utils/index.js";
     import {cloneObject, isObjectEmpty} from "../utils/index.js";
     import {obj2css} from "../utils/index.js";
-    import helpers from "../mixins/helpers.js";
+    import { helpersMixin } from "../mixins/helpers.js";
     import events from "../mixins/events.js";
     import FCard from "./FCard.vue";
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
     export default {
         mixins: [
-            helpers, events
+            helpersMixin, events
         ],
 
         components: {

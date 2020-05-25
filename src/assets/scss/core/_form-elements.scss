@@ -43,6 +43,7 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
 
 textarea:not(.def), textarea:not(.def).large, textarea:not(.def).small {
     height: auto;
+    resize: vertical;
 }
 
 @include inputs('::-ms-clear') {
@@ -57,6 +58,10 @@ textarea:not(.def), textarea:not(.def).large, textarea:not(.def).small {
     @include main-focus;
 }
 
+@include inputs('.focus') {
+    @include main-focus;
+}
+
 input[type="submit"]:not(.def):focus {
     outline: none;
 }
@@ -67,7 +72,17 @@ input[type="submit"]:not(.def):focus {
     background-color: $input-disabled-bg-color !important;
 }
 
+@include inputs('.disabled') {
+    border-color: $input-disabled-border-color !important;
+    color: $input-disabled-color;
+    background-color: $input-disabled-bg-color !important;
+}
+
 @include inputs('[readonly]') {
+    background: $input-readonly-bg-color;
+}
+
+@include inputs('.readonly') {
     background: $input-readonly-bg-color;
 }
 
@@ -75,7 +90,11 @@ input[type="submit"]:not(.def):focus {
     border-color: $input-invalid-border-color;
 }
 
-@include inputs('', '.not-valid ') {
+@include inputs('.invalid') {
+    border-color: $input-invalid-border-color;
+}
+
+@include inputs('', '.invalid ') {
     border-color: $input-invalid-border-color;
 }
 
@@ -83,7 +102,11 @@ input[type="submit"]:not(.def):focus {
     box-shadow: $input-invalid-outline-shadow;
 }
 
-@include inputs(':focus', '.not-valid ') {
+@include inputs('.invalid.focus') {
+    box-shadow: $input-invalid-outline-shadow;
+}
+
+@include inputs(':focus', '.invalid ') {
     box-shadow: $input-invalid-outline-shadow;
 }
 

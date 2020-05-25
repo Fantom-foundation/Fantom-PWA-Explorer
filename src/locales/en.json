@@ -20,6 +20,10 @@
     "yes": "Yes",
     "no": "No",
     "contract": "Contract",
+    "version": "Version",
+    "optional": "Optional",
+    "required_field": "This field is required.",
+    "maximum_allowed_characters_length": "Maximum allowed length is {len} characters.",
 
     "navigation": [
         {
@@ -182,8 +186,30 @@
         "address": "@:address",
         "name": "@:name",
         "compiler": "Compiler",
-        "version": "Version",
+        "version": "@:version",
         "validated": "Validated",
         "timestamp": "Timestamp"
+    },
+    "view_contract_detail": {
+        "name": "@:name",
+        "creator": "Creator",
+        "compiler": "Compiler",
+        "deployed": "Deployed",
+        "validated": "Validated",
+        "transactions": "@:transactions",
+        "abi": "ABI",
+        "source_code": "Source Code",
+        "support_contact": "Support Contact",
+        "validate_contract": "Validate Contract",
+        "validate": "Validate",
+        "version": "@:version"
+    },
+    "validate_contract_form": {
+        "name": "@:name",
+        "validate_contract": "@:view_contract_detail.validate_contract",
+        "source_code": "@:view_contract_detail.source_code",
+        "support_contact": "@:view_contract_detail.support_contact",
+        "validate": "@:view_contract_detail.validate",
+        "version": "@:version"
     }
 }

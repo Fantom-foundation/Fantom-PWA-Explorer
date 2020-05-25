@@ -1,0 +1,35 @@
+@import "variables";
+
+.f-message {
+    display: flex;
+    align-items: center;
+    align-content: center;
+
+    &.success {
+        color: $f-message-success-color;
+    }
+
+    &.error {
+        color: $f-message-error-color;
+    }
+
+    &.info {
+        color: $f-message-info-color;
+    }
+
+    .f-message-body {
+        width: 100%;
+    }
+
+    &.prefix-slot, &.with-icon {
+        .f-message-body {
+            padding-left: 8px;
+        }
+    }
+
+    &.suffix-slot {
+        .f-message-body {
+            padding-right: 8px;
+        }
+    }
+}

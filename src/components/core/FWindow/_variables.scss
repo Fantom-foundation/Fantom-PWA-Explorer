@@ -1,0 +1,16 @@
+@import "../variables";
+
+$f-window-border-radius: 20px !default;
+$f-window-background: #fff !default;
+
+$f-window-padding: 24px !default;
+
+$f-window-header-padding: $f-window-padding !default;
+$f-window-header-background: none !default;
+//$f-window-header-border-radius: $f-window-padding $f-window-padding 0 0 !default;
+
+$f-window-body-padding: 0 $f-window-padding $f-window-padding $f-window-padding !default;
+$f-window-body-background: none !default;
+
+$f-window-footer-padding: $f-window-padding !default;
+$f-window-footer-background: none !default;

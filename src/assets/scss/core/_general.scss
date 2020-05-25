@@ -71,6 +71,13 @@
     display: none !important;
 }
 
+.not-visible {
+    position: absolute !important;
+    top: -9999px !important;;
+    left: -9999px !important;;
+    opacity: 0 !important;;
+}
+
 .align-right {
     text-align: right !important;
 }

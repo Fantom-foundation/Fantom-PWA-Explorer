@@ -26,14 +26,14 @@
                     <f-card>
                         <h2>{{ $t('view_address_detail.staking') }}</h2>
 
-<!--
-                        <div class="row no-collapse">
-                            <div class="col f-row-label">{{ $t('view_address_detail.available') }}</div>
-                            <div class="col">
-                                <div v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} FTM</div>
-                            </div>
-                        </div>
--->
+                        <!--
+                                                <div class="row no-collapse">
+                                                    <div class="col f-row-label">{{ $t('view_address_detail.available') }}</div>
+                                                    <div class="col">
+                                                        <div v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} FTM</div>
+                                                    </div>
+                                                </div>
+                        -->
                         <div class="row no-collapse">
                             <div class="col f-row-label">{{ $t('view_address_detail.delegated') }}</div>
                             <div class="col">
@@ -56,39 +56,39 @@
                 </div>
             </div>
 
-<!--
-            <br><br>
-            <f-card>
-                <h2 class="break-word">{{ id }}</h2>
-                <div class="row">
-                    <div class="col">
-                        <div class="num-block">
-                            <h2 class="h3">{{ $t('view_address_detail.value_in_ftm') }}</h2>
-                            <div class="num"><span v-show="cAccount">{{ toFTM(cAccount ? cAccount.totalValue : 1) }}</span></div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="num-block">
-                            <h2 class="h3">{{ $t('view_address_detail.value_in_usd') }}</h2>
-                            <div class="num"><span v-show="cAccount">{{ toUSD(cAccount ? cAccount.totalValue : 1) }}</span></div>
-                        </div>
-                    </div>
-                </div>
-            </f-card>
--->
+            <!--
+                        <br><br>
+                        <f-card>
+                            <h2 class="break-word">{{ id }}</h2>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="num-block">
+                                        <h2 class="h3">{{ $t('view_address_detail.value_in_ftm') }}</h2>
+                                        <div class="num"><span v-show="cAccount">{{ toFTM(cAccount ? cAccount.totalValue : 1) }}</span></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="num-block">
+                                        <h2 class="h3">{{ $t('view_address_detail.value_in_usd') }}</h2>
+                                        <div class="num"><span v-show="cAccount">{{ toUSD(cAccount ? cAccount.totalValue : 1) }}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </f-card>
+            -->
 
-<!--
-            <div class="f-subsection">
-                <h2 class="h1">{{ $t('view_address_detail.assets') }} <span v-if="cAssetItems.length" class="f-records-count">({{ cAssetItems.length }})</span></h2>
+            <!--
+                        <div class="f-subsection">
+                            <h2 class="h1">{{ $t('view_address_detail.assets') }} <span v-if="cAssetItems.length" class="f-records-count">({{ cAssetItems.length }})</span></h2>
 
-                <f-data-table
-                    :columns="dAssetColumns"
-                    :items="cAssetItems"
-                    fixed-header
-                >
-                </f-data-table>
-            </div>
--->
+                            <f-data-table
+                                :columns="dAssetColumns"
+                                :items="cAssetItems"
+                                fixed-header
+                            >
+                            </f-data-table>
+                        </div>
+            -->
 
             <div class="f-subsection">
                 <h2 class="h1">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
@@ -112,7 +112,7 @@
     import gql from 'graphql-tag';
     import { WEIToFTM, FTMToUSD } from "../utils/transactions.js";
     import FTransactionList from "../data-tables/FTransactionList.vue";
-    import {formatHexToInt, numToFixed, formatNumberByLocale} from "../filters.js";
+    import {formatHexToInt, numToFixed, formatNumberByLocale, timestampToDate} from "../filters.js";
     // import FDataTable from "../components/FDataTable.vue";
 
     export default {
@@ -145,6 +145,18 @@
                             address
                             contract {
                                 address
+                                deployedBy {
+                                    hash
+                                    contractAddress
+                                }
+                                name
+                                version
+                                compiler
+                                sourceCode
+                                abi
+                                validated
+                                supportContact
+                                timestamp
                             }
                             balance
                             totalValue
@@ -391,7 +403,8 @@
             },
 
             WEIToFTM,
-            FTMToUSD
+            FTMToUSD,
+            timestampToDate,
         }
     }
 </script>

@@ -1,0 +1,50 @@
+@import "variables";
+
+.f-tabs {
+    ul {
+        display: flex;
+        list-style-type: none;
+        border-bottom: $f-tabs-border-width solid $f-tabs-border-color;
+
+        li {
+            position: relative;
+            top: $f-tabs-border-width;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+    }
+
+    &:not(.no-style) {
+        ul {
+            li {
+                //border-radius: 8px 8px 0 0;
+                //background-color: #f4f4f4;
+                //margin-right: 1px;
+                color: $f-tabs-color;
+                font-weight: $f-tabs-font-weight;
+                border-bottom: $f-tabs-border-width solid $f-tabs-border-color;
+
+                &:hover, &:focus {
+                    //background-color: #ddd;
+                    border-bottom-color: $f-tabs-border-hover-color;
+                }
+
+                &[aria-selected="true"] {
+                    color: $f-tabs-color-active;
+                    border-bottom-color: $theme-color;
+                }
+
+                &[aria-disabled="true"] {
+                    color: $f-tabs-color-disabled;
+                    border-bottom-color: $f-tabs-border-disabled-color;
+                    cursor: default;
+                }
+            }
+        }
+    }
+
+    .f-tabs-panels {
+        padding-top: 16px;
+        //padding: 16px;
+    }
+}

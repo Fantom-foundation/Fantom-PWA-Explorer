@@ -14,6 +14,7 @@
             <f-breakpoint value="1000px" code="transaction-list-dt-mobile-view"></f-breakpoint>
             <f-breakpoint value="1100px" code="validator-list-dt-mobile-view"></f-breakpoint>
         </f-breakpoints>
+        <f-aria-alert />
     </div>
 </template>
 
@@ -23,11 +24,13 @@
     import FHeader from "./layouts/FHeader.vue";
     import FFooter from "./layouts/FFooter.vue";
     import gql from 'graphql-tag';
+    import FAriaAlert from "./components/core/FAriaAlert/FAriaAlert.vue";
 
     export default {
         name: 'App',
 
         components: {
+            FAriaAlert,
             FBreakpoint,
             FBreakpoints,
             FHeader,
