@@ -15,7 +15,7 @@
         "apollo-link-error": "^1.1.12",
         "apollo-link-http": "^1.5.16",
         "apollo-link-retry": "^2.2.15",
-        "apollo-link-ws": "^1.0.19",
+        "apollo-link-ws": "^1.0.20",
         "copy-to-clipboard": "^3.3.1",
         "core-js": "^3.6.4",
         "eslint": "^6.8.0",
