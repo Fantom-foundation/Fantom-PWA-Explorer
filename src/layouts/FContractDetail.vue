@@ -40,7 +40,7 @@
             <div class="row no-collapse">
                 <div class="col-12 align-center">
                     <button @click="onValidateContract" class="btn large">
-                        {{ $t('view_contract_detail.validate_contract') }}...
+                        {{ $t('view_contract_detail.validate_contract') }}
                     </button>
                 </div>
             </div>

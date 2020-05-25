@@ -24,6 +24,7 @@
     "optional": "Optional",
     "required_field": "This field is required.",
     "maximum_allowed_characters_length": "Maximum allowed length is {len} characters.",
+    "alert": "Alert",
 
     "navigation": [
         {

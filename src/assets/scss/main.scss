@@ -186,6 +186,14 @@ form {
     }
 }
 
+.f-window {
+    &.double-body-padding {
+        .body {
+            padding: 0 40px 40px 40px;
+        }
+    }
+}
+
 @include media-max($bp-large) {
     .margin-bottom-menu {
         margin-bottom: 30px;

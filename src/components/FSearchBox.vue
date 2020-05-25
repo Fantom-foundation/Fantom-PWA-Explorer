@@ -15,6 +15,19 @@
                 <icon data="@/assets/svg/search.svg" width="20" height="20"></icon>
             </button>
         </form>
+
+        <f-window
+            ref="alertWindow"
+            modal
+            :title="$t('alert')"
+            style="max-width: 680px;"
+            class="double-body-padding"
+            :z-index="14"
+            animation-in="scale-center-enter-active"
+            animation-out="scale-center-leave-active"
+        >
+            {{ $t('alerts.bad_search_string') }}
+        </f-window>
     </div>
 </template>
 
@@ -23,8 +36,10 @@
     import { throttle } from "../utils";
     import { clientInfo } from "../utils/client-info.js";
     import {getTypeByStr} from "../utils/transactions.js";
+    import FWindow from "./core/FWindow/FWindow.vue";
 
     export default {
+        components: {FWindow},
         mixins: [events],
 
         props: {
@@ -126,8 +141,7 @@
                         routeName = 'block-detail';
                         break;
                     default:
-                        // temporary alert
-                        alert(this.$t('alerts.bad_search_string'));
+                        this.$refs.alertWindow.show();
                 }
 
                 if (routeName) {

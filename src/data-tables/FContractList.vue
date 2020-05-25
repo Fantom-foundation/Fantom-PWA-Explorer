@@ -21,7 +21,7 @@
                     </div>
                     <template v-else>
                         <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">
-                            {{ value }}
+                            <f-ellipsis :text="value" overflow="middle" />
                         </router-link>
                     </template>
                 </template>
