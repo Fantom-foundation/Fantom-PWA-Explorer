@@ -72,7 +72,12 @@
                 <f-card>
                     <div class="source-code">
                         <pre class="break">{{ formatJSON(contract.abi) }}</pre>
-                        <f-copy-button :text="contract.abi" class="btn light large same-size round" />
+                        <f-copy-button
+                            :text="contract.abi"
+                            :tooltip="$t('copy_to_clipboard', {what: $t('view_contract_detail.abi')})"
+                            :popoverText="$t('copied_to_clipboard', {what: $t('view_contract_detail.abi')})"
+                            class="btn light large same-size round"
+                        />
                     </div>
                 </f-card>
             </f-tab>
@@ -80,7 +85,12 @@
                 <f-card>
                     <div class="source-code">
                         <pre>{{ contract.sourceCode }}</pre>
-                        <f-copy-button :text="contract.sourceCode" class="btn light large same-size round" />
+                        <f-copy-button
+                            :text="contract.sourceCode"
+                            :tooltip="$t('copy_to_clipboard', {what: $t('source_code')})"
+                            :popoverText="$t('copied_to_clipboard', {what: $t('source_code')})"
+                            class="btn light large same-size round"
+                        />
                     </div>
                 </f-card>
             </f-tab>

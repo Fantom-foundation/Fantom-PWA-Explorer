@@ -8,7 +8,7 @@ const kebabSplitRE = /([A-Z]|[ _-]+)/;
  * @return {string}
  */
 export function getUniqueId() {
-    return shortid.generate();
+    return `i${shortid.generate()}`;
 }
 
 /**
@@ -368,4 +368,48 @@ export function getNestedProp(_obj, _path) {
     }
 
     return value;
+}
+
+/**
+ * Deep extend an object.
+ *
+ * @param {Object} _out
+ * @param [_args]
+ * @return {*|{}}
+ */
+export function deepExtend(_out, ..._args) {
+    const out = _out || {};
+    let obj;
+
+    for (let i = 0, len = _args.length; i < len; i += 1) {
+        obj = _args[i];
+
+        if (!isObject(obj)) {
+            // eslint-disable-next-line no-continue
+            continue;
+        }
+
+        // eslint-disable-next-line no-restricted-syntax
+        for (const key in obj) {
+            // eslint-disable-next-line no-prototype-builtins
+            if (!obj.hasOwnProperty(key)) {
+                // || (typeof obj[key] === 'function')) {
+                // eslint-disable-next-line no-continue
+                continue;
+            }
+
+            // console.log("TYPeOF", typeof obj[key]);
+
+            // if (Object.prototype.toString.call(obj[key]) === '[object Object]') {
+            if (isObject(obj[key])) {
+                out[key] = deepExtend(out[key], obj[key]);
+                // eslint-disable-next-line no-continue
+                continue;
+            }
+
+            out[key] = obj[key];
+        }
+    }
+
+    return out;
 }

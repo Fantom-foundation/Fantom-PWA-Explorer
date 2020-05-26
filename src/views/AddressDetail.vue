@@ -4,7 +4,12 @@
             <h1 class="break-word">
                 {{ title || $t("view_address_detail.title") }}
                 <strong>{{ $route.params.id }}</strong>
-                <f-copy-button :text="$route.params.id" class="btn light large same-size round" />
+                <f-copy-button
+                    :text="$route.params.id"
+                    :tooltip="$t('copy_to_clipboard', {what: $t('address')})"
+                    :popoverText="$t('copied_to_clipboard', {what: $t('address')})"
+                    class="btn light large same-size round"
+                />
             </h1>
         </f-view-heading>
         <f-address-detail

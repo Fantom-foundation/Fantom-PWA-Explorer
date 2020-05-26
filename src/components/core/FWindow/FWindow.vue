@@ -5,7 +5,7 @@
             class="f-window"
             :class="cssClass"
             :style="style"
-            role="dialog"
+            :role="role"
             :aria-modal="modal"
             :aria-labelledby="_ids.title"
             :aria-describedby="_ids.body"
@@ -39,7 +39,7 @@
                 </footer>
 
                 <f-overlay
-                    v-if="withOverlay && isVisible"
+                    v-if="dWithOverlay && isVisible"
                     ref="overlay"
                     :z-index="dZIndex - 1"
                     @overlay-hide="onOverlayHide"
@@ -56,9 +56,17 @@ import FOverlay from '../FOverlay/FOverlay.vue';
 import { focusTrap, isKey, returnFocus, setReceiveFocusFromAttr } from '../../../utils/aria.js';
 import ResizeObserver from 'resize-observer-polyfill';
 import { helpersMixin } from '../../../mixins/helpers.js';
+import {
+    attachElemTo,
+    getAlignment,
+    getAttachPosition,
+    getAttachPositionByRects,
+    getAutoAttachPosition,
+    getElemRect,
+} from '../../../utils/DOM.js';
 
 /**
- * Basic modal window following WAI-ARIA practices.
+ * Basic window following WAI-ARIA practices.
  * Needs `resize-observer-polyfill` plugin.
  */
 export default {
@@ -89,8 +97,18 @@ export default {
             type: String,
             default: 'fade-leave-active',
         },
+        /** WAI-ARIA role. */
+        role: {
+            type: String,
+            default: 'dialog',
+        },
         /** Is window a modal? */
         modal: {
+            type: Boolean,
+            default: false,
+        },
+        /** Is window a popover? */
+        popover: {
             type: Boolean,
             default: false,
         },
@@ -119,6 +137,48 @@ export default {
             type: Number,
             default: 10,
         },
+        /** CSS selector. If window is popover, it will be attached to elemnet given by this selector. */
+        attachTo: {
+            type: String,
+            default: '',
+        },
+        /**
+         * How to place popover to `attachTo` element. (`'top'`, `'right'`, `'bottom'`, `'left'`, `'auto'`, `'[lcrm][tcbm] [lcrm][tcbm]'`)
+         *
+         * @type {('top', 'right', 'bottom', 'left', 'auto', '[lcrm][tcbm] [lcrm][tcbm]')}
+         */
+        attachPosition: {
+            type: String,
+            default: '',
+        },
+        /**
+         * Prefered attach position, if `attachPosition` is `'auto'`. (`'top'`, `'right'`, `'bottom'`, `'left'`, `'auto'`, `'[lcrm][tcbm] [lcrm][tcbm]'`)
+         *
+         * @type {('top', 'right', 'bottom', 'left', 'auto', '[lcrm][tcbm] [lcrm][tcbm]')}
+         */
+        preferredAttachPosition: {
+            type: String,
+            default: '',
+        },
+        /**
+         * Margin of popover. (`[top, right, bottom, left]`)
+         *
+         * @type {[number, number, number, number]}
+         */
+        attachMargin: {
+            type: Array,
+            default() {
+                return [0, 0, 0, 0];
+            },
+            validator: function (_value) {
+                return _value.length === 4;
+            },
+        },
+        /** Hide window after this amout of milliseconds. 0 means no auto hiding. */
+        hideAfter: {
+            type: Number,
+            default: 0,
+        },
         /** Center window horizontally. */
         centerHorizontally: {
             type: Boolean,
@@ -126,6 +186,11 @@ export default {
         },
         /** Center window vertically. */
         centerVertically: {
+            type: Boolean,
+            default: true,
+        },
+        /** Make window stay in viewport. */
+        stayInViewport: {
             type: Boolean,
             default: true,
         },
@@ -144,9 +209,11 @@ export default {
     data() {
         return {
             isVisible: false,
+            dPosition: this.popover ? 'absolute' : this.position,
             dAnimationIn: this.animationIn,
             dAnimationOut: this.animationOut,
             dZIndex: this.zIndex,
+            dWithOverlay: this.popover ? false : this.withOverlay,
             style: {
                 zIndex: this.zIndex,
             },
@@ -156,8 +223,12 @@ export default {
     computed: {
         cssClass() {
             return {
-                'pos-absolute': this.position === 'absolute',
-                'pos-fixed': this.position === 'fixed',
+                'pos-absolute': this.dPosition === 'absolute',
+                'pos-fixed': this.dPosition === 'fixed',
+                'with-header': this.withHeader,
+                'with-footer': this.withFooter,
+                modal: this.modal,
+                popover: this.popover,
             };
         },
     },
@@ -203,6 +274,8 @@ export default {
             first: null,
             last: null,
         };
+        /** `hideAfter` timeout id. */
+        this._hideAfterId = -1;
     },
 
     mounted() {
@@ -223,6 +296,8 @@ export default {
         if (this._resizeCallback) {
             window.removeEventListener('resize', this._resizeCallback);
         }
+
+        this.clearHideAfterTimeout();
 
         this.destroyResizeObserver();
     },
@@ -260,6 +335,8 @@ export default {
                     this.focus();
                     this.createResizeObserver();
                 });
+
+                this.startHideAfterTimeout();
             }
         },
 
@@ -273,7 +350,7 @@ export default {
                     }
                 }
 
-                if (this.withOverlay && !_byOverlay) {
+                if (this.dWithOverlay && !_byOverlay) {
                     this.$refs.overlay.hide();
                 } else {
                     this.destroyResizeObserver();
@@ -310,7 +387,9 @@ export default {
                     focusElem.focus();
                 }
             } else {
-                this.$refs.doc.focus();
+                this.$nextTick(() => {
+                    this.$refs.doc.focus();
+                });
             }
         },
 
@@ -318,7 +397,7 @@ export default {
             const style = {};
 
             if (this.isVisible) {
-                if (this.position === 'fixed') {
+                if (this.dPosition === 'fixed') {
                     if (this.centerHorizontally) {
                         this._setHalfMargin(style);
                         style.left = '50%';
@@ -351,7 +430,7 @@ export default {
                 return;
             }
 
-            if (this.position === 'fixed') {
+            if (this.dPosition === 'fixed') {
                 rect = this.$el.getBoundingClientRect();
 
                 if (this.centerHorizontally) {
@@ -383,6 +462,25 @@ export default {
                 }
 
                 this._updateStyle(css);
+            } else if (this.dPosition === 'absolute') {
+                if (this.attachTo || this.attachToPoint) {
+                    const attachMargin = this.attachMargin;
+
+                    rect = attachElemTo(
+                        this.$el,
+                        this.attachToPoint || document.querySelector(this.attachTo),
+                        this._getAlignment(),
+                        this.stayInViewport,
+                        {
+                            top: attachMargin[0],
+                            right: attachMargin[1],
+                            bottom: attachMargin[2],
+                            left: attachMargin[3],
+                        }
+                    );
+
+                    this.attachToPoint = null;
+                }
             }
         },
 
@@ -397,6 +495,22 @@ export default {
             if (this._resizeObserver) {
                 this._resizeObserver.disconnect();
                 this._resizeObserver = null;
+            }
+        },
+
+        startHideAfterTimeout() {
+            if (this.hideAfter > 0) {
+                this.clearHideAfterTimeout();
+
+                this._hideAfterId = setTimeout(() => {
+                    this.hide();
+                }, this.hideAfter);
+            }
+        },
+
+        clearHideAfterTimeout() {
+            if (this._hideAfterId > -1) {
+                clearTimeout(this._hideAfterId);
             }
         },
 
@@ -448,6 +562,33 @@ export default {
                 ...this.style,
                 ..._css,
             };
+        },
+
+        _getAlignment() {
+            let alignment = ['lt', 'lb'];
+            let { attachPosition } = this;
+            let pos;
+
+            if (attachPosition) {
+                if (attachPosition.indexOf('auto') > -1) {
+                    if (this.attachToPoint) {
+                        pos = getAttachPositionByRects(getElemRect(this.$el), {
+                            width: 1,
+                            height: 1,
+                            left: this.attachToPoint[0],
+                            top: this.attachToPoint[1],
+                        });
+                    } else if (this.attachTo) {
+                        pos = getAttachPosition(this.$el, document.querySelector(this.attachTo));
+                    }
+
+                    attachPosition = getAutoAttachPosition(pos, attachPosition, this.preferredAttachPosition);
+                }
+
+                alignment = getAlignment(attachPosition);
+            }
+
+            return alignment;
         },
 
         onWindowResize() {

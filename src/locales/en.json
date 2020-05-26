@@ -22,9 +22,12 @@
     "contract": "Contract",
     "version": "Version",
     "optional": "Optional",
-    "required_field": "This field is required.",
-    "maximum_allowed_characters_length": "Maximum allowed length is {len} characters.",
+    "required_field": "This field is required",
+    "maximum_allowed_characters_length": "Maximum allowed length is {len} characters",
     "alert": "Alert",
+    "source_code": "Source Code",
+    "copy_to_clipboard": "Copy {what} to clipboard",
+    "copied_to_clipboard": "{what} copied to clipboard",
 
     "navigation": [
         {
@@ -199,7 +202,7 @@
         "validated": "Validated",
         "transactions": "@:transactions",
         "abi": "ABI",
-        "source_code": "Source Code",
+        "source_code": "@:source_code",
         "support_contact": "Support Contact",
         "validate_contract": "Validate Contract",
         "validate": "Validate",
@@ -208,7 +211,7 @@
     "validate_contract_form": {
         "name": "@:name",
         "validate_contract": "@:view_contract_detail.validate_contract",
-        "source_code": "@:view_contract_detail.source_code",
+        "source_code": "@:source_code",
         "support_contact": "@:view_contract_detail.support_contact",
         "validate": "@:view_contract_detail.validate",
         "version": "@:version"
