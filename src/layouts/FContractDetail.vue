@@ -37,7 +37,7 @@
                 <div class="col-4 f-row-label">{{ $t("view_contract_detail.support_contact") }}</div>
                 <div class="col-8">{{ contract.supportContact }}</div>
             </div>
-            <div class="row no-collapse">
+            <div v-if="!contract.validated" class="row no-collapse">
                 <div class="col-12 align-center">
                     <button @click="onValidateContract" class="btn large">
                         {{ $t('view_contract_detail.validate_contract') }}
