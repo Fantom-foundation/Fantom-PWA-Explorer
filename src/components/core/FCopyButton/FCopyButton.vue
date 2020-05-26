@@ -18,7 +18,7 @@
             preferred-attach-position="top"
             :attach-margin="[4, 4, 4, 4]"
             :with-header="false"
-            :hide-after="2000"
+            :hide-after="1600"
             animation-in="scale-center-enter-active"
             animation-out="scale-center-leave-active"
             style="width: auto; max-width: 360px;"
