@@ -34,7 +34,9 @@ const appConfig = {
     build: {
         // output dir for production build
         outputDir: 'dist'
-    }
+    },
+    // downtime threshold in seconds. downtime values less than this threshold will be displayed as 0
+    downtimeThreshold: 10,
 };
 
 // scss variables prepended to every scss file

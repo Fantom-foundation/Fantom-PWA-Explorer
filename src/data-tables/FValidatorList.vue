@@ -92,7 +92,7 @@
     import FDataTable from "../components/FDataTable.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
-    import {formatHexToInt, timestampToDate, numToFixed, formatNumberByLocale} from "../filters.js";
+    import {formatHexToInt, timestampToDate, numToFixed, formatNumberByLocale, clampDowntime} from "../filters.js";
     import {sortByHex, sortByLocaleString, sortByString} from "../utils/array-sorting.js";
 
     export default {
@@ -235,7 +235,7 @@
                     {
                         name: 'downtime',
                         label: this.$t('view_validator_list.downtime'),
-                        formatter: _value => `${Math.round(formatHexToInt(_value) / 10000000) / 100} s`,
+                        formatter: _value => `${clampDowntime((Math.round(formatHexToInt(_value) / 10000000) / 100))} s`,
                         sortFunc: sortByHex,
                         width: '140px',
                     },
@@ -295,7 +295,8 @@
         methods: {
             WEIToFTM,
             timestampToDate,
-            numToFixed
+            numToFixed,
+            clampDowntime,
         }
     }
 </script>

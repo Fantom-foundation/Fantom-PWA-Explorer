@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import web3utils from 'web3-utils';
+const appConfig = require('../app.config.js');
 
 const zeroString = '00000000';
+const downtimeThreshold = appConfig.downtimeThreshold;
 
 /**
  * @param {string|number} _number
@@ -165,6 +167,14 @@ export function numToFixed(_value, _digits) {
     }
 
     return Number.parseFloat(value).toFixed(_digits);
+}
+
+/**
+ * @param {number} _downtime
+ * @return {number}
+ */
+export function clampDowntime(_downtime) {
+    return _downtime < downtimeThreshold ? 0 : _downtime;
 }
 
 Vue.filter('formatDate', formatDate);

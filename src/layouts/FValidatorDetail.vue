@@ -110,7 +110,7 @@
                     <div class="col-4 f-row-label">{{ $t('view_validator_detail.downtime') }}</div>
                     <div class="col">
                         <div v-show="'downtime' in cStaker">
-                            {{ Math.round(formatHexToInt(cStaker.downtime) / 10000000) / 100 }} s
+                            {{ clampDowntime(Math.round(formatHexToInt(cStaker.downtime) / 10000000) / 100) }} s
                         </div>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
 <script>
     import FCard from "../components/FCard.vue";
     import gql from 'graphql-tag';
-    import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed} from "../filters.js";
+    import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed, clampDowntime} from "../filters.js";
     import { WEIToFTM } from "../utils/transactions.js";
     import FDelegationList from "../data-tables/FDelegationList.vue";
     import FYesNo from "../components/FYesNo.vue";
@@ -252,7 +252,8 @@
             timestampToDate,
             formatHexToInt,
             formatNumberByLocale,
-            numToFixed
+            numToFixed,
+            clampDowntime,
         }
     }
 </script>
