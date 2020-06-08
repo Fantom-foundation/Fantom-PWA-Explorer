@@ -7,9 +7,14 @@
                 <f-copy-button
                     :text="$route.params.id"
                     :tooltip="$t('copy_to_clipboard', {what: $t('address')})"
-                    :popoverText="$t('copied_to_clipboard', {what: $t('address')})"
+                    :hide-popover-after="3100"
                     class="btn light large same-size round"
-                />
+                >
+                    <template #popover-text>
+                        {{ $t('copied_to_clipboard', {what: $t('address')}) }} <br />
+                        {{ $t('copied_to_clipboard_warning') }}
+                    </template>
+                </f-copy-button>
             </h1>
         </f-view-heading>
         <f-address-detail

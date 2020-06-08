@@ -28,6 +28,7 @@
     "source_code": "Source Code",
     "copy_to_clipboard": "Copy {what} to clipboard",
     "copied_to_clipboard": "{what} copied to clipboard",
+    "copied_to_clipboard_warning": "Warning: Use this address to receive Opera FTM only. If you are receiving FTM-ERC20 you need to use a different address!",
 
     "navigation": [
         {
@@ -49,6 +50,10 @@
         {
             "url": "/contracts",
             "title": "Contracts"
+        },
+        {
+            "url": "https://pwawallet.fantom.network/#/",
+            "title": "Wallet"
         }
     ],
 

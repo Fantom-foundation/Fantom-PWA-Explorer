@@ -3,7 +3,12 @@
         <nav>
             <slot>
                 <ul class="no-markers" v-if="cItems">
-                    <li v-for="item in cItems" :key="item.id"><router-link :to="item.url">{{ item.title }}</router-link></li>
+                    <li v-for="item in cItems" :key="item.id">
+                        <a v-if="item.url.indexOf('http') === 0" :href="item.url" target="_blank">
+                            {{ item.title }}
+                        </a>
+                        <router-link v-else :to="item.url">{{ item.title }}</router-link>
+                    </li>
                 </ul>
             </slot>
         </nav>
