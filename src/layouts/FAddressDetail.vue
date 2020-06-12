@@ -55,7 +55,10 @@
                         <div class="row no-collapse">
                             <div class="col f-row-label">{{ $t('validator') }}</div>
                             <div class="col">
-                                <div>{{ validator }}</div>
+                                <router-link v-if="validator && validator.address" :to="{ name: 'validator-detail', params: {address: validator.address} }">
+                                    {{ validator ? validator.name : '' }}
+                                </router-link>
+                                <span v-else>{{ validator ? validator.name : '' }}</span>
                             </div>
                         </div>
                     </f-card>
@@ -347,11 +350,17 @@
             async validator() {
                 const delegation = this.account ? this.account.delegation : null;
 
-                if (delegation) {
+                if (delegation && delegation.toStakerId !== '0x0') {
                     const validatorInfo = await this.getStakerById(delegation.toStakerId);
-                    return `${validatorInfo.stakerInfo ? validatorInfo.stakerInfo.name : this.$t('unknown')}, ${parseInt(validatorInfo.id, 16)}`;
+                    return {
+                        name: `${validatorInfo.stakerInfo ? validatorInfo.stakerInfo.name : this.$t('unknown')}, ${parseInt(validatorInfo.id, 16)}`,
+                        address: validatorInfo.stakerAddress,
+                    };
                 } else {
-                    return '-';
+                    return {
+                        name: '-',
+                        address: '',
+                    };
                 }
             },
         },
@@ -405,6 +414,7 @@
                         query StakerById($id: Long!) {
                             staker(id: $id) {
                                 id
+                                stakerAddress
                                 stakerInfo {
                                     name
                                     website
