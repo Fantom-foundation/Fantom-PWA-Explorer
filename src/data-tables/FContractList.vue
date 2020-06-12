@@ -6,22 +6,25 @@
                 :items="dItems"
                 :disable-infinite-scroll="!dHasNext"
                 :loading="cLoading"
+                :mobile-view="cMobileView"
                 infinite-scroll
                 fixed-header
                 @fetch-more="fetchMore"
             >
-                <template v-slot:column-address="{ value, column }">
+                <template v-slot:column-addressname="{ value, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-4 f-row-label">{{ column.label }}</div>
                         <div class="col-8">
-                            <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">
-                                <f-ellipsis :text="value" overflow="middle" />
+                            <span>{{ value.name }}</span>
+                            <router-link :to="{name: 'address-detail', params: {id: value.address}}" :title="value.address">
+                                <f-ellipsis :text="value.address" overflow="middle" />
                             </router-link>
                         </div>
                     </div>
                     <template v-else>
-                        <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">
-                            <f-ellipsis :text="value" overflow="middle" />
+                        <span>{{ value.name }}</span>
+                        <router-link :to="{name: 'address-detail', params: {id: value.address}}" :title="value.address">
+                            <f-ellipsis :text="value.address" overflow="middle" />
                         </router-link>
                     </template>
                 </template>
@@ -38,7 +41,7 @@
 import FDataTable from "../components/FDataTable.vue";
 import gql from "graphql-tag";
 import { WEIToFTM } from "../utils/transactions.js";
-import {timestampToDate, formatHexToInt} from "../filters.js";
+import {timestampToDate, formatHexToInt, formatDate} from "../filters.js";
 import FEllipsis from "../components/core/FEllipsis/FEllipsis.vue";
 
 export default {
@@ -131,41 +134,45 @@ export default {
             dContractListError: "",
             dColumns: [
                 {
-                    name: "address",
-                    label: this.$t("view_contract_list.address"),
-                    itemProp: "contract.address",
-                },
-                {
-                    name: "name",
-                    label: this.$t("view_contract_list.name"),
-                    itemProp: "contract.name",
+                    name: "addressname",
+                    label: `${this.$t("view_contract_list.address")} / ${this.$t("view_contract_list.name")}`,
+                    itemProp: "contract",
+                    width: '400px',
                 },
                 {
                     name: "compiler",
                     label: this.$t("view_contract_list.compiler"),
                     itemProp: "contract.compiler",
-                },
-                {
-                    name: "version",
-                    label: this.$t("view_contract_list.version"),
-                    itemProp: "contract.version",
+                    width: '150px',
                 },
                 {
                     name: "validated",
                     label: this.$t("view_contract_list.validated"),
                     itemProp: "contract.validated",
+                    formatter: (_value) => formatDate(timestampToDate(_value)),
                 },
                 {
                     name: "timestamp",
                     label: this.$t("view_contract_list.timestamp"),
                     itemProp: "contract.timestamp",
-                    formatter: (_value) => timestampToDate(_value),
+                    formatter: (_value) => formatDate(timestampToDate(_value)),
                 },
             ]
         };
     },
 
     computed: {
+        /**
+         * Property is set to `true`, if 'contract-list-dt-mobile-view' breakpoint is reached.
+         *
+         * @return {Boolean}
+         */
+        cMobileView() {
+            const dataTableBreakpoint = this.$store.state.breakpoints['contract-list-dt-mobile-view'];
+
+            return (dataTableBreakpoint && dataTableBreakpoint.matches);
+        },
+
         cLoading() {
             return this.$apollo.queries.contracts.loading;
         }

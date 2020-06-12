@@ -133,7 +133,7 @@
                         name: 'createdTime',
                         label: this.$t('delegation_list_dt.created_on'),
                         itemProp: 'delegator.createdTime',
-                        formatter: _value => formatDate(timestampToDate(formatHexToInt(_value) / 1000000000), true)
+                        formatter: _value => formatDate(timestampToDate(formatHexToInt(_value) / 1000000000))
                     },
                     {
                         name: 'createdEpoch',

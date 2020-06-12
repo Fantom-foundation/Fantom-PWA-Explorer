@@ -11,6 +11,7 @@
         <f-breakpoints>
             <f-breakpoint value="768px" code="menu-mobile"></f-breakpoint>
             <f-breakpoint value="600px" code="data-table-mobile-view"></f-breakpoint>
+            <f-breakpoint value="940px" code="contract-list-dt-mobile-view"></f-breakpoint>
             <f-breakpoint value="1000px" code="transaction-list-dt-mobile-view"></f-breakpoint>
             <f-breakpoint value="1100px" code="validator-list-dt-mobile-view"></f-breakpoint>
         </f-breakpoints>

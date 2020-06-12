@@ -11,7 +11,7 @@
                     <div class="col">
                         <div v-show="cBlock && ('timestamp' in cBlock)">
                             <timeago :datetime="timestampToDate(cBlock.timestamp)"></timeago>
-                            ({{ timestampToDate(cBlock.timestamp) }})
+                            ({{ formatDate(timestampToDate(cBlock.timestamp)) }})
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
     import FTransactionList from "../data-tables/FTransactionList.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
-    import { formatHexToInt, timestampToDate } from "../filters.js";
+    import { formatHexToInt, timestampToDate, formatDate } from "../filters.js";
 
     export default {
         components: {
@@ -156,7 +156,8 @@
         methods: {
             WEIToFTM,
             formatHexToInt,
-            timestampToDate
+            timestampToDate,
+            formatDate
         }
     }
 </script>

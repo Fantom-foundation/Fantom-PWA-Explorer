@@ -27,11 +27,11 @@
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t("view_contract_detail.deployed") }}</div>
-                <div class="col-8">{{ timestampToDate(contract.timestamp) }}</div>
+                <div class="col-8">{{ formatDate(timestampToDate(contract.timestamp)) }}</div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t("view_contract_detail.validated") }}</div>
-                <div class="col-8">{{ timestampToDate(contract.validated) }}</div>
+                <div class="col-8">{{ formatDate(timestampToDate(contract.validated)) }}</div>
             </div>
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t("view_contract_detail.support_contact") }}</div>
@@ -71,7 +71,9 @@
             <f-tab title-slot="abi" :disabled="!contract.abi">
                 <f-card>
                     <div class="source-code">
-                        <pre class="break">{{ formatJSON(contract.abi) }}</pre>
+                        <div>
+                            <pre class="break">{{ formatJSON(contract.abi) }}</pre>
+                        </div>
                         <f-copy-button
                             :text="contract.abi"
                             :tooltip="$t('copy_to_clipboard', {what: $t('view_contract_detail.abi')})"
@@ -84,7 +86,9 @@
             <f-tab title-slot="source-code" :disabled="!contract.sourceCode">
                 <f-card>
                     <div class="source-code">
-                        <pre>{{ contract.sourceCode }}</pre>
+                        <div>
+                            <pre>{{ contract.sourceCode }}</pre>
+                        </div>
                         <f-copy-button
                             :text="contract.sourceCode"
                             :tooltip="$t('copy_to_clipboard', {what: $t('source_code')})"
@@ -121,6 +125,7 @@
     import FCopyButton from "../components/core/FCopyButton/FCopyButton.vue";
     import FWindow from "../components/core/FWindow/FWindow.vue";
     import ValidateContractForm from "../forms/ValidateContractForm.vue";
+    import {formatDate} from "../filters.js";
 
     export default {
         name: "FContractDetail",
@@ -156,6 +161,8 @@
 
                 this.$refs.validateContractWindow.hide('fade-leave-active');
             },
+
+            formatDate: formatDate,
         }
     }
 </script>
@@ -173,7 +180,11 @@
         .source-code {
             position: relative;
             width: 100%;
-            overflow-x: auto;
+
+            > div {
+                width: 100%;
+                overflow-x: auto;
+            }
 
             pre {
                 width: 100%;

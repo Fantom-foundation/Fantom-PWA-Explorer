@@ -61,9 +61,10 @@ export function timestampToDate(_value) {
 /**
  * @param {string|Date} _value
  * @param {boolean} [_notWeekday]
+ * @param {boolean} [_notTime]
  * @return {string}
  */
-export function formatDate(_value, _notWeekday) {
+export function formatDate(_value, _notWeekday, _notTime) {
     if (!_value) {
         return '';
     }
@@ -72,15 +73,21 @@ export function formatDate(_value, _notWeekday) {
     const options = {
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
+        timeZoneName: 'short',
     };
 
     if (!_notWeekday) {
         options.weekday = 'short';
     }
 
+    if (!_notTime) {
+        options.hour = '2-digit';
+        options.minute = '2-digit';
+    }
+
     // TODO: use i18n current locale
-    return date.toLocaleDateString('en-GB', options);
+    return date.toLocaleDateString('en-US', options);
 }
 
 /**

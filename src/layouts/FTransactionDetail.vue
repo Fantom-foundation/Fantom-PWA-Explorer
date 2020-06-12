@@ -33,7 +33,7 @@
                     <div class="col">
                         <div class="break-word" v-show="cTransaction && cTransaction.block.timestamp">
                             <timeago :datetime="timestampToDate(cTransaction.block.timestamp)"></timeago>
-                            ({{ timestampToDate(cTransaction.block.timestamp) }})
+                            ({{ formatDate(timestampToDate(cTransaction.block.timestamp)) }})
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
     import FCard from "../components/FCard.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
-    import { formatHexToInt, timestampToDate } from "../filters.js";
+    import { formatHexToInt, timestampToDate, formatDate } from "../filters.js";
     import FTransactionStatus from "../components/FTransactionStatus.vue";
 
     export default {
@@ -188,7 +188,8 @@
         methods: {
             WEIToFTM,
             formatHexToInt,
-            timestampToDate
+            timestampToDate,
+            formatDate,
         }
     }
 </script>

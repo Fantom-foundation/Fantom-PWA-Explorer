@@ -385,7 +385,7 @@
 
         computed: {
             /**
-             * Property is set to `true`, if 'ttransaction-list-dt-mobile-view' breakpoint is reached.
+             * Property is set to `true`, if 'transaction-list-dt-mobile-view' breakpoint is reached.
              *
              * @return {Boolean}
              */

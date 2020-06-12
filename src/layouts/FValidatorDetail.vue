@@ -47,7 +47,7 @@
                     <div class="col-4 f-row-label">{{ $t('view_validator_detail.start_time') }}</div>
                     <div class="col">
                         <div v-show="'createdTime' in cStaker">
-                            {{ timestampToDate(formatHexToInt(cStaker.createdTime) / 1000000000) }}
+                            {{ formatDate(timestampToDate(formatHexToInt(cStaker.createdTime) / 1000000000)) }}
                         </div>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
 <script>
     import FCard from "../components/FCard.vue";
     import gql from 'graphql-tag';
-    import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed, clampDowntime} from "../filters.js";
+    import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed, clampDowntime, formatDate} from "../filters.js";
     import { WEIToFTM } from "../utils/transactions.js";
     import FDelegationList from "../data-tables/FDelegationList.vue";
     import FYesNo from "../components/FYesNo.vue";
@@ -250,6 +250,7 @@
 
             WEIToFTM,
             timestampToDate,
+            formatDate,
             formatHexToInt,
             formatNumberByLocale,
             numToFixed,
