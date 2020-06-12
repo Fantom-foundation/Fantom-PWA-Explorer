@@ -7,7 +7,7 @@
                         <h2>{{ $t('view_address_detail.balance') }}</h2>
 
                         <div class="balance center-v">
-                            <h3 class="h1"><span v-show="cAccount">{{ toFTM(cAccount ? cAccount.totalValue : 1) }} FTM</span></h3>
+                            <h3 class="h1"><span v-show="cAccount">{{ toFTM(cAccount ? cAccount.totalValue : 1) }} <span class="ftm">FTM</span></span></h3>
                             <div v-show="cAccount" class="usd">${{ toUSD(cAccount ? cAccount.totalValue : 1) }}</div>
                         </div>
                     </f-card>
@@ -17,7 +17,7 @@
                         <h2>{{ $t('view_address_detail.available') }}</h2>
 
                         <div class="balance center-v">
-                            <h3 class="h1"><span v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} FTM</span></h3>
+                            <h3 class="h1"><span v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} <span class="ftm">FTM</span></span></h3>
                             <div v-show="'available' in cAssets" class="usd">${{ toUSD(cAssets.available) }}</div>
                         </div>
                     </f-card>
@@ -50,6 +50,12 @@
                             <div class="col f-row-label">{{ $t('view_address_detail.claimed_rewards') }}</div>
                             <div class="col">
                                 <div v-show="'claimed_rewards' in cAssets">{{ toFTM(cAssets.claimed_rewards) }} FTM</div>
+                            </div>
+                        </div>
+                        <div class="row no-collapse">
+                            <div class="col f-row-label">{{ $t('validator') }}</div>
+                            <div class="col">
+                                <div>{{ validator }}</div>
                             </div>
                         </div>
                     </f-card>
@@ -213,13 +219,13 @@
                 error(_error) {
                     this.dAccountByAddressError = _error.message;
                 }
-            }
+            },
         },
 
         data() {
             return {
                 dRecordsCount: 0,
-                dAccountByAddressError: ''
+                dAccountByAddressError: '',
 /*
                 dAssetColumns: [
                     {
@@ -334,7 +340,20 @@
 
             cLoading() {
                 return this.$apollo.queries.account.loading;
-            }
+            },
+        },
+
+        asyncComputed: {
+            async validator() {
+                const delegation = this.account ? this.account.delegation : null;
+
+                if (delegation) {
+                    const validatorInfo = await this.getStakerById(delegation.toStakerId);
+                    return `${validatorInfo.stakerInfo ? validatorInfo.stakerInfo.name : this.$t('unknown')}, ${parseInt(validatorInfo.id, 16)}`;
+                } else {
+                    return '-';
+                }
+            },
         },
 
         created() {
@@ -378,6 +397,30 @@
              */
             toUSD(_value) {
                 return formatNumberByLocale(numToFixed(FTMToUSD(WEIToFTM(_value), this.$store.state.tokenPrice), 2), 2);
+            },
+
+            async getStakerById(_id) {
+                const data = await this.$apollo.query({
+                    query: gql`
+                        query StakerById($id: Long!) {
+                            staker(id: $id) {
+                                id
+                                stakerInfo {
+                                    name
+                                    website
+                                    contact
+                                    logoUrl
+                                }
+                            }
+                        }
+                    `,
+                    variables: {
+                        id: _id,
+                    },
+                    fetchPolicy: 'no-cache',
+                });
+
+                return data.data.staker;
             },
 
             onFetchMore() {

@@ -194,6 +194,10 @@ form {
     }
 }
 
+.ftm {
+    font-size: 0.6em;
+}
+
 @include media-max($bp-large) {
     .margin-bottom-menu {
         margin-bottom: 30px;
