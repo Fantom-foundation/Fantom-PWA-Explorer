@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         breakpoints: {},
-        tokenPrice: 0
+        tokenPrice: 0,
+        gasPrice: 0,
     },
 
     mutations: {
@@ -24,6 +25,14 @@ export const store = new Vuex.Store({
          */
         setTokenPrice(_state, _tokenPrice) {
             _state.tokenPrice = _tokenPrice;
+        },
+
+        /**
+         * @param {object} _state
+         * @param {number} _tokenPrice
+         */
+        setGasPrice(_state, _gasPrice) {
+            _state.gasPrice = _gasPrice;
         }
     }
 });
