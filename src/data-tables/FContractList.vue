@@ -15,17 +15,17 @@
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-4 f-row-label">{{ column.label }}</div>
                         <div class="col-8">
-                            <span>{{ value.name }}</span>
                             <router-link :to="{name: 'address-detail', params: {id: value.address}}" :title="value.address">
                                 <f-ellipsis :text="value.address" overflow="middle" />
                             </router-link>
+                            <span class="contract-name">{{ value.name }}</span>
                         </div>
                     </div>
                     <template v-else>
-                        <span>{{ value.name }}</span>
                         <router-link :to="{name: 'address-detail', params: {id: value.address}}" :title="value.address">
                             <f-ellipsis :text="value.address" overflow="middle" />
                         </router-link>
+                        <span class="contract-name">{{ value.name }}</span>
                     </template>
                 </template>
             </f-data-table>
@@ -140,12 +140,6 @@ export default {
                     width: '400px',
                 },
                 {
-                    name: "compiler",
-                    label: this.$t("view_contract_list.compiler"),
-                    itemProp: "contract.compiler",
-                    width: '150px',
-                },
-                {
                     name: "validated",
                     label: this.$t("view_contract_list.validated"),
                     itemProp: "contract.validated",
@@ -202,3 +196,12 @@ export default {
     }
 };
 </script>
+
+<style lang="scss">
+    .contract-list-dt {
+        .contract-name {
+            display: block;
+            padding-top: 4px;
+        }
+    }
+</style>

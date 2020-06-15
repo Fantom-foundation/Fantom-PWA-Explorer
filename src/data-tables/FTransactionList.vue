@@ -330,6 +330,13 @@
                         // width: '180px'
                     },
                     {
+                        name: 'gasUsed',
+                        label: this.$t('view_transaction_list.gas_used'),
+                        itemProp: `${!this.withoutCursor ? 'transaction.' : ''}gasUsed`,
+                        formatter: (_value) => formatHexToInt(_value),
+                        // width: '180px'
+                    },
+                    {
                         name: 'amount',
                         label: `${this.$t('view_transaction_list.amount')} (FTM)`,
                         itemProp: `${!this.withoutCursor ? 'transaction.' : ''}value`,
