@@ -79,6 +79,7 @@
                                     number
                                     timestamp
                                     transactionCount
+                                    gasUsed
                                 }
                                 cursor
                             }
@@ -125,6 +126,7 @@
                 dItems: [],
                 dHasNext: false,
                 dBlockListError: '',
+                gasPrice: this.$store.state.gasPrice,
                 dColumns: [
                     {
                         name: 'block',
@@ -136,12 +138,20 @@
                         name: 'time',
                         label: this.$t('view_block_list.time'),
                         itemProp: 'block.timestamp',
-                        formatter: (_value) => formatDate(timestampToDate(_value))
+                        formatter: (_value) => formatDate(timestampToDate(_value)),
+                        width: '340px'
                     },
                     {
                         name: 'age',
                         label: this.$t('view_block_list.age'),
                         itemProp: 'block.timestamp'
+                    },
+                    {
+                        name: 'fee',
+                        label: `${this.$t('view_block_list.fee')} (FTM)`,
+                        itemProp: 'block.gasUsed',
+                        formatter: (_value) => WEIToFTM(_value * (this.gasPrice || 1500000000)),
+                        // width: '80px'
                     },
                     {
                         name: 'transaction_count',

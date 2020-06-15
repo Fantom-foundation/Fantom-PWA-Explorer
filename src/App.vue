@@ -65,6 +65,22 @@
                         to: 'USD'
                     }
                 }
+            },
+
+            gasPrice: {
+                query: gql`
+                    query GasPrice {
+                        gasPrice
+                    }
+                `,
+
+                result(_data) {
+                    const gasPrice = parseInt(_data.data.gasPrice);
+
+                    if (gasPrice) {
+                        this.$store.commit('setGasPrice', gasPrice);
+                    }
+                },
             }
         }
     }

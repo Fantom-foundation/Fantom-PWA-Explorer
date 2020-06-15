@@ -31,6 +31,7 @@
     "copy_to_clipboard": "Copy {what} to clipboard",
     "copied_to_clipboard": "{what} copied to clipboard",
     "copied_to_clipboard_warning": "Warning: Use this address to receive Opera FTM only. If you are receiving FTM-ERC20 you need to use a different address!",
+    "gas_used": "Gas Used",
 
     "navigation": [
         {
@@ -82,6 +83,7 @@
         "title": "Transactions",
         "time": "@:time",
         "fee": "@:fee",
+        "gas_used": "@:gas_used",
         "address": "@:address",
         "amount": "@:amount",
         "from": "@:from",
@@ -100,7 +102,7 @@
         "amount": "@:amount",
         "fee": "@:fee",
         "block": "@:block",
-        "gas_used": "Gas Used",
+        "gas_used": "@:gas_used",
         "gas_limit": "Gas Limit",
         "gas_price": "Gas Price",
         "transaction_fee": "Transaction Fee",
@@ -125,6 +127,7 @@
         "block": "@:block",
         "time": "@:time",
         "age": "Age",
+        "fee": "@:fee",
         "transaction_count": "Txns"
     },
     "view_block_detail": {
