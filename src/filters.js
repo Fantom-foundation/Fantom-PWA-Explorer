@@ -72,13 +72,13 @@ export function formatDate(_value, _notWeekday, _notTime) {
     const date = (_value instanceof Date ? _value : new Date(_value));
     const options = {
         year: 'numeric',
-        month: 'long',
+        month: 'short',
         day: 'numeric',
         timeZoneName: 'short',
     };
 
     if (!_notWeekday) {
-        options.weekday = 'short';
+        // options.weekday = 'short';
     }
 
     if (!_notTime) {
