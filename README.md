@@ -1,6 +1,6 @@
-# Fantom UI Components
+# Fantom PWA Explorer
 
-JavaScript and Vue based UI components for Fantom frontend projects.
+JavaScript and Vue based Fantom pwa explorer.
 
 We are using:
 * Node / NPM
