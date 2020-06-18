@@ -17,7 +17,7 @@
         "apollo-link-retry": "^2.2.15",
         "apollo-link-ws": "^1.0.20",
         "copy-to-clipboard": "^3.3.1",
-        "core-js": "^3.6.4",
+        "core-js": "^3.6.5",
         "eslint": "^6.8.0",
         "focus-visible": "^5.1.0",
         "graphql": "^14.6.0",
