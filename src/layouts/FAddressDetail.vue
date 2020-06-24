@@ -47,6 +47,12 @@
                             </div>
                         </div>
                         <div class="row no-collapse">
+                            <div class="col f-row-label">{{ $t('view_address_detail.stashed_rewards') }}</div>
+                            <div class="col">
+                                <div v-show="'stashed' in cAssets">{{ toFTM(cAssets.stashed) }} FTM</div>
+                            </div>
+                        </div>
+                        <div class="row no-collapse">
                             <div class="col f-row-label">{{ $t('view_address_detail.claimed_rewards') }}</div>
                             <div class="col">
                                 <div v-show="'claimed_rewards' in cAssets">{{ toFTM(cAssets.claimed_rewards) }} FTM</div>
@@ -169,6 +175,7 @@
                             }
                             balance
                             totalValue
+                            stashed
                             txCount
                             txList(cursor: $cursor, count: $count) {
                                 pageInfo {
@@ -304,9 +311,12 @@
                 if (cAccount) {
                     const {delegation} = cAccount;
 
+                    console.log('wt', cAccount);
+
                     assets.available = cAccount.balance;
                     assets.delegated = (delegation ? delegation.amount : 0);
                     assets.pending_rewards = (delegation ? delegation.pendingRewards.amount : 0);
+                    assets.stashed = cAccount.stashed || 0;
                     assets.claimed_rewards = (delegation ? delegation.claimedReward : 0);
                 }
 

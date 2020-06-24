@@ -120,6 +120,7 @@
         "available": "Available",
         "delegated": "Delegated",
         "pending_rewards": "Pending Rewards",
+        "stashed_rewards": "Stashed Rewards",
         "claimed_rewards": "Claimed Rewards"
     },
     "view_block_list": {
