@@ -24,6 +24,20 @@ const appConfig = {
         // index into providers array of default provider or 'random' - takes index randomly
         defaultProviderIndex: "random"
     },
+    //
+    useTestnet: false,
+    // testnet config
+    testnet: {
+        // list of providers. if one of them is unavailable, another is randomly picked
+        providers: [
+            {
+                http: 'https://xapi5.testnet.fantom.network/graphql',
+                // http: 'https://xapi.testnet.fantom.network/api',
+                // for subscriptions
+                ws: '',
+            },
+        ],
+    },
     // progressive web application
     usePWA: true,
     // pwa settings
@@ -39,6 +53,10 @@ const appConfig = {
     // downtime threshold in seconds. downtime values less than this threshold will be displayed as 0
     downtimeThreshold: 10
 };
+
+if (appConfig.useTestnet) {
+    appConfig.apollo.providers = appConfig.testnet.providers;
+}
 
 // scss variables prepended to every scss file
 appConfig.scssData = `
