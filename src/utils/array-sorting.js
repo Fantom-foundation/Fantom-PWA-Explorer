@@ -10,7 +10,7 @@ import { getNestedProp } from "./index.js";
  * @return {number}
  */
 export function stringSort(_a, _b) {
-    return _a - _b;
+    return _a.localeCompare(_b);
 }
 
 /**

@@ -169,14 +169,6 @@
 
 <style lang="scss">
     .f-contract-detail {
-        .f-tabs {
-            margin-top: 32px;
-
-            ul {
-                margin: 0 20px;
-            }
-        }
-
         .source-code {
             position: relative;
             width: 100%;

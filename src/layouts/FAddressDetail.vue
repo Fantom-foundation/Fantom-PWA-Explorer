@@ -111,14 +111,35 @@
             -->
 
             <div class="f-subsection">
-                <h2 class="h1">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
+                <f-tabs>
+                    <template #transactions>
+                        <h2>
+                            {{ $t('view_block_detail.block_transactions') }}
+                            <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span>
+                        </h2>
+                    </template>
+                    <template #assets>
+                        <h2>
+                            Assets
+                            <span class="f-records-count">({{ assetsRecordsCount }})</span>
+                        </h2>
+                    </template>
 
-                <f-transaction-list
-                    :items="cTransactionItems"
-                    :loading="cLoading"
-                    :address-col="id"
-                    @fetch-more="onFetchMore"
-                ></f-transaction-list>
+                    <f-tab title-slot="transactions">
+                        <f-transaction-list
+                            :items="cTransactionItems"
+                            :loading="cLoading"
+                            :address-col="id"
+                            @fetch-more="onFetchMore"
+                        ></f-transaction-list>
+                    </f-tab>
+                    <f-tab title-slot="assets">
+                        <assets-list :tokens="tokens" :defi-account="defiAccount" @records-count="onAssetsRecordsCount" />
+                    </f-tab>
+                </f-tabs>
+
+<!--                <h2 class="h1">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>-->
+
             </div>
         </template>
         <template v-else>
@@ -133,10 +154,16 @@
     import { WEIToFTM, FTMToUSD } from "../utils/transactions.js";
     import FTransactionList from "../data-tables/FTransactionList.vue";
     import {formatHexToInt, numToFixed, formatNumberByLocale, timestampToDate} from "../filters.js";
+    import FTabs from "@/components/core/FTabs/FTabs.vue";
+    import FTab from "@/components/core/FTabs/FTab.vue";
+    import AssetsList from "@/data-tables/AssetsList.vue";
     // import FDataTable from "../components/FDataTable.vue";
 
     export default {
         components: {
+            AssetsList,
+            FTab,
+            FTabs,
             // FDataTable,
             FTransactionList,
             FCard
@@ -245,7 +272,15 @@
 
         data() {
             return {
+                /** @type {DefiAccount} */
+                defiAccount: {
+                    collateral: [],
+                    debt: [],
+                },
+                /** @type {DefiToken[]} */
+                tokens: [],
                 dRecordsCount: 0,
+                assetsRecordsCount: 0,
                 dAccountByAddressError: '',
                 validators: null,
 /*
@@ -385,6 +420,7 @@
         created() {
             /** If `true`, transaction items will be appended. */
             this.appendItems = false;
+            this.initDeFi();
         },
 
         methods: {
@@ -405,25 +441,16 @@
             },
 */
 
-            /**
-             * Convert value to FTM.
-             *
-             * @param {string|number} _value
-             * @param {boolean} _isNumber Value is number.
-             * @return {string}
-             */
-            toFTM(_value, _isNumber) {
-                return formatNumberByLocale(numToFixed(_isNumber ? _value : WEIToFTM(_value), 2), 2);
-            },
+            async initDeFi() {
+                const { $defi } = this;
+                const result = await Promise.all([
+                    $defi.fetchDefiAccount(this.id),
+                    $defi.fetchTokens(this.id),
+                    $defi.init(),
+                ]);
 
-            /**
-             * Convert value to USD.
-             *
-             * @param {string|number} _value
-             * @return {string}
-             */
-            toUSD(_value) {
-                return formatNumberByLocale(numToFixed(FTMToUSD(WEIToFTM(_value), this.$store.state.tokenPrice), 2), 2);
+                this.defiAccount = result[0];
+                this.tokens = result[1];
             },
 
             /**
@@ -492,6 +519,31 @@
                 });
 
                 return data.data.staker;
+            },
+
+            /**
+             * Convert value to FTM.
+             *
+             * @param {string|number} _value
+             * @param {boolean} _isNumber Value is number.
+             * @return {string}
+             */
+            toFTM(_value, _isNumber) {
+                return formatNumberByLocale(numToFixed(_isNumber ? _value : WEIToFTM(_value), 2), 2);
+            },
+
+            /**
+             * Convert value to USD.
+             *
+             * @param {string|number} _value
+             * @return {string}
+             */
+            toUSD(_value) {
+                return formatNumberByLocale(numToFixed(FTMToUSD(WEIToFTM(_value), this.$store.state.tokenPrice), 2), 2);
+            },
+
+            onAssetsRecordsCount(_count) {
+                this.assetsRecordsCount = _count;
             },
 
             onFetchMore() {
