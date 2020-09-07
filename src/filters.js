@@ -74,8 +74,11 @@ export function formatDate(_value, _notWeekday, _notTime) {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
-        timeZoneName: 'short',
     };
+
+    if (!_notTime) {
+        options.timeZoneName = 'short';
+    }
 
     if (!_notWeekday) {
         // options.weekday = 'short';

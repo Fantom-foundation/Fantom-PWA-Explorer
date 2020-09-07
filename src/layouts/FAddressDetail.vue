@@ -124,6 +124,12 @@
                             <span class="f-records-count">({{ assetsRecordsCount }})</span>
                         </h2>
                     </template>
+                    <template #delegations>
+                        <h2>
+                            Delegations
+                            <span class="f-records-count">({{ delegationsRecordsCount }})</span>
+                        </h2>
+                    </template>
 
                     <f-tab title-slot="transactions">
                         <f-transaction-list
@@ -135,6 +141,9 @@
                     </f-tab>
                     <f-tab title-slot="assets">
                         <assets-list :tokens="tokens" :defi-account="defiAccount" @records-count="onAssetsRecordsCount" />
+                    </f-tab>
+                    <f-tab title-slot="delegations">
+                        <address-delegation-list :account-address="id" @records-count="onDelegationsRecordsCount" />
                     </f-tab>
                 </f-tabs>
 
@@ -157,10 +166,12 @@
     import FTabs from "@/components/core/FTabs/FTabs.vue";
     import FTab from "@/components/core/FTabs/FTab.vue";
     import AssetsList from "@/data-tables/AssetsList.vue";
+    import AddressDelegationList from "@/data-tables/AddressDelegationList.vue";
     // import FDataTable from "../components/FDataTable.vue";
 
     export default {
         components: {
+            AddressDelegationList,
             AssetsList,
             FTab,
             FTabs,
@@ -281,6 +292,7 @@
                 tokens: [],
                 dRecordsCount: 0,
                 assetsRecordsCount: 0,
+                delegationsRecordsCount: 0,
                 dAccountByAddressError: '',
                 validators: null,
 /*
@@ -544,6 +556,10 @@
 
             onAssetsRecordsCount(_count) {
                 this.assetsRecordsCount = _count;
+            },
+
+            onDelegationsRecordsCount(_count) {
+                this.delegationsRecordsCount = _count;
             },
 
             onFetchMore() {
