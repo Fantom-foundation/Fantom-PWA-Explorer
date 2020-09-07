@@ -70,7 +70,7 @@
                             }
                             edges {
                                 cursor
-                                delegator {
+                                delegation {
                                     address
                                     amount
                                     createdEpoch
@@ -127,24 +127,24 @@
                     {
                         name: 'address',
                         label: this.$t('delegation_list_dt.address'),
-                        itemProp: 'delegator.address'
+                        itemProp: 'delegation.address'
                     },
                     {
                         name: 'createdTime',
                         label: this.$t('delegation_list_dt.created_on'),
-                        itemProp: 'delegator.createdTime',
+                        itemProp: 'delegation.createdTime',
                         formatter: _value => formatDate(timestampToDate(formatHexToInt(_value) / 1000000000))
                     },
                     {
                         name: 'createdEpoch',
                         label: this.$t('delegation_list_dt.created_epoch'),
-                        itemProp: 'delegator.createdEpoch',
+                        itemProp: 'delegation.createdEpoch',
                         formatter: formatHexToInt
                     },
                     {
                         name: 'amount',
                         label: this.$t('delegation_list_dt.amount'),
-                        itemProp: 'delegator.amount',
+                        itemProp: 'delegation.amount',
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
                         css: {textAlign: 'right'}
                     }

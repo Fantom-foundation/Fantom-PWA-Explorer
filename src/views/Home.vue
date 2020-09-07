@@ -19,7 +19,7 @@
                 <router-link :to="{name: 'staking'}" class="no-effect">
                     <f-card class="home-block" hover>
                         <h2 class="h3">{{ $t('view_home.validators') }} <icon data="@/assets/svg/angle-right.svg" color="#999"></icon></h2>
-                        <div class="num">{{ cValidatorsCount }}</div>
+                        <div class="num">{{ cValidatorsCount | formatHexToInt }}</div>
                     </f-card>
                 </router-link>
             </div>
@@ -53,60 +53,41 @@
         },
 
         apollo: {
-            blocks: {
+            state: {
                 query: gql`
-                    query BlockList {
-                        blocks (count: 1) {
-                            totalCount
+                    query State {
+                        state {
+                            blocks
+                            transactions
+                            accounts
+                            validators
+                            sfcLockingEnabled
+                            sealedEpoch {
+                                id
+                                totalSupply
+                                baseRewardPerSecond
+                            }
                         }
                     }
                 `
             },
-
-            stakers: {
-                query: gql`
-                    query Stakers {
-                        stakers {
-                            id
-                        }
-                    }
-                `
-            },
-
-            accountsActive: {
-                query: gql`
-                    query AccountCount {
-                        accountsActive
-                    }
-                `
-            },
-
-            transactions: {
-                query: gql`
-                    query TransactionList {
-                        transactions (count: 1) {
-                            totalCount
-                        }
-                    }
-                `
-            }
         },
 
         computed: {
             cBlocksCount() {
-                return (this.blocks ? this.blocks.totalCount : 0);
+                return (this.state ? this.state.blocks : 0);
             },
 
             cValidatorsCount() {
-                return (this.stakers ? this.stakers.length : '-');
+                return (this.state ? this.state.validators : 0);
             },
 
             cAccountsCount() {
-                return this.accountsActive;
+                return (this.state ? this.state.accounts : 0);
             },
 
             cTransactionsCount() {
-                return (this.transactions ? this.transactions.totalCount : 0);
+                return (this.state ? this.state.transactions : 0);
             }
         }
     }

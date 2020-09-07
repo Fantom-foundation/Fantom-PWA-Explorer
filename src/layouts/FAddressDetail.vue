@@ -37,13 +37,13 @@
                         <div class="row no-collapse">
                             <div class="col f-row-label">{{ $t('view_address_detail.delegated') }}</div>
                             <div class="col">
-                                <div v-show="'delegated' in cAssets">{{ toFTM(cAssets.delegated) }} FTM</div>
+                                <div v-show="'delegated' in cAssets">{{ toFTM(cAssets.delegated, true) }} FTM</div>
                             </div>
                         </div>
                         <div class="row no-collapse">
                             <div class="col f-row-label">{{ $t('view_address_detail.pending_rewards') }}</div>
                             <div class="col">
-                                <div v-show="'pending_rewards' in cAssets">{{ toFTM(cAssets.pending_rewards) }} FTM</div>
+                                <div v-show="'pending_rewards' in cAssets">{{ toFTM(cAssets.pending_rewards, true) }} FTM</div>
                             </div>
                         </div>
                         <div class="row no-collapse">
@@ -55,16 +55,21 @@
                         <div class="row no-collapse">
                             <div class="col f-row-label">{{ $t('view_address_detail.claimed_rewards') }}</div>
                             <div class="col">
-                                <div v-show="'claimed_rewards' in cAssets">{{ toFTM(cAssets.claimed_rewards) }} FTM</div>
+                                <div v-show="'claimed_rewards' in cAssets">{{ toFTM(cAssets.claimed_rewards, true) }} FTM</div>
                             </div>
                         </div>
                         <div class="row no-collapse">
-                            <div class="col f-row-label">{{ $t('validator') }}</div>
+                            <div class="col f-row-label">{{ $t('validators') }}</div>
                             <div class="col">
-                                <router-link v-if="validator && validator.address" :to="{ name: 'validator-detail', params: {address: validator.address} }">
-                                    {{ validator ? validator.name : '' }}
-                                </router-link>
-                                <span v-else>{{ validator ? validator.name : '' }}</span>
+                                <template v-if="validators && validators.length">
+                                    <div v-for="validator in validators" :key="validator.id">
+                                        <router-link v-if="validator.stakerAddress" :to="{ name: 'validator-detail', params: {address: validator.stakerAddress} }">
+                                            {{ validator ? validator.name : '' }}
+                                        </router-link>
+                                        <span v-else>{{ validator ? validator.name : '' }}</span>
+                                    </div>
+                                </template>
+                                <template v-else>-</template>
                             </div>
                         </div>
                     </f-card>
@@ -205,15 +210,21 @@
                                 createdTime
                                 isActive
                             }
-                            delegation {
-                                toStakerId
-                                createdTime
-                                amount
-                                claimedReward
-                                pendingRewards {
-                                    amount
-                                    fromEpoch
-                                    toEpoch
+                            delegations {
+                                totalCount
+                                edges {
+                                    delegation {
+                                        toStakerId
+                                        createdTime
+                                        amount
+                                        claimedReward
+                                        pendingRewards {
+                                            amount
+                                            fromEpoch
+                                            toEpoch
+                                        }
+                                    }
+                                    cursor
                                 }
                             }
                         }
@@ -236,6 +247,7 @@
             return {
                 dRecordsCount: 0,
                 dAccountByAddressError: '',
+                validators: null,
 /*
                 dAssetColumns: [
                     {
@@ -307,17 +319,31 @@
             cAssets() {
                 const {cAccount} = this;
                 const assets = {};
+                const validatorIds = [];
 
                 if (cAccount) {
-                    const {delegation} = cAccount;
-
-                    console.log('wt', cAccount);
+                    const { delegations } = cAccount;
 
                     assets.available = cAccount.balance;
-                    assets.delegated = (delegation ? delegation.amount : 0);
-                    assets.pending_rewards = (delegation ? delegation.pendingRewards.amount : 0);
                     assets.stashed = cAccount.stashed || 0;
-                    assets.claimed_rewards = (delegation ? delegation.claimedReward : 0);
+
+                    assets.delegated = 0;
+                    assets.pending_rewards = 0;
+                    assets.claimed_rewards = 0;
+
+                    if (delegations && delegations.edges) {
+                        delegations.edges.forEach((_edge) => {
+                            const { delegation } = _edge;
+
+                            validatorIds.push(delegation.toStakerId);
+
+                            assets.delegated += (delegation ? WEIToFTM(delegation.amount) : 0);
+                            assets.pending_rewards += (delegation && delegation.pendingRewards ? WEIToFTM(delegation.pendingRewards.amount) : 0);
+                            assets.claimed_rewards += (delegation ? WEIToFTM(delegation.claimedReward) : 0);
+                        });
+
+                        this.setValidators(validatorIds);
+                    }
                 }
 
                 return assets;
@@ -356,25 +382,6 @@
             },
         },
 
-        asyncComputed: {
-            async validator() {
-                const delegation = this.account ? this.account.delegation : null;
-
-                if (delegation && delegation.toStakerId !== '0x0') {
-                    const validatorInfo = await this.getStakerById(delegation.toStakerId);
-                    return {
-                        name: `${validatorInfo.stakerInfo ? validatorInfo.stakerInfo.name : this.$t('unknown')}, ${parseInt(validatorInfo.id, 16)}`,
-                        address: validatorInfo.stakerAddress,
-                    };
-                } else {
-                    return {
-                        name: '-',
-                        address: '',
-                    };
-                }
-            },
-        },
-
         created() {
             /** If `true`, transaction items will be appended. */
             this.appendItems = false;
@@ -402,10 +409,11 @@
              * Convert value to FTM.
              *
              * @param {string|number} _value
+             * @param {boolean} _isNumber Value is number.
              * @return {string}
              */
-            toFTM(_value) {
-                return formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2);
+            toFTM(_value, _isNumber) {
+                return formatNumberByLocale(numToFixed(_isNumber ? _value : WEIToFTM(_value), 2), 2);
             },
 
             /**
@@ -416,6 +424,49 @@
              */
             toUSD(_value) {
                 return formatNumberByLocale(numToFixed(FTMToUSD(WEIToFTM(_value), this.$store.state.tokenPrice), 2), 2);
+            },
+
+            /**
+             * @param {array} _validatorIds
+             * @return {Promise<void>}
+             */
+            async setValidators(_validatorIds) {
+                let data;
+
+                if (this.validators === null) {
+                    data = await this.fetchValidators();
+
+                    this.validators = data.filter((_validator) => {
+                        if (_validatorIds.indexOf(_validator.id) > -1) {
+                            _validator.name = `${_validator.stakerInfo ? _validator.stakerInfo.name : this.$t('unknown')}, ${parseInt(_validator.id, 16)}`;
+                            return true;
+                        }
+
+                        return false;
+                    });
+                }
+            },
+
+            async fetchValidators() {
+                const data = await this.$apollo.query({
+                    query: gql`
+                        query StakerById {
+                            stakers {
+                                id
+                                stakerAddress
+                                stakerInfo {
+                                    name
+                                    website
+                                    contact
+                                    logoUrl
+                                }
+                            }
+                        }
+                    `,
+                    fetchPolicy: 'network-only',
+                });
+
+                return data.data.stakers;
             },
 
             async getStakerById(_id) {
@@ -437,7 +488,7 @@
                     variables: {
                         id: _id,
                     },
-                    fetchPolicy: 'no-cache',
+                    fetchPolicy: 'network-only',
                 });
 
                 return data.data.staker;
