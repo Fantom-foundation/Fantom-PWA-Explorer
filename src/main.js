@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue'
 import {router} from "./plugins/router.js";
-import {apolloProvider} from "./plugins/apollo-provider.js";
+import {apolloProvider, apolloClient} from "./plugins/apollo-provider.js";
 import i18n from './plugins/i18n';
 import './plugins/vue-timeago.js';
 import './plugins/vue-svgicon.js';
@@ -11,8 +11,14 @@ import {store} from "./store";
 import './filters.js';
 import './registerServiceWorker'
 import 'focus-visible';
+import { DeFi } from './plugins/defi/defi.js';
 
 Vue.config.productionTip = false;
+
+Vue.use(DeFi, {
+    apolloClient,
+});
+
 
 // measure performance
 // Vue.config.performance = true;

@@ -92,7 +92,7 @@ const retryLink = new RetryLink({
     }
 });
 
-const apolloClient = new ApolloClient({
+export const apolloClient = new ApolloClient({
     link: ApolloLink.from([
         errorLink,
         retryLink,
