@@ -55,7 +55,10 @@
                         <div class="row no-collapse">
                             <div class="col f-row-label">{{ $t('view_address_detail.claimed_rewards') }}</div>
                             <div class="col">
-                                <div v-show="'claimed_rewards' in cAssets">{{ toFTM(cAssets.claimed_rewards, true) }} FTM</div>
+                                <div v-show="'claimed_rewards' in cAssets">
+                                    -
+                                    <!--{{ toFTM(cAssets.claimed_rewards, true) }} FTM-->
+                                </div>
                             </div>
                         </div>
                         <div class="row no-collapse">
