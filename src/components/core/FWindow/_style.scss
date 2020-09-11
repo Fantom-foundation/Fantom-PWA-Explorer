@@ -1,4 +1,4 @@
-@import "variables";
+@import "custom-properties";
 
 .f-window {
     display: flex;
@@ -7,8 +7,8 @@
     left: 0;
     width: 100%;
     outline: none;
-    border-radius: $f-window-border-radius;
-    background: $f-window-background;
+    border-radius: var(--f-window-border-radius);
+    background: var(--f-window-background);
     overflow: hidden;
 
     /*
@@ -37,12 +37,11 @@
     header {
         display: flex;
         align-items: center;
-        padding: $f-window-header-padding;
-        background: $f-window-header-background;
-        //border-radius: $f-window-header-border-radius;
+        padding: var(--f-window-header-padding);
+        background: var(--f-window-header-background);
+        //border-radius: var(--f-window-header-border-radius);
 
         .title {
-            //font-size: var(--zpe-window-label-font-size);
             width: 100%;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -71,39 +70,66 @@
         /*max-height: 150px;*/
         height: 100%;
         overflow: auto;
-        padding: $f-window-body-padding;
-        background: $f-window-body-background;
+        padding: var(--f-window-body-padding);
+        background: var(--f-window-body-background);
     }
 
     footer {
-        padding: $f-window-footer-padding;
-        background: $f-window-footer-background;
+        padding: var(--f-window-footer-padding);
+        background: var(--f-window-footer-background);
     }
 
     &.with-header {
-        .body {
-            padding: $f-window-body-padding-with-header;
+        &.no-title {
+            header {
+                padding: 0;
+
+                .controls {
+                    position: relative;
+                    top: 16px;
+                    right: 16px;
+                }
+            }
+        }
+
+        &:not(.no-title) {
+            .body {
+                padding: var(--f-window-body-padding-with-header);
+            }
         }
     }
 
     &.popover {
-        font-size: $f-window-popover-font-size;
-        color: $f-window-popover-color;
-        background: $f-window-popover-background;
-        border-radius: $f-window-popover-border-radius;
-        box-shadow: $f-window-popover-box-shadow;
+        font-size: var(--f-window-popover-font-size);
+        color: var(--f-window-popover-color);
+        background: var(--f-window-popover-background);
+        border-radius: var(--f-window-popover-border-radius);
+        box-shadow: var(--f-window-popover-box-shadow);
+
+        header {
+            padding: var(--f-window-popover-header-padding);
+        }
 
         .body {
-            padding: $f-window-popover-body-padding;
+            padding: var(--f-window-popover-body-padding);
         }
 
         footer {
-            padding: $f-window-popover-footer-padding;
+            padding: var(--f-window-popover-footer-padding);
         }
 
         &.with-header {
+            &.no-title {
+                header {
+                    .controls {
+                        top: 8px;
+                        right: 8px;
+                    }
+                }
+            }
+
             .body {
-                padding: $f-window-popover-body-padding-with-header;
+                //padding: var(--f-window-popover-body-padding-with-header);
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
     <div class="claim-rewards-info-window">
-        <f-window2
+        <f-window
             ref="window"
             modal
             style="max-width: 700px;"
@@ -27,16 +27,16 @@
             <p class="align-center">
                 <button class="btn large" @click="onBtnClick">Ok, understood</button>
             </p>
-        </f-window2>
+        </f-window>
     </div>
 </template>
 
 <script>
-import FWindow2 from "@/components/core/FWindow2/FWindow2.vue";
+import FWindow from "@/components/core/FWindow/FWindow.vue";
 export default {
     name: 'TemporaryMessageWindow',
 
-    components: {FWindow2 },
+    components: { FWindow },
 
     mounted() {
         if (!window.localStorage.getItem('tmp-msg')) {
