@@ -1,11 +1,10 @@
 /**
  * DeFi settings object.
  * @typedef {Object} DefiSettings
- * @property {number} tradeFee4 Current fee applied to all direct trading operations.
- * @property {number} loanFee4 Current entry fee applied to all lending operations.
+ * @property {number} mintFee4 Current fee applied to all minting operations on fMint protocol.
+ * @property {number} rewardCollateralRatio4 Minimal ratio between collateral and debt values in ref. denomination (fUSD) on which the account is eligible for rewards distribution.
  * @property {number} minCollateralRatio4 Minimal collateral ratio.
- * @property {number} warningCollateralRatio4
- * @property {number} liqCollateralRatio4 Liquidation collateral ratio.
+ * @property {number} fMintContract Address of the fMint contract.
  * @property {number} decimals Decimals represents the decimals / digits correction applied to the fees and ratios.
  */
 
@@ -23,13 +22,14 @@
  * @property {string} availableBalance Available balance of the token on the account regardless of the DeFi usage of the token.
  * @property {boolean} isActive Signals if the token can be used in the DeFi functions at all.
  * @property {boolean} canDeposit Signals if the token can be used in deposit as a collateral asset.
+ * @property {boolean} canMint Signals if the token can be used in fMint protocol as the target token.
  * @property {boolean} canBorrow Signals if the token is available for FLend borrow operations.
  * @property {boolean} canTrade Signals if the token is available for FTrade direct trading operations.
  */
 
 /**
  * DeFi token balance object.
- * @typedef {Object} DefiTokenBalance
+ * @typedef {Object} FMintTokenBalance
  * @property {string} tokenAddress Unique identifier of the token.
  * @property {DefiToken} token
  * @property {string} balance Balance of the token on the account.
@@ -38,12 +38,12 @@
 
 /**
  * DeFi account object.
- * @typedef {Object} DefiAccount
+ * @typedef {Object} FMintAccount
  * @property {string} address Address of the DeFi account.
- * @property {DefiTokenBalance[]} collateral List of all collateral assets.
+ * @property {FMintTokenBalance[]} collateral List of all collateral assets.
  * @property {string} collateralValue Current collateral value in ref. denomination (fUSD).
  * @property {string[]} collateralList List of all collateral tokens linked with the account.
- * @property {DefiTokenBalance[]} debt List of all the current borrowed tokens.
+ * @property {FMintTokenBalance[]} debt List of all the current borrowed tokens.
  * @property {string} debtValue Current debt value in ref. denomination (fUSD).
  * @property {string[]} debtList List of all debt tokens linked with the account.
  */

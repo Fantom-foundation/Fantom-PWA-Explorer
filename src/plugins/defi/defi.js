@@ -2,7 +2,6 @@ import './defi.types.js';
 import gql from 'graphql-tag';
 import { isObjectEmpty, lowercaseFirstChar } from '../../utils';
 import web3utils from 'web3-utils';
-// import appConfig from '../../../app.config.js';
 
 /** @type {BNBridgeExchange} */
 export let defi = null;
@@ -38,6 +37,8 @@ export class DeFi {
         this.minCollateralRatio = 3;
         /** Warning collateral ratio. */
         this.warningCollateralRatio = 2.25; // (this.liqCollateralRatio + this.minCollateralRatio) / 2;
+        this.rewardCollateralRatio = 5;
+        this.mintFee = 0.0025;
         /** DeFi settings was loaded. */
         this.settingsLoaded = false;
         /** @type {DefiToken[]} */
@@ -48,6 +49,10 @@ export class DeFi {
         this.ftmToken = {};
         /** Keys are token symbols, values are number of decimals. */
         this.tokenDecimals = {};
+        /** Addresses of various contracts. */
+        this.contracts = {
+            fMint: '',
+        };
 
         // TMP!!
         this.tmpWFTM = tmpWFTM;
@@ -72,10 +77,14 @@ export class DeFi {
      */
     initProperties(_settings) {
         const dec = Math.pow(10, _settings.decimals);
+        const { contracts } = this;
 
-        this.liqCollateralRatio = parseInt(_settings.liqCollateralRatio4, 16) / dec;
+        // this.liqCollateralRatio = parseInt(_settings.liqCollateralRatio4, 16) / dec;
         this.minCollateralRatio = parseInt(_settings.minCollateralRatio4, 16) / dec;
-        this.warningCollateralRatio = parseInt(_settings.warningCollateralRatio4, 16) / dec;
+        this.rewardCollateralRatio = parseInt(_settings.rewardCollateralRatio4, 16) / dec;
+        // this.warningCollateralRatio = parseInt(_settings.warningCollateralRatio4, 16) / dec;
+        this.mintFee = parseInt(_settings.mintFee4, 16) / dec;
+        contracts.fMint = _settings.fMintContract;
     }
 
     /**
@@ -217,32 +226,32 @@ export class DeFi {
     /**
      * Get overall debt in FUSD.
      *
-     * @param {DefiAccount} _defiAccount
+     * @param {FMintAccount} _fMintAccount
      * @return {number}
      */
-    getOverallDebt(_defiAccount) {
-        return this.fromTokenValue(_defiAccount.debtValue, this.fusdToken);
+    getOverallDebt(_fMintAccount) {
+        return this.fromTokenValue(_fMintAccount.debtValue, this.fusdToken);
     }
 
     /**
      * Get overall collateral in FUSD.
      *
-     * @param {DefiAccount} _defiAccount
+     * @param {FMintAccount} _fMintAccount
      * @return {number}
      */
-    getOverallCollateral(_defiAccount) {
-        return this.fromTokenValue(_defiAccount.collateralValue, this.fusdToken);
+    getOverallCollateral(_fMintAccount) {
+        return this.fromTokenValue(_fMintAccount.collateralValue, this.fusdToken);
     }
 
     /**
      * Get overall borrow limit in FUSD.
      *
-     * @param {DefiAccount} _defiAccount
+     * @param {FMintAccount} _fMintAccount
      * @return {number}
      */
-    getBorrowLimit(_defiAccount) {
-        const overallDebt = this.getOverallDebt(_defiAccount);
-        const overallCollateral = this.getOverallCollateral(_defiAccount);
+    getBorrowLimit(_fMintAccount) {
+        const overallDebt = this.getOverallDebt(_fMintAccount);
+        const overallCollateral = this.getOverallCollateral(_fMintAccount);
 
         return this.getMaxDebtFUSD(overallCollateral) - overallDebt;
     }
@@ -250,12 +259,12 @@ export class DeFi {
     /**
      * Get overall borrow limit in hex.
      *
-     * @param {DefiAccount} _defiAccount
+     * @param {FMintAccount} _fMintAccount
      * @return {number}
      */
-    getBorrowLimitHex(_defiAccount) {
-        const debtValue = web3utils.toBN(_defiAccount.debtValue);
-        const collateralValue = web3utils.toBN(_defiAccount.collateralValue);
+    getBorrowLimitHex(_fMintAccount) {
+        const debtValue = web3utils.toBN(_fMintAccount.debtValue);
+        const collateralValue = web3utils.toBN(_fMintAccount.collateralValue);
 
         return '0x' + collateralValue.divn(this.minCollateralRatio).sub(debtValue).toString('hex');
     }
@@ -263,14 +272,14 @@ export class DeFi {
     /**
      * Get overall debt limit in FUSD.
      *
-     * @param {DefiAccount} _defiAccount
+     * @param {FMintAccount} _fMintAccount
      * @param {number} [_currDebtFUSD] Current debt in FUSD.
      * @param {number} [_currCollateralFUSD] Current corrateral in FUSD.
      * @return {number}
      */
-    getDebtLimit(_defiAccount, _currDebtFUSD = 0, _currCollateralFUSD = 0) {
-        const overallDebt = this.getOverallDebt(_defiAccount);
-        const overallCollateral = this.getOverallCollateral(_defiAccount);
+    getDebtLimit(_fMintAccount, _currDebtFUSD = 0, _currCollateralFUSD = 0) {
+        const overallDebt = this.getOverallDebt(_fMintAccount);
+        const overallCollateral = this.getOverallCollateral(_fMintAccount);
 
         return this.getMintingLimitFUSD(_currDebtFUSD + overallDebt, _currCollateralFUSD + overallCollateral);
     }
@@ -462,11 +471,11 @@ export class DeFi {
     /**
      * Get defi account debt by token.
      *
-     * @param {DefiAccount} _account
+     * @param {FMintAccount} _account
      * @param {DefiToken} _token
-     * @return {DefiTokenBalance|{}}
+     * @return {FMintTokenBalance|{}}
      */
-    getDefiAccountDebt(_account, _token) {
+    getFMintAccountDebt(_account, _token) {
         let debt = {};
         let acountDebt;
 
@@ -483,11 +492,11 @@ export class DeFi {
     /**
      * Get defi account collateral by token.
      *
-     * @param {DefiAccount} _account
+     * @param {FMintAccount} _account
      * @param {DefiToken} _token
-     * @return {DefiTokenBalance|{}}
+     * @return {FMintTokenBalance|{}}
      */
-    getDefiAccountCollateral(_account, _token) {
+    getFMintAccountCollateral(_account, _token) {
         let collateral = {};
         let acountCollateral;
 
@@ -499,6 +508,15 @@ export class DeFi {
         }
 
         return collateral;
+    }
+
+    /**
+     * @param {DefiToken} _token
+     * @return {boolean}
+     */
+    canTokenBeMinted(_token) {
+        // return _token && _token.isActive && _token.canMint && _token.symbol !== 'FUSD';
+        return _token && _token.isActive && _token.canMint;
     }
 
     /**
@@ -547,11 +565,10 @@ export class DeFi {
             query: gql`
                 query DefiSettings {
                     defiConfiguration {
-                        tradeFee4
-                        loanFee4
+                        mintFee4
+                        rewardCollateralRatio4
                         minCollateralRatio4
-                        warningCollateralRatio4
-                        liqCollateralRatio4
+                        fMintContract
                         decimals
                     }
                 }
@@ -581,6 +598,7 @@ export class DeFi {
                         priceDecimals
                         isActive
                         canDeposit
+                        canMint
                         canBorrow
                         canTrade
                         availableBalance(owner: $owner)
@@ -619,13 +637,13 @@ export class DeFi {
 
     /**
      * @param {string} _ownerAddress
-     * @return {Promise<DefiAccount>}
+     * @return {Promise<FMintAccount>}
      */
-    async fetchDefiAccount(_ownerAddress = '') {
+    async fetchFMintAccount(_ownerAddress = '') {
         const data = await this.apolloClient.query({
             query: gql`
-                query DefiAccount($owner: Address!) {
-                    defiAccount(owner: $owner) {
+                query FMintAccount($owner: Address!) {
+                    fMintAccount(owner: $owner) {
                         address
                         collateral {
                             type
@@ -659,10 +677,10 @@ export class DeFi {
             },
             fetchPolicy: 'network-only',
         });
-        /** @type {DefiAccount} */
-        const { defiAccount } = data.data;
+        /** @type {FMintAccount} */
+        const { fMintAccount } = data.data;
 
-        return defiAccount;
+        return fMintAccount;
     }
 
     /**
