@@ -142,9 +142,11 @@
                             @fetch-more="onFetchMore"
                         ></f-transaction-list>
                     </f-tab>
+<!--
                     <f-tab title-slot="assets">
                         <assets-list :tokens="tokens" :f-mint-account="fMintAccount" @records-count="onAssetsRecordsCount" />
                     </f-tab>
+-->
                     <f-tab title-slot="delegations">
                         <address-delegation-list :account-address="id" @records-count="onDelegationsRecordsCount" />
                     </f-tab>
@@ -168,14 +170,12 @@
     import {formatHexToInt, numToFixed, formatNumberByLocale, timestampToDate} from "../filters.js";
     import FTabs from "@/components/core/FTabs/FTabs.vue";
     import FTab from "@/components/core/FTabs/FTab.vue";
-    import AssetsList from "@/data-tables/AssetsList.vue";
     import AddressDelegationList from "@/data-tables/AddressDelegationList.vue";
     // import FDataTable from "../components/FDataTable.vue";
 
     export default {
         components: {
             AddressDelegationList,
-            AssetsList,
             FTab,
             FTabs,
             // FDataTable,
@@ -435,7 +435,7 @@
         created() {
             /** If `true`, transaction items will be appended. */
             this.appendItems = false;
-            this.initDeFi();
+            // this.initDeFi();
         },
 
         methods: {
