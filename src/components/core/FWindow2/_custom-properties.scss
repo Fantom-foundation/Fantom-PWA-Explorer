@@ -1,0 +1,34 @@
+@import "../variables";
+
+.f-window {
+    --f-window-border-radius: 16px;
+    --f-window-background: #fff;
+
+    --f-window-popover-font-size: 1em;
+    --f-window-popover-color: #f4f4f4;
+    --f-window-popover-border-radius: 4px;
+    --f-window-popover-background: #333;
+    --f-window-popover-box-shadow: #{$elev8-shadow};
+
+    --f-window-padding: 24px;
+    --f-window-popover-padding: 16px;
+
+    --f-window-header-padding: var(--f-window-padding);
+    --f-window-header-background: none;
+    //--f-window-header-border-radius: var(--f-window-padding) var(--f-window-padding) 0 0;
+    --f-window-popover-header-padding: var(--f-window-popover-padding);
+
+    --f-window-body-padding-with-header: 0 var(--f-window-padding) var(--f-window-padding) var(--f-window-padding);
+    --f-window-body-padding: var(--f-window-padding);
+    --f-window-body-background: none;
+    --f-window-popover-body-padding: calc(var(--f-window-popover-padding) / 2) var(--f-window-popover-padding);
+    --f-window-popover-body-padding-with-header: 0 var(--f-window-popover-padding) var(--f-window-popover-padding) var(--f-window-popover-padding);
+
+    --f-window-footer-padding: var(--f-window-padding);
+    --f-window-footer-background: none;
+    --f-window-popover-footer-padding: var(--f-window-popover-padding);
+}
+
+.f-window-overlay {
+    //--f-overlay-background-color: #f00;
+}

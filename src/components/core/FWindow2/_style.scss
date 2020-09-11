@@ -1,0 +1,136 @@
+@import "custom-properties";
+
+.f-window2 {
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    width: 100%;
+    outline: none;
+    border-radius: var(--f-window-border-radius);
+    background: var(--f-window-background);
+    overflow: hidden;
+
+    /*
+    &.visible {
+        display: flex;
+    }
+    */
+
+    &.pos-fixed {
+        position: fixed;
+        max-height: 100%;
+    }
+
+    &.pos-absolute {
+        position: absolute;
+    }
+
+    .doc {
+        display: flex;
+        flex-direction: column;
+        //width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
+
+    header {
+        display: flex;
+        align-items: center;
+        padding: var(--f-window-header-padding);
+        background: var(--f-window-header-background);
+        //border-radius: var(--f-window-header-border-radius);
+
+        .title {
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            padding-right: 1rem;
+            outline: none;
+
+            h1, h2, h3, h4, h5 {
+                margin-bottom: 0;
+                text-align: center;
+                padding-left: 36px;
+            }
+        }
+
+        .controls {
+            white-space: nowrap;
+            margin-left: auto;
+
+            > * {
+                display: inline-block;
+            }
+        }
+    }
+
+    .body {
+        /*max-height: 150px;*/
+        height: 100%;
+        overflow: auto;
+        padding: var(--f-window-body-padding);
+        background: var(--f-window-body-background);
+    }
+
+    footer {
+        padding: var(--f-window-footer-padding);
+        background: var(--f-window-footer-background);
+    }
+
+    &.with-header {
+        &.no-title {
+            header {
+                padding: 0;
+
+                .controls {
+                    position: relative;
+                    top: 16px;
+                    right: 16px;
+                }
+            }
+        }
+
+        &:not(.no-title) {
+            .body {
+                padding: var(--f-window-body-padding-with-header);
+            }
+        }
+    }
+
+    &.popover {
+        font-size: var(--f-window-popover-font-size);
+        color: var(--f-window-popover-color);
+        background: var(--f-window-popover-background);
+        border-radius: var(--f-window-popover-border-radius);
+        box-shadow: var(--f-window-popover-box-shadow);
+
+        header {
+            padding: var(--f-window-popover-header-padding);
+        }
+
+        .body {
+            padding: var(--f-window-popover-body-padding);
+        }
+
+        footer {
+            padding: var(--f-window-popover-footer-padding);
+        }
+
+        &.with-header {
+            &.no-title {
+                header {
+                    .controls {
+                        top: 8px;
+                        right: 8px;
+                    }
+                }
+            }
+
+            .body {
+                //padding: var(--f-window-popover-body-padding-with-header);
+            }
+        }
+    }
+}
