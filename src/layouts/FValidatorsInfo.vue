@@ -34,12 +34,14 @@
                             </div>
                         </div>
 
+<!--
                         <div class="row no-collapse">
                             <div class="col-5 f-row-label">{{ $t('view_validators_info.current_reward_rate') }}</div>
                             <div class="col">
                                 <div v-show="cCurrentRewardRate">{{ formatNumberByLocale(numToFixed(cCurrentRewardRate, 0)) }}%</div>
                             </div>
                         </div>
+-->
                     </f-card>
                 </div>
                 <div class="col">
