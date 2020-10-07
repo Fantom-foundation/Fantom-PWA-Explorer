@@ -80,14 +80,33 @@
         }
     }
 
+    @include media-max(900px) {
+        .f-navigation {
+            nav {
+                ul {
+                    li {
+                        @include links() {
+                            font-size: 0.9em;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     @include media-max($bp-menu) {
         .f-navigation {
             nav {
                 ul {
                     li {
                         display: block;
-                        a {
+
+                        @include links() {
                             font-size: 1.5em;
+                            padding-left: 20px;
+                            padding-right: 20px;
                         }
                     }
                 }
