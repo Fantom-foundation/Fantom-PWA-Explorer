@@ -4,7 +4,6 @@
             :columns="columns"
             :items="items"
             first-m-v-column-width="6"
-            :class="{ 'f-data-table-body-bg-color': defiAssetsList }"
         >
             <template v-slot:column-asset="{ value, item, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
@@ -45,45 +44,6 @@
                     <!-- <span class="currency-light">{{ $defi.getTokenSymbol(item) }}</span>-->
                 </template>
             </template>
-
-            <template v-slot:column-actions="{ value, item, column }">
-                <div v-if="column" class="row no-collapse no-vert-col-padding">
-                    <div class="col-6 f-row-label">{{ column.label }}</div>
-                    <div class="col break-word">
-                        <template v-if="item._collateral > 0">
-                            <template v-if="usedInFMint(item) && item.symbol === 'WFTM'">
-                                <router-link :to="{ name: 'defi-lock' }">Lock</router-link>,
-                                <router-link :to="{ name: 'defi-unlock' }">Unlock</router-link>,
-                                <router-link :to="{ name: 'defi-ftrade' }">Swap</router-link>
-                            </template>
-                        </template>
-                        <template v-if="item._debt > 0">
-                            <template v-if="usedInFMint(item) && item.symbol === 'FUSD'">
-                                <router-link :to="{ name: 'defi-mint' }">Mint</router-link>,
-                                <router-link :to="{ name: 'defi-repay' }">Repay</router-link>
-                            </template>
-                        </template>
-                    </div>
-                </div>
-                <template v-else>
-                    <template v-if="item._collateral > 0">
-                        <template v-if="usedInFMint(item) && item.symbol === 'WFTM'">
-                            <router-link :to="{ name: 'defi-lock' }">Lock</router-link>
-                            <br />
-                            <router-link :to="{ name: 'defi-unlock' }">Unlock</router-link>
-                            <br />
-                            <router-link :to="{ name: 'defi-ftrade' }">Swap</router-link>
-                        </template>
-                    </template>
-                    <template v-if="item._debt > 0">
-                        <template v-if="usedInFMint(item) && item.symbol === 'FUSD'">
-                            <router-link :to="{ name: 'defi-mint' }">Mint</router-link>
-                            <br />
-                            <router-link :to="{ name: 'defi-repay' }">Repay</router-link>
-                        </template>
-                    </template>
-                </template>
-            </template>
         </f-data-table>
     </div>
 </template>
@@ -95,7 +55,7 @@ import { stringSort } from '../utils/array-sorting.js';
 import { formatNumberByLocale } from '../filters.js';
 
 export default {
-    name: 'AssetsList',
+    name: 'AddressAssetList',
 
     components: { FCryptoSymbol, FDataTable },
 
@@ -118,11 +78,6 @@ export default {
                     debt: [],
                 };
             },
-        },
-        /** Assets list used in defi module. */
-        defiAssetsList: {
-            type: Boolean,
-            default: false,
         },
     },
 
@@ -173,19 +128,13 @@ export default {
                 {
                     name: 'borrowed',
                     label: 'Borrowed',
-                    hidden: !this.defiAssetsList,
+                    // hidden: true,
                     formatter: (_value, _item) => {
                         const debt = this.getDebt(_item);
 
                         return debt > 0 ? formatNumberByLocale(debt, this.defi.getTokenDecimals(_item)) : 0;
                     },
                     css: { textAlign: 'right' },
-                },
-                {
-                    name: 'actions',
-                    label: 'Actions',
-                    hidden: !this.defiAssetsList,
-                    width: '120px',
                 },
             ],
         };

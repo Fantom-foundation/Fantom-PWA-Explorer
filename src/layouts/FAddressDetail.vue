@@ -143,7 +143,7 @@
                         ></f-transaction-list>
                     </f-tab>
                     <f-tab title-slot="assets">
-                        <assets-list :tokens="tokens" :f-mint-account="fMintAccount" @records-count="onAssetsRecordsCount" />
+                        <address-asset-list :tokens="tokens" :f-mint-account="fMintAccount" @records-count="onAssetsRecordsCount" />
                     </f-tab>
                     <f-tab title-slot="delegations">
                         <address-delegation-list :account-address="id" @records-count="onDelegationsRecordsCount" />
@@ -169,12 +169,12 @@
     import FTabs from "@/components/core/FTabs/FTabs.vue";
     import FTab from "@/components/core/FTabs/FTab.vue";
     import AddressDelegationList from "@/data-tables/AddressDelegationList.vue";
-    import AssetsList from "@/data-tables/AssetsList.vue";
+    import AddressAssetList from "@/data-tables/AddressAssetList.vue";
     // import FDataTable from "../components/FDataTable.vue";
 
     export default {
         components: {
-            AssetsList,
+            AddressAssetList,
             AddressDelegationList,
             FTab,
             FTabs,
@@ -335,6 +335,7 @@
             $route(_to, _from) {
                 if (_to.name === _from.name) {
                     this.appendItems = false;
+                    this.initDeFi();
                 }
             }
         },
