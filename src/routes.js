@@ -10,6 +10,7 @@ import Validators from "./views/Validators.vue";
 import ValidatorDetail from "./views/ValidatorDetail.vue";
 import Contracts from "./views/Contracts.vue";
 import Assets from "@/views/Assets.vue";
+import AssetDetail from "@/views/AssetDetail.vue";
 
 export const routes = [
     {
@@ -56,6 +57,11 @@ export const routes = [
         name: "assets",
         path: "/assets",
         component: Assets
+    },
+    {
+        name: "asset-detail",
+        path: "/assets/:address",
+        component: AssetDetail
     },
     {
         name: "contracts",

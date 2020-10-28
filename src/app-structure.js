@@ -50,6 +50,12 @@ const appStructure = [
             {
                 id: 'assets',
                 translation: 'view_assets.title',
+                _c: [
+                    {
+                        id: 'asset-detail',
+                        translation: 'view_assets.title_detail',
+                    }
+                ]
             },
             {
                 id: 'contracts',
