@@ -586,7 +586,7 @@ export class DeFi {
      */
     async fetchTokens(_ownerAddress, _symbol) {
         const data = await this.apolloClient.query({
-            query: gql`
+            query: _ownerAddress ? gql`
                 query DefiTokens($owner: Address!) {
                     defiTokens {
                         address
@@ -603,6 +603,24 @@ export class DeFi {
                         canTrade
                         availableBalance(owner: $owner)
                         allowance(owner: $owner)
+                    }
+                }
+            ` : gql`
+                query DefiTokens {
+                    defiTokens {
+                        address
+                        name
+                        symbol
+                        logoUrl
+                        decimals
+                        price
+                        priceDecimals
+                        isActive
+                        totalSupply
+                        canDeposit
+                        canMint
+                        canBorrow
+                        canTrade
                     }
                 }
             `,

@@ -1,5 +1,5 @@
 <template>
-    <div class="assets-list-dt">
+    <div class="address-asset-list-dt">
         <f-data-table
             :columns="columns"
             :items="items"

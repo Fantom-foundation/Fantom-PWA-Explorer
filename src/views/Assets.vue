@@ -3,7 +3,7 @@
         <f-view-heading>
             <h1>{{ $t('view_assets.title') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h1>
         </f-view-heading>
-        Assets
+        <asset-list />
     </div>
 </template>
 
