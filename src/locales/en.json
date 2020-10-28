@@ -51,6 +51,10 @@
             "title": "Staking"
         },
         {
+            "url": "/assets",
+            "title": "Assets"
+        },
+        {
             "url": "/contracts",
             "title": "Contracts"
         },
@@ -159,6 +163,9 @@
         "unknown": "@:unknown",
         "downtime": "Downtime",
         "flagged": "Flagged"
+    },
+    "view_assets": {
+        "title": "Assets"
     },
     "view_validators_info": {
         "last_epoch": "Last Epoch",

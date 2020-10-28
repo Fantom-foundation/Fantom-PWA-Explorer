@@ -80,7 +80,7 @@
         }
     }
 
-    @include media-max(900px) {
+    @include media-max(1000px) {
         .f-navigation {
             nav {
                 ul {
@@ -89,6 +89,21 @@
                             font-size: 0.9em;
                             padding-left: 10px;
                             padding-right: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @include media-max(800px) {
+        .f-navigation {
+            nav {
+                ul {
+                    li {
+                        @include links() {
+                            padding-left: 5px;
+                            padding-right: 5px;
                         }
                     }
                 }
