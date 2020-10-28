@@ -32,6 +32,9 @@
     "copied_to_clipboard": "{what} copied to clipboard",
     "copied_to_clipboard_warning": "Warning: Use this address to receive Opera FTM only. If you are receiving FTM-ERC20 you need to use a different address!",
     "gas_used": "Gas Used",
+    "hash": "Hash",
+    "assets": "Assets",
+    "asset": "Asset",
 
     "navigation": [
         {
@@ -98,7 +101,7 @@
     "view_transaction_detail": {
         "title": "Transaction detail",
         "transaction_not_found": "Transaction not found",
-        "hash": "Hash",
+        "hash": "@:hash",
         "status": "Status",
         "from": "@:from",
         "to": "@:to",
@@ -115,14 +118,16 @@
     },
     "view_address_detail": {
         "title": "Address",
-        "assets": "Assets",
-        "asset": "Asset",
+        "assets": "@:assets",
+        "asset": "@:asset",
         "balance": "Total Balance",
         "staking": "Staking",
         "value_in_ftm": "Value in FTM",
         "value_in_usd": "Value in USD",
         "available": "Available",
         "delegated": "Delegated",
+        "delegations": "Delegations",
+        "transactions": "@:transactions",
         "pending_rewards": "Pending Rewards",
         "stashed_rewards": "Stashed Rewards",
         "claimed_rewards": "Claimed Rewards"
@@ -165,7 +170,16 @@
         "flagged": "Flagged"
     },
     "view_assets": {
-        "title": "Assets"
+        "title": "@:assets",
+        "title_detail": "Asset detail",
+        "asset": "@:asset",
+        "name": "@:name",
+        "contract": "@:contract",
+        "decimals": "decimals",
+        "price": "Price",
+        "total_supply": "Total supply",
+        "hash": "@:hash",
+        "symbol": "Symbol"
     },
     "view_validators_info": {
         "last_epoch": "Last Epoch",
