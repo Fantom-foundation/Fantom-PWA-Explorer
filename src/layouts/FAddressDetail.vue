@@ -117,19 +117,19 @@
                 <f-tabs>
                     <template #transactions>
                         <h2>
-                            {{ $t('view_block_detail.block_transactions') }}
+                            {{ $t('view_address_detail.transactions') }}
                             <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span>
                         </h2>
                     </template>
                     <template #assets>
                         <h2>
-                            Assets
+                            {{ $t('view_address_detail.assets') }}
                             <span class="f-records-count">({{ assetsRecordsCount }})</span>
                         </h2>
                     </template>
                     <template #delegations>
                         <h2>
-                            Delegations
+                            {{ $t('view_address_detail.delegations') }}
                             <span class="f-records-count">({{ delegationsRecordsCount }})</span>
                         </h2>
                     </template>
@@ -146,7 +146,7 @@
                         <address-asset-list :tokens="tokens" :f-mint-account="fMintAccount" @records-count="onAssetsRecordsCount" />
                     </f-tab>
                     <f-tab title-slot="delegations">
-                        <address-delegation-list :account-address="id" @records-count="onDelegationsRecordsCount" />
+                        <address-delegation-list v-if="this.loadDelegations" :account-address="id" @records-count="onDelegationsRecordsCount" />
                     </f-tab>
                 </f-tabs>
 
@@ -298,6 +298,7 @@
                 delegationsRecordsCount: 0,
                 dAccountByAddressError: '',
                 validators: null,
+                loadDelegations: false,
 /*
                 dAssetColumns: [
                     {
@@ -436,7 +437,15 @@
         created() {
             /** If `true`, transaction items will be appended. */
             this.appendItems = false;
-            this.initDeFi();
+
+            setTimeout(() => {
+                this.initDeFi();
+            }, 500);
+
+            // postpone delegations loading
+            setTimeout(() => {
+                this.loadDelegations = true;
+            }, 1400);
         },
 
         methods: {
