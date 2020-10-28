@@ -1,7 +1,7 @@
 <template>
     <div class="narrow-container">
         <f-view-heading>
-            <h1>{{ $t('view_assets.title') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h1>
+            <h1>{{ $t('view_assets.title') }} (ERC-20) <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h1>
         </f-view-heading>
         <asset-list />
     </div>

@@ -98,9 +98,9 @@ export default {
                     name: 'price',
                     label: this.$t('view_assets.price'),
                     formatter: (_value, _item) => {
-                        return '$ ' + formatNumberByLocale(
+                        return '$' + formatNumberByLocale(
                             this.$defi.fromTokenValue(_value, _item),
-                            this.$defi.getTokenDecimals(_item)
+                            this.$defi.getTokenDecimals(_item) + 1
                         );
                     },
                 },
@@ -112,6 +112,17 @@ export default {
                             this.$defi.fromTokenValue(_value, _item),
                             this.$defi.getTokenDecimals(_item)
                         );
+                    },
+                },
+                {
+                    name: 'marketCap',
+                    label: this.$t('view_assets.market_cap'),
+                    itemProp: 'totalSupply',
+                    formatter: (_value, _item) => {
+                        const value = this.$defi.fromTokenValue(_value, _item);
+                        const price = this.$defi.fromTokenValue(_item.price, _item);
+
+                        return '$' + formatNumberByLocale(value * price, this.$defi.getTokenDecimals(_item));
                     },
                 },
 /*
