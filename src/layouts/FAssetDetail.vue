@@ -20,7 +20,7 @@
             <div class="row no-collapse">
                 <div class="col-4 f-row-label">{{ $t('view_assets.total_supply') }}</div>
                 <div class="col">
-                    {{ formatNumberByLocale($defi.fromTokenValue(token.totalSupply, token), $defi.getTokenDecimals(token)) }}
+                    {{ formatNumberByLocale($defi.fromTokenValue(token.totalSupply, token).toFixed(0), 0) }}
                 </div>
             </div>
             <div class="row no-collapse">
