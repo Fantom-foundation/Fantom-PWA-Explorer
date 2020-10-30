@@ -109,8 +109,8 @@ export default {
                     label: this.$t('view_assets.total_supply'),
                     formatter: (_value, _item) => {
                         return formatNumberByLocale(
-                            this.$defi.fromTokenValue(_value, _item),
-                            this.$defi.getTokenDecimals(_item)
+                            this.$defi.fromTokenValue(_value, _item).toFixed(0), 0
+                            // this.$defi.getTokenDecimals(_item)
                         );
                     },
                 },
@@ -122,7 +122,7 @@ export default {
                         const value = this.$defi.fromTokenValue(_value, _item);
                         const price = this.$defi.fromTokenValue(_item.price, _item);
 
-                        return '$' + formatNumberByLocale(value * price, this.$defi.getTokenDecimals(_item));
+                        return '$' + formatNumberByLocale((value * price).toFixed(0), 0);
                     },
                 },
 /*
