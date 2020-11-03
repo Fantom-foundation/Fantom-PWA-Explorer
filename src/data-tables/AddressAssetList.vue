@@ -4,6 +4,7 @@
             :columns="columns"
             :items="items"
             first-m-v-column-width="6"
+            class="f-data-table-body-bg-color"
         >
             <template v-slot:column-asset="{ value, item, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
@@ -49,7 +50,7 @@
 </template>
 
 <script>
-import FDataTable from '../components/FDataTable.vue';
+import FDataTable from '../components/core/FDataTable/FDataTable.vue';
 import FCryptoSymbol from '../components/core/FCryptoSymbol/FCryptoSymbol.vue';
 import { stringSort } from '../utils/array-sorting.js';
 import { formatNumberByLocale } from '../filters.js';

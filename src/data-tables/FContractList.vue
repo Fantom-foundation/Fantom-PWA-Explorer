@@ -9,6 +9,7 @@
                 :mobile-view="cMobileView"
                 infinite-scroll
                 fixed-header
+                class="f-data-table-body-bg-color"
                 @fetch-more="fetchMore"
             >
                 <template v-slot:column-addressname="{ value, column }">
@@ -38,7 +39,7 @@
 </template>
 
 <script>
-import FDataTable from "../components/FDataTable.vue";
+import FDataTable from "../components/core/FDataTable/FDataTable.vue";
 import gql from "graphql-tag";
 import { WEIToFTM } from "../utils/transactions.js";
 import {timestampToDate, formatHexToInt, formatDate} from "../filters.js";

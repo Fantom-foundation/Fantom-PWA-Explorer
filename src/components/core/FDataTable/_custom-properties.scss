@@ -1,0 +1,8 @@
+@import "../variables";
+
+.f-data-table {
+    --f-data-table-cell-background-color: #fff;
+    --f-data-table-cell-hover-background-color: #ccddff;
+    --f-data-table-mobile-item-border-bottom: 1px solid #{$grey-color-semi};
+    --f-data-table-sort-column-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path style="fill: rgb(200,200,200);" d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"/></svg>');
+}

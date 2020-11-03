@@ -8,6 +8,7 @@
                 :loading="cLoading"
                 first-m-v-column-width="6"
                 fixed-header
+                class="f-data-table-body-bg-color"
             >
                 <template v-slot:column-logo="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
@@ -89,7 +90,7 @@
 </template>
 
 <script>
-    import FDataTable from "../components/FDataTable.vue";
+    import FDataTable from "../components/core/FDataTable/FDataTable.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
     import {formatHexToInt, timestampToDate, numToFixed, formatNumberByLocale, clampDowntime} from "../filters.js";

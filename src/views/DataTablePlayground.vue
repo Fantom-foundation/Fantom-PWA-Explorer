@@ -19,6 +19,7 @@
             height="400px"
             use-pagination
             fixed-header
+            class="f-data-table-body-bg-color"
         >
             <template v-slot:before-table>
                 <div style="text-align: right;padding-bottom: 4px;">
@@ -61,6 +62,7 @@
         <h3>Data table with no items</h3>
         <f-data-table
             :columns="columns"
+            class="f-data-table-body-bg-color"
         >
             <!--            <template v-slot:no-items>No itemo</template>-->
         </f-data-table>
@@ -71,6 +73,7 @@
             :total-items="items.length"
             :items-per-page="20"
             fixed-header
+            class="f-data-table-body-bg-color"
         >
             <template v-slot:before-table>
                 <h3>Default data table</h3>
@@ -83,7 +86,7 @@
 </template>
 
 <script>
-    import FDataTable from "../components/FDataTable.vue";
+    import FDataTable from "../components/core/FDataTable/FDataTable.vue";
     import FPagination from "../components/FPagination.vue";
     import {cloneObject} from "../utils/index.js";
     import shortid from 'shortid';

@@ -2,7 +2,7 @@
     --f-header-height: 96px;
     //--f-header-height: 72px;
     --f-data-layout-cols-padding: 15px;
-    //--f-data-table-header-sticky-top: 146px;
+    --f-data-table-header-sticky-top: var(--f-header-height);
 
     //--f-window-padding-with-header: 40px;
     //--f-window-body-padding-with-header: 0 var(--f-window-padding-with-header) var(--f-window-padding-with-header) var(--f-window-padding-with-header);
@@ -39,7 +39,7 @@
     .f-card {
         --f-card-padding: 40px;
 
-        .f-data-table-body-bg-color {
+        &.f-data-table-body-bg-color {
             .f-data-table {
                 //--f-data-table-cell-background-color: none;
                 --f-data-table-cell-background-color: var(--f-card-background-color);

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import FDataTable from "../components/FDataTable.vue";
+    import FDataTable from "../components/core/FDataTable/FDataTable.vue";
     import gql from 'graphql-tag';
 
     const columns = [

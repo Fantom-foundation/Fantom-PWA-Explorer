@@ -10,6 +10,7 @@
                 first-m-v-column-width="5"
                 infinite-scroll
                 fixed-header
+                class="f-data-table-body-bg-color"
                 @fetch-more="fetchMore"
             >
                 <template v-slot:column-validator="{ value, item, column }">
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-import FDataTable from '@/components/FDataTable.vue';
+import FDataTable from '@/components/core/FDataTable/FDataTable.vue';
 import gql from 'graphql-tag';
 import { cloneObject } from '@/utils';
 import { formatDate, formatHexToInt, formatNumberByLocale, timestampToDate } from '@/filters.js';

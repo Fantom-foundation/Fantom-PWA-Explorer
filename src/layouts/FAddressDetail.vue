@@ -170,7 +170,7 @@
     import FTab from "@/components/core/FTabs/FTab.vue";
     import AddressDelegationList from "@/data-tables/AddressDelegationList.vue";
     import AddressAssetList from "@/data-tables/AddressAssetList.vue";
-    // import FDataTable from "../components/FDataTable.vue";
+    // import FDataTable from "../components/core/FDataTable/FDataTable.vue";
 
     export default {
         components: {

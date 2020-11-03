@@ -1,0 +1,17 @@
+.f-pagination {
+    display: inline-block;
+
+    .pages {
+        display: inline-block;
+        vertical-align: middle;
+        padding: 0 16px;
+    }
+
+    button {
+        margin-right: 4px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
