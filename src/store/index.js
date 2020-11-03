@@ -8,6 +8,7 @@ export const store = new Vuex.Store({
         breakpoints: {},
         tokenPrice: 0,
         gasPrice: 0,
+        darkMode: true,
     },
 
     mutations: {
@@ -33,6 +34,14 @@ export const store = new Vuex.Store({
          */
         setGasPrice(_state, _gasPrice) {
             _state.gasPrice = _gasPrice;
+        },
+
+        /**
+         * @param {object} _state
+         * @param {boolean} _on
+         */
+        setDarkMode(_state, _on) {
+            _state.darkMode = _on;
         }
     }
 });

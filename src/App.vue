@@ -86,6 +86,40 @@
                     }
                 },
             }
+        },
+
+        created() {
+            this.darkMode(this.$store.state.darkMode);
+        },
+
+        methods: {
+            /**
+             * @param {boolean} _on
+             */
+            setDarkMode(_on) {
+                this.$store.commit('setDarkMode', _on);
+
+                this.darkMode(_on);
+            },
+
+            /**
+             * @param {boolean} _on
+             */
+            darkMode(_on) {
+                const { documentElement } = document;
+
+                documentElement.classList.add('theme-transition');
+
+                if (_on) {
+                    documentElement.classList.add('dark-theme');
+                } else {
+                    documentElement.classList.remove('dark-theme');
+                }
+
+                setTimeout(function () {
+                    documentElement.classList.remove('theme-transition');
+                }, 250);
+            },
         }
     }
 </script>
