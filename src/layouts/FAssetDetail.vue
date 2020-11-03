@@ -39,7 +39,7 @@
 
 <script>
 import FEllipsis from "@/components/core/FEllipsis/FEllipsis.vue";
-import FCard from "@/components/FCard.vue";
+import FCard from "@/components/core/FCard/FCard.vue";
 import FCryptoSymbol from "@/components/core/FCryptoSymbol/FCryptoSymbol.vue";
 import {formatNumberByLocale} from "@/filters.js";
 

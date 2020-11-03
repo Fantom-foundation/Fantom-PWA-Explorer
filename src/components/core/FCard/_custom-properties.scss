@@ -1,0 +1,13 @@
+@import "../variables";
+
+.f-card {
+    --f-card-padding: 20px;
+    //--f-card-padding-2x: calc(2 * var(--f-card-padding)) !default;
+    --f-card-padding-2x: calc(1.5 * var(--f-card-padding));
+    --f-card-border-radius: 16px;
+    --f-card-background-color: #fff;
+    --f-card-hover-background-color: #fff;
+    --f-card-transition-length: #{$transition-length};
+    --f-card-box-shadow: 0 8px 16px 0 rgba(48, 49, 51, 0.1), 0 0 1px 0 rgba(48, 49, 51, 0.05);
+    --f-card-hover-box-shadow: #{$elev6-shadow};
+}

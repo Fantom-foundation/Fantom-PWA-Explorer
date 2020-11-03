@@ -120,7 +120,7 @@
     import {obj2css} from "../utils/index.js";
     import { helpersMixin } from "../mixins/helpers.js";
     import events from "../mixins/events.js";
-    import FCard from "./FCard.vue";
+    import FCard from "../components/core/FCard/FCard.vue";
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
     export default {

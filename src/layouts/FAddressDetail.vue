@@ -161,7 +161,7 @@
 </template>
 
 <script>
-    import FCard from "../components/FCard.vue";
+    import FCard from "../components/core/FCard/FCard.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM, FTMToUSD } from "../utils/transactions.js";
     import FTransactionList from "../data-tables/FTransactionList.vue";

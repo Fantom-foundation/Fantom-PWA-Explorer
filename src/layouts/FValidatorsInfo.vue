@@ -120,7 +120,7 @@
 <script>
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
-    import FCard from "../components/FCard.vue";
+    import FCard from "../components/core/FCard/FCard.vue";
     import FValidatorList from "../data-tables/FValidatorList.vue";
     import {formatHexToInt, formatNumberByLocale, numToFixed, timestampToDate} from "../filters.js";
     import web3utils from 'web3-utils';

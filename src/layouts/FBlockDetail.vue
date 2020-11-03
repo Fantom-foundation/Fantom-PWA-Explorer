@@ -56,7 +56,7 @@
 </template>
 
 <script>
-    import FCard from "../components/FCard.vue";
+    import FCard from "../components/core/FCard/FCard.vue";
     import FTransactionList from "../data-tables/FTransactionList.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";

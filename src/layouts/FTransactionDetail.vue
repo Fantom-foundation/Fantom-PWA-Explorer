@@ -90,7 +90,7 @@
 </template>
 
 <script>
-    import FCard from "../components/FCard.vue";
+    import FCard from "../components/core/FCard/FCard.vue";
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
     import { formatHexToInt, timestampToDate, formatDate } from "../filters.js";

@@ -116,7 +116,7 @@
 </template>
 
 <script>
-    import FCard from "../components/FCard.vue";
+    import FCard from "../components/core/FCard/FCard.vue";
     import FTabs from "../components/core/FTabs/FTabs.vue";
     import FTab from "../components/core/FTabs/FTab.vue";
     import FTransactionList from "../data-tables/FTransactionList.vue";

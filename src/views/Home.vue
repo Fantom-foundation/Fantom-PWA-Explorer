@@ -42,7 +42,7 @@
 </template>
 
 <script>
-    import FCard from "../components/FCard.vue";
+    import FCard from "../components/core/FCard/FCard.vue";
     import FSearchBox from "../components/FSearchBox.vue";
     import gql from 'graphql-tag';
 

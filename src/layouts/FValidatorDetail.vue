@@ -132,7 +132,7 @@
 </template>
 
 <script>
-    import FCard from "../components/FCard.vue";
+    import FCard from "../components/core/FCard/FCard.vue";
     import gql from 'graphql-tag';
     import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed, clampDowntime, formatDate} from "../filters.js";
     import { WEIToFTM } from "../utils/transactions.js";
