@@ -5,6 +5,9 @@ sm - input: 28px, checkbox: 20px
  */
 
 label.option {
+    --f-checkbox-color: #fff;
+    --f-checkbox-background-color: #fff;
+
     position: relative;
     display: inline-block;
 }
@@ -25,7 +28,7 @@ label.option > span {
     //top: -10px;
     /*top: -$size-mini;*/
     //left: 1px;
-    background-color: $checkbox-bg-color;
+    background-color: var(--f-checkbox-background-color);
     cursor: pointer;
 }
 
@@ -44,11 +47,11 @@ label.option input:checked + span::before {
 label.option input:checked + span,
 label.option input:focus + span,
 label.option:hover input:not(:disabled) + span {
-    border-color: $input-active-border-color;
+    border-color: var(--f-input-active-border-color);
 }
 
 label.option input:focus + span {
-    box-shadow: $outline-shadow;
+    box-shadow: var(--f-outline-shadow);
 }
 
 label.option input:disabled + span {
@@ -62,15 +65,15 @@ label.option input:checked:disabled + span {
 }
 
 label.option > span.checkbox {
-    border: $input-border-width solid $input-border-color;
-    border-radius: $input-border-radius;
+    border: $input-border-width solid var(--f-input-border-color);
+    border-radius: $checkbox-radius;
 }
 
 label.option > span.checkbox::before {
     //top: 0.18rem;
     top: 50%;
-    border-left: $checkbox-width solid $checkbox-color;
-    border-bottom: $checkbox-width solid $checkbox-color;
+    border-left: $checkbox-width solid var(--f-checkbox-color);
+    border-bottom: $checkbox-width solid var(--f-checkbox-color);
     border-radius: $checkbox-radius;
     /*opacity: 0;*/
     transform: rotate(-45deg) scale(0, 0);
@@ -81,7 +84,7 @@ label.option input:checked + span.checkbox::before {
 }
 
 label.option input:checked + span.checkbox {
-    background-color: $input-active-border-color;
+    background-color: var(--f-input-active-border-color);
 }
 
 label.option input:not(:checked):disabled + span.checkbox::before {
@@ -89,15 +92,15 @@ label.option input:not(:checked):disabled + span.checkbox::before {
 }
 
 label.option > span.radio {
-    //background-color: $checkbox-bg-color;
-    border: $input-border-width solid $input-border-color;
+    //background-color: var(--f-checkbox-background-color);
+    border: $input-border-width solid var(--f-input-border-color);
     border-radius: 50%;
 }
 
 label.option > span.radio::before {
     top: 50%;
     left: 50%;
-    background-color: $input-active-border-color;
+    background-color: var(--f-input-active-border-color);
     border-radius: 50%;
     transform: scale(0, 0);
 }
@@ -107,7 +110,7 @@ label.option input:checked + span.radio::before {
 }
 
 label.option input:checked + span.radio {
-    background-color: $checkbox-bg-color;
+    background-color: var(--f-checkbox-background-color);
 }
 
 label.option > span, label.option > span::before {

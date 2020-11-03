@@ -1,18 +1,18 @@
 html {
     font-size: $font-size;
     font-family: $font-family;
-    background-color: $body-bg-color;
+    background-color: var(--f-doc-background-color);
     line-height: $line-height;
 }
 
 body {
-    color: $body-color;
+    color: var(--f-doc-color);
     font-size: $fs-body;
-    background-color: $body-bg-color;
+    background-color: var(--f-doc-background-color);
 }
 
 @include links() {
-    color: $link-color;
+    color: var(--f-link-color);
 }
 
 p {

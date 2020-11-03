@@ -134,7 +134,7 @@ $input-disabled-color: #888 !default;
 $input-disabled-border-color: #ccc !default;
 $input-disabled-bg-color: #f0f0f0 !default;
 $input-readonly-bg-color: #fefff2 !default;
-$input-bg-color: #fff !default;
+//$input-bg-color: #fff !default;
 //$input-hover-bg-color: darken($input-bg-color, 10%) !default;
 $input-v-padding: 0.75rem !default;
 $input-h-padding: 0.75rem !default;
@@ -154,13 +154,13 @@ $input-sm-v-padding: 8px !default;
 $input-sm-h-padding: 8px !default;
 */
 $input-border-width: 1px !default;
-$input-border-color: #d7dce1 !default;
+//$input-border-color: #d7dce1 !default;
 $input-invalid-border-color: #c00 !default;
 $input-invalid-outline-shadow-color: rgba(200, 0, 0, 0.5) !default;
 
 // checkbox, radio
-$checkbox-color: #fff !default;
-$checkbox-bg-color: #fff !default;
+//$checkbox-color: #fff !default;
+//$checkbox-bg-color: #fff !default;
 $checkbox-width: 0.2rem !default;
 $checkbox-radius: 0.2rem !default;
 $checkbox-transition-length: 150ms !default;
@@ -179,7 +179,7 @@ $headings-text-align: initial !default;
 
 // grid layout
 $grid-layout-gutter-width: $size8f !default;
-$grid-layout-row-border: 1px solid $theme-color !default;
+$grid-layout-row-border: 1px solid var(--f-primary-color) !default;
 $grid-layout-cols-border: 1px solid #eee !default;
 $grid-layout-cols-border-dark-theme: 1px solid $dark-theme-light-color !default;
 $narrow-container-max-width: 1200px !default;

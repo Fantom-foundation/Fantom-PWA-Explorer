@@ -138,6 +138,17 @@ button:not(.def):hover::after, a.btn:hover::after {
     background: $button-light-bg-color;
 }
 
+button.no-style {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
 @include buttons(' zpe-icon') {
     --zpe-icon-color: #{$button-color};
     --zpe-icon-width: #{$fs-button};

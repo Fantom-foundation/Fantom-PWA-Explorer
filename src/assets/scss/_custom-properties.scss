@@ -1,0 +1,82 @@
+:root {
+    --f-header-height: 96px;
+    //--f-header-height: 72px;
+    --f-data-layout-cols-padding: 15px;
+    //--f-data-table-header-sticky-top: 146px;
+
+    //--f-window-padding-with-header: 40px;
+    //--f-window-body-padding-with-header: 0 var(--f-window-padding-with-header) var(--f-window-padding-with-header) var(--f-window-padding-with-header);
+
+    //--f-icon-stroke-color: var(--f-doc-background-color);
+    //--f-icon-fill-color: var(--f-doc-background-color);
+
+    .f-message {
+        --f-message-success-color: var(--f-success-color);
+        --f-message-warning-color: var(--f-warning-color-dark);
+        --f-message-error-color: var(--f-error-color);
+        --f-message-info-color: #{$light-gray-color};
+    }
+
+    .f-tabs {
+        --f-tabs-font-family: #{$font-family-proxima};
+        --f-tabs-color: #{$light-gray-color};
+        --f-tabs-font-size: 18px;
+        --f-tabs-active-color: inherit;
+        //--f-tabs-font-weight: 600;
+        --f-tabs-border-width: 2px;
+        --f-tabs-border-color: #{$grey-color-semi};
+        --f-tabs-hover-color: var(--f-primary-color);
+        --f-tabs-hover-border-color: transparent;
+    }
+
+    .f-data-table-body-bg-color {
+        .f-data-table {
+            //--f-data-table-cell-background-color: none;
+            --f-data-table-cell-background-color: var(--f-doc-background-color);
+        }
+    }
+
+    .f-card {
+        --f-card-padding: 40px;
+
+        .f-data-table-body-bg-color {
+            .f-data-table {
+                //--f-data-table-cell-background-color: none;
+                --f-data-table-cell-background-color: var(--f-card-background-color);
+            }
+        }
+    }
+
+    .f-window {
+        .f-data-table-body-bg-color {
+            .f-data-table {
+                //--f-data-table-cell-background-color: none;
+                --f-data-table-cell-background-color: var(--f-window-background);
+            }
+        }
+    }
+
+    .f-placeholder {
+        --f-placeholder-on-gradient-color1: var(--f-doc-background-color);
+        --f-placeholder-on-gradient-color2: #eee;
+        //--f-placeholder-on-gradient-color2: #{$grey-color-semi};
+    }
+
+    .f-card:not(.off) {
+        .f-placeholder {
+            --f-placeholder-on-gradient-color1: var(--f-card-background-color);
+        }
+    }
+}
+
+@include media-max($bp-menu) {
+    :root {
+        //--f-header-height: 52px;
+        --f-header-height: 60px;
+        --f-data-layout-cols-padding: 8px;
+
+        .f-card {
+            --f-card-padding: 24px;
+        }
+    }
+}

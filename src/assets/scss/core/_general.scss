@@ -73,9 +73,10 @@
 
 .not-visible {
     position: absolute !important;
-    top: -9999px !important;;
-    left: -9999px !important;;
-    opacity: 0 !important;;
+    //top: -9999px !important;
+    //left: -9999px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
 .align-right {

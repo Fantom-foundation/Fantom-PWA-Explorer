@@ -3,11 +3,14 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
 }
 
 @include inputs() {
+    --f-input-background-color: #fff;
+    --f-input-readonly-background: var(--f-input-background-color);
+
     font-family: $input-font-family;
     font-size: $fs-input;
     //padding: calc(#{$input-v-padding} - #{$input-border-width} - 2px) $input-h-padding;
     padding: $input-padding;
-    border: $input-border-width solid $input-border-color;
+    border: $input-border-width solid var(--f-input-border-color);
     //border: none;
     display: inline-block;
     vertical-align: middle;
@@ -20,7 +23,7 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
     //text-transform: uppercase;
     //font-weight: bold;
     color: $input-color;
-    background-color: $input-bg-color;
+    background-color: var(--f-input-background-color);
     border-radius: $input-border-radius;
     outline: none;
     //border-radius: $border-radius;
@@ -51,7 +54,7 @@ textarea:not(.def), textarea:not(.def).large, textarea:not(.def).small {
 }
 
 @include inputs(':hover') {
-    border-color: $input-active-border-color;
+    border-color: var(--f-input-active-border-color);
 }
 
 @include inputs(':focus') {
@@ -79,11 +82,11 @@ input[type="submit"]:not(.def):focus {
 }
 
 @include inputs('[readonly]') {
-    background: $input-readonly-bg-color;
+    background: var(--f-input-readonly-background);
 }
 
 @include inputs('.readonly') {
-    background: $input-readonly-bg-color;
+    background: var(--f-input-readonly-background);
 }
 
 @include inputs('[aria-invalid="true"]') {
@@ -116,9 +119,10 @@ select:not(.def) {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
-    background-position: calc(100% - 8px) 50%;
+    background-position: calc(100% - 12px) 50%;
     background-repeat: no-repeat;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="9" viewBox="0 0 12 9"><path style="fill: rgb(140,140,140);" id="chevron-medium-big-4-01" d="M128,160v3l6,6,6-6v-2.952l-6,6Z" transform="translate(-128 -160)"/></svg>');
+    background-image: var(--f-select-background-image);
+    padding-right: 40px;
 }
 
 select:not(.def).small {

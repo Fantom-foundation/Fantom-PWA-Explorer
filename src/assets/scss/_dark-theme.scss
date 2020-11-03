@@ -1,0 +1,172 @@
+:root.dark-theme {
+    //--f-primary-color: #286FF6;
+
+    --f-dark-color: #222431;
+    --f-darker-color: #2C2E3F;
+    --f-darker-color-2: #33364a;
+    //--f-darker-color-3: #41455e;
+    --f-darker-color-3: #3e425b;
+    --f-darker-color-4: #252736;
+    --f-lighter-color: #8997b1;
+
+    --f-orange-color: #F8782A;
+    --f-orange-color-darker: #de6b26;
+
+    --f-doc-color: #fff;
+    //--f-doc-color: #fff;
+    //--f-doc-color: #ebeeff;
+    //--f-doc-color: #fbfcff;
+    --f-doc-background-color: var(--f-dark-color);
+
+    //--f-simple-navigation-link-color: #2C2E3F;
+    --f-simple-navigation-link-color: var(--f-lighter-color);
+    //--f-simple-navigation-link-hover-color: #fff;
+
+    --f-home-background-color: var(--f-darker-color);
+
+    .f-card {
+        --f-card-background-color: var(--f-darker-color);
+        --f-card-hover-background-color: var(--f-darker-color-2);
+        --f-card-box-shadow: none;
+        --f-card-hover-box-shadow: none;
+    }
+
+    .f-tabs {
+        --f-tabs-border-color: var(--f-darker-color);
+    }
+
+    .f-window {
+        //--f-window-background: var(--f-darker-color);
+        --f-window-background: var(--f-dark-color);
+        --f-window-body-background: var(--f-dark-color);
+        --f-window-popover-box-shadow: none;
+
+        &.popover {
+            --f-window-popover-background: var(--f-darker-color-2);
+            --f-window-body-background: var(--f-darker-color-2);
+        }
+    }
+
+    .f-window-overlay, .f-overlay {
+        --f-overlay-background-color: rgba(43, 50, 77, 0.8);
+    }
+
+    --f-select-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 448 512"><path style="fill: rgb(146,153,166);" d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"/></svg>');
+    --f-input-border-color: var(--f-darker-color-3);
+    //--f-input-active-border-color: var(--f-lighter-color);
+    //--f-outline-shadow: 0 0 0 2px rgba(87,92,128, 0.9);
+    .inp {
+        --f-input-background-color: var(--f-darker-color-2);
+    }
+
+    label.option {
+        --f-checkbox-background-color: var(--f-darker-color-2);
+    }
+
+    @include buttons {
+        --f-button-light-hover-background-color: var(--f-darker-color-3);
+    }
+
+    .toggle-btn {
+        --f-toggle-btn-background: var(--f-darker-color-3);
+    }
+
+    .actions-box {
+        --f-actions-box-btn-background-color: var(--f-darker-color);
+        --f-actions-box-btn-hover-background-color: var(--f-darker-color-3);
+        //--f-actions-box-color: var(--f-primary-color);
+    }
+
+    /*
+    .f-message {
+        --f-message-warning-color: #F8782A;
+    }
+    */
+
+    .f-slider {
+        --f-slider-thumb-background-color: var(--f-primary-color);
+        --f-slider-thumb-hover-background-color: var(--f-primary-color);
+        --f-slider-track-color: var(--f-darker-color-2);
+        //--f-slider-track-color: var(--f-darker-color);
+        --f-slider-thumb-box-shadow: none;
+        --f-slider-thumb-hover-box-shadow: none;
+    }
+
+    .f-data-table {
+        --f-data-table-cell-hover-background-color: var(--f-darker-color-2);
+        --f-data-table-mobile-item-border-bottom: 1px solid var(--f-darker-color-3);
+        --f-data-table-sort-column-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path style="fill: rgb(62,66,91);" d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"/></svg>');
+    }
+
+    .f-placeholder {
+        --f-placeholder-on-gradient-color2: var(--f-darker-color-3);
+    }
+
+    .f-circle-progress {
+        --f-circle-progress-bg-circle-color: var(--f-darker-color-2);
+    }
+
+    .f-select-button {
+        --f-select-button-border-bottom: 1px solid var(--f-darker-color-3);
+
+        &.bigger-arrow {
+            --f-select-button-arrow-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 448 512"><path style="fill: rgb(146,153,166);" d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"/></svg>');
+        }
+    }
+
+    /*
+    .f-social-media-links {
+        --f-social-media-link-color: var(--f-primary-color-light);
+        --f-social-media-link-hover-color: var(--f-primary-color);
+    }
+    */
+
+    .defi-token-list {
+        --f-defi-token-list-item-color: var(--f-darker-color-2);
+        --f-defi-token-list-item-hover-color: var(--f-darker-color-3);
+    }
+
+    .wallet-list {
+        --f-wallet-list-item-color: var(--f-darker-color-2);
+        --f-wallet-list-item-hover-color: var(--f-darker-color-3);
+    }
+
+    .wallet-menu {
+        --f-wallet-menu-background-color: var(--f-darker-color);
+    }
+
+    .defi-menu {
+        --f-defi-menu-item-hover-box-shadow: none;
+        --f-defi-menu-item-hover-background-color: var(--f-darker-color);
+
+        .menu-item {
+            &:not(.disabled) {
+                &:hover, &:focus-within {
+                    --f-icon-stroke-color: var(--f-defi-menu-item-hover-background-color);
+                    --f-icon-fill-color: var(--f-defi-menu-item-hover-background-color);
+                }
+            }
+        }
+    }
+
+    .view-defi-ftrade {
+        --f-view-defi-ftrade-swap-btn-border-color: var(--f-darker-color-3);
+    }
+
+    .funiswap {
+        --f-funiswap-btn-border-color: var(--f-darker-color-3);
+        --f-funiswap-bottom-box-background-color: var(--f-darker-color-4);
+    }
+
+    .view-not-found {
+        --view-not-found-background-color: var(--f-darker-color-2);
+    }
+
+    .funiswap-home-tabs {
+        --f-funiswap-home-tabs-focus-background-color: var(--f-darker-color-3);
+    }
+
+    .blockchain-picker {
+        --blockchain-picker-focus-background-color: var(--f-darker-color-3);
+    }
+}

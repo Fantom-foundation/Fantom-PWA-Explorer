@@ -158,8 +158,8 @@ $grid-rows-selector: '.row, [class^="row-"], [class*=" row-"]';
 @mixin main-focus() {
     outline: none;
     z-index: 10;
-    border-color: $input-active-border-color;
-    box-shadow: $outline-shadow;
+    border-color: var(--f-input-active-border-color);
+    box-shadow: var(--f-outline-shadow);
 }
 
 @mixin clearfix() {
@@ -218,10 +218,15 @@ $grid-rows-selector: '.row, [class^="row-"], [class*=" row-"]';
     }
 }
 
+@mixin elevation($_i, $_color: $elev-color, $_suffix: '') {
+    box-shadow: nth($elev-shadow-sizes-list, $_i + 1) rgba($_color, nth($elev-shadow-opacities-list, $_i + 1));
+}
+
 @mixin elevations($_num, $_color, $_suffix: '') {
     @for $i from 0 to $_num {
         .elev-#{$i + 1}#{$_suffix} {
-            box-shadow: nth($elev-shadow-sizes-list, $i + 1) rgba($_color, nth($elev-shadow-opacities-list, $i + 1));
+            @include elevation($i, $_color, $_suffix);
+            //box-shadow: nth($elev-shadow-sizes-list, $i + 1) rgba($_color, nth($elev-shadow-opacities-list, $i + 1));
         }
     }
 }
