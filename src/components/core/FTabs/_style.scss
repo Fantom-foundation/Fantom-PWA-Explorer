@@ -1,14 +1,14 @@
-@import "variables";
+@import "custom-properties";
 
 .f-tabs {
     ul {
         display: flex;
         list-style-type: none;
-        border-bottom: $f-tabs-border-width solid $f-tabs-border-color;
+        border-bottom: var(--f-tabs-border-width) solid var(--f-tabs-border-color);
 
         li {
             position: relative;
-            top: $f-tabs-border-width;
+            top: var(--f-tabs-border-width);
             padding: 8px 16px;
             cursor: pointer;
         }
@@ -20,23 +20,26 @@
                 //border-radius: 8px 8px 0 0;
                 //background-color: #f4f4f4;
                 //margin-right: 1px;
-                color: $f-tabs-color;
-                font-weight: $f-tabs-font-weight;
-                border-bottom: $f-tabs-border-width solid $f-tabs-border-color;
+                color: var(--f-tabs-color);
+                font-family: var(--f-tabs-font-family);
+                font-size: var(--f-tabs-font-size);
+                font-weight: var(--f-tabs-font-weight);
+                border-bottom: var(--f-tabs-border-width) solid var(--f-tabs-border-color);
 
                 &:hover, &:focus {
                     //background-color: #ddd;
-                    border-bottom-color: $f-tabs-border-hover-color;
+                    color: var(--f-tabs-hover-color);
+                    border-bottom-color: var(--f-tabs-hover-border-color);
                 }
 
                 &[aria-selected="true"] {
-                    color: $f-tabs-color-active;
-                    border-bottom-color: $theme-color;
+                    color: var(--f-tabs-active-color);
+                    border-bottom-color: var(--f-tabs-active-color-border-color);
                 }
 
                 &[aria-disabled="true"] {
-                    color: $f-tabs-color-disabled;
-                    border-bottom-color: $f-tabs-border-disabled-color;
+                    color: var(--f-tabs-disabled-color);
+                    border-bottom-color: var(--f-tabs-disabled-border-color);
                     cursor: default;
                 }
             }

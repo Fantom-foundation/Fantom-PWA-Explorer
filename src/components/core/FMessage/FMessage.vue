@@ -10,7 +10,7 @@
                     aria-hidden="true"
                 />
                 <icon
-                    v-if="type === 'error'"
+                    v-if="type === 'error' || type === 'warning'"
                     data="@/assets/svg/message/exclamation-circle.svg"
                     width="16"
                     height="16"
@@ -37,11 +37,20 @@ export default {
     mixins: [helpersMixin],
 
     props: {
+        /**
+         * Type of message.
+         *
+         * @type {('success' | 'info' | 'warning' | 'error')}
+         */
         type: {
             type: String,
             default: '',
             required: true,
+            validator: function (_value) {
+                return ['success', 'info', 'warning', 'error'].indexOf(_value) !== -1;
+            },
         },
+        /** Use icon with message. */
         withIcon: {
             type: Boolean,
             default: false,

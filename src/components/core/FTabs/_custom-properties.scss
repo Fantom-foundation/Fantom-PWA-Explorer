@@ -1,0 +1,22 @@
+@import "../variables";
+
+.f-tabs {
+    --f-tabs-main-color: var(--f-primary-color);
+
+    --f-tabs-color: inherit;
+    --f-tabs-font-family: inherit;
+    --f-tabs-font-size: inherit;
+    --f-tabs-font-weight: inherit;
+
+    --f-tabs-border-width: 1px;
+    --f-tabs-border-color: #eee;
+
+    --f-tabs-active-color: var(--f-tabs-main-color);
+    --f-tabs-active-color-border-color: var(--f-tabs-main-color);
+
+    --f-tabs-hover-color: var(--f-tabs-color);
+    --f-tabs-hover-border-color: #666;
+
+    --f-tabs-disabled-color: #ddd;
+    --f-tabs-disabled-border-color: transparent;
+}

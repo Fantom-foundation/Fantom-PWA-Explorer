@@ -1,3 +1,5 @@
+@import "custom-properties";
+
 .f-overlay {
     display: block;
     position: fixed;
@@ -5,5 +7,5 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(28, 33, 50, 0.8);
+    background-color: var(--f-overlay-background-color);
 }

@@ -1,4 +1,4 @@
-@import "variables";
+@import "custom-properties";
 
 .f-message {
     display: flex;
@@ -6,15 +6,19 @@
     align-content: center;
 
     &.success {
-        color: $f-message-success-color;
-    }
-
-    &.error {
-        color: $f-message-error-color;
+        color: var(--f-message-success-color);
     }
 
     &.info {
-        color: $f-message-info-color;
+        color: var(--f-message-info-color);
+    }
+
+    &.warning {
+        color: var(--f-message-warning-color);
+    }
+
+    &.error {
+        color: var(--f-message-error-color);
     }
 
     .f-message-body {
