@@ -9,7 +9,7 @@
 @import "core/all";
 @import "core/vue-animations";
 @import "core/_positioning.scss";
-
+@import "core/toggle-button/toggle-button";
 //@include flexbox-layout(24);
 
 //@include media-max($bp-menu) {
@@ -47,6 +47,10 @@ a:not(.btn):hover {
 
 .break-word {
     word-break: break-word;
+}
+
+.theme-transition, .theme-transition * {
+    transition: background-color $transition-length $transition-func, border-color $transition-length $transition-func;
 }
 
 .f-data-layout {

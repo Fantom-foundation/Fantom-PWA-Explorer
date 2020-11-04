@@ -51,6 +51,10 @@
         --f-navigation-link-color: var(--f-lighter-color);
     }
 
+    .f-dark-mode-switch {
+        --f-dark-mode-switch-color: var(--f-lighter-color);
+    }
+
     .f-card {
         --f-card-background-color: var(--f-darker-color);
         --f-card-hover-background-color: var(--f-darker-color-2);

@@ -2,8 +2,9 @@
     <header class="f-header" :class="cCssClass">
         <div class="narrow-container">
             <div class="row no-collapse align-items-center">
-                <div class="col-2">
+                <div ref="logoCol" class="col-2">
                     <router-link to="/" class="logo" :aria-label="$t('view_home.back_to_home')"><img src="/fantom-logo.svg" alt="" class="not-fluid"></router-link>
+                    <f-dark-mode-switch ref="darkModeSwitch" />
                 </div>
                 <div class="col right-col">
                     <f-navigation
@@ -38,12 +39,14 @@
     import FSocialMediaLinks from "../components/FSocialMediaLinks.vue";
     import { mapState } from 'vuex';
     import FSearchBox from "../components/FSearchBox.vue";
+    import FDarkModeSwitch from "@/components/FDarkModeSwitch.vue";
 
     /**
      * Renderes header and takes care of navigation.
      */
     export default {
         components: {
+            FDarkModeSwitch,
             FSearchBox,
             FNavigation,
             FHamburgerSwitch,
@@ -116,6 +119,8 @@
 
         methods: {
             moveNavigationToDrawer() {
+                const { $refs } = this;
+
                 if (!this.$el) {
                     return;
                 }
@@ -125,10 +130,16 @@
 
                 if (eFNavigation && eDrawer) {
                     eDrawer.appendChild(eFNavigation);
+
+                    if ($refs.darkModeSwitch) {
+                        eDrawer.prepend($refs.darkModeSwitch.$el);
+                    }
                 }
             },
 
             moveNavigationFromDrawer() {
+                const { $refs } = this;
+
                 if (!this.$el) {
                     return;
                 }
@@ -138,6 +149,9 @@
 
                 if (eFNavigation && eRightCol) {
                     eRightCol.insertBefore(eFNavigation, eRightCol.firstChild);
+                    if ($refs.logoCol && $refs.darkModeSwitch) {
+                        $refs.logoCol.appendChild($refs.darkModeSwitch.$el);
+                    }
                     // eRightCol.appendChild(eFNavigation);
                 }
             },
@@ -184,6 +198,7 @@
         color: #fff;
         background-color: var(--f-header-background-color);
         transition: height $transition-length ease;
+        border-bottom: 1px solid transparent;
 
         .narrow-container {
             padding-top: 0;
@@ -264,7 +279,6 @@
                 margin-right: 16px;
             }
         }
-
 
         &.drawer-on {
             .f-drawer {
@@ -352,8 +366,16 @@
                 }
             }
 
+            .f-dark-mode-switch {
+                display: none;
+            }
+
             &.drawer-on {
                 .f-navigation {
+                    display: block;
+                }
+
+                .f-dark-mode-switch {
                     display: block;
                 }
             }
