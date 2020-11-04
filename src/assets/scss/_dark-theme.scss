@@ -24,6 +24,33 @@
 
     --f-home-background-color: var(--f-darker-color);
 
+    .f-search-box {
+        --f-search-box-input-box-shadow: none;
+        --f-search-box-input-color: #fff;
+        --f-search-box-input-background-color: var(--f-darker-color-3);
+        --f-search-box-input-placeholder-color: var(--f-lighter-color);
+        --f-search-box-button-hover-color:  var(--f-lighter-color);
+    }
+
+    .f-header {
+        --f-header-background-color: var(--f-darker-color);
+        --f-header-link-color: var(--f-lighter-color);
+        border-bottom: 1px solid var(--f-dark-color);
+    }
+
+    .f-footer {
+        --f-footer-background-color: var(--f-darker-color);
+        --f-footer-link-color: var(--f-lighter-color);
+    }
+
+    .f-social-media-links {
+        --f-social-media-links-color: var(--f-lighter-color);
+    }
+
+    .f-navigation {
+        --f-navigation-link-color: var(--f-lighter-color);
+    }
+
     .f-card {
         --f-card-background-color: var(--f-darker-color);
         --f-card-hover-background-color: var(--f-darker-color-2);
@@ -57,6 +84,10 @@
     //--f-outline-shadow: 0 0 0 2px rgba(87,92,128, 0.9);
     .inp {
         --f-input-background-color: var(--f-darker-color-2);
+
+        input, textarea {
+            --f-input-color: #fff;
+        }
     }
 
     label.option {

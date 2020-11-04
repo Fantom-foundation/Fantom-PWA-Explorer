@@ -40,7 +40,9 @@
 
 <style lang="scss">
     .f-social-media-links {
-        color: $secondary-color-lighter;
+        --f-social-media-links-color: #{$secondary-color-lighter};
+
+        color: var(--f-social-media-links-color);
 
         li {
             display: inline-block;

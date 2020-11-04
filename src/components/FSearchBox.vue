@@ -277,6 +277,12 @@
 
 <style lang="scss">
     .f-search-box {
+        --f-search-box-input-box-shadow: #{$elev3-shadow};
+        --f-search-box-input-color: #000;
+        --f-search-box-input-background-color: #{$secondary-color-lightest};
+        --f-search-box-input-placeholder-color: #{$grey-color-lighter};
+        --f-search-box-button-hover-color: #fff;
+
         display: inline-block;
 
         form {
@@ -295,7 +301,7 @@
             text-align: center;
             border-radius: 3.5rem !important;
             outline: none;
-            box-shadow: $elev3-shadow;
+            box-shadow: var(--f-search-box-input-box-shadow);
             /*background-color: transparent;*/
 
             &:not(:focus) {
@@ -303,7 +309,7 @@
             }
 
             &::placeholder {
-                color: $grey-color-lighter;
+                color: var(--f-search-box-input-placeholder-color);
             }
         }
 
@@ -341,7 +347,7 @@
                     /*padding-right: 48px;*/
 
                     &::placeholder {
-                        color: $grey-color-lighter;
+                        color: var(--f-search-box-input-placeholder-color);
                     }
                 }
             }
@@ -361,15 +367,15 @@
                 width: 44px;
 
                 input:not(.def):not([type=submit]).large {
-                    color: #000;
-                    background-color: $secondary-color-lightest;
+                    color: var(--f-search-box-input-color);
+                    background-color: var(--f-search-box-input-background-color);
                     border-color: transparent;
                     transition: background-color $transition-length ease;
                 }
 
                 &:not(.expanded) {
                     button[type="submit"]:hover {
-                        background-color: #fff !important;
+                        background-color: var(--f-search-box-button-hover-color) !important;
                     }
                 }
             }

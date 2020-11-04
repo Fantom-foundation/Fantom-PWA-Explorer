@@ -51,6 +51,8 @@
 
 <style lang="scss">
     .f-navigation {
+        --f-navigation-link-color: #{$secondary-color-lighter};
+
         display: inline-block;
 
         nav {
@@ -61,7 +63,7 @@
                     margin-left: 4px;
 
                     @include links() {
-                        color: $secondary-color-lighter;
+                        color: var(--f-navigation-link-color);
                         font-weight: bold;
                         letter-spacing: normal;
                         display: inline-block;

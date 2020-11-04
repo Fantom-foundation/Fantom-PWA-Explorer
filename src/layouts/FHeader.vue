@@ -171,6 +171,9 @@
 
 <style lang="scss">
     .f-header {
+        --f-header-background-color: #{$theme-color};
+        --f-header-link-color: #{$secondary-color-lighter};
+
         /*position: -webkit-sticky;*/
         /*position: sticky;*/
         position: fixed;
@@ -179,7 +182,7 @@
         width: 100%;
         height: $f-header-height;
         color: #fff;
-        background-color: $theme-color;
+        background-color: var(--f-header-background-color);
         transition: height $transition-length ease;
 
         .narrow-container {
@@ -217,7 +220,7 @@
             height: 100%;
             top: 0;
             padding: 64px 8px 8px 8px;
-            background-color: $theme-color;
+            background-color: var(--f-header-background-color);
             transform: translateX(100%);
             transition: all $transition-length ease;
             display: none;
@@ -234,7 +237,7 @@
             }
 
             @include links() {
-                color: $secondary-color-lighter;
+                color: var(--f-header-link-color);
                 transition: color $transition-length ease;
             }
 
