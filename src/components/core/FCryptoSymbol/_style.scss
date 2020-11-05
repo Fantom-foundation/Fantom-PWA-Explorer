@@ -1,19 +1,21 @@
 .f-crypto-symbol {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: nowrap;
     margin-right: 8px;
     font-weight: bold;
 
     .img {
-        display: inline-block;
-        vertical-align: middle;
-        //width: 32px;
-        //height: 32px;
-        overflow: hidden;
-        margin-right: 4px;
+        //display: inline-block;
+        //vertical-align: middle;
+        //overflow: hidden;
+        margin-right: 8px;
 
-        img {
+        img, svg {
             width: auto;
+            height: auto;
             max-height: 100%;
+            display: block;
         }
     }
 }
