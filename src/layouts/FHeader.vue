@@ -2,15 +2,15 @@
     <header class="f-header" :class="cCssClass">
         <div class="narrow-container">
             <div class="row no-collapse align-items-center">
-                <div ref="logoCol" class="col-2">
+                <div class="col-2">
                     <router-link to="/" class="logo" :aria-label="$t('view_home.back_to_home')"><img src="/fantom-logo.svg" alt="" class="not-fluid"></router-link>
-                    <f-dark-mode-switch ref="darkModeSwitch" />
                 </div>
                 <div class="col right-col">
                     <f-navigation
                         :items="cNavigation"
                     ></f-navigation>
-                    <f-search-box class="small" expandable v-show="!cHomeView"></f-search-box>
+                    <f-dark-mode-switch ref="darkModeSwitch" />
+                    <f-search-box ref="searchBox" class="small" expandable v-show="!cHomeView"></f-search-box>
                     <f-hamburger-switch
                         thickness="2"
                         two-lines
@@ -149,8 +149,8 @@
 
                 if (eFNavigation && eRightCol) {
                     eRightCol.insertBefore(eFNavigation, eRightCol.firstChild);
-                    if ($refs.logoCol && $refs.darkModeSwitch) {
-                        $refs.logoCol.appendChild($refs.darkModeSwitch.$el);
+                    if ($refs.searchBox && $refs.darkModeSwitch) {
+                        $refs.searchBox.$el.parentNode.insertBefore($refs.darkModeSwitch.$el, $refs.searchBox.$el);
                     }
                     // eRightCol.appendChild(eFNavigation);
                 }
@@ -272,12 +272,18 @@
         }
 
         .right-col {
-            /*display: flex;*/
-            text-align: right;
+            //text-align: right;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
 
             .f-navigation {
                 margin-right: 16px;
             }
+        }
+
+        .f-dark-mode-switch {
+            margin-right: 16px;
         }
 
         &.drawer-on {
@@ -377,6 +383,8 @@
 
                 .f-dark-mode-switch {
                     display: block;
+                    text-align: right;
+                    margin-right: 8px;
                 }
             }
         }

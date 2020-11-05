@@ -10,6 +10,12 @@
     //--f-icon-stroke-color: var(--f-doc-background-color);
     //--f-icon-fill-color: var(--f-doc-background-color);
 
+    .toggle-btn {
+        --f-toggle-btn-border: 1px solid transparent;
+        --f-toggle-btn-checked-border: 1px solid transparent;
+        --f-toggle-btn-hover-border: 1px solid transparent;
+    }
+
     .f-message {
         --f-message-success-color: var(--f-success-color);
         --f-message-warning-color: var(--f-warning-color-dark);

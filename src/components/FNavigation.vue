@@ -82,7 +82,7 @@
         }
     }
 
-    @include media-max(1000px) {
+    @include media-max(1075px) {
         .f-navigation {
             nav {
                 ul {
@@ -98,7 +98,7 @@
         }
     }
 
-    @include media-max(800px) {
+    @include media-max(870px) {
         .f-navigation {
             nav {
                 ul {

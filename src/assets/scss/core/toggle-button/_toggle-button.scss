@@ -21,7 +21,7 @@
         cursor: pointer;
 
         /* switch */
-        &::before {
+        &::before, &::after {
             position: absolute;
             z-index: 2;
             content: "";
@@ -35,6 +35,24 @@
             box-shadow: var(--f-toggle-btn-switch-box-shadow);
             border: var(--f-toggle-btn-switch-border);
             border-radius: var(--f-toggle-btn-switch-border-radius);
+        }
+
+        /* switch content */
+        &::after {
+            z-index: 3;
+            text-align: center;
+            content: var(--f-toggle-btn-switch-content-content);
+            background: var(--f-toggle-btn-switch-content-background);
+            border: none;
+            pointer-events: none;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: 50% 50%;
+            mask-position: 50% 50%;
+            -webkit-mask-size: var(--f-toggle-btn-switch-content-mask-size) var(--f-toggle-btn-switch-content-mask-size);
+            mask-size: var(--f-toggle-btn-switch-content-mask-size) var(--f-toggle-btn-switch-content-mask-size);
+            -webkit-mask-image: var(--f-toggle-btn-switch-content-mask-image);
+            mask-image: var(--f-toggle-btn-switch-content-mask-image);
         }
     }
 
@@ -54,6 +72,14 @@
                 border: var(--f-toggle-btn-checked-switch-border);
                 transform: translateX(var(--f-toggle-btn-checked-switch-translate-x));
             }
+
+            /* switch content - checked */
+            &::after {
+                background: var(--f-toggle-btn-checked-switch-content-background);
+                -webkit-mask-image: var(--f-toggle-btn-checked-switch-content-mask-image);
+                mask-image: var(--f-toggle-btn-checked-switch-content-mask-image);
+                transform: translateX(var(--f-toggle-btn-checked-switch-translate-x));
+            }
         }
 
         &:disabled + .toggle-btn__btn {
@@ -68,6 +94,11 @@
                 background: var(--f-toggle-btn-disabled-switch-background);
                 box-shadow: var(--f-toggle-btn-disabled-switch-box-shadow);
                 border: var(--f-toggle-btn-disabled-switch-border);
+            }
+
+            /* switch content - disabled */
+            &::after {
+                /*color: #eee;*/
             }
 
             & + .toggle-btn__label {

@@ -55,6 +55,13 @@
     --f-toggle-btn-switch-box-shadow: none;
     --f-toggle-btn-switch-border: 1px solid var(--f-toggle-btn-switch-background);
     --f-toggle-btn-switch-border-radius: 50%;
+    /* switch content */
+    --f-toggle-btn-switch-content-content: "";
+    --f-toggle-btn-switch-content-background: none;
+    --f-toggle-btn-checked-switch-content-background: none;
+    --f-toggle-btn-switch-content-mask-size: 100%;
+    --f-toggle-btn-switch-content-mask-image: none;
+    --f-toggle-btn-checked-switch-content-mask-image: none;
     /* switch - checked */
     --f-toggle-btn-checked-switch-background: var(--f-toggle-btn-switch-background);
     --f-toggle-btn-checked-switch-box-shadow: none;

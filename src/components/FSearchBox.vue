@@ -284,6 +284,7 @@
         --f-search-box-button-hover-color: #fff;
 
         display: inline-block;
+        z-index: 4;
 
         form {
             display: inline-block;
