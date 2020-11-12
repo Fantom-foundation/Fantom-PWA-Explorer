@@ -16,8 +16,6 @@
             <f-breakpoint value="1100px" code="validator-list-dt-mobile-view"></f-breakpoint>
         </f-breakpoints>
         <f-aria-alert />
-
-        <temporary-message-window />
     </div>
 </template>
 
@@ -28,13 +26,11 @@
     import FFooter from "./layouts/FFooter.vue";
     import gql from 'graphql-tag';
     import FAriaAlert from "./components/core/FAriaAlert/FAriaAlert.vue";
-    import TemporaryMessageWindow from "@/components/TemporaryMessageWindow/TemporaryMessageWindow.vue";
 
     export default {
         name: 'App',
 
         components: {
-            TemporaryMessageWindow,
             FAriaAlert,
             FBreakpoint,
             FBreakpoints,
