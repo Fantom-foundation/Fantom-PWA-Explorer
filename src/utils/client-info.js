@@ -30,6 +30,7 @@ export function detect(_window) {
     let nameOffset;
     let verOffset;
     let ix;
+    let match;
 
     // Opera
     if ((verOffset = nAgt.indexOf('Opera')) !== -1) {
@@ -119,7 +120,10 @@ export function detect(_window) {
         { s: 'Windows ME', r: /(Win 9x 4.90|Windows ME)/ },
         { s: 'Windows 98', r: /(Windows 98|Win98)/ },
         { s: 'Windows 95', r: /(Windows 95|Win95|Windows_95)/ },
-        { s: 'Windows NT 4.0', r: /(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/ },
+        {
+            s: 'Windows NT 4.0',
+            r: /(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/,
+        },
         { s: 'Windows CE', r: /Windows CE/ },
         { s: 'Windows 3.11', r: /Win16/ },
         { s: 'Android', r: /Android/ },
@@ -151,7 +155,8 @@ export function detect(_window) {
 
     if (/Windows/.test(os)) {
         // eslint-disable-next-line prefer-destructuring
-        osVersion = /Windows (.*)/.exec(os)[1];
+        match = /Windowsd (.*)/.exec(os);
+        osVersion = match ? match[1] : 0;
         os = 'Windows';
     }
 
@@ -159,12 +164,14 @@ export function detect(_window) {
     switch (os) {
         case 'Mac OS X':
             // eslint-disable-next-line prefer-destructuring,no-useless-escape
-            osVersion = /Mac OS X (10[\.\_\d]+)/.exec(nAgt)[1];
+            match = /Mac OS X ([\.\_\d]+)/.exec(nAgt);
+            osVersion = match ? match[1] : 0;
             break;
 
         case 'Android':
             // eslint-disable-next-line prefer-destructuring,no-useless-escape
-            osVersion = /Android ([\.\_\d]+)/.exec(nAgt)[1];
+            match = /Android ([\.\_\d]+)/.exec(nAgt);
+            osVersion = match ? match[1] : 0;
             break;
 
         case 'iOS':
@@ -210,11 +217,11 @@ export const clientInfo = detect(window);
 
 export function getLanguageCode() {
     const re = /(\w+)-?/;
-    const lang = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language;
+    const lang = navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language;
     const match = re.exec(lang);
     let code = 'en';
 
-    if (match && (match.length === 2)) {
+    if (match && match.length === 2) {
         // eslint-disable-next-line prefer-destructuring
         code = match[1];
     }
