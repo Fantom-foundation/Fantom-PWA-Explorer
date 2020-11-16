@@ -470,12 +470,17 @@
                 const { $defi } = this;
                 const result = await Promise.all([
                     $defi.fetchFMintAccount(this.id),
-                    $defi.fetchTokens(this.id),
+                    // $defi.fetchTokens(this.id),
+                    $defi.fetchERC20Tokens(),
                     $defi.init(),
                 ]);
 
                 this.fMintAccount = result[0];
                 this.tokens = result[1];
+
+                setTimeout(async () => {
+                    this.tokens = await $defi.getERC20TokensWithAvailableBalances(this.id, this.tokens);
+                }, 30);
             },
 
             /**

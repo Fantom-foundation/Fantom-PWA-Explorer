@@ -18,7 +18,7 @@
                 </template>
             </template>
 
-            <template v-slot:column-balance="{ value, item, column }">
+            <template v-slot:column-deposited="{ value, item, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
                     <div class="col-6 f-row-label">{{ column.label }}</div>
                     <div class="col break-word">
@@ -106,8 +106,8 @@ export default {
                     name: 'available',
                     label: 'Available',
                     itemProp: 'availableBalance',
-                    formatter: (_availableBalance, _item) => {
-                        const balance = this.$defi.fromTokenValue(_availableBalance, _item);
+                    formatter: (_value, _item) => {
+                        const balance = _item._availableBalance;
 
                         return balance > 0 ? formatNumberByLocale(balance, this.defi.getTokenDecimals(_item)) : 0;
                     },
@@ -115,11 +115,11 @@ export default {
                     // width: '100px',
                 },
                 {
-                    name: 'balance',
+                    name: 'deposited',
                     label: 'Deposited',
                     itemProp: 'availableBalance',
-                    formatter: (_availableBalance, _item) => {
-                        const collateral = this.getCollateral(_item);
+                    formatter: (_value, _item) => {
+                        const collateral = _item._deposited;
 
                         return collateral > 0 ? formatNumberByLocale(collateral, this.defi.getTokenDecimals(_item)) : 0;
                     },
@@ -131,7 +131,7 @@ export default {
                     label: 'Borrowed',
                     // hidden: true,
                     formatter: (_value, _item) => {
-                        const debt = this.getDebt(_item);
+                        const debt = _item._debt;
 
                         return debt > 0 ? formatNumberByLocale(debt, this.defi.getTokenDecimals(_item)) : 0;
                     },
@@ -146,13 +146,40 @@ export default {
          * @param {DefiToken[]} _value
          */
         tokens(_value) {
-            this.items = _value.filter((_item) => _item.isActive && _item.canDeposit && _item.symbol !== 'FTM');
+            // this.items = _value.filter((_item) => _item.isActive && _item.canDeposit && _item.symbol !== 'FTM');
+            this.prepareTokens(_value);
+
+            this.items = _value.filter(
+                (_token) => _token._availableBalance > 0 || _token._deposited > 0 || _token._debt > 0
+            );
 
             this.$emit('records-count', this.items.length);
         },
     },
 
     methods: {
+        /**
+         * @param {DefiToken[]} _tokens
+         */
+        prepareTokens(_tokens) {
+            const { $defi } = this;
+
+            if (_tokens) {
+                _tokens.forEach((_token) => {
+                    const availableBalance = _token.balanceOf || _token.availableBalance;
+
+                    if (availableBalance) {
+                        _token._availableBalance = $defi.fromTokenValue(availableBalance, _token);
+                    } else {
+                        _token._availableBalance = 0;
+                    }
+
+                    _token._deposited = this.getCollateral(_token);
+                    _token._debt = this.getDebt(_token);
+                });
+            }
+        },
+
         /**
          * @param {DefiToken} _token
          * @return {*|number}

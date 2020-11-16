@@ -1,6 +1,6 @@
 import './defi.types.js';
 import gql from 'graphql-tag';
-import { isObjectEmpty, lowercaseFirstChar } from '../../utils';
+import {cloneObject, isObjectEmpty, lowercaseFirstChar} from '../../utils';
 import web3utils from 'web3-utils';
 import { fFetch } from '../ffetch.js';
 
@@ -711,7 +711,7 @@ export class DeFi {
         if (filterTokens.length > 0) {
             erc20TokenList = erc20TokenList.filter(this.filterTokensBySymbol);
         }
-        console.log('erc20', erc20TokenList);
+        // console.log('erc20', erc20TokenList);
 
         let tokens = [];
 
@@ -725,6 +725,50 @@ export class DeFi {
             }
         } else {
             tokens = erc20TokenList;
+        }
+
+        return tokens;
+    }
+
+    /**
+     * @param {string} _ownerAddress
+     * @return {Promise<DefiToken[]>}
+     */
+    async fetchERC20TokensAvailableBalances(_ownerAddress) {
+        const query = {
+            query: gql`
+                query ERC20TokenList($owner: Address!) {
+                    erc20TokenList {
+                        address
+                        balanceOf(owner: $owner)
+                    }
+                }
+            `,
+            variables: {
+                owner: _ownerAddress,
+            },
+        };
+        const data = await fFetch.fetchGQLQuery(query, 'erc20TokenList');
+
+        return data.data.erc20TokenList || [];
+    }
+
+    /**
+     * @param {string} _ownerAddress
+     * @param {ERC20Token[]} _tokens
+     */
+    async getERC20TokensWithAvailableBalances(_ownerAddress, _tokens) {
+        const tokenBalances = await this.fetchERC20TokensAvailableBalances(_ownerAddress);
+        const tokens = cloneObject(_tokens);
+
+        if (tokenBalances) {
+            tokenBalances.forEach((_token) => {
+                const token = tokens.find((_t) => _t.address === _token.address);
+
+                if (token) {
+                    token.balanceOf = _token.balanceOf;
+                }
+            });
         }
 
         return tokens;
