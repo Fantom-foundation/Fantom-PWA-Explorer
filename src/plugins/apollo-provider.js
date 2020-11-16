@@ -49,6 +49,10 @@ const httpLink = new HttpLink({
     uri: httpProvider
 });
 
+export function getCurrentHttpProvider() {
+    return httpProvider;
+}
+
 const httpProviderMiddleware = new ApolloLink((operation, forward) => {
     // add the authorization to the headers
     operation.setContext({

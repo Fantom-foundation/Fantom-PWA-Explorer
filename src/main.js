@@ -12,12 +12,14 @@ import './filters.js';
 import './registerServiceWorker'
 import 'focus-visible';
 import { DeFi } from './plugins/defi/defi.js';
+import { FFetch } from "@/plugins/ffetch.js";
 
 Vue.config.productionTip = false;
 
 Vue.use(DeFi, {
     apolloClient,
 });
+Vue.use(FFetch);
 
 
 // measure performance
