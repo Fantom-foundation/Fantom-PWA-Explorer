@@ -2,14 +2,13 @@ import './defi.types.js';
 import gql from 'graphql-tag';
 import { isObjectEmpty, lowercaseFirstChar } from '../../utils';
 import web3utils from 'web3-utils';
+import { fFetch } from '../ffetch.js';
 
 /** @type {BNBridgeExchange} */
 export let defi = null;
 
 // TMP!!
-// const tmpWFTM = appConfig.tmpWFTM;
-const tmpWFTM = true;
-const filterTokens = tmpWFTM ? ['FTM', 'WFTM', 'FUSD'] : [];
+const filterTokens = [];
 
 /**
  * Plugin for various DeFi requests and calculations.
@@ -52,10 +51,10 @@ export class DeFi {
         /** Addresses of various contracts. */
         this.contracts = {
             fMint: '',
+            fMintReward: '',
+            uniswapCoreFactory: '',
+            uniswapRouter: '',
         };
-
-        // TMP!!
-        this.tmpWFTM = tmpWFTM;
     }
 
     /**
@@ -85,6 +84,9 @@ export class DeFi {
         // this.warningCollateralRatio = parseInt(_settings.warningCollateralRatio4, 16) / dec;
         this.mintFee = parseInt(_settings.mintFee4, 16) / dec;
         contracts.fMint = _settings.fMintContract;
+        contracts.fMintReward = _settings.fMintRewardDistribution;
+        contracts.uniswapCoreFactory = _settings.uniswapCoreFactory;
+        contracts.uniswapRouter = _settings.uniswapRouter;
     }
 
     /**
@@ -115,8 +117,10 @@ export class DeFi {
             decimals = 1;
         } else if (tokenPrice < 100) {
             decimals = 2;
+        } else if (tokenPrice < 1000) {
+            decimals = 5;
         } else {
-            decimals = 3;
+            decimals = 6;
         }
 
         this.tokenDecimals[_token.symbol] = decimals;
@@ -348,6 +352,7 @@ export class DeFi {
         let left;
         let right;
         let res = '';
+        const isHex = value.indexOf('0x') === 0;
 
         if (idx > -1) {
             left = value.slice(0, idx);
@@ -378,6 +383,10 @@ export class DeFi {
             if (!res) {
                 res = '0';
             }
+        }
+
+        if (isHex && res.charAt(0) === 'x') {
+            res = '0' + res;
         }
 
         return res;
@@ -542,11 +551,8 @@ export class DeFi {
      */
     canTokenBeTraded(_token) {
         // return _token && _token.isActive && _token.canTrade;
-        if (tmpWFTM) {
-            return _token && _token.isActive && (_token.canTrade || _token.symbol === 'FTM');
-        } else {
-            return _token && _token.isActive && (_token.canTrade || _token.symbol === 'FUSD');
-        }
+        return _token && _token.isActive && (_token.canTrade || _token.symbol === 'FTM');
+        // return _token && _token.isActive && (_token.canTrade || _token.symbol === 'FUSD');
     }
 
     /**
@@ -585,50 +591,58 @@ export class DeFi {
      * @return {Promise<DefiToken[]>}
      */
     async fetchTokens(_ownerAddress, _symbol) {
-        const data = await this.apolloClient.query({
-            query: _ownerAddress ? gql`
-                query DefiTokens($owner: Address!) {
-                    defiTokens {
-                        address
-                        name
-                        symbol
-                        logoUrl
-                        decimals
-                        price
-                        priceDecimals
-                        isActive
-                        canDeposit
-                        canMint
-                        canBorrow
-                        canTrade
-                        availableBalance(owner: $owner)
-                        allowance(owner: $owner)
-                    }
-                }
-            ` : gql`
-                query DefiTokens {
-                    defiTokens {
-                        address
-                        name
-                        symbol
-                        logoUrl
-                        decimals
-                        price
-                        priceDecimals
-                        isActive
-                        totalSupply
-                        canDeposit
-                        canMint
-                        canBorrow
-                        canTrade
-                    }
-                }
-            `,
+        const query = {
+            query: _ownerAddress
+                ? gql`
+                      query DefiTokens($owner: Address!) {
+                          defiTokens {
+                              address
+                              name
+                              symbol
+                              logoUrl
+                              decimals
+                              price
+                              priceDecimals
+                              totalSupply
+                              isActive
+                              canWrapFTM
+                              canDeposit
+                              canMint
+                              canBorrow
+                              canTrade
+                              availableBalance(owner: $owner)
+                              allowance(owner: $owner)
+                          }
+                      }
+                  `
+                : gql`
+                      query DefiTokens {
+                          defiTokens {
+                              address
+                              name
+                              symbol
+                              logoUrl
+                              decimals
+                              price
+                              priceDecimals
+                              totalSupply
+                              isActive
+                              canWrapFTM
+                              canDeposit
+                              canMint
+                              canBorrow
+                              canTrade
+                          }
+                      }
+                  `,
             variables: {
                 owner: _ownerAddress,
             },
-            fetchPolicy: 'network-only',
-        });
+            // fetchPolicy: 'network-only',
+        };
+        // const data = await this.apolloClient.query(query);
+        const data = await fFetch.fetchGQLQuery(query, 'defiTokens');
+
         let defiTokens = data.data.defiTokens || [];
 
         if (filterTokens.length > 0) {
@@ -651,6 +665,107 @@ export class DeFi {
         }
 
         return tokens;
+    }
+
+    /**
+     * @param {string} _ownerAddress
+     * @param {string|array} [_symbol]
+     * @return {Promise<DefiToken[]>}
+     */
+    async fetchERC20Tokens(_ownerAddress, _symbol) {
+        const query = {
+            query: _ownerAddress
+                ? gql`
+                      query ERC20TokenList($owner: Address!) {
+                          erc20TokenList {
+                              address
+                              name
+                              symbol
+                              decimals
+                              totalSupply
+                              balanceOf(owner: $owner)
+                          }
+                      }
+                  `
+                : gql`
+                      query ERC20TokenList {
+                          erc20TokenList {
+                              address
+                              name
+                              symbol
+                              decimals
+                              totalSupply
+                          }
+                      }
+                  `,
+            variables: {
+                owner: _ownerAddress,
+            },
+            // fetchPolicy: 'network-only',
+        };
+        // const data = await this.apolloClient.query(query);
+        const data = await fFetch.fetchGQLQuery(query, 'erc20TokenList');
+
+        let erc20TokenList = data.data.erc20TokenList || [];
+
+        if (filterTokens.length > 0) {
+            erc20TokenList = erc20TokenList.filter(this.filterTokensBySymbol);
+        }
+        console.log('erc20', erc20TokenList);
+
+        let tokens = [];
+
+        this._setTokens(erc20TokenList);
+
+        if (_symbol) {
+            if (typeof _symbol === 'string') {
+                tokens = erc20TokenList.find((_item) => _item.symbol === _symbol);
+            } else if (_symbol.length) {
+                tokens = erc20TokenList.filter((_item) => _symbol.indexOf(_item.symbol) > -1);
+            }
+        } else {
+            tokens = erc20TokenList;
+        }
+
+        return tokens;
+    }
+
+    /**
+     * @param {string|array} [_symbol]
+     * @return {Promise<number[]>}
+     */
+    async fetchTokenPrices(_symbol) {
+        const data = await this.apolloClient.query({
+            query: gql`
+                query DefiTokens {
+                    defiTokens {
+                        address
+                        symbol
+                        decimals
+                        price
+                        priceDecimals
+                        isActive
+                    }
+                }
+            `,
+            fetchPolicy: 'network-only',
+        });
+        let defiTokens = data.data.defiTokens || [];
+        let tokens = [];
+
+        this._setTokens(defiTokens);
+
+        if (_symbol) {
+            if (typeof _symbol === 'string') {
+                tokens = defiTokens.find((_item) => _item.symbol === _symbol);
+            } else if (_symbol.length) {
+                tokens = defiTokens.filter((_item) => _symbol.indexOf(_item.symbol) > -1);
+            }
+        } else {
+            tokens = defiTokens;
+        }
+
+        return tokens.map((_token) => this.fromTokenValue(_token.price, _token, true));
     }
 
     /**
