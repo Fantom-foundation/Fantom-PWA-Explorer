@@ -155,7 +155,7 @@ export function detect(_window) {
 
     if (/Windows/.test(os)) {
         // eslint-disable-next-line prefer-destructuring
-        match = /Windowsd (.*)/.exec(os);
+        match = /Windows (.*)/.exec(os);
         osVersion = match ? match[1] : 0;
         os = 'Windows';
     }
