@@ -6,7 +6,7 @@ console.log('--- app config ---');
 console.log(appConfig);
 
 module.exports = {
-    publicPath: '/',
+    publicPath: appConfig.routerHashMode ? '' : '/',
     outputDir: appConfig.build.outputDir,
 
     css: {

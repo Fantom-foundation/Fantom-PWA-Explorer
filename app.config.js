@@ -35,7 +35,9 @@ const appConfig = {
         defaultProviderIndex: "random"
     },
     //
-    useTestnet: false,
+    useTestnet: true,
+    // use 'hash' mode in vue router
+    routerHashMode: false,
     // testnet config
     testnet: {
         // list of providers. if one of them is unavailable, another is randomly picked

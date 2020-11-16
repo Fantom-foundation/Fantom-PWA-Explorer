@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from "vue-router";
 import { routes } from "../routes.js";
+const appConfig = require('../../app.config.js');
 
 Vue.use(VueRouter);
 
@@ -14,5 +15,5 @@ export const router = new VueRouter({
             return { x: 0, y: 0 }
         }
     },
-    mode: 'history'
+    mode: appConfig.routerHashMode ? 'hash' : 'history'
 });
