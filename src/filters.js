@@ -121,15 +121,9 @@ export function formatDuration(_value) {
  * @param {number} [_digits]
  * @return {*}
  */
-export function formatNumberByLocale(_number, _digits) {
+export function formatNumberByLocale(_number, _digits = 0) {
     // TODO: use i18n current locale
-    let number = (new Intl.NumberFormat('en-GB')).format(_number);
-
-    if (_digits) {
-        number = addZeros(_number, _digits);
-    }
-
-    return number;
+    return (new Intl.NumberFormat('en-GB', { minimumFractionDigits: _digits })).format(_number);
 }
 
 /**
