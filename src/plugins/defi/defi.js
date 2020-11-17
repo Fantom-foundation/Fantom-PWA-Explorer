@@ -113,7 +113,9 @@ export class DeFi {
         const tokenPrice = this.getTokenPrice(_token);
         let decimals = 0;
 
-        if (tokenPrice < 0.5) {
+        if (tokenPrice === 0) {
+            decimals = 6;
+        } else if (tokenPrice < 0.5) {
             decimals = 1;
         } else if (tokenPrice < 100) {
             decimals = 2;
@@ -668,7 +670,7 @@ export class DeFi {
     }
 
     /**
-     * @param {string} _ownerAddress
+     * @param {string} [_ownerAddress]
      * @param {string|array} [_symbol]
      * @return {Promise<DefiToken[]>}
      */
