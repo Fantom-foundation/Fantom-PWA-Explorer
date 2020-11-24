@@ -74,6 +74,12 @@
         --f-tabs-border-color: var(--f-darker-color);
     }
 
+    .f-contract-detail {
+        pre {
+            background-color: var(--f-darker-color-4);
+        }
+    }
+
     .f-window {
         //--f-window-background: var(--f-darker-color);
         --f-window-background: var(--f-dark-color);
