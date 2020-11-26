@@ -685,6 +685,7 @@ export class DeFi {
                               symbol
                               decimals
                               totalSupply
+                              logoURL
                               balanceOf(owner: $owner)
                           }
                       }
@@ -697,6 +698,7 @@ export class DeFi {
                               symbol
                               decimals
                               totalSupply
+                              logoURL
                           }
                       }
                   `,
