@@ -54,6 +54,7 @@ import FDataTable from '../components/core/FDataTable/FDataTable.vue';
 import FCryptoSymbol from '../components/core/FCryptoSymbol/FCryptoSymbol.vue';
 import { stringSort } from '../utils/array-sorting.js';
 import { formatNumberByLocale } from '../filters.js';
+import {MAX_TOKEN_DECIMALS_IN_TABLES} from "../plugins/defi/defi.js";
 
 export default {
     name: 'AddressAssetList',
@@ -109,7 +110,7 @@ export default {
                     formatter: (_value, _item) => {
                         const balance = _item._availableBalance;
 
-                        return balance > 0 ? formatNumberByLocale(balance, this.defi.getTokenDecimals(_item)) : 0;
+                        return balance > 0 ? formatNumberByLocale(balance, this.defi.getTokenDecimals(_item, MAX_TOKEN_DECIMALS_IN_TABLES)) : 0;
                     },
                     css: { textAlign: 'right' },
                     // width: '100px',
@@ -121,7 +122,7 @@ export default {
                     formatter: (_value, _item) => {
                         const collateral = _item._deposited;
 
-                        return collateral > 0 ? formatNumberByLocale(collateral, this.defi.getTokenDecimals(_item)) : 0;
+                        return collateral > 0 ? formatNumberByLocale(collateral, this.defi.getTokenDecimals(_item, MAX_TOKEN_DECIMALS_IN_TABLES)) : 0;
                     },
                     css: { textAlign: 'right' },
                     // width: '100px',
@@ -133,7 +134,7 @@ export default {
                     formatter: (_value, _item) => {
                         const debt = _item._debt;
 
-                        return debt > 0 ? formatNumberByLocale(debt, this.defi.getTokenDecimals(_item)) : 0;
+                        return debt > 0 ? formatNumberByLocale(debt, this.defi.getTokenDecimals(_item, MAX_TOKEN_DECIMALS_IN_TABLES)) : 0;
                     },
                     css: { textAlign: 'right' },
                 },

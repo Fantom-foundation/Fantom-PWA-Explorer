@@ -7,6 +7,9 @@ import { fFetch } from '../ffetch.js';
 /** @type {BNBridgeExchange} */
 export let defi = null;
 
+/** Maximum number of token decimal places to be displayed in tables. */
+export const MAX_TOKEN_DECIMALS_IN_TABLES = 2;
+
 // TMP!!
 const filterTokens = [];
 

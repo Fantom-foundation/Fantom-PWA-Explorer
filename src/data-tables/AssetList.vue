@@ -58,6 +58,7 @@ import FDataTable from '../components/core/FDataTable/FDataTable.vue';
 import FCryptoSymbol from '../components/core/FCryptoSymbol/FCryptoSymbol.vue';
 import { stringSort } from '../utils/array-sorting.js';
 import { formatNumberByLocale } from '../filters.js';
+import {MAX_TOKEN_DECIMALS_IN_TABLES} from "../plugins/defi/defi.js";
 
 export default {
     name: 'AssetList',
@@ -101,7 +102,7 @@ export default {
                     formatter: (_value, _item) => {
                         return '$' + formatNumberByLocale(
                             this.$defi.fromTokenValue(_value, _item),
-                            this.$defi.getTokenDecimals(_item) + 1
+                            this.$defi.getTokenDecimals(_item, MAX_TOKEN_DECIMALS_IN_TABLES) + 1
                         );
                     },
                 },
@@ -111,7 +112,7 @@ export default {
                     formatter: (_value, _item) => {
                         return formatNumberByLocale(
                             this.$defi.fromTokenValue(_value, _item).toFixed(0), 0
-                            // this.$defi.getTokenDecimals(_item)
+                            // this.$defi.getTokenDecimals(_item, MAX_TOKEN_DECIMALS_IN_TABLES)
                         );
                     },
                 },
