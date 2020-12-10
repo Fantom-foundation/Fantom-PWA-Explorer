@@ -179,7 +179,7 @@
         "price": "Price",
         "total_supply": "Total supply",
         "hash": "@:hash",
-        "market_cap": "Maket Cap",
+        "market_cap": "Market Cap",
         "symbol": "Symbol"
     },
     "view_validators_info": {
