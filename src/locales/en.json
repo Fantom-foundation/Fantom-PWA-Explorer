@@ -180,7 +180,9 @@
         "total_supply": "Total supply",
         "hash": "@:hash",
         "market_cap": "Market Cap",
-        "symbol": "Symbol"
+        "symbol": "Symbol",
+        "fantom_finance_assets": "Fantom Finance Assets",
+        "all_erc20_tokens": "All ERC20 Tokens"
     },
     "view_validators_info": {
         "last_epoch": "Last Epoch",
