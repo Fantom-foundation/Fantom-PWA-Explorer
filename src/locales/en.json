@@ -212,6 +212,8 @@
         "active": "Active",
         "online": "Online",
         "downtime": "Downtime",
+        "locked_until": "Locked Until",
+        "lock_days": "Lock (Days)",
         "delegations": "Delegations"
     },
     "delegation_list_dt": {

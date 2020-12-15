@@ -114,6 +114,24 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row no-collapse">
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.locked_until') }}</div>
+                    <div class="col">
+                        <div v-show="'lockedUntil' in cStaker">
+                            {{ formatDate(timestampToDate(cStaker.lockedUntil)) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row no-collapse">
+                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.lock_days') }}</div>
+                    <div class="col">
+                        <div v-show="'lockedUntil' in cStaker">
+                            {{ cLockDays }}
+                        </div>
+                    </div>
+                </div>
             </f-card>
 
             <div class="f-subsection">
@@ -134,10 +152,20 @@
 <script>
     import FCard from "../components/core/FCard/FCard.vue";
     import gql from 'graphql-tag';
-    import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed, clampDowntime, formatDate} from "../filters.js";
+    import {
+        formatHexToInt,
+        timestampToDate,
+        formatNumberByLocale,
+        numToFixed,
+        clampDowntime,
+        formatDate,
+        prepareTimestamp
+    } from "../filters.js";
     import { WEIToFTM } from "../utils/transactions.js";
     import FDelegationList from "../data-tables/FDelegationList.vue";
     import FYesNo from "../components/FYesNo.vue";
+
+    const dayS = 60 * 60 * 24;
 
     export default {
         components: {
@@ -175,6 +203,7 @@
                             createdTime
                             validationScore
                             downtime
+                            lockedUntil
                             isActive
                             isOffline
                             stakerInfo {
@@ -240,6 +269,13 @@
 
             cLoading() {
                 return this.$apollo.queries.staker.loading;
+            },
+
+            cLockDays() {
+                const {cStaker} = this;
+                const ts = cStaker && cStaker.lockedUntil ? prepareTimestamp(cStaker.lockedUntil) : 0;
+
+                return ts > 0 ? parseInt((ts - Date.now()) / (dayS * 1000), 10) : '-';
             }
         },
 

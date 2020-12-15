@@ -6,6 +6,33 @@ const zeroString = '00000000';
 const downtimeThreshold = appConfig.downtimeThreshold;
 
 /**
+ * @param {string|number} _timestamp
+ * @return {int}
+ */
+export function prepareTimestamp(_timestamp) {
+    if (!_timestamp) {
+        return 0;
+    }
+
+    let timestamp = _timestamp;
+
+    if (web3utils.isHexStrict(_timestamp)) {
+        timestamp = formatHexToInt(_timestamp);
+    }
+
+    if (timestamp >= 1e16 || timestamp <= -1e16) {
+        timestamp = Math.floor(timestamp / 1000000);
+    } else if (timestamp >= 1e14 || timestamp <= -1e14) {
+        timestamp /= 1000;
+    } else {
+        timestamp *= 1000;
+    }
+
+    return timestamp;
+}
+
+
+/**
  * @param {string|number} _number
  * @param {int} _digits
  * @return {string}
@@ -29,33 +56,17 @@ export function addZeros(_number, _digits) {
 }
 
 /**
- * @param {string|number} _value
- * @return {Date|null}
+ * @param {string|number} _timestamp
+ * @return {Date|''}
  */
-export function timestampToDate(_value) {
-    if (!_value) {
+export function timestampToDate(_timestamp) {
+    const timestamp = prepareTimestamp(_timestamp);
+
+    if (!timestamp) {
         return '';
     }
 
-    let timestamp = _value;
-
-    if (web3utils.isHexStrict(_value)) {
-        timestamp = formatHexToInt(_value);
-    }
-
-    if (timestamp >= 1e16 || timestamp <= -1e16) {
-        timestamp = Math.floor(timestamp / 1000000);
-    } else if (timestamp >= 1e14 || timestamp <= -1e14) {
-        timestamp /= 1000;
-    } else {
-        timestamp *= 1000;
-    }
-
-    if (timestamp) {
-        return new Date(timestamp);
-    }
-
-    return null;
+    return new Date(timestamp);
 }
 
 /**
