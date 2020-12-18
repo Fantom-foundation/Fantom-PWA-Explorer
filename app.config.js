@@ -37,7 +37,7 @@ const appConfig = {
     //
     useTestnet: false,
     // use 'hash' mode in vue router
-    routerHashMode: true,
+    routerHashMode: false,
     // testnet config
     testnet: {
         // list of providers. if one of them is unavailable, another is randomly picked
