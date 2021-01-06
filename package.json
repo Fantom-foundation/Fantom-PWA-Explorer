@@ -40,7 +40,7 @@
         "web3": "^1.2.6"
     },
     "devDependencies": {
-        "@vue/cli-plugin-babel": "~4.4.4",
+        "@vue/cli-plugin-babel": "~4.5.10",
         "@vue/cli-plugin-eslint": "~4.4.4",
         "@vue/cli-plugin-pwa": "^4.4.4",
         "@vue/cli-service": "~4.4.4",
