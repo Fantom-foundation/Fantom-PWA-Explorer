@@ -11,11 +11,6 @@ const appConfig = {
         // list of providers. if one of them is unavailable, another is randomly picked
         providers: [
             {
-                http: 'https://xapi2.fantom.network/api',
-                // for subscriptions
-                ws: '',
-            },
-            {
                 http: 'https://xapi3.fantom.network/api',
                 // for subscriptions
                 ws: '',
