@@ -35,6 +35,16 @@ const appConfig = {
                 // for subscriptions
                 ws: '',
             },
+            {
+                http: 'https://xapi8.fantom.network/api',
+                // for subscriptions
+                ws: '',
+            },
+            {
+                http: 'https://xapi9.fantom.network/api',
+                // for subscriptions
+                ws: '',
+            },
         ],
         // index into providers array of default provider or 'random' - takes index randomly
         defaultProviderIndex: "random"
