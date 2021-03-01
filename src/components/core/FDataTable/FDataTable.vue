@@ -490,6 +490,8 @@ export default {
          * Fetch more data.
          */
         fetchMore(_visible) {
+            this.$emit('loader-visibility', _visible);
+
             if (_visible) {
                 this.$emit('fetch-more');
             }

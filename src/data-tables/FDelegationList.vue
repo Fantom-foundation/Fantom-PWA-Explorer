@@ -10,7 +10,7 @@
                 infinite-scroll
                 fixed-header
                 class="f-data-table-body-bg-color"
-                @fetch-more="fetchMore"
+                @loader-visibility="onLoaderVisibility"
             >
                 <template v-slot:column-address="{ value, item, column }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
@@ -53,7 +53,7 @@
             /** Number of items per page. */
             itemsPerPage: {
                 type: Number,
-                default: 40
+                default: 3
             }
         },
 
@@ -108,6 +108,10 @@
                             for (let i = 0, len1 = edges.length; i < len1; i++) {
                                 this.dItems.push(edges[i]);
                             }
+
+                            if (this.loaderVisible) {
+                                this.fetchMore();
+                            }
                         }
 
                         this.$emit('records-count', formatHexToInt(data.totalCount));
@@ -124,6 +128,7 @@
                 dItems: [],
                 dHasNext: false,
                 dBlockListError: '',
+                loaderVisible: false,
                 dColumns: [
                     {
                         name: 'address',
@@ -194,6 +199,14 @@
                             return fetchMoreResult;
                         }
                     });
+                }
+            },
+
+            onLoaderVisibility(_visible) {
+                this.loaderVisible = _visible;
+
+                if (this.loaderVisible && !this.cLoading) {
+                    this.fetchMore();
                 }
             },
 
