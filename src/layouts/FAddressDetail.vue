@@ -470,8 +470,8 @@
                 const { $defi } = this;
                 const result = await Promise.all([
                     $defi.fetchFMintAccount(this.id),
-                    // $defi.fetchTokens(this.id),
-                    $defi.fetchERC20Tokens(),
+                    $defi.fetchERC20Assets(this.id),
+                    // $defi.fetchERC20Tokens(),
                     $defi.init(),
                 ]);
 

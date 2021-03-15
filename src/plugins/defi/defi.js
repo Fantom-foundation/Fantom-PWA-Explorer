@@ -799,6 +799,36 @@ export class DeFi {
     }
 
     /**
+     * @param {string} [_ownerAddress]
+     * @return {Promise<ERC20Token[]>}
+     */
+    async fetchERC20Assets(_ownerAddress) {
+        const query = {
+            query: gql`
+                query Erc20Assets($owner: Address!) {
+                    erc20Assets(owner: $owner) {
+                        address
+                        name
+                        symbol
+                        decimals
+                        totalSupply
+                        logoURL
+                        balanceOf(owner: $owner)
+                    }
+                }
+            `,
+            variables: {
+                owner: _ownerAddress,
+            },
+            // fetchPolicy: 'network-only',
+        };
+        // const data = await this.apolloClient.query(query);
+        const data = await fFetch.fetchGQLQuery(query, 'erc20Assets');
+
+        return data ? data.data.erc20Assets : [] || [];
+    }
+
+    /**
      * @param {string|array} [_symbol]
      * @return {Promise<number[]>}
      */
