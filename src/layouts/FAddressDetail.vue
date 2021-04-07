@@ -1,162 +1,160 @@
 <template>
     <div class="f-address-detail">
-        <template v-if="!dAccountByAddressError">
-            <div class="row f-data-layout equal-height no-vert-col-padding collapse-md">
-                <div class="col col-6-lg margin-bottom-menu">
-                    <f-card>
-                        <h2>{{ $t('view_address_detail.balance') }}</h2>
+        <template v-if="dAccountByAddressError">
+            <div class="query-error">{{ dAccountByAddressError }}</div>
+        </template>
+        <div class="row f-data-layout equal-height no-vert-col-padding collapse-md">
+            <div class="col col-6-lg margin-bottom-menu">
+                <f-card>
+                    <h2>{{ $t('view_address_detail.balance') }}</h2>
 
-                        <div class="balance center-v">
-                            <h3 class="h1"><span v-show="cAccount">{{ toFTM(cAccount ? cAccount.totalValue : 1) }} <span class="ftm">FTM</span></span></h3>
-                            <div v-show="cAccount" class="usd">${{ toUSD(cAccount ? cAccount.totalValue : 1) }}</div>
-                        </div>
-                    </f-card>
-                </div>
-                <div class="col col-6-lg margin-bottom-menu">
-                    <f-card>
-                        <h2>{{ $t('view_address_detail.available') }}</h2>
-
-                        <div class="balance center-v">
-                            <h3 class="h1"><span v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} <span class="ftm">FTM</span></span></h3>
-                            <div v-show="'available' in cAssets" class="usd">${{ toUSD(cAssets.available) }}</div>
-                        </div>
-                    </f-card>
-                </div>
-                <div class="col">
-                    <f-card>
-                        <h2>{{ $t('view_address_detail.staking') }}</h2>
-
-                        <!--
-                                                <div class="row no-collapse">
-                                                    <div class="col f-row-label">{{ $t('view_address_detail.available') }}</div>
-                                                    <div class="col">
-                                                        <div v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} FTM</div>
-                                                    </div>
-                                                </div>
-                        -->
-                        <div class="row no-collapse">
-                            <div class="col f-row-label">{{ $t('view_address_detail.delegated') }}</div>
-                            <div class="col">
-                                <div v-show="'delegated' in cAssets">{{ toFTM(cAssets.delegated, true) }} FTM</div>
-                            </div>
-                        </div>
-                        <div class="row no-collapse">
-                            <div class="col f-row-label">{{ $t('view_address_detail.pending_rewards') }}</div>
-                            <div class="col">
-                                <div v-show="'pending_rewards' in cAssets">{{ toFTM(cAssets.pending_rewards, true) }} FTM</div>
-                            </div>
-                        </div>
-                        <div class="row no-collapse">
-                            <div class="col f-row-label">{{ $t('view_address_detail.stashed_rewards') }}</div>
-                            <div class="col">
-                                <div v-show="'stashed' in cAssets">{{ toFTM(cAssets.stashed) }} FTM</div>
-                            </div>
-                        </div>
-                        <div class="row no-collapse">
-                            <div class="col f-row-label">{{ $t('view_address_detail.claimed_rewards') }}</div>
-                            <div class="col">
-                                <div v-show="'claimed_rewards' in cAssets">
-                                    -
-                                    <!--{{ toFTM(cAssets.claimed_rewards, true) }} FTM-->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row no-collapse">
-                            <div class="col f-row-label">{{ $t('validators') }}</div>
-                            <div class="col">
-                                <template v-if="validators && validators.length">
-                                    <div v-for="validator in validators" :key="validator.id">
-                                        <router-link v-if="validator.stakerAddress" :to="{ name: 'validator-detail', params: {address: validator.stakerAddress} }">
-                                            {{ validator ? validator.name : '' }}
-                                        </router-link>
-                                        <span v-else>{{ validator ? validator.name : '' }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>-</template>
-                            </div>
-                        </div>
-                    </f-card>
-                </div>
+                    <div class="balance center-v">
+                        <h3 class="h1"><span v-show="cAccount">{{ toFTM(cAccount ? cAccount.totalValue : 1) }} <span class="ftm">FTM</span></span></h3>
+                        <div v-show="cAccount" class="usd">${{ toUSD(cAccount ? cAccount.totalValue : 1) }}</div>
+                    </div>
+                </f-card>
             </div>
+            <div class="col col-6-lg margin-bottom-menu">
+                <f-card>
+                    <h2>{{ $t('view_address_detail.available') }}</h2>
 
-            <!--
-                        <br><br>
-                        <f-card>
-                            <h2 class="break-word">{{ id }}</h2>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="num-block">
-                                        <h2 class="h3">{{ $t('view_address_detail.value_in_ftm') }}</h2>
-                                        <div class="num"><span v-show="cAccount">{{ toFTM(cAccount ? cAccount.totalValue : 1) }}</span></div>
-                                    </div>
+                    <div class="balance center-v">
+                        <h3 class="h1"><span v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} <span class="ftm">FTM</span></span></h3>
+                        <div v-show="'available' in cAssets" class="usd">${{ toUSD(cAssets.available) }}</div>
+                    </div>
+                </f-card>
+            </div>
+            <div class="col">
+                <f-card>
+                    <h2>{{ $t('view_address_detail.staking') }}</h2>
+
+                    <!--
+                                            <div class="row no-collapse">
+                                                <div class="col f-row-label">{{ $t('view_address_detail.available') }}</div>
+                                                <div class="col">
+                                                    <div v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} FTM</div>
+                                                </div>
+                                            </div>
+                    -->
+                    <div class="row no-collapse">
+                        <div class="col f-row-label">{{ $t('view_address_detail.delegated') }}</div>
+                        <div class="col">
+                            <div v-show="'delegated' in cAssets">{{ toFTM(cAssets.delegated, true) }} FTM</div>
+                        </div>
+                    </div>
+                    <div class="row no-collapse">
+                        <div class="col f-row-label">{{ $t('view_address_detail.pending_rewards') }}</div>
+                        <div class="col">
+                            <div v-show="'pending_rewards' in cAssets">{{ toFTM(cAssets.pending_rewards, true) }} FTM</div>
+                        </div>
+                    </div>
+                    <div class="row no-collapse">
+                        <div class="col f-row-label">{{ $t('view_address_detail.stashed_rewards') }}</div>
+                        <div class="col">
+                            <div v-show="'stashed' in cAssets">{{ toFTM(cAssets.stashed) }} FTM</div>
+                        </div>
+                    </div>
+                    <div class="row no-collapse">
+                        <div class="col f-row-label">{{ $t('view_address_detail.claimed_rewards') }}</div>
+                        <div class="col">
+                            <div v-show="'claimed_rewards' in cAssets">
+                                -
+                                <!--{{ toFTM(cAssets.claimed_rewards, true) }} FTM-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-collapse">
+                        <div class="col f-row-label">{{ $t('validators') }}</div>
+                        <div class="col">
+                            <template v-if="validators && validators.length">
+                                <div v-for="validator in validators" :key="validator.id">
+                                    <router-link v-if="validator.stakerAddress" :to="{ name: 'validator-detail', params: {address: validator.stakerAddress} }">
+                                        {{ validator ? validator.name : '' }}
+                                    </router-link>
+                                    <span v-else>{{ validator ? validator.name : '' }}</span>
                                 </div>
-                                <div class="col">
-                                    <div class="num-block">
-                                        <h2 class="h3">{{ $t('view_address_detail.value_in_usd') }}</h2>
-                                        <div class="num"><span v-show="cAccount">{{ toUSD(cAccount ? cAccount.totalValue : 1) }}</span></div>
-                                    </div>
+                            </template>
+                            <template v-else>-</template>
+                        </div>
+                    </div>
+                </f-card>
+            </div>
+        </div>
+
+        <!--
+                    <br><br>
+                    <f-card>
+                        <h2 class="break-word">{{ id }}</h2>
+                        <div class="row">
+                            <div class="col">
+                                <div class="num-block">
+                                    <h2 class="h3">{{ $t('view_address_detail.value_in_ftm') }}</h2>
+                                    <div class="num"><span v-show="cAccount">{{ toFTM(cAccount ? cAccount.totalValue : 1) }}</span></div>
                                 </div>
                             </div>
-                        </f-card>
-            -->
-
-            <!--
-                        <div class="f-subsection">
-                            <h2 class="h1">{{ $t('view_address_detail.assets') }} <span v-if="cAssetItems.length" class="f-records-count">({{ cAssetItems.length }})</span></h2>
-
-                            <f-data-table
-                                :columns="dAssetColumns"
-                                :items="cAssetItems"
-                                fixed-header
-                            >
-                            </f-data-table>
+                            <div class="col">
+                                <div class="num-block">
+                                    <h2 class="h3">{{ $t('view_address_detail.value_in_usd') }}</h2>
+                                    <div class="num"><span v-show="cAccount">{{ toUSD(cAccount ? cAccount.totalValue : 1) }}</span></div>
+                                </div>
+                            </div>
                         </div>
-            -->
+                    </f-card>
+        -->
 
-            <div class="f-subsection">
-                <f-tabs>
-                    <template #transactions>
-                        <h2>
-                            {{ $t('view_address_detail.transactions') }}
-                            <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span>
-                        </h2>
-                    </template>
-                    <template #assets>
-                        <h2>
-                            {{ $t('view_address_detail.assets') }}
-                            <span class="f-records-count">({{ assetsRecordsCount }})</span>
-                        </h2>
-                    </template>
-                    <template #delegations>
-                        <h2>
-                            {{ $t('view_address_detail.delegations') }}
-                            <span class="f-records-count">({{ delegationsRecordsCount }})</span>
-                        </h2>
-                    </template>
+        <!--
+                    <div class="f-subsection">
+                        <h2 class="h1">{{ $t('view_address_detail.assets') }} <span v-if="cAssetItems.length" class="f-records-count">({{ cAssetItems.length }})</span></h2>
 
-                    <f-tab title-slot="transactions">
-                        <f-transaction-list
-                            :items="cTransactionItems"
-                            :loading="cLoading"
-                            :address-col="id"
-                            @fetch-more="onFetchMore"
-                        ></f-transaction-list>
-                    </f-tab>
-                    <f-tab title-slot="assets">
-                        <address-asset-list :tokens="tokens" :f-mint-account="fMintAccount" @records-count="onAssetsRecordsCount" />
-                    </f-tab>
-                    <f-tab title-slot="delegations">
-                        <address-delegation-list v-if="this.loadDelegations" :account-address="id" @records-count="onDelegationsRecordsCount" />
-                    </f-tab>
-                </f-tabs>
+                        <f-data-table
+                            :columns="dAssetColumns"
+                            :items="cAssetItems"
+                            fixed-header
+                        >
+                        </f-data-table>
+                    </div>
+        -->
+
+        <div class="f-subsection">
+            <f-tabs>
+                <template #transactions>
+                    <h2>
+                        {{ $t('view_address_detail.transactions') }}
+                        <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span>
+                    </h2>
+                </template>
+                <template #assets>
+                    <h2>
+                        {{ $t('view_address_detail.assets') }}
+                        <span class="f-records-count">({{ assetsRecordsCount }})</span>
+                    </h2>
+                </template>
+                <template #delegations>
+                    <h2>
+                        {{ $t('view_address_detail.delegations') }}
+                        <span class="f-records-count">({{ delegationsRecordsCount }})</span>
+                    </h2>
+                </template>
+
+                <f-tab title-slot="transactions">
+                    <f-transaction-list
+                        :items="cTransactionItems"
+                        :loading="cLoading"
+                        :address-col="id"
+                        @fetch-more="onFetchMore"
+                    ></f-transaction-list>
+                </f-tab>
+                <f-tab title-slot="assets">
+                    <address-asset-list :tokens="tokens" :f-mint-account="fMintAccount" @records-count="onAssetsRecordsCount" />
+                </f-tab>
+                <f-tab title-slot="delegations">
+                    <address-delegation-list v-if="this.loadDelegations" :account-address="id" @records-count="onDelegationsRecordsCount" />
+                </f-tab>
+            </f-tabs>
 
 <!--                <h2 class="h1">{{ $t('view_block_detail.block_transactions') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>-->
 
-            </div>
-        </template>
-        <template v-else>
-            <div class="query-error">{{ dAccountByAddressError }}</div>
-        </template>
+        </div>
     </div>
 </template>
 
@@ -221,7 +219,6 @@
                             }
                             balance
                             totalValue
-                            stashed
                             txCount
                             txList(cursor: $cursor, count: $count) {
                                 pageInfo {
@@ -261,8 +258,6 @@
                                         claimedReward
                                         pendingRewards {
                                             amount
-                                            fromEpoch
-                                            toEpoch
                                         }
                                     }
                                     cursor
@@ -377,7 +372,7 @@
                     const { delegations } = cAccount;
 
                     assets.available = cAccount.balance;
-                    assets.stashed = cAccount.stashed || 0;
+                    // assets.stashed = cAccount.stashed || 0;
 
                     assets.delegated = 0;
                     assets.pending_rewards = 0;
