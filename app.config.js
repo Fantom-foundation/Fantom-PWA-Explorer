@@ -14,13 +14,13 @@ const appConfig = {
                 http: 'https://xapi3.fantom.network/api',
                 // for subscriptions
                 ws: '',
-            },*/
+            },
             {
                 http: 'https://xapi4.fantom.network/api',
                 // for subscriptions
                 ws: '',
             },
-            /*{
+            {
                 http: 'https://xapi5.fantom.network/api',
                 // for subscriptions
                 ws: '',
