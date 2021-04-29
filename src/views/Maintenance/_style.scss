@@ -1,0 +1,25 @@
+@import "../../assets/scss/vars";
+
+.view-not-found {
+    --view-not-found-background-color: #fff;
+
+    .message {
+        width: 90%;
+        max-width: 600px;
+        padding: 24px 32px;
+        border-radius: 8px;
+        background-color: var(--view-not-found-background-color);
+        margin: 32px auto 0 auto;
+
+        h1 {
+            font-weight: bold;
+            margin-top: 0;
+            /*margin: 0;*/
+        }
+
+        .router-link {
+            display: block;
+            margin-top: 16px;
+        }
+    }
+}

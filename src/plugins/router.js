@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from "vue-router";
-import { routes } from "../routes.js";
+// import { routes } from "../routes.js";
+import { routes } from '../routes-maintenance.js';
 const appConfig = require('../../app.config.js');
 
 Vue.use(VueRouter);
