@@ -50,7 +50,7 @@ const appConfig = {
         defaultProviderIndex: "random"
     },
     //
-    useTestnet: true,
+    useTestnet: false,
     // use 'hash' mode in vue router
     routerHashMode: false,
     // testnet config
