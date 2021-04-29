@@ -4,7 +4,10 @@
             <div class="query-error">{{ dAccountByAddressError }}</div>
         </template>
         <div class="row f-data-layout equal-height no-vert-col-padding collapse-md">
-            <div class="col col-6-lg margin-bottom-menu">
+            <f-card style="margin: 32px auto 0 auto; margin-bottom: 0;">
+                <h1 class="h2" style="margin-bottom: 0;">Scheduled network upgrade in progress.</h1>
+            </f-card>
+<!--            <div class="col col-6-lg margin-bottom-menu">
                 <f-card>
                     <h2>{{ $t('view_address_detail.balance') }}</h2>
 
@@ -28,14 +31,14 @@
                 <f-card>
                     <h2>{{ $t('view_address_detail.staking') }}</h2>
 
-                    <!--
+                    &lt;!&ndash;
                                             <div class="row no-collapse">
                                                 <div class="col f-row-label">{{ $t('view_address_detail.available') }}</div>
                                                 <div class="col">
                                                     <div v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} FTM</div>
                                                 </div>
                                             </div>
-                    -->
+                    &ndash;&gt;
                     <div class="row no-collapse">
                         <div class="col f-row-label">{{ $t('view_address_detail.delegated') }}</div>
                         <div class="col">
@@ -59,7 +62,7 @@
                         <div class="col">
                             <div v-show="'claimed_rewards' in cAssets">
                                 -
-                                <!--{{ toFTM(cAssets.claimed_rewards, true) }} FTM-->
+                                &lt;!&ndash;{{ toFTM(cAssets.claimed_rewards, true) }} FTM&ndash;&gt;
                             </div>
                         </div>
                     </div>
@@ -78,7 +81,7 @@
                         </div>
                     </div>
                 </f-card>
-            </div>
+            </div>-->
         </div>
 
         <!--
