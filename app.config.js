@@ -10,11 +10,11 @@ const appConfig = {
     apollo: {
         // list of providers. if one of them is unavailable, another is randomly picked
         providers: [
-            {
+            /*{
                 http: 'https://xapi3.fantom.network/api',
                 // for subscriptions
                 ws: '',
-            },
+            },*/
             {
                 http: 'https://xapi4.fantom.network/api',
                 // for subscriptions
