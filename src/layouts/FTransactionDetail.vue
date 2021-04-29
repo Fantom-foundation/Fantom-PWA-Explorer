@@ -114,7 +114,7 @@
         apollo: {
             transaction: {
                 query: gql`
-                    query TransactionByHash($hash: Hash!) {
+                    query TransactionByHash($hash: Bytes32!) {
                         transaction (hash: $hash) {
                             hash
                             index

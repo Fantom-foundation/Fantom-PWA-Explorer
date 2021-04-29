@@ -53,15 +53,6 @@
                 </div>
 
                 <div class="row no-collapse">
-                    <div class="col-4 f-row-label">{{ $t('view_validator_detail.validating_power') }}</div>
-                    <div class="col">
-                        <div v-show="'validationScore' in cStaker">
-                            {{ formatNumberByLocale(numToFixed(formatHexToInt(cStaker.validationScore) / 10000000, 0)) }}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_validator_detail.amount_staked') }}</div>
                     <div class="col">
                         <div v-show="'stake' in cStaker">
@@ -201,7 +192,6 @@
                             delegatedMe
                             createdEpoch
                             createdTime
-                            validationScore
                             downtime
                             lockedUntil
                             isActive

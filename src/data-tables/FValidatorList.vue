@@ -129,7 +129,6 @@
                             stake
                             totalStake
                             delegatedMe
-                            poi
                             downtime
                             stakerInfo {
                                 name

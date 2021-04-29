@@ -60,7 +60,7 @@
         apollo: {
             delegationsOf: {
                 query: gql`
-                    query DelegationList($staker: Long!, $cursor: Cursor, $count: Int!) {
+                    query DelegationList($staker: BigInt!, $cursor: Cursor, $count: Int!) {
                         delegationsOf(staker: $staker, cursor: $cursor, count: $count) {
                             totalCount
                             pageInfo {
@@ -74,7 +74,6 @@
                                 delegation {
                                     address
                                     amount
-                                    createdEpoch
                                     createdTime
                                 }
                             }
@@ -140,12 +139,6 @@
                         label: this.$t('delegation_list_dt.created_on'),
                         itemProp: 'delegation.createdTime',
                         formatter: _value => formatDate(timestampToDate(formatHexToInt(_value) / 1000000000))
-                    },
-                    {
-                        name: 'createdEpoch',
-                        label: this.$t('delegation_list_dt.created_epoch'),
-                        itemProp: 'delegation.createdEpoch',
-                        formatter: formatHexToInt
                     },
                     {
                         name: 'amount',
