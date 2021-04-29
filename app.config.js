@@ -30,12 +30,12 @@ const appConfig = {
                 // for subscriptions
                 ws: '',
             },
-            /*{
+            {
                 http: 'https://xapi7.fantom.network/api',
                 // for subscriptions
                 ws: '',
             },
-            {
+            /*{
                 http: 'https://xapi8.fantom.network/api',
                 // for subscriptions
                 ws: '',
