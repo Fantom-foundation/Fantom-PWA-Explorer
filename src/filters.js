@@ -70,6 +70,18 @@ export function timestampToDate(_timestamp) {
 }
 
 /**
+ * @param {Date} _date
+ * @returns {null|Date}
+ */
+function dateToUTCDate(_date) {
+    if (_date instanceof Date) {
+        return new Date(_date.getTime() - _date.getTimezoneOffset() * 60000);
+    }
+
+    return null;
+}
+
+/**
  * @param {string|Date} _value
  * @param {boolean} [_notWeekday]
  * @param {boolean} [_notTime]
@@ -81,6 +93,7 @@ export function formatDate(_value, _notWeekday, _notTime) {
     }
 
     const date = (_value instanceof Date ? _value : new Date(_value));
+    const utcDate = dateToUTCDate(date);
     const options = {
         year: 'numeric',
         month: 'short',
@@ -101,7 +114,9 @@ export function formatDate(_value, _notWeekday, _notTime) {
     }
 
     // TODO: use i18n current locale
-    return date.toLocaleDateString('en-US', options);
+    return utcDate !== null && utcDate.getTime() === 0
+        ? '-'
+        : date.toLocaleDateString('en-US', options);
 }
 
 /**
