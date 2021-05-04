@@ -101,7 +101,17 @@
             <f-validator-list
                 @records-count="onRecordsCount"
                 @validator-list-totals="onValidatorListTotals"
+                @validator-list-offline="onValidatorListOffline"
                 @validator-list-flagged="onValidatorListFlagged"
+            >
+            </f-validator-list>
+        </div>
+
+        <div class="f-subsection" v-if="dOfflineItems.length">
+            <h2 class="h1">{{ $t('view_validator_list.offline') }} <span class="f-records-count">({{ dOfflineItems.length }})</span></h2>
+
+            <f-validator-list
+                :items="dOfflineItems"
             >
             </f-validator-list>
         </div>
@@ -199,6 +209,7 @@
         data() {
             return {
                 dItems: [],
+                dOfflineItems: [],
                 dFlaggedItems: [],
                 dValidatorsInfoError: '',
                 dTotals: {},
@@ -274,6 +285,10 @@
                     fTotalDelegated: formatNumberByLocale(numToFixed(_totals.totalDelegated, 2)),
                     fTotalStaked: formatNumberByLocale(numToFixed(_totals.totalStaked, 2))
                 };
+            },
+
+            onValidatorListOffline(_offline) {
+                this.dOfflineItems = _offline;
             },
 
             onValidatorListFlagged(_flagged) {

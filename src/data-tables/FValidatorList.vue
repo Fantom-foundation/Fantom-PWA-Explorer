@@ -146,6 +146,7 @@
                         totalStaked: 0
                     };
                     let data;
+                    const offline = [];
                     const flagged = [];
                     const tUnknown = this.$t('view_validator_list.unknown');
 
@@ -166,10 +167,22 @@
                                 _item.stakerInfo.name = tUnknown;
                             }
 
+                            if (_item.isOffline) {
+                                offline.push(_idx);
+                            }
+
                             if (_item.isCheater) {
                                 flagged.push(_idx);
                             }
                         });
+
+                        if (offline.length > 0) {
+                            for (let i = offline.length - 1; i >= 0; i--) {
+                                offline[i] = data.splice(offline[i], 1)[0];
+                            }
+
+                            this.$emit('validator-list-offline', offline);
+                        }
 
                         if (flagged.length > 0) {
                             for (let i = flagged.length - 1; i >= 0; i--) {
