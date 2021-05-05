@@ -37,6 +37,7 @@
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
     import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed, formatDate} from "../filters.js";
+    import {cloneObject} from "@/utils";
 
     export default {
         components: {
@@ -53,7 +54,7 @@
             /** Number of items per page. */
             itemsPerPage: {
                 type: Number,
-                default: 3
+                default: 20
             }
         },
 
@@ -97,7 +98,7 @@
                     if (_key === 'delegationsOf') {
                         data = _data.data.delegationsOf;
 
-                        const edges = data.edges;
+                        const edges = cloneObject(data.edges);
 
                         this.dHasNext = data.pageInfo.hasNext;
 
@@ -138,7 +139,7 @@
                         name: 'createdTime',
                         label: this.$t('delegation_list_dt.created_on'),
                         itemProp: 'delegation.createdTime',
-                        formatter: _value => formatDate(timestampToDate(formatHexToInt(_value) / 1000000000))
+                        formatter: _value => formatDate(timestampToDate(formatHexToInt(_value)))
                     },
                     {
                         name: 'amount',

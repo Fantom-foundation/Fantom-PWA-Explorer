@@ -47,7 +47,7 @@
                     <div class="col-4 f-row-label">{{ $t('view_validator_detail.start_time') }}</div>
                     <div class="col">
                         <div v-show="'createdTime' in cStaker">
-                            {{ formatDate(timestampToDate(formatHexToInt(cStaker.createdTime) / 1000000000)) }}
+                            {{ formatDate(timestampToDate(formatHexToInt(cStaker.createdTime))) }}
                         </div>
                     </div>
                 </div>
