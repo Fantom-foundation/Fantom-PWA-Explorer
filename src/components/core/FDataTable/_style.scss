@@ -223,7 +223,8 @@
 
     &.height-set {
         .table-container {
-            overflow: auto;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
     }
 

@@ -38,6 +38,26 @@
                 </router-link>
             </div>
         </div>
+        <div class="row row-2-cols-lg equal-height">
+            <div class="col">
+                <f-card class="half-padding">
+                    <h2 class="h3">Latest Blocks</h2>
+                    <f-block-list f-card-off :mobile-view="true" :hidden-columns="['time', 'fee']" :infinite-scroll="false" height="300px" :items-per-page="10" class="home-table" />
+                    <router-link :to="{name: 'blocks'}" class="btn small secondary" style="width: 100%;">
+                        View all blocks
+                    </router-link>
+                </f-card>
+            </div>
+            <div class="col">
+                <f-card class="half-padding">
+                    <h2 class="h3">Latest Transactions</h2>
+                    <f-transaction-list f-card-off :mobile-view="true" :hidden-columns="['gasUsed']" :infinite-scroll="false" height="300px" :items-per-page="10" class="home-table" />
+                    <router-link :to="{name: 'transactions'}" class="btn small secondary" style="width: 100%;">
+                        View all transactions
+                    </router-link>
+                </f-card>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -45,9 +65,13 @@
     import FCard from "../components/core/FCard/FCard.vue";
     import FSearchBox from "../components/FSearchBox.vue";
     import gql from 'graphql-tag';
+    import FBlockList from "@/data-tables/FBlockList.vue";
+    import FTransactionList from "@/data-tables/FTransactionList.vue";
 
     export default {
         components: {
+            FTransactionList,
+            FBlockList,
             FCard,
             FSearchBox
         },
@@ -97,10 +121,13 @@
     .view-home {
         .f-search-box {
             width: 100%;
-            padding: 64px 0;
+            padding: 32px 0 64px 0;
+            //padding: 64px 0;
         }
 
         .home-block {
+            min-height: 195px;
+
             h2 {
                 text-align: center;
                 margin-top: 16px;
@@ -112,6 +139,11 @@
                 font-weight: bold;
                 font-size: $fs48;
             }
+        }
+
+        .home-table {
+            margin-bottom: 16px;
+            height: 300px;
         }
     }
 

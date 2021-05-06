@@ -12,6 +12,7 @@
                 first-m-v-column-width="5"
                 infinite-scroll
                 fixed-header
+                v-bind="{...$attrs, ...$props}"
                 class="f-data-table-body-bg-color"
                 @fetch-more="onFetchMore"
             >
@@ -159,6 +160,11 @@
         },
 
         props: {
+            mobileView: {
+                type: Boolean,
+                default: false
+            },
+
             /** No pagination, no 'transaction.' prefix on columns. */
             withoutCursor: {
                 type: Boolean,
@@ -400,7 +406,7 @@
             cMobileView() {
                 const dataTableBreakpoint = this.$store.state.breakpoints['transaction-list-dt-mobile-view'];
 
-                return (dataTableBreakpoint && dataTableBreakpoint.matches);
+                return (dataTableBreakpoint && dataTableBreakpoint.matches) || this.mobileView;
             },
 
             cLoading() {

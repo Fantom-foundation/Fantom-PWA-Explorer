@@ -8,6 +8,7 @@
                 :loading="cLoading"
                 infinite-scroll
                 fixed-header
+                v-bind="{...$attrs, ...$props}"
                 class="f-data-table-body-bg-color"
                 @fetch-more="fetchMore"
             >
@@ -49,6 +50,7 @@
     import gql from 'graphql-tag';
     import { WEIToFTM } from "../utils/transactions.js";
     import {timestampToDate, formatDate, formatHexToInt} from "../filters.js";
+    import {cloneObject} from "@/utils";
 
     export default {
         components: {
@@ -56,6 +58,9 @@
         },
 
         props: {
+            hiddenColumns: {
+                ...FDataTable.props.hiddenColumns,
+            },
             /** Number of items per page. */
             itemsPerPage: {
                 type: Number,
@@ -102,7 +107,7 @@
                         // console.log('???');
                         data = _data.data.blocks;
 
-                        const edges = data.edges;
+                        const edges = cloneObject(data.edges);
 
                         this.dHasNext = data.pageInfo.hasNext;
 
