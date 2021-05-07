@@ -146,7 +146,7 @@
                 () => {
                     this.updateChainState();
                 },
-                6000
+                4300
             );
 
             this.volumeSeries = [
@@ -164,7 +164,7 @@
                 },
                 {
                     time: '2021-04-13',
-                    value: 16000,
+                    value: 14300,
                 },
                 {
                     time: '2021-04-14',
