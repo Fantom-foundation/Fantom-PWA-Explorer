@@ -77,6 +77,10 @@
             --f-placeholder-on-gradient-color1: var(--f-card-background-color);
         }
     }
+
+    .f-lightweight-chart {
+        --f-lightweight-chart-chart-text-color: #8997b1;
+    }
 }
 
 @include media-max($bp-menu) {

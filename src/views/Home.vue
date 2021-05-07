@@ -58,6 +58,23 @@
                 </f-card>
             </div>
         </div>
+<!--        <div class="row row-2-cols-lg equal-height">
+            <div class="col">
+                <f-card class="half-padding">
+                    <h2 class="h3">Transaction Volumes</h2>
+                    <f-lightweight-charts
+                        ref="chart"
+                        :series="volumeSeries"
+                        series-type="histogram"
+                        :series-options="{ priceFormat: { type: 'volume' } }"
+                        __transform-values="to-eth"
+                        time-to-timestamp
+                        :height="280"
+                        :options="{handleScroll: true,handleScale: true }"
+                    />
+                </f-card>
+            </div>
+        </div>-->
     </div>
 </template>
 
@@ -97,6 +114,12 @@
             },
         },
 
+        data() {
+            return {
+                volumeSeries: [],
+            }
+        },
+
         computed: {
             cBlocksCount() {
                 return (this.state ? this.state.blocks : 0);
@@ -113,6 +136,48 @@
             cTransactionsCount() {
                 return (this.state ? this.state.transactions : 0);
             }
+        },
+
+        mounted() {
+            this.volumeSeries = [
+                {
+                    time: '2021-04-10',
+                    value: 10000,
+                },
+                {
+                    time: '2021-04-11',
+                    value: 20000,
+                },
+                {
+                    time: '2021-04-12',
+                    value: 10500,
+                },
+                {
+                    time: '2021-04-13',
+                    value: 16000,
+                },
+                {
+                    time: '2021-04-14',
+                    value: 1000,
+                },
+                {
+                    time: '2021-04-15',
+                    value: 10000,
+                },
+                {
+                    time: '2021-04-16',
+                    value: 10000,
+                },
+                {
+                    time: '2021-04-17',
+                    value: 10000,
+                },
+            ];
+
+/*            setInterval(() => {
+                this.volumeSeries[this.volumeSeries.length - 1].value += 100;
+                this.$refs.chart._series.series.update({time: '2021-04-17', value: this.volumeSeries[this.volumeSeries.length - 1].value});
+            }, 500);*/
         }
     }
 </script>
