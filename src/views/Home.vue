@@ -42,7 +42,7 @@
             <div class="col">
                 <f-card class="half-padding">
                     <h2 class="h3">Latest Blocks</h2>
-                    <f-block-list f-card-off :mobile-view="true" :hidden-columns="['time', 'fee']" :infinite-scroll="false" height="300px" :items-per-page="10" class="home-table" />
+                    <home-block-list :items="blocksData" :hidden-columns="['time', 'fee']" :items-per-page="10" class="home-table" />
                     <router-link :to="{name: 'blocks'}" class="btn small secondary" style="width: 100%;">
                         View all blocks
                     </router-link>
@@ -51,7 +51,7 @@
             <div class="col">
                 <f-card class="half-padding">
                     <h2 class="h3">Latest Transactions</h2>
-                    <f-transaction-list f-card-off :mobile-view="true" :hidden-columns="['gasUsed']" :infinite-scroll="false" height="300px" :items-per-page="10" class="home-table" />
+                    <home-transaction-list :items="blocksData" :hidden-columns="['gasUsed']" :items-per-page="5" class="home-table" />
                     <router-link :to="{name: 'transactions'}" class="btn small secondary" style="width: 100%;">
                         View all transactions
                     </router-link>
@@ -82,13 +82,13 @@
     import FCard from "../components/core/FCard/FCard.vue";
     import FSearchBox from "../components/FSearchBox.vue";
     import gql from 'graphql-tag';
-    import FBlockList from "@/data-tables/FBlockList.vue";
-    import FTransactionList from "@/data-tables/FTransactionList.vue";
+    import HomeBlockList from "@/data-tables/HomeBlockList.vue";
+    import HomeTransactionList from "@/data-tables/HomeTransactionList.vue";
 
     export default {
         components: {
-            FTransactionList,
-            FBlockList,
+            HomeTransactionList,
+            HomeBlockList,
             FCard,
             FSearchBox
         },
@@ -116,6 +116,7 @@
 
         data() {
             return {
+                blocksData: [],
                 volumeSeries: [],
             }
         },
