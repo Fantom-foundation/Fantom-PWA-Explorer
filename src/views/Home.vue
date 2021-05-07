@@ -11,7 +11,13 @@
                 <router-link :to="{name: 'blocks'}" class="no-effect">
                     <f-card class="home-block" hover>
                         <h2 class="h3">{{ $t('view_home.blocks') }} <icon data="@/assets/svg/angle-right.svg" color="#999"></icon></h2>
-                        <div class="num">{{ cBlocksCount | formatHexToInt }}</div>
+                        <div class="num">
+                            <animated-number
+                                :value="chainState.blocks | formatHexToInt"
+                                :formatValue="formatNum"
+                                :duration="numAnimationDuration"
+                            />
+                        </div>
                     </f-card>
                 </router-link>
             </div>
@@ -19,21 +25,39 @@
                 <router-link :to="{name: 'staking'}" class="no-effect">
                     <f-card class="home-block" hover>
                         <h2 class="h3">{{ $t('view_home.validators') }} <icon data="@/assets/svg/angle-right.svg" color="#999"></icon></h2>
-                        <div class="num">{{ cValidatorsCount | formatHexToInt }}</div>
+                        <div class="num">
+                            <animated-number
+                                :value="chainState.validators | formatHexToInt"
+                                :formatValue="formatNum"
+                                :duration="numAnimationDuration"
+                            />
+                        </div>
                     </f-card>
                 </router-link>
             </div>
             <div class="col">
                 <f-card class="home-block">
                     <h2 class="h3">{{ $t('view_home.accounts') }}</h2>
-                    <div class="num">{{ cAccountsCount | formatHexToInt }}</div>
+                    <div class="num">
+                        <animated-number
+                            :value="chainState.accounts | formatHexToInt"
+                            :formatValue="formatNum"
+                            :duration="numAnimationDuration"
+                        />
+                    </div>
                 </f-card>
             </div>
             <div class="col">
                 <router-link :to="{name: 'transactions'}" class="no-effect">
                     <f-card class="home-block" hover>
                         <h2 class="h3">{{ $t('view_home.transactions') }} <icon data="@/assets/svg/angle-right.svg" color="#999"></icon></h2>
-                        <div class="num">{{ cTransactionsCount | formatHexToInt }}</div>
+                        <div class="num">
+                            <animated-number
+                                :value="chainState.transactions | formatHexToInt"
+                                :formatValue="formatNum"
+                                :duration="numAnimationDuration"
+                            />
+                        </div>
                     </f-card>
                 </router-link>
             </div>
@@ -84,62 +108,47 @@
     import gql from 'graphql-tag';
     import HomeBlockList from "@/data-tables/HomeBlockList.vue";
     import HomeTransactionList from "@/data-tables/HomeTransactionList.vue";
+    import AnimatedNumber from "animated-number-vue";
+    import {pollingMixin} from "@/mixins/polling.js";
 
     export default {
+        mixins: [pollingMixin],
+
         components: {
             HomeTransactionList,
             HomeBlockList,
             FCard,
-            FSearchBox
-        },
-
-        apollo: {
-            state: {
-                query: gql`
-                    query State {
-                        state {
-                            blocks
-                            transactions
-                            accounts
-                            validators
-                            sfcLockingEnabled
-                            sealedEpoch {
-                                id
-                                totalSupply
-                                baseRewardPerSecond
-                            }
-                        }
-                    }
-                `
-            },
+            FSearchBox,
+            AnimatedNumber
         },
 
         data() {
             return {
                 blocksData: [],
                 volumeSeries: [],
+                numAnimationDuration: 750,
+                chainState: {
+                    blocks: 0,
+                    validators: 0,
+                    accounts: 0,
+                    transactions: 0,
+                },
             }
         },
 
-        computed: {
-            cBlocksCount() {
-                return (this.state ? this.state.blocks : 0);
-            },
-
-            cValidatorsCount() {
-                return (this.state ? this.state.validators : 0);
-            },
-
-            cAccountsCount() {
-                return (this.state ? this.state.accounts : 0);
-            },
-
-            cTransactionsCount() {
-                return (this.state ? this.state.transactions : 0);
-            }
+        created() {
+            this.updateChainState();
         },
 
         mounted() {
+            this._polling.start(
+                'update-blocks',
+                () => {
+                    this.updateChainState();
+                },
+                6000
+            );
+
             this.volumeSeries = [
                 {
                     time: '2021-04-10',
@@ -179,6 +188,44 @@
                 this.volumeSeries[this.volumeSeries.length - 1].value += 100;
                 this.$refs.chart._series.series.update({time: '2021-04-17', value: this.volumeSeries[this.volumeSeries.length - 1].value});
             }, 500);*/
+        },
+
+        methods: {
+            async updateChainState() {
+                this.chainState = {...await this.fetchState()};
+
+            },
+
+            /**
+             * @returns {Promise<Object>}
+             */
+            async fetchState() {
+                const data = await this.$apollo.query({
+                    query: gql`
+                        query State {
+                            state {
+                                blocks
+                                transactions
+                                accounts
+                                validators
+                                sfcLockingEnabled
+                                sealedEpoch {
+                                    id
+                                    totalSupply
+                                    baseRewardPerSecond
+                                }
+                            }
+                        }
+                    `,
+                    fetchPolicy: 'network-only',
+                });
+
+                return data.data.state || {};
+            },
+
+            formatNum(_num) {
+                return parseInt(_num);
+            }
         }
     }
 </script>

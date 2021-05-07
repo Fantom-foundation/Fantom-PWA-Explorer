@@ -237,7 +237,7 @@ export default {
             () => {
                 this.updateItems(true);
             },
-            6000
+            5000
         );
     },
 
