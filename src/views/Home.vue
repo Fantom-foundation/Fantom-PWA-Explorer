@@ -144,7 +144,9 @@
             this._polling.start(
                 'update-blocks',
                 () => {
-                    this.updateChainState();
+                    if (this.$store.state.pageVisible) {
+                        this.updateChainState();
+                    }
                 },
                 4300
             );
@@ -234,7 +236,7 @@
     .view-home {
         .f-search-box {
             width: 100%;
-            padding: 32px 0 64px 0;
+            padding: 8px 0 40px 0;
             //padding: 64px 0;
         }
 

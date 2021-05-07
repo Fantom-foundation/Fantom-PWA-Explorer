@@ -27,6 +27,7 @@ export const store = new Vuex.Store({
         tokenPrice: 0,
         gasPrice: 0,
         darkMode: true,
+        pageVisible: true,
     },
 
     mutations: {
@@ -60,6 +61,14 @@ export const store = new Vuex.Store({
          */
         setDarkMode(_state, _on) {
             _state.darkMode = _on;
+        },
+
+        /**
+         * @param {object} _state
+         * @param {boolean} _on
+         */
+        setPageVisible(_state, _visible) {
+            _state.pageVisible = _visible;
         }
     }
 });

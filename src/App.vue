@@ -88,6 +88,16 @@
             this.darkMode(this.$store.state.darkMode);
         },
 
+        mounted() {
+            document.addEventListener("visibilitychange", () => {
+                if (document.visibilityState === 'visible') {
+                    this.$store.commit('setPageVisible', true);
+                } else {
+                    this.$store.commit('setPageVisible', false);
+                }
+            });
+        },
+
         methods: {
             /**
              * @param {boolean} _on

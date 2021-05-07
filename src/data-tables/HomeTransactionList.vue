@@ -229,13 +229,16 @@ export default {
 
     created() {
         this.updateItems();
+        this._tmp = 0;
     },
 
     mounted() {
         this._polling.start(
             'update-blocks',
             () => {
-                this.updateItems(true);
+                if (this.$store.state.pageVisible) {
+                    this.updateItems(true);
+                }
             },
             3500
         );
