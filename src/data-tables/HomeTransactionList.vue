@@ -241,7 +241,7 @@ export default {
                     this.updateItems(true);
                 }
             },
-            2000
+            3300
         );
     },
 

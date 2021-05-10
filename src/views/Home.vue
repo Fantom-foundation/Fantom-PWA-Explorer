@@ -250,7 +250,7 @@
             .num {
                 text-align: center;
                 font-weight: bold;
-                font-size: $fs48;
+                font-size: 40px;
             }
         }
 
@@ -271,12 +271,14 @@
     @include media-max($bp-small) {
         .view-home {
             .home-block {
+                min-height: 136px;
+
                 h2 {
                     font-size: $fs16;
                 }
 
                 .num {
-                    font-size: $fs36;
+                    font-size: 28px;
                 }
             }
         }
