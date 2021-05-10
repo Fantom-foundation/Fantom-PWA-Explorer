@@ -62,7 +62,7 @@
                 </router-link>
             </div>
         </div>
-        <div class="row row-2-cols-lg equal-height">
+        <div class="row row-2-cols-lg equal-height mat-5">
             <div class="col">
                 <f-card class="half-padding">
                     <h2 class="h3">Latest Blocks</h2>
@@ -142,13 +142,13 @@
 
         mounted() {
             this._polling.start(
-                'update-blocks',
+                'update-net-state',
                 () => {
                     if (this.$store.state.pageVisible) {
                         this.updateChainState();
                     }
                 },
-                4300
+                3300
             );
 
             this.volumeSeries = [

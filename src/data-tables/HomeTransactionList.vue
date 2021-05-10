@@ -229,18 +229,19 @@ export default {
 
     created() {
         this.updateItems();
-        this._tmp = 0;
+        this._updatingTxs = false;
     },
 
     mounted() {
         this._polling.start(
-            'update-blocks',
+            'update-transactions',
             () => {
-                if (this.$store.state.pageVisible) {
+                if (this.$store.state.pageVisible && !this._updatingTxs) {
+                    this._updatingTxs = true;
                     this.updateItems(true);
                 }
             },
-            3500
+            2000
         );
     },
 
@@ -253,6 +254,8 @@ export default {
 
                 this.$nextTick(() => {this.show = true;});
             }
+
+            this._updatingTxs = false;
         },
 
 

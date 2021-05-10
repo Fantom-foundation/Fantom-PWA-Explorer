@@ -87,7 +87,7 @@ export default {
                     this.updateItems(true);
                 }
             },
-            4300
+            3300
         );
     },
 
