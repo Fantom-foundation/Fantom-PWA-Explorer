@@ -1,11 +1,28 @@
 // Mixin for polling
 
+let pageIsVisible = true;
+let pageVisibilitychangeSet = false;
+
+function setVisibilitychangeListener() {
+    if (!pageVisibilitychangeSet) {
+        document.addEventListener("visibilitychange", () => {
+            pageIsVisible = document.visibilityState === 'visible';
+        });
+
+        pageVisibilitychangeSet = true;
+    }
+}
+
 class Polling {
     constructor() {
         // Keys are codes, values are interval ids
         this._intervalIds = {};
         // Timeout of interval in milliseconds
         this._timeout = 3000;
+
+        if (!pageVisibilitychangeSet) {
+            setVisibilitychangeListener();
+        }
     }
 
     destroy() {
@@ -26,7 +43,11 @@ class Polling {
     start(_code, _callback, _timeout) {
         this.stop(_code);
 
-        this._intervalIds[_code] = setInterval(_callback, _timeout || this._timeout);
+        this._intervalIds[_code] = setInterval(() => {
+            if (pageIsVisible) {
+                _callback();
+            }
+        }, _timeout || this._timeout);
     }
 
     /**

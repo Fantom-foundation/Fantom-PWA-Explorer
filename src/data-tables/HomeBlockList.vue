@@ -83,9 +83,7 @@ export default {
         this._polling.start(
             'update-blocks',
             () => {
-                if (this.$store.state.pageVisible) {
-                    this.updateItems(true);
-                }
+                this.updateItems(true);
             },
             3300
         );

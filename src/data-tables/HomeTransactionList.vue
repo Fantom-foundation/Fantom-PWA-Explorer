@@ -236,7 +236,7 @@ export default {
         this._polling.start(
             'update-transactions',
             () => {
-                if (this.$store.state.pageVisible && !this._updatingTxs) {
+                if (!this._updatingTxs) {
                     this._updatingTxs = true;
                     this.updateItems(true);
                 }

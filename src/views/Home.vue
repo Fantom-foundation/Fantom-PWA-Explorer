@@ -144,9 +144,7 @@
             this._polling.start(
                 'update-net-state',
                 () => {
-                    if (this.$store.state.pageVisible) {
-                        this.updateChainState();
-                    }
+                    this.updateChainState();
                 },
                 3300
             );
