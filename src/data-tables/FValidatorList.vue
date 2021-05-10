@@ -95,6 +95,7 @@
     import { WEIToFTM } from "../utils/transactions.js";
     import {formatHexToInt, timestampToDate, numToFixed, formatNumberByLocale, clampDowntime} from "../filters.js";
     import {sortByHex, sortByLocaleString, sortByString} from "../utils/array-sorting.js";
+    import {cloneObject} from "@/utils";
 
     export default {
         components: {
@@ -148,6 +149,7 @@
                     let data;
                     const offline = [];
                     const flagged = [];
+                    const remove = [];
                     const tUnknown = this.$t('view_validator_list.unknown');
 
                     if (_key === 'stakers') {
@@ -167,7 +169,7 @@
                                 _item.stakerInfo.name = tUnknown;
                             }
 
-                            if (_item.isOffline) {
+                            if (_item.isOffline && !_item.isCheater) {
                                 offline.push(_idx);
                             }
 
@@ -177,19 +179,29 @@
                         });
 
                         if (offline.length > 0) {
-                            for (let i = offline.length - 1; i >= 0; i--) {
-                                offline[i] = data.splice(offline[i], 1)[0];
-                            }
+                            offline.forEach((_idx, _index) => {
+                                remove.push(_idx);
+                                offline[_index] = cloneObject(data[_idx]);
+                            });
 
                             this.$emit('validator-list-offline', offline);
                         }
 
                         if (flagged.length > 0) {
-                            for (let i = flagged.length - 1; i >= 0; i--) {
-                                flagged[i] = data.splice(flagged[i], 1)[0];
-                            }
+                            flagged.forEach((_idx, _index) => {
+                                remove.push(_idx);
+                                flagged[_index] = cloneObject(data[_idx]);
+                            });
 
                             this.$emit('validator-list-flagged', flagged);
+                        }
+
+                        if (remove.length > 0) {
+                            remove.sort().reverse();
+                            remove.forEach((_idx) => {
+                                data.splice(_idx, 1);
+                            })
+
                         }
 
                         this.dItems = data;

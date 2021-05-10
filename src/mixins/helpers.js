@@ -10,7 +10,11 @@ export const helpersMixin = {
         setIds(_items) {
             if (_items && _items.length) {
                 for (let i = 0, len1 = _items.length; i < len1; i += 1) {
-                    if (!('id' in _items[i])) {
+                    if (_items[i] === undefined) {
+                        console.log(JSON.stringify(_items));
+                    }
+
+                    if (_items[i] && !('id' in _items[i])) {
                         _items[i].id = getUniqueId();
                     }
                 }

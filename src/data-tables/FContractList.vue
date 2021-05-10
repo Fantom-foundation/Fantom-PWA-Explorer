@@ -44,6 +44,7 @@ import gql from "graphql-tag";
 import { WEIToFTM } from "../utils/transactions.js";
 import {timestampToDate, formatHexToInt, formatDate} from "../filters.js";
 import FEllipsis from "../components/core/FEllipsis/FEllipsis.vue";
+import {cloneObject} from "@/utils";
 
 export default {
     name: "FContractList",
@@ -104,7 +105,7 @@ export default {
                     // console.log('???');
                     data = _data.data.contracts;
 
-                    const edges = data.edges;
+                    const edges = cloneObject(data.edges);
 
                     this.dHasNext = data.pageInfo.hasNext;
 
