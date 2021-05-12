@@ -6,7 +6,7 @@
             __time-to-timestamp
             :fit-content="true"
             :height="280"
-            :options="{ handleScroll: true,handleScale: true }"
+            :options="{ handleScroll: false,handleScale: false }"
         />
         <!--                    <f-lightweight-charts
             ref="chart"
