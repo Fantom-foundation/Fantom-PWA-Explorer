@@ -7,6 +7,7 @@ import './plugins/vue-timeago.js';
 import './plugins/vue-svgicon.js';
 import './plugins/vue-observe-visibility.js';
 import './plugins/vue-async-computed.js';
+import './plugins/dayjs.js';
 import {store} from "./store";
 import './filters.js';
 import './registerServiceWorker'
@@ -20,7 +21,6 @@ Vue.use(DeFi, {
     apolloClient,
 });
 Vue.use(FFetch);
-
 
 // measure performance
 // Vue.config.performance = true;
