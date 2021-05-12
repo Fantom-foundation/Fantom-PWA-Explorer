@@ -82,23 +82,17 @@
                 </f-card>
             </div>
         </div>
-<!--        <div class="row row-2-cols-lg equal-height">
+        <div class="row row-2-cols-lg equal-height mat-5">
             <div class="col">
                 <f-card class="half-padding">
-                    <h2 class="h3">Transaction Volumes</h2>
-                    <f-lightweight-charts
-                        ref="chart"
-                        :series="volumeSeries"
-                        series-type="histogram"
-                        :series-options="{ priceFormat: { type: 'volume' } }"
-                        __transform-values="to-eth"
-                        time-to-timestamp
-                        :height="280"
-                        :options="{handleScroll: true,handleScale: true }"
-                    />
+                    <div class="txvolumes_label">
+                        <h2 class="h3" id="txv">Daily Transactions</h2>
+                        <f-listbox v-model="txVolumesResolution" :focus-item-on-focus="true" :data="txVolumesResolutions" labeled-by="txv" horizontal />
+                    </div>
+                    <transaction-volumes :resolution="txVolumesResolution" />
                 </f-card>
             </div>
-        </div>-->
+        </div>
     </div>
 </template>
 
@@ -110,11 +104,15 @@
     import HomeTransactionList from "@/data-tables/HomeTransactionList.vue";
     import AnimatedNumber from "animated-number-vue";
     import {pollingMixin} from "@/mixins/polling.js";
+    import TransactionVolumes from "@/components/TransactionVolumes.vue";
+    import FListbox from "@/components/core/FListbox/FListbox.vue";
 
     export default {
         mixins: [pollingMixin],
 
         components: {
+            FListbox,
+            TransactionVolumes,
             HomeTransactionList,
             HomeBlockList,
             FCard,
@@ -125,7 +123,21 @@
         data() {
             return {
                 blocksData: [],
-                volumeSeries: [],
+                txVolumesResolution: '1m',
+                txVolumesResolutions: [
+                    {
+                        label: '2 Weeks',
+                        value: '14d',
+                    },
+                    {
+                        label: '1 Month',
+                        value: '1m',
+                    },
+                    {
+                        label: '3 Months',
+                        value: '3m',
+                    },
+                ],
                 numAnimationDuration: 750,
                 chainState: {
                     blocks: 0,
@@ -148,46 +160,6 @@
                 },
                 3300
             );
-
-            this.volumeSeries = [
-                {
-                    time: '2021-04-10',
-                    value: 10000,
-                },
-                {
-                    time: '2021-04-11',
-                    value: 20000,
-                },
-                {
-                    time: '2021-04-12',
-                    value: 10500,
-                },
-                {
-                    time: '2021-04-13',
-                    value: 14300,
-                },
-                {
-                    time: '2021-04-14',
-                    value: 1000,
-                },
-                {
-                    time: '2021-04-15',
-                    value: 10000,
-                },
-                {
-                    time: '2021-04-16',
-                    value: 10000,
-                },
-                {
-                    time: '2021-04-17',
-                    value: 10000,
-                },
-            ];
-
-/*            setInterval(() => {
-                this.volumeSeries[this.volumeSeries.length - 1].value += 100;
-                this.$refs.chart._series.series.update({time: '2021-04-17', value: this.volumeSeries[this.volumeSeries.length - 1].value});
-            }, 500);*/
         },
 
         methods: {
@@ -258,6 +230,19 @@
             margin-bottom: 16px;
             height: 300px;
         }
+
+        .txvolumes_label {
+            display: flex;
+            flex-wrap: wrap;
+            //gap: 16px;
+            align-items: center;
+            margin-bottom: 4px;
+
+            h2 {
+                margin-bottom: 0;
+                padding-right: 16px;
+            }
+        }
     }
 
     @include media-max($bp-menu) {
@@ -279,6 +264,13 @@
 
                 .num {
                     font-size: 28px;
+                }
+            }
+
+            .txvolumes_label {
+                //font-size: 14px;
+                h2 {
+                    margin-bottom: 8px;
                 }
             }
         }
