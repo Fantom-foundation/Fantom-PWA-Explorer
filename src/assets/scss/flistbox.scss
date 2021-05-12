@@ -1,0 +1,11 @@
+:root {
+    .flistbox {
+        --flistbox-item-padding: 4px 9px;
+
+        &_list {
+            &_item {
+                border-radius: 20px;
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+//@use "../../assets/scss/tools/visibility";
+
+.flabel {
+    display: inline-block;
+    vertical-align: middle;
+
+    /*&-notvisible {
+        @include visibility.not-visible;
+    }*/
+}

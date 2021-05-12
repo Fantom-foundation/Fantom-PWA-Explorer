@@ -1,0 +1,17 @@
+.flistbox {
+    --flistbox-padding: 0;
+    --flistbox-item-color: inherit;
+    //--flistbox-item-padding: 8px 16px;
+    --flistbox-item-padding: var(--f-spacer-3, 12px) var(--f-spacer-4, 18px);
+    --flistbox-item-background-color: #fff;
+    --flistbox-item-hover-color: inherit;
+    --flistbox-item-hover-background-color: var(--f-color-primary-2, #ebf2ff);
+    --flistbox-item-selected-color: #fff;
+    --flistbox-item-selected-background-color: var(--f-color-primary-5, #1a6aff);
+    --flistbox-item-disabled-opacity: 0.3;
+    --flistbox-item-gap: 0;
+
+    &-horizontal {
+        --flistbox-item-gap: var(--f-spacer-1, 3px);
+    }
+}

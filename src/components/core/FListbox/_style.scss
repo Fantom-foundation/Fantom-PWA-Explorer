@@ -1,0 +1,58 @@
+@import 'custom-properties';
+
+.flistbox {
+    &_list {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: var(--flistbox-padding);
+        list-style-type: none;
+        margin: 0;
+
+        &:focus:not(:focus-visible) {
+            outline: none;
+        }
+
+        &_item {
+            color: var(--flistbox-item-color);
+            padding: var(--flistbox-item-padding);
+            background-color: var(--flistbox-item-background-color);
+            word-break: break-word;
+
+            &[aria-selected="true"] {
+                color: var(--flistbox-item-selected-color);
+                background-color: var(--flistbox-item-selected-background-color);
+            }
+
+            &[aria-disabled="true"] {
+                opacity: var(--flistbox-item-disabled-opacity);
+            }
+        }
+
+        &:not([aria-disabled="true"]) {
+            .flistbox_list_item {
+                &:not([aria-disabled="true"]) {
+                    cursor: pointer;
+
+                    &:not([aria-selected="true"]):hover {
+                        color: var(--flistbox-item-hover-color);
+                        background-color: var(--flistbox-item-hover-background-color);
+                    }
+                }
+            }
+        }
+
+        &[aria-disabled="true"] {
+            .flistbox_list_item {
+                opacity: var(--flistbox-item-disabled-opacity);
+            }
+        }
+    }
+
+    &-horizontal {
+        .flistbox_list {
+            flex-direction: row;
+            gap: var(--flistbox-item-gap);
+        }
+    }
+}

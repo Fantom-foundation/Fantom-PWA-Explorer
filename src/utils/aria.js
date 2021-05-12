@@ -243,52 +243,116 @@ export function focusTrap(_event, _elem, _focusableElems) {
 }
 
 /**
+ * @param {HTMLElement} _eTarget
+ * @param {string} _selector
+ * @return {HTMLElement|null}
+ */
+export function getFirstElement(_eTarget, _selector) {
+    let elem = _eTarget && _eTarget.parentElement ? _eTarget.parentElement.firstElementChild : null;
+
+    while (elem && !elem.matches(_selector)) {
+        elem = elem.nextElementSibling;
+    }
+
+    return elem;
+}
+
+/**
+ * @param {HTMLElement} _eTarget
+ * @param {string} _selector
+ * @return {HTMLElement|null}
+ */
+export function getLastElement(_eTarget, _selector) {
+    let elem = _eTarget && _eTarget.parentElement ? _eTarget.parentElement.lastElementChild : null;
+
+    while (elem && !elem.matches(_selector)) {
+        elem = elem.previousElementSibling;
+    }
+
+    return elem;
+}
+
+/**
  *
  * @param {KeyboardEvent} _event
- * @param {string} _selector
+ * @param {string} _selector Item selector.
+ * @param {('horizontal' | 'vertical' | 'both')} [_direction] Movement direction.
  * @param {boolean} [_circular] Circular keyboard navigation
+ * @param {HTMLElement} [_target]
+ * @param {boolean} [_focusElem] Focus found element.
+ * @param {boolean} [_useHomeAndEnd] `Home` and `End` keys are enabled.
  * @return {HTMLElement|null} Next or previous element or null.
  */
-export function keyboardNavigation(_event, _selector, _circular) {
+export function keyboardNavigation({
+    _event,
+    _selector,
+    _direction = 'horizontal',
+    _circular = false,
+    _target = null,
+    _focusElem = true,
+    _useHomeAndEnd = true,
+}) {
     if (!_event || !(_event.type in KEY_EVENTS) || !_selector) {
         return null;
     }
 
+    const eTarget = _target || _event.target.closest(_selector);
     let elem = null;
-    // const { keyCode } = _event;
-    const eTarget = _event.target.closest(_selector);
+    let move = '';
 
     // console.log(_event.code);
 
     if (eTarget) {
-        if (isKey('ArrowRight', _event) || isKey('ArrowUp', _event)) {
+        if (_direction === 'horizontal' || _direction === 'both') {
+            if (isKey('ArrowRight', _event)) {
+                move = 'next';
+            } else if (isKey('ArrowLeft', _event)) {
+                move = 'prev';
+            }
+        }
+
+        if (!move && (_direction === 'vertical' || _direction === 'both')) {
+            if (isKey('ArrowDown', _event)) {
+                move = 'next';
+            } else if (isKey('ArrowUp', _event)) {
+                move = 'prev';
+            }
+        }
+
+        if (_useHomeAndEnd && !move) {
+            if (isKey('Home', _event)) {
+                move = 'first';
+            } else if (isKey('End', _event)) {
+                move = 'last';
+            }
+        }
+
+        if (move === 'next') {
             elem = eTarget.nextElementSibling;
             while (elem && !elem.matches(_selector)) {
                 elem = elem.nextElementSibling;
             }
 
             if (_circular && elem === null) {
-                elem = eTarget.parentElement.firstElementChild;
-                while (elem && !elem.matches(_selector)) {
-                    elem = elem.nextElementSibling;
-                }
+                elem = getFirstElement(eTarget, _selector);
             }
-        } else if (isKey('ArrowLeft', _event) || isKey('ArrowDown', _event)) {
+        } else if (move === 'prev') {
             elem = eTarget.previousElementSibling;
             while (elem && !elem.matches(_selector)) {
                 elem = elem.previousElementSibling;
             }
 
             if (_circular && elem === null) {
-                elem = eTarget.parentElement.lastElementChild;
-                while (elem && !elem.matches(_selector)) {
-                    elem = elem.previousElementSibling;
-                }
+                elem = getLastElement(eTarget, _selector);
             }
+        } else if (move === 'first') {
+            elem = getFirstElement(eTarget, _selector);
+        } else if (move === 'last') {
+            elem = getLastElement(eTarget, _selector);
         }
     }
 
-    if (elem) {
+    if (elem && _focusElem) {
         elem.focus();
     }
 

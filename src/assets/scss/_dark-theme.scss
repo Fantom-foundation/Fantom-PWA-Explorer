@@ -218,4 +218,16 @@
     .blockchain-picker {
         --blockchain-picker-focus-background-color: var(--f-darker-color-3);
     }
+
+    .flistbox {
+        --flistbox-item-color: #fff;
+        --flistbox-item-hover-color: #fff;
+        --flistbox-item-background-color: var(--f-darker-color-2);
+        --flistbox-item-hover-background-color: var(--f-darker-color-3);
+        --flistbox-item-selected-background-color: var(--f-darker-color-3);
+
+        &-horizontal {
+            --flistbox-item-background-color: none;
+        }
+    }
 }
