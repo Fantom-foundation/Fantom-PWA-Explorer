@@ -29,6 +29,11 @@ export const routes = [
         component: TransactionDetail
     },
     {
+        name: "tx-detail",
+        path: "/tx/:id",
+        component: TransactionDetail
+    },
+    {
         name: "address-detail",
         path: "/address/:id",
         component: AddressDetail

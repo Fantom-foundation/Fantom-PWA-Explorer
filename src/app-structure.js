@@ -20,6 +20,10 @@ const appStructure = [
                     {
                         id: 'transaction-detail',
                         translation: 'view_transaction_detail.title'
+                    },
+                    {
+                        id: 'tx-detail',
+                        translation: 'view_transaction_detail.title'
                     }
                 ]
             },
