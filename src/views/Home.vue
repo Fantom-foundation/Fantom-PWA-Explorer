@@ -82,7 +82,7 @@
                 </f-card>
             </div>
         </div>
-        <div class="row row-2-cols-lg equal-height mat-5">
+        <div class="row equal-height mat-5">
             <div class="col">
                 <f-card class="half-padding">
                     <div class="txvolumes_label">
