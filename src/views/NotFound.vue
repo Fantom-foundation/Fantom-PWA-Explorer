@@ -24,12 +24,14 @@
 
 <style lang="scss">
     .view-not-found {
+        --view-not-found-background-color: #fff;
+
         .message {
             width: 90%;
             max-width: 400px;
             padding: 24px 32px;
             border-radius: 8px;
-            background-color: #fff;
+            background-color: var(--view-not-found-background-color);
             margin: 32px auto 0 auto;
 
             h1 {
