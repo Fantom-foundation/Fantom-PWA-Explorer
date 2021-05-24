@@ -106,6 +106,7 @@
     import {pollingMixin} from "@/mixins/polling.js";
     import TransactionVolumes from "@/components/TransactionVolumes.vue";
     import FListbox from "@/components/core/FListbox/FListbox.vue";
+    import {formatNumberByLocale} from "@/filters.js";
 
     export default {
         mixins: [pollingMixin],
@@ -196,7 +197,7 @@
             },
 
             formatNum(_num) {
-                return parseInt(_num);
+                return formatNumberByLocale(parseInt(_num));
             }
         }
     }
@@ -222,7 +223,7 @@
             .num {
                 text-align: center;
                 font-weight: bold;
-                font-size: 40px;
+                font-size: 38px;
             }
         }
 
