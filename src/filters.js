@@ -147,9 +147,9 @@ export function formatDuration(_value) {
  * @param {number} [_digits]
  * @return {*}
  */
-export function formatNumberByLocale(_number, _digits = 0) {
+export function formatNumberByLocale(_number, _digits = 0, _maximumDigits) {
     // TODO: use i18n current locale
-    return (new Intl.NumberFormat('en-GB', { minimumFractionDigits: _digits })).format(_number);
+    return (new Intl.NumberFormat('en-GB', { minimumFractionDigits: _digits, maximumFractionDigits: _maximumDigits })).format(_number);
 }
 
 /**

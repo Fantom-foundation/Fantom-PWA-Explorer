@@ -11,6 +11,8 @@ import ValidatorDetail from "./views/ValidatorDetail.vue";
 import Contracts from "./views/Contracts.vue";
 import Assets from "@/views/Assets.vue";
 import AssetDetail from "@/views/AssetDetail.vue";
+import Epochs from "@/views/Epochs.vue";
+import EpochDetail from "@/views/EpochDetail.vue";
 
 export const routes = [
     {
@@ -76,6 +78,16 @@ export const routes = [
     {
         path: "/validators",
         redirect: { name: "staking" }
+    },
+    {
+        name: "epochs",
+        path: "/epochs",
+        component: Epochs
+    },
+    {
+        name: "epoch-detail",
+        path: "/epoch/:id",
+        component: EpochDetail
     },
     {
         name: "data-table-playground",

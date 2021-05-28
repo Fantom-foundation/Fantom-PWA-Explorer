@@ -82,7 +82,7 @@
         }
     }
 
-    @include media-max(1075px) {
+    @include media-max(1210px) {
         .f-navigation {
             nav {
                 ul {
@@ -98,7 +98,7 @@
         }
     }
 
-    @include media-max(870px) {
+    @include media-max(970px) {
         .f-navigation {
             nav {
                 ul {
@@ -106,6 +106,22 @@
                         @include links() {
                             padding-left: 5px;
                             padding-right: 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @include media-max(870px) {
+        .f-navigation {
+            nav {
+                ul {
+                    li {
+                        @include links() {
+                            font-size: 0.8em;
+                            padding-left: 2px;
+                            padding-right: 2px;
                         }
                     }
                 }

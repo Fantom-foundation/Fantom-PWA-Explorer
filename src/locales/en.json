@@ -46,6 +46,10 @@
             "title": "Transactions"
         },
         {
+            "url": "/epochs",
+            "title": "Epochs"
+        },
+        {
             "url": "/blocks",
             "title": "Blocks"
         },
@@ -252,5 +256,14 @@
         "support_contact": "@:view_contract_detail.support_contact",
         "validate": "@:view_contract_detail.validate",
         "version": "@:version"
+    },
+    "epoch": {
+        "list_title": "Epochs",
+        "detail_title": "Epoch Detail",
+        "epoch": "Epoch",
+        "end_time": "End Time",
+        "total_base_reward": "Total Base Reward",
+        "total_fee": "Total Fee",
+        "total_tx_reward": "Total Tx Reward"
     }
 }
