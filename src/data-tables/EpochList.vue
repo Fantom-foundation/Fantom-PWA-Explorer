@@ -75,8 +75,6 @@ export default {
                                 id
                                 endTime
                                 epochFee
-                                totalTxRewardWeight
-                                totalBaseRewardWeight
                             }
                             cursor
                         }
@@ -139,13 +137,13 @@ export default {
                     formatter: (_value) => formatDate(timestampToDate(_value)),
                     width: '340px'
                 },
-                {
+                /*{
                     name: 'baseReward',
                     label: this.$t('epoch.total_base_reward') + ' (FTM)',
                     itemProp: 'epoch.totalBaseRewardWeight',
                     formatter: (_value) => formatNumberByLocale(WEIToFTM(_value), 1, 2),
                     css: {textAlign: 'right'}
-                },
+                },*/
                 {
                     name: 'fee',
                     label: this.$t('epoch.total_fee') + ' (FTM)',
@@ -153,13 +151,13 @@ export default {
                     formatter: (_value) => formatNumberByLocale(WEIToFTM(_value), 1, 2),
                     css: {textAlign: 'right'}
                 },
-                {
+                /*{
                     name: 'txReward',
                     label: this.$t('epoch.total_tx_reward') + ' (FTM)',
                     itemProp: 'epoch.totalTxRewardWeight',
                     formatter: (_value) => formatNumberByLocale(WEIToFTM(_value), 1, 2),
                     css: {textAlign: 'right'}
-                }
+                }*/
             ]
         };
     },
