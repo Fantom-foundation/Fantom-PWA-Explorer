@@ -65,9 +65,9 @@
                     @include links() {
                         color: var(--f-navigation-link-color);
                         font-weight: bold;
-                        letter-spacing: normal;
+                        //letter-spacing: normal;
                         display: inline-block;
-                        padding: 16px 20px;
+                        padding: 16px 18px;
                         text-decoration: none;
                         transition: all $transition-length ease;
                         border-radius: $border-radius;
@@ -82,7 +82,7 @@
         }
     }
 
-    @include media-max(1210px) {
+    @include media-max(1120px) {
         .f-navigation {
             nav {
                 ul {
