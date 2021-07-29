@@ -10,36 +10,6 @@ const appConfig = {
     apollo: {
         // list of providers. if one of them is unavailable, another is randomly picked
         providers: [
-            /*{
-                http: 'https://xapi3.fantom.network/api',
-                // for subscriptions
-                ws: '',
-            },*/
-            /*{
-                http: 'https://xapi5.fantom.network/api',
-                // for subscriptions
-                ws: '',
-            },*/
-            {
-                http: 'https://xapi6.fantom.network/api',
-                // for subscriptions
-                ws: '',
-            },
-            {
-                http: 'https://xapi7.fantom.network/api',
-                // for subscriptions
-                ws: '',
-            },
-            /*{
-                http: 'https://xapi8.fantom.network/api',
-                // for subscriptions
-                ws: '',
-            },
-            {
-                http: 'https://xapi9.fantom.network/api',
-                // for subscriptions
-                ws: '',
-            },*/
             {
                 http: 'https://xapi30.fantom.network/api',
                 // for subscriptions
@@ -47,6 +17,16 @@ const appConfig = {
             },
             {
                 http: 'https://xapi31.fantom.network/api',
+                // for subscriptions
+                ws: '',
+            },
+            {
+                http: 'https://xapi36.fantom.network/api',
+                // for subscriptions
+                ws: '',
+            },
+            {
+                http: 'https://xapi37.fantom.network/api',
                 // for subscriptions
                 ws: '',
             },
