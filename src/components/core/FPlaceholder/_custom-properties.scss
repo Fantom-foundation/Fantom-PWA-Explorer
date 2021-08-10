@@ -1,0 +1,7 @@
+.f-placeholder {
+    --f-placeholder-background-size-width: 800px;
+    --f-placeholder-on-gradient-color1: #f6f6f6;
+    --f-placeholder-on-gradient-color2: #f6f6f6;
+    --f-placeholder-on-background: linear-gradient(to right, var(--f-placeholder-on-gradient-color1) 8%, var(--f-placeholder-on-gradient-color2) 18%, var(--f-placeholder-on-gradient-color1) 33%);
+    --f-placeholder-animation-speed: 1s;
+}

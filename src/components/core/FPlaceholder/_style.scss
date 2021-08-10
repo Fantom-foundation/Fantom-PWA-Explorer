@@ -1,0 +1,41 @@
+@import "custom-properties";
+
+@keyframes placeholder-animation {
+    0%{
+        background-position: 100% 0
+    }
+    100%{
+        background-position: -100% 0
+    }
+}
+
+.f-placeholder {
+    &.placeholder-on {
+        background: var(--f-placeholder-on-background);
+        background-size: var(--f-placeholder-background-size-width) 100%;
+
+        .replacement {
+            opacity: 0;
+        }
+    }
+
+    &.background-animation-on {
+        animation-duration: var(--f-placeholder-animation-speed);
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: placeholder-animation;
+        animation-timing-function: linear;
+    }
+
+    &.is-block {
+        display: block;
+    }
+
+    .replacement-twin {
+        position: fixed;
+        top: -1000px;
+        left: -1000px;
+        visibility: hidden;
+        white-space: pre;
+    }
+}

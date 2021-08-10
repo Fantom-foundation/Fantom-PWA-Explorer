@@ -1,0 +1,13 @@
+@import "../variables";
+
+.f-token-value {
+    &__dots {
+        font-size: 0.8em;
+    }
+
+    .currency {
+        font-size: 0.7em;
+        color: $light-gray-color;
+        padding-left: 4px;
+    }
+}
