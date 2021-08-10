@@ -12,8 +12,14 @@
                     <h2>{{ $t('view_address_detail.balance') }}</h2>
 
                     <div class="balance center-v">
-                        <h3 class="h1"><span v-show="cAccount">{{ toFTM(cAccount ? cAccount.totalValue : 1) }} <span class="ftm">FTM</span></span></h3>
-                        <div v-show="cAccount" class="usd">${{ toUSD(cAccount ? cAccount.totalValue : 1) }}</div>
+                        <h3 class="h1">
+                            <span v-show="cAccount">
+                                <f-t-m-token-value :value="cAccount ? cAccount.totalValue : 1" convert no-currency /> <span class="ftm">FTM</span>
+                            </span>
+                        </h3>
+                        <div v-show="cAccount" class="usd">
+                            <f-t-m-token-value :value="toUSD(cAccount ? cAccount.totalValue : 1)" with-price-currency no-currency />
+                        </div>
                     </div>
                 </f-card>
             </div>
@@ -22,8 +28,14 @@
                     <h2>{{ $t('view_address_detail.available') }}</h2>
 
                     <div class="balance center-v">
-                        <h3 class="h1"><span v-show="'available' in cAssets">{{ toFTM(cAssets.available) }} <span class="ftm">FTM</span></span></h3>
-                        <div v-show="'available' in cAssets" class="usd">${{ toUSD(cAssets.available) }}</div>
+                        <h3 class="h1">
+                            <span v-show="'available' in cAssets">
+                                <f-t-m-token-value :value="cAssets.available" convert no-currency /> <span class="ftm">FTM</span>
+                            </span>
+                        </h3>
+                        <div v-show="'available' in cAssets" class="usd">
+                            <f-t-m-token-value :value="toUSD(cAssets.available)" with-price-currency no-currency />
+                        </div>
                     </div>
                 </f-card>
             </div>
@@ -42,19 +54,19 @@
                     <div class="row no-collapse">
                         <div class="col f-row-label">{{ $t('view_address_detail.delegated') }}</div>
                         <div class="col">
-                            <div v-show="'delegated' in cAssets">{{ toFTM(cAssets.delegated, true) }} FTM</div>
+                            <div v-show="'delegated' in cAssets"><f-t-m-token-value :value="cAssets.delegated" /></div>
                         </div>
                     </div>
                     <div class="row no-collapse">
                         <div class="col f-row-label">{{ $t('view_address_detail.pending_rewards') }}</div>
                         <div class="col">
-                            <div v-show="'pending_rewards' in cAssets">{{ toFTM(cAssets.pending_rewards, true) }} FTM</div>
+                            <div v-show="'pending_rewards' in cAssets"><f-t-m-token-value :value="cAssets.pending_rewards" /></div>
                         </div>
                     </div>
                     <div class="row no-collapse">
                         <div class="col f-row-label">{{ $t('view_address_detail.stashed_rewards') }}</div>
                         <div class="col">
-                            <div v-show="'stashed' in cAssets">{{ toFTM(cAssets.stashed) }} FTM</div>
+                            <div v-show="'stashed' in cAssets"><f-t-m-token-value :value="cAssets.stashed" convert /></div>
                         </div>
                     </div>
                     <div class="row no-collapse">
@@ -166,15 +178,16 @@
     import gql from 'graphql-tag';
     import { WEIToFTM, FTMToUSD } from "../utils/transactions.js";
     import FTransactionList from "../data-tables/FTransactionList.vue";
-    import {formatHexToInt, numToFixed, formatNumberByLocale, timestampToDate} from "../filters.js";
+    import {formatHexToInt, timestampToDate} from "../filters.js";
     import FTabs from "@/components/core/FTabs/FTabs.vue";
     import FTab from "@/components/core/FTabs/FTab.vue";
     import AddressDelegationList from "@/data-tables/AddressDelegationList.vue";
     import AddressAssetList from "@/data-tables/AddressAssetList.vue";
-    // import FDataTable from "../components/core/FDataTable/FDataTable.vue";
+    import FTMTokenValue from "@/components/core/FTMTokenValue/FTMTokenValue.vue";
 
     export default {
         components: {
+            FTMTokenValue,
             AddressAssetList,
             AddressDelegationList,
             FTab,
@@ -557,7 +570,7 @@
              * @return {string}
              */
             toFTM(_value, _isNumber) {
-                return formatNumberByLocale(numToFixed(_isNumber ? _value : WEIToFTM(_value), 2), 2);
+                return _isNumber ? _value : WEIToFTM(_value);
             },
 
             /**
@@ -567,7 +580,7 @@
              * @return {string}
              */
             toUSD(_value) {
-                return formatNumberByLocale(numToFixed(FTMToUSD(WEIToFTM(_value), this.$store.state.tokenPrice), 2), 2);
+                return FTMToUSD(WEIToFTM(_value), this.$store.state.tokenPrice);
             },
 
             onAssetsRecordsCount(_count) {

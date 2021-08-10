@@ -147,10 +147,38 @@ export function formatDuration(_value) {
  * @param {number} [_digits]
  * @return {*}
  */
+/*
 export function formatNumberByLocale(_number, _digits = 0, _maximumDigits) {
     // TODO: use i18n current locale
     return (new Intl.NumberFormat('en-GB', { minimumFractionDigits: _digits, maximumFractionDigits: _maximumDigits })).format(_number);
 }
+*/
+/**
+ * @param {number} _number
+ * @param {number} [_fractionDigits]
+ * @param {string} [_currency]
+ * @param {boolean} [_variableFDigits]
+ * @return {*}
+ */
+export function formatNumberByLocale(
+    _number,
+    _fractionDigits = 2,
+    _currency,
+    _variableFDigits
+) {
+    let options = {
+        minimumFractionDigits: _variableFDigits ? 0 : _fractionDigits,
+        maximumFractionDigits: _fractionDigits,
+    };
+
+    if (_currency) {
+        options.style = 'currency';
+        options.currency = _currency;
+    }
+
+    return new Intl.NumberFormat('en-US', options).format(_number);
+}
+
 
 /**
  * @param {string} _value

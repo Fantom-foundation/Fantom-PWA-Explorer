@@ -106,7 +106,7 @@
                                 />
                             </template>
                             <template v-else>
-                                {{ value }}
+                                <f-token-value :value="value" :decimals="2" :use-placeholder="false" no-currency />
                             </template>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                             />
                         </template>
                         <template v-else>
-                            {{ value }}
+                            <f-token-value :value="value" :decimals="2" :use-placeholder="false" no-currency />
                         </template>
                     </template>
                 </template>
@@ -152,9 +152,11 @@
     import {formatHexToInt, timestampToDate, numToFixed, formatNumberByLocale} from "../filters.js";
     import {getNestedProp} from "../utils";
     import FAccountTransactionAmount from "../components/FAccountTransactionAmount.vue";
+    import FTokenValue from "@/components/core/FTokenValue/FTokenValue.vue";
 
     export default {
         components: {
+            FTokenValue,
             FAccountTransactionAmount,
             FDataTable
         },
@@ -348,7 +350,8 @@
                         label: `${this.$t('view_transaction_list.amount')} (FTM)`,
                         itemProp: `${!this.withoutCursor ? 'transaction.' : ''}value`,
                         formatter: _value => {
-                            return formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2)
+                            // return formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2)
+                            return WEIToFTM(_value);
                         },
                         width: '150px',
                         css: {

@@ -27,6 +27,28 @@
                         </router-link>
                     </template>
                 </template>
+
+                <template v-slot:column-fee="{ value, item, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-4 f-row-label">{{ column.label }}</div>
+                        <div class="col-8 break-word">
+                            <f-token-value
+                                :value="value"
+                                :decimals="2"
+                                :use-placeholder="false"
+                                no-currency
+                            />
+                        </div>
+                    </div>
+                    <template v-else>
+                        <f-token-value
+                            :value="value"
+                            :decimals="2"
+                            :use-placeholder="false"
+                            no-currency
+                        />
+                    </template>
+                </template>
             </f-data-table>
         </template>
 
@@ -40,13 +62,15 @@
 import FDataTable from "../components/core/FDataTable/FDataTable.vue";
 import gql from "graphql-tag";
 import { WEIToFTM } from "../utils/transactions.js";
-import {timestampToDate, formatHexToInt, formatDate, formatNumberByLocale} from "../filters.js";
+import {timestampToDate, formatHexToInt, formatDate } from "../filters.js";
 import {cloneObject} from "@/utils";
+import FTokenValue from "@/components/core/FTokenValue/FTokenValue.vue";
 
 export default {
     name: "EpochList",
 
     components: {
+        FTokenValue,
         FDataTable
     },
 
@@ -148,7 +172,7 @@ export default {
                     name: 'fee',
                     label: this.$t('epoch.total_fee') + ' (FTM)',
                     itemProp: 'epoch.epochFee',
-                    formatter: (_value) => formatNumberByLocale(WEIToFTM(_value), 1, 2),
+                    formatter: (_value) => WEIToFTM(_value),
                     css: {textAlign: 'right'}
                 },
                 /*{

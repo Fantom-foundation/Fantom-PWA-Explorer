@@ -28,6 +28,50 @@
                         {{ value.id | formatHexToInt }}
                     </template>
                 </template>
+
+                <template v-slot:column-amount="{ value, item, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-5 f-row-label">{{ column.label }}</div>
+                        <div class="col break-word">
+                            <f-token-value
+                                :value="value"
+                                :decimals="2"
+                                :use-placeholder="false"
+                                no-currency
+                            />
+                        </div>
+                    </div>
+                    <template v-else>
+                        <f-token-value
+                            :value="value"
+                            :decimals="2"
+                            :use-placeholder="false"
+                            no-currency
+                        />
+                    </template>
+                </template>
+
+                <template v-slot:column-rewards="{ value, item, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-5 f-row-label">{{ column.label }}</div>
+                        <div class="col break-word">
+                            <f-token-value
+                                :value="value"
+                                :decimals="2"
+                                :use-placeholder="false"
+                                no-currency
+                            />
+                        </div>
+                    </div>
+                    <template v-else>
+                        <f-token-value
+                            :value="value"
+                            :decimals="2"
+                            :use-placeholder="false"
+                            no-currency
+                        />
+                    </template>
+                </template>
             </f-data-table>
         </template>
         <template v-else>
@@ -40,14 +84,15 @@
 import FDataTable from '@/components/core/FDataTable/FDataTable.vue';
 import gql from 'graphql-tag';
 import { cloneObject } from '@/utils';
-import { formatDate, formatHexToInt, formatNumberByLocale, timestampToDate } from '@/filters.js';
+import { formatDate, formatHexToInt, timestampToDate } from '@/filters.js';
 import { WEIToFTM } from '@/utils/transactions.js';
+import FTokenValue from "@/components/core/FTokenValue/FTokenValue.vue";
 // import { formatHexToInt } from '@/filters.js';
 
 export default {
     name: 'AddressDelegationList',
 
-    components: { FDataTable },
+    components: {FTokenValue, FDataTable },
 
     props: {
         /** */
@@ -162,7 +207,7 @@ export default {
                     name: 'amount',
                     label: 'Amount (FTM)',
                     itemProp: 'delegation.amount',
-                    formatter: (_value) => formatNumberByLocale(WEIToFTM(_value)),
+                    formatter: (_value) => WEIToFTM(_value),
                     width: '160px',
                     css: {
                         textAlign: 'right',
@@ -172,7 +217,7 @@ export default {
                     name: 'rewards',
                     label: 'Pending Rewards (FTM)',
                     itemProp: 'delegation.pendingRewards',
-                    formatter: (_value) => (_value ? formatNumberByLocale(WEIToFTM(_value.amount)) : '-'),
+                    formatter: (_value) => (_value ? WEIToFTM(_value.amount) : '-'),
                     width: '200px',
                     css: {
                         textAlign: 'right',

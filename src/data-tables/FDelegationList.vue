@@ -23,6 +23,28 @@
                         <router-link :to="{name: 'address-detail', params: {id: value}}" :title="value">{{ value | formatHash }}</router-link>
                     </template>
                 </template>
+
+                <template v-slot:column-amount="{ value, item, column }">
+                    <div v-if="column" class="row no-collapse no-vert-col-padding">
+                        <div class="col-5 f-row-label">{{ column.label }}</div>
+                        <div class="col break-word">
+                            <f-token-value
+                                :value="value"
+                                :decimals="2"
+                                :use-placeholder="false"
+                                no-currency
+                            />
+                        </div>
+                    </div>
+                    <template v-else>
+                        <f-token-value
+                            :value="value"
+                            :decimals="2"
+                            :use-placeholder="false"
+                            no-currency
+                        />
+                    </template>
+                </template>
             </f-data-table>
         </template>
 
@@ -38,9 +60,11 @@
     import { WEIToFTM } from "../utils/transactions.js";
     import {formatHexToInt, timestampToDate, formatNumberByLocale, numToFixed, formatDate} from "../filters.js";
     import {cloneObject} from "@/utils";
+    import FTokenValue from "@/components/core/FTokenValue/FTokenValue.vue";
 
     export default {
         components: {
+            FTokenValue,
             FDataTable
         },
 
@@ -50,7 +74,6 @@
                 type: String,
                 default: ''
             },
-
             /** Number of items per page. */
             itemsPerPage: {
                 type: Number,
@@ -145,7 +168,7 @@
                         name: 'amount',
                         label: this.$t('delegation_list_dt.amount'),
                         itemProp: 'delegation.amount',
-                        formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
+                        formatter: _value => WEIToFTM(_value),
                         css: {textAlign: 'right'}
                     }
                 ]

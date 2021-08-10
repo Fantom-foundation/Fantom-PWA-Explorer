@@ -1,12 +1,16 @@
 <template>
     <span class="f-account-t-amount" :class="cClass">
-        <template v-if="!cIsZero"><template v-if="cRecieved">+</template><template v-else>-</template></template>{{ amount }}
+        <template v-if="!cIsZero"><template v-if="cReceived">+</template><template v-else>-</template></template>
+        <f-token-value :value="amount" :decimals="2" :use-placeholder="false" no-currency />
     </span>
 </template>
 
 <script>
+    import FTokenValue from "@/components/core/FTokenValue/FTokenValue.vue";
+
     // formatter for account transaction amount
     export default {
+        components: {FTokenValue},
         props: {
             // account address
             address: {
@@ -25,7 +29,7 @@
             },
             // transaction's amount
             amount: {
-                type: String,
+                type: [String, Number],
                 default: ''
             },
             // zero amount
@@ -36,19 +40,19 @@
         },
 
         computed: {
-            cRecieved() {
+            cReceived() {
                 return (this.address.toLocaleLowerCase() === this.to.toLocaleLowerCase());
             },
 
             cIsZero() {
-                return (this.amount === this.zero);
+                return this.amount === 0;
             },
 
             cClass() {
                 let clas = '';
 
                 if (!this.cIsZero) {
-                    clas = (this.cRecieved ? 'recieved' : 'sent');
+                    clas = (this.cReceived ? 'received' : 'sent');
                 }
 
                 return clas;
@@ -60,8 +64,12 @@
 <style lang="scss">
     .f-account-t-amount {
         font-weight: bold;
-        &.recieved {
+        &.received {
             color: #0ebec2;
+        }
+
+        .f-token-value {
+            margin-left: -4px;
         }
     }
 </style>

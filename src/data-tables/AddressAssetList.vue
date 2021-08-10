@@ -18,16 +18,53 @@
                 </template>
             </template>
 
+            <template v-slot:column-available="{ value, item, column }">
+                <div v-if="column" class="row no-collapse no-vert-col-padding">
+                    <div class="col-6 f-row-label">{{ column.label }}</div>
+                    <div class="col break-word">
+                        <f-token-value
+                            :value="value"
+                            :token="item"
+                            :use-placeholder="false"
+                            :max-decimals="MAX_TOKEN_DECIMALS_IN_TABLES"
+                            no-currency
+                        />
+                    </div>
+                </div>
+                <template v-else>
+                    <f-token-value
+                        :value="value"
+                        :token="item"
+                        :use-placeholder="false"
+                        :max-decimals="MAX_TOKEN_DECIMALS_IN_TABLES"
+                        no-currency
+                    />
+                </template>
+            </template>
+
+
             <template v-slot:column-deposited="{ value, item, column }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
                     <div class="col-6 f-row-label">{{ column.label }}</div>
                     <div class="col break-word">
-                        {{ value }}
+                        <f-token-value
+                            :value="value"
+                            :token="item"
+                            :use-placeholder="false"
+                            :max-decimals="MAX_TOKEN_DECIMALS_IN_TABLES"
+                            no-currency
+                        />
                         <!-- <span class="currency-light">{{ $defi.getTokenSymbol(item) }}</span>-->
                     </div>
                 </div>
                 <template v-else>
-                    {{ value }}
+                    <f-token-value
+                        :value="value"
+                        :token="item"
+                        :use-placeholder="false"
+                        :max-decimals="MAX_TOKEN_DECIMALS_IN_TABLES"
+                        no-currency
+                    />
                     <!-- <span class="currency-light">{{ $defi.getTokenSymbol(item) }}</span>-->
                 </template>
             </template>
@@ -36,12 +73,24 @@
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
                     <div class="col-6 f-row-label">{{ column.label }}</div>
                     <div class="col break-word">
-                        {{ value }}
+                        <f-token-value
+                            :value="value"
+                            :token="item"
+                            :use-placeholder="false"
+                            :max-decimals="MAX_TOKEN_DECIMALS_IN_TABLES"
+                            no-currency
+                        />
                         <!-- <span class="currency-light">{{ $defi.getTokenSymbol(item) }}</span>-->
                     </div>
                 </div>
                 <template v-else>
-                    {{ value }}
+                    <f-token-value
+                        :value="value"
+                        :token="item"
+                        :use-placeholder="false"
+                        :max-decimals="MAX_TOKEN_DECIMALS_IN_TABLES"
+                        no-currency
+                    />
                     <!-- <span class="currency-light">{{ $defi.getTokenSymbol(item) }}</span>-->
                 </template>
             </template>
@@ -53,13 +102,13 @@
 import FDataTable from '../components/core/FDataTable/FDataTable.vue';
 import FCryptoSymbol from '../components/core/FCryptoSymbol/FCryptoSymbol.vue';
 import { stringSort } from '../utils/array-sorting.js';
-import { formatNumberByLocale } from '../filters.js';
 import {MAX_TOKEN_DECIMALS_IN_TABLES} from "../plugins/defi/defi.js";
+import FTokenValue from "@/components/core/FTokenValue/FTokenValue.vue";
 
 export default {
     name: 'AddressAssetList',
 
-    components: { FCryptoSymbol, FDataTable },
+    components: {FTokenValue, FCryptoSymbol, FDataTable },
 
     props: {
         /** @type {DefiToken[]} */
@@ -110,7 +159,7 @@ export default {
                     formatter: (_value, _item) => {
                         const balance = _item._availableBalance;
 
-                        return balance > 0 ? formatNumberByLocale(balance, this.defi.getTokenDecimals(_item, MAX_TOKEN_DECIMALS_IN_TABLES)) : 0;
+                        return balance > 0 ? balance : 0;
                     },
                     css: { textAlign: 'right' },
                     // width: '100px',
@@ -122,7 +171,7 @@ export default {
                     formatter: (_value, _item) => {
                         const collateral = _item._deposited;
 
-                        return collateral > 0 ? formatNumberByLocale(collateral, this.defi.getTokenDecimals(_item, MAX_TOKEN_DECIMALS_IN_TABLES)) : 0;
+                        return collateral > 0 ? collateral : 0;
                     },
                     css: { textAlign: 'right' },
                     // width: '100px',
@@ -134,11 +183,12 @@ export default {
                     formatter: (_value, _item) => {
                         const debt = _item._debt;
 
-                        return debt > 0 ? formatNumberByLocale(debt, this.defi.getTokenDecimals(_item, MAX_TOKEN_DECIMALS_IN_TABLES)) : 0;
+                        return debt > 0 ? debt : 0;
                     },
                     css: { textAlign: 'right' },
                 },
             ],
+            MAX_TOKEN_DECIMALS_IN_TABLES,
         };
     },
 

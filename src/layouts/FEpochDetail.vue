@@ -16,7 +16,7 @@
                     <div class="col-4 f-row-label">{{ $t('epoch.total_base_reward') }}</div>
                     <div class="col">
                         <div class="break-word">
-                            {{ formatNumberByLocale(WEIToFTM(cEpoch.totalBaseRewardWeight), 1, 2) }} FTM
+                            <f-t-m-token-value :value="cEpoch.totalBaseRewardWeight" convert />
                         </div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                     <div class="col-4 f-row-label">{{ $t('epoch.total_fee') }}</div>
                     <div class="col">
                         <div class="break-word">
-                            {{ formatNumberByLocale(WEIToFTM(cEpoch.epochFee), 1, 2) }} FTM
+                            <f-t-m-token-value :value="cEpoch.epochFee" convert />
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     <div class="col-4 f-row-label">{{ $t('epoch.total_tx_reward') }}</div>
                     <div class="col">
                         <div class="break-word">
-                            {{ formatNumberByLocale(WEIToFTM(cEpoch.totalTxRewardWeight), 1, 2) }} FTM
+                            <f-t-m-token-value :value="cEpoch.totalTxRewardWeight" convert />
                         </div>
                     </div>
                 </div>
@@ -48,11 +48,12 @@
 <script>
 import FCard from "../components/core/FCard/FCard.vue";
 import gql from 'graphql-tag';
-import { WEIToFTM } from "../utils/transactions.js";
-import {timestampToDate, formatDate, formatNumberByLocale} from "../filters.js";
+import {timestampToDate, formatDate } from "../filters.js";
+import FTMTokenValue from "@/components/core/FTMTokenValue/FTMTokenValue.vue";
 
 export default {
     components: {
+        FTMTokenValue,
         FCard
     },
 
@@ -104,10 +105,8 @@ export default {
     },
 
     methods: {
-        WEIToFTM,
         timestampToDate,
         formatDate,
-        formatNumberByLocale
     }
 }
 </script>
