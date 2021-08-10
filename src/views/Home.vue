@@ -197,7 +197,7 @@
             },
 
             formatNum(_num) {
-                return formatNumberByLocale(parseInt(_num));
+                return formatNumberByLocale(parseInt(_num), 0);
             }
         }
     }
@@ -212,11 +212,18 @@
         }
 
         .home-block {
+            --f-card-padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+
             min-height: 195px;
 
             h2 {
                 text-align: center;
-                margin-top: 16px;
+                //margin-top: 16px;
                 margin-bottom: 4px;
             }
 
