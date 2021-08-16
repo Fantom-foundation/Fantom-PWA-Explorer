@@ -89,12 +89,12 @@ export default {
                 {
                     name: 'name',
                     label: this.$t('view_assets.name'),
-                    // css: { textAlign: 'center' },
+                    // cssClass: 'align-center',
                 },
                 {
                     name: 'address',
                     label: this.$t('view_assets.hash'),
-                    // css: { textAlign: 'center' },
+                    // cssClass: 'align-center',
                 },
                 {
                     name: 'price',

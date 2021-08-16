@@ -319,17 +319,17 @@
                     {
                         name: 'balance',
                         label: this.$t('view_address_detail.balance'),
-                        css: {textAlign: 'right'}
+                        cssClass: 'align-end',
                     },
                     {
                         name: 'valueInFTM',
                         label: this.$t('view_address_detail.value_in_ftm'),
-                        css: {textAlign: 'right'}
+                        cssClass: 'align-end',
                     },
                     {
                         name: 'valueInUSD',
                         label: this.$t('view_address_detail.value_in_usd'),
-                        css: {textAlign: 'right'}
+                        cssClass: 'align-end',
                     }
                 ]
 */

@@ -234,7 +234,7 @@
                         name: 'logo',
                         label: this.$t('view_validator_list.logo'),
                         itemProp: 'stakerInfo.logoUrl',
-                        css: {textAlign: 'center'},
+                        cssClass: 'align-center',
                         width: '80px'
                     },
                     {
@@ -269,14 +269,14 @@
                         label: this.$t('view_validator_list.self_staked'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
                         sortFunc: sortByHex,
-                        css: {textAlign: 'right'}
+                        cssClass: 'align-end',
                     },
                     {
                         name: 'delegatedMe',
                         label: this.$t('view_validator_list.delegated'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
                         sortFunc: sortByHex,
-                        css: {textAlign: 'right'}
+                        cssClass: 'align-end',
                     },
                     // computed
                     {
@@ -285,7 +285,7 @@
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
                         sortFunc: sortByHex,
                         sortDir: 'desc',
-                        css: {textAlign: 'right'}
+                        cssClass: 'align-end',
                     },
 /*
                     {

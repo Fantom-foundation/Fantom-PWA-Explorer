@@ -166,21 +166,21 @@ export default {
                     label: this.$t('epoch.total_base_reward') + ' (FTM)',
                     itemProp: 'epoch.totalBaseRewardWeight',
                     formatter: (_value) => formatNumberByLocale(WEIToFTM(_value), 1, 2),
-                    css: {textAlign: 'right'}
+                    cssClass: 'align-end',
                 },*/
                 {
                     name: 'fee',
                     label: this.$t('epoch.total_fee') + ' (FTM)',
                     itemProp: 'epoch.epochFee',
                     formatter: (_value) => WEIToFTM(_value),
-                    css: {textAlign: 'right'}
+                    cssClass: 'align-end',
                 },
                 /*{
                     name: 'txReward',
                     label: this.$t('epoch.total_tx_reward') + ' (FTM)',
                     itemProp: 'epoch.totalTxRewardWeight',
                     formatter: (_value) => formatNumberByLocale(WEIToFTM(_value), 1, 2),
-                    css: {textAlign: 'right'}
+                    cssClass: 'align-end',
                 }*/
             ]
         };

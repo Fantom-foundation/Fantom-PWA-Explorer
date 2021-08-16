@@ -169,7 +169,7 @@
                         label: this.$t('delegation_list_dt.amount'),
                         itemProp: 'delegation.amount',
                         formatter: _value => WEIToFTM(_value),
-                        css: {textAlign: 'right'}
+                        cssClass: 'align-end',
                     }
                 ]
             }

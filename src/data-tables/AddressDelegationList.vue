@@ -209,9 +209,7 @@ export default {
                     itemProp: 'delegation.amount',
                     formatter: (_value) => WEIToFTM(_value),
                     width: '160px',
-                    css: {
-                        textAlign: 'right',
-                    },
+                    cssClass: 'align-end',
                 },
                 {
                     name: 'rewards',
@@ -219,9 +217,7 @@ export default {
                     itemProp: 'delegation.pendingRewards',
                     formatter: (_value) => (_value ? WEIToFTM(_value.amount) : '-'),
                     width: '200px',
-                    css: {
-                        textAlign: 'right',
-                    },
+                    cssClass: 'align-end',
                 },
                 {
                     name: '',
