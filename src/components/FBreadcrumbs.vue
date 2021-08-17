@@ -3,7 +3,7 @@
         <li v-for="item in cItems" :key="item.id">
             <router-link v-if="item.name" :to="{name: item.name}">{{ item.title }}</router-link>
             <span v-else class="curr-route">{{ item.title }}</span>
-            <icon v-if="item.name" data="@/assets/svg/angle-right.svg" color="#999"></icon>
+            <icon v-if="item.name" data="@/assets/svg/angle-right.svg" color="#999" class="rtl-mirror"></icon>
         </li>
     </ul>
 </template>
@@ -51,7 +51,7 @@
 <style lang="scss">
     .f-breadcrumbs {
         color: $grey-color-lighter;
-        text-align: right;
+        text-align: end;
         font-size: 0.9em;
 
         li {
@@ -60,12 +60,12 @@
 
             @include links() {
                 color: inherit;
-                padding-left: 4px;
-                padding-right: 4px;
+                padding-inline-start: 4px;
+                padding-inline-end: 4px;
             }
 
             .curr-route {
-                padding-left: 4px;
+                padding-inline-start: 4px;
             }
         }
     }

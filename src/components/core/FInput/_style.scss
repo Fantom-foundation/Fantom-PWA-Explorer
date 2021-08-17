@@ -39,20 +39,20 @@
 
     &.prefix-slot {
         .inp {
-            padding-left: 0.25rem;
+            padding-inline-start: 0.25rem;
 
             input {
-                padding-left: 0.5rem;
+                padding-inline-start: 0.5rem;
             }
         }
     }
 
     &.suffix-slot {
         .inp {
-            padding-right: 0.25rem;
+            padding-inline-end: 0.25rem;
 
             input {
-                padding-right: 0.5rem;
+                padding-inline-end: 0.5rem;
             }
         }
     }

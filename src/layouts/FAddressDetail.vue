@@ -624,10 +624,10 @@
     .f-address-detail {
         .balance {
             height: calc(100% - 48px);
-            text-align: right;
+            text-align: end;
 
             h3 {
-                text-align: right;
+                text-align: end;
                 margin-bottom: 0;
             }
 

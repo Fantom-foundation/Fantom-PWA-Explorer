@@ -69,7 +69,7 @@
         }
 
         .f-token-value {
-            margin-left: -4px;
+            margin-inline-start: -4px;
         }
     }
 </style>

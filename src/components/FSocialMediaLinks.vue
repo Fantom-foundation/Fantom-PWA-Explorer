@@ -49,7 +49,7 @@
             vertical-align: middle;
 
             &:not(:last-child) {
-                padding-right: 24px;
+                padding-inline-end: 24px;
             }
 
             @include links() {

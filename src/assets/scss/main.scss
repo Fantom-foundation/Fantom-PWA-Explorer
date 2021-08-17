@@ -66,13 +66,13 @@ a:not(.btn):hover {
     }
 
     @include flexbox-rows() {
-        margin-right: $f-data-layout-cols-padding-neg !important;
-        margin-left: $f-data-layout-cols-padding-neg !important;;
+        margin-inline-end: $f-data-layout-cols-padding-neg !important;
+        margin-inline-start: $f-data-layout-cols-padding-neg !important;;
     }
 
     @include flexbox-rows('&') {
-        margin-right: $f-data-layout-cols-padding-neg !important;
-        margin-left: $f-data-layout-cols-padding-neg !important;;
+        margin-inline-end: $f-data-layout-cols-padding-neg !important;
+        margin-inline-start: $f-data-layout-cols-padding-neg !important;;
     }
 
     @include flexbox-cols() {
@@ -112,7 +112,7 @@ a:not(.btn):hover {
 .validator-website {
     svg {
         //opacity: 0.65;
-        margin-left: 4px;
+        margin-inline-start: 4px;
         margin-top: -2px;
     }
 }
@@ -162,7 +162,7 @@ form {
             display: block;
             font-weight: bold;
             padding-bottom: 4px;
-            text-align: left;
+            text-align: start;
         }
     }
 
@@ -170,7 +170,7 @@ form {
         display: block;
         font-weight: bold;
         padding-bottom: 4px;
-        text-align: left;
+        text-align: start;
     }
 }
 
@@ -195,10 +195,10 @@ form {
     padding-top: 16px;
 
     .btn {
-        margin-right: 16px;
+        margin-inline-end: 16px;
 
         &:last-child {
-            margin-right: 0;
+            margin-inline-end: 0;
         }
     }
 }

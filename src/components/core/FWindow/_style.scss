@@ -46,19 +46,19 @@
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-            padding-right: 1rem;
+            padding-inline-end: 1rem;
             outline: none;
 
             h1, h2, h3, h4, h5 {
                 margin-bottom: 0;
                 text-align: center;
-                padding-left: 36px;
+                padding-inline-start: 36px;
             }
         }
 
         .controls {
             white-space: nowrap;
-            margin-left: auto;
+            margin-inline-start: auto;
 
             > * {
                 display: inline-block;

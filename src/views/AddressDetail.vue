@@ -67,11 +67,11 @@ export default {
         strong {
             font-size: 21px;
             font-weight: normal;
-            padding-left: 8px;
+            padding-inline-start: 8px;
         }
 
         .f-copy-button {
-            margin-left: 4px;
+            margin-inline-start: 4px;
         }
     }
 }

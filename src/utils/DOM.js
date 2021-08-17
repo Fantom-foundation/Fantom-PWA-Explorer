@@ -578,3 +578,7 @@ export function parseAlignment(_alignmentStr, _defaultAlignment) {
 
     return alignment;
 }
+
+export function isRTLDir() {
+    return getAttr(document.documentElement, 'dir') === 'rtl' || getAttr(document.body, 'dir') === 'rtl';
+}

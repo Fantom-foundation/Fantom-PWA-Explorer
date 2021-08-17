@@ -37,6 +37,7 @@
     import { clientInfo } from "../utils/client-info.js";
     import {getTypeByStr} from "../utils/transactions.js";
     import FWindow from "./core/FWindow/FWindow.vue";
+    import {isRTLDir} from "@/utils/DOM.js";
 
     export default {
         components: {FWindow},
@@ -63,6 +64,7 @@
                     position: '',
                     top: '',
                     left: '',
+                    right: '',
                     width: '',
                     transform: ''
                 },
@@ -156,17 +158,27 @@
                     return;
                 }
 
+                const RTLDir = isRTLDir();
                 const inlineStyle = this.inlineStyle;
 
                 inlineStyle.position = '';
                 inlineStyle.top = '';
                 inlineStyle.left = '';
+                inlineStyle.right = '';
 
                 const winWidth = window.innerWidth;
                 const parentElemRect = parentElem.getBoundingClientRect();
                 const elRect = this.$el.getBoundingClientRect();
-                const width = (this.cMobileView ? winWidth * 0.98 : (elRect.left - parentElemRect.left + elRect.width));
-                const tx = (this.cMobileView ? elRect.left - winWidth * 0.01 : elRect.left - parentElemRect.left);
+                let width = 0;
+                let tx = 0;
+
+                if (RTLDir) {
+                    width = (this.cMobileView ? winWidth * 0.98 : -(elRect.right - parentElemRect.right + elRect.width));
+                    tx = (this.cMobileView ? elRect.right - winWidth * 0.01 : elRect.right - parentElemRect.right);
+                } else {
+                    width = (this.cMobileView ? winWidth * 0.98 : (elRect.left - parentElemRect.left + elRect.width));
+                    tx = (this.cMobileView ? elRect.left - winWidth * 0.01 : elRect.left - parentElemRect.left);
+                }
                 // const width = parentElemRect.width * 0.98;
                 // const tx = elRect.left - (parentElemRect.left + ((parentElemRect.width - width) / 2));
 
@@ -174,7 +186,13 @@
 
                 inlineStyle.position = 'fixed';
                 inlineStyle.top = `${elRect.top}px`;
-                inlineStyle.left = `${elRect.left}px`;
+                if (RTLDir) {
+                    // inlineStyle.left = `0px`;
+                    inlineStyle.left = `${elRect.right}px`;
+                    // inlineStyle.right = `${elRect.right}px`;
+                } else {
+                    inlineStyle.left = `${elRect.left}px`;
+                }
                 inlineStyle.transform = `translateX(-${tx}px)`;
 
                 inlineStyle.width = `${width}px`;
@@ -198,6 +216,7 @@
                     inlineStyle.position = '';
                     inlineStyle.top = '';
                     inlineStyle.left = '';
+                    inlineStyle.right = '';
                 }, 250);
             },
 
@@ -298,7 +317,7 @@
         input:not(.def):not([type=submit]).large {
             width: 100%;
             height: 3.5rem;
-            padding-right: 48px;
+            padding-inline-end: 48px;
             text-align: center;
             border-radius: 3.5rem !important;
             outline: none;
@@ -331,7 +350,7 @@
             transition: all $transition-length ease;
 
             input:not(.def):not([type=submit]).large {
-                padding-right: 0;
+                padding-inline-end: 0;
 
                 &::placeholder {
                     color: transparent;
@@ -342,10 +361,10 @@
             }
 
             &.expanded {
-                margin-left: 0;
+                margin-inline-start: 0;
 
                 input:not(.def):not([type=submit]).large {
-                    /*padding-right: 48px;*/
+                    /*padding-inline-end: 48px;*/
 
                     &::placeholder {
                         color: var(--f-search-box-input-placeholder-color);
@@ -384,6 +403,6 @@
     }
 
     .search-box-on-anim-end .f-search-box.expandable.expanded input:not(.def):not([type=submit]).large {
-        padding-right: 48px;
+        padding-inline-end: 48px;
     }
 </style>

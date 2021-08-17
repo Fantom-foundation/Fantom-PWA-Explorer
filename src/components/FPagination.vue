@@ -134,10 +134,10 @@
         }
 
         button {
-            margin-right: 4px;
+            margin-inline-end: 4px;
 
             &:last-child {
-                margin-right: 0;
+                margin-inline-end: 0;
             }
         }
     }

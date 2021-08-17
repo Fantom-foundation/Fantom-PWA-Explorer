@@ -122,7 +122,7 @@ select:not(.def) {
     background-position: calc(100% - 12px) 50%;
     background-repeat: no-repeat;
     background-image: var(--f-select-background-image);
-    padding-right: 40px;
+    padding-inline-end: 40px;
 }
 
 select:not(.def).small {

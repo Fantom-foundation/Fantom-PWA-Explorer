@@ -248,7 +248,7 @@
 
             h2 {
                 margin-bottom: 0;
-                padding-right: 16px;
+                padding-inline-end: 16px;
             }
         }
     }

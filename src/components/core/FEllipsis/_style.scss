@@ -9,7 +9,7 @@
 
     &.overflow-start {
         direction: rtl;
-        text-align: left;
+        text-align: start;
     }
 
     &.overflow-middle {
@@ -18,7 +18,7 @@
         .right-chars {
             white-space: nowrap;
         }
-        
+
         &:not(.fixed-char-pos-start) > .left-chars {
             white-space: nowrap;
             overflow: hidden;
@@ -30,7 +30,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             direction: rtl;
-            text-align: left;
+            text-align: start;
         }
 
         &.f-ellipsis-align-right {

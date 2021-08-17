@@ -27,13 +27,13 @@
 
     &.prefix-slot, &.with-icon {
         .f-message-body {
-            padding-left: 8px;
+            padding-inline-start: 8px;
         }
     }
 
     &.suffix-slot {
         .f-message-body {
-            padding-right: 8px;
+            padding-inline-end: 8px;
         }
     }
 }

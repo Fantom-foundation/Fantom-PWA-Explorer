@@ -1,5 +1,5 @@
 ul, ol {
-    padding-left: $lists-padding-left;
+    padding-inline-start: $lists-padding-left;
 }
 
 ul, ul ul {
@@ -13,7 +13,7 @@ ul li::before {
     font-size: 1.1em;
     display: inline-block;
     width: $lists-marker-width;
-    margin-left: -0.8em;
+    margin-inline-start: -0.8em;
 }
 
 ul.list-marker-disc li::before {
@@ -31,7 +31,7 @@ ul.list-marker-square li::before {
 }
 
 ul.no-markers {
-    padding-left: 0;
+    padding-inline-start: 0;
 }
 
 ul.no-markers li::before {

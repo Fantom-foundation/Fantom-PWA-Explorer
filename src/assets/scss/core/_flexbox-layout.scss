@@ -50,7 +50,7 @@
     }
 
     .no-offset-#{$_bp} {
-        margin-left: 0;
+        margin-inline-start: 0;
     }
 
     @include flexbox-rows('', '.collapse-#{$_bp}') {
@@ -80,8 +80,8 @@
 
     //padding: 0 $grid-layout-gutter-width;
     //margin: 0;
-    margin-right: -$grid-layout-gutter-width;
-    margin-left: -$grid-layout-gutter-width;
+    margin-inline-end: -$grid-layout-gutter-width;
+    margin-inline-start: -$grid-layout-gutter-width;
 
     &:not(.no-wrap) {
         flex-wrap: wrap;
@@ -276,8 +276,8 @@
     @include no-row-margins;
 
     @include flexbox-cols('> ') {
-        padding-right: 0;
-        padding-left: 0;
+        padding-inline-end: 0;
+        padding-inline-start: 0;
     }
 }
 
@@ -294,8 +294,8 @@
 
 .no-hor-col-padding {
     @include flexbox-cols('> ') {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
+        padding-inline-start: 0 !important;
+        padding-inline-end: 0 !important;
     }
 }
 /* ?? viz. header.hbs, pridat tam no-row-margins */

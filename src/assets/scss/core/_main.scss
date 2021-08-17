@@ -41,3 +41,9 @@ p {
     outline: 1px solid red;
 }
 */
+
+html[dir=rtl], body[dir=rtl] {
+    .rtl-mirror {
+        transform: scale(-1);
+    }
+}

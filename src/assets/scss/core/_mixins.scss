@@ -59,7 +59,7 @@
             }
 
             .offset-#{$i} {
-                margin-left: #{($i / $_numCols) * 100 + '%'};
+                margin-inline-start: #{($i / $_numCols) * 100 + '%'};
             }
         }
 
@@ -80,7 +80,7 @@
                 }
 
                 .offset-#{$i}-lg {
-                    margin-left: #{($i / $_numCols) * 100 + '%'};
+                    margin-inline-start: #{($i / $_numCols) * 100 + '%'};
                 }
             }
         }
@@ -95,7 +95,7 @@
                 }
 
                 .offset-#{$i}-md {
-                    margin-left: #{($i / $_numCols) * 100 + '%'};
+                    margin-inline-start: #{($i / $_numCols) * 100 + '%'};
                 }
             }
         }
@@ -110,7 +110,7 @@
                 }
 
                 .offset-#{$i}-sm {
-                    margin-left: #{($i / $_numCols) * 100 + '%'};
+                    margin-inline-start: #{($i / $_numCols) * 100 + '%'};
                 }
             }
         }
@@ -212,7 +212,7 @@ $grid-rows-selector: '.row, [class^="row-"], [class*=" row-"]';
 
     label.option#{$_class} > span.radio::before {
         margin-top: -0.5 * $_radioSize;
-        margin-left: -0.5 * $_radioSize;
+        margin-inline-start: -0.5 * $_radioSize;
         width: $_radioSize;
         height: $_radioSize;
     }
@@ -251,8 +251,8 @@ $grid-rows-selector: '.row, [class^="row-"], [class*=" row-"]';
 
 // grid layout
 @mixin no-row-margins() {
-    margin-right: 0;
-    margin-left: 0;
+    margin-inline-end: 0;
+    margin-inline-start: 0;
 }
 
 @mixin links($_prefix: '', $_suffix: '') {

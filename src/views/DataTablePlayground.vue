@@ -22,7 +22,7 @@
             class="f-data-table-body-bg-color"
         >
             <template v-slot:before-table>
-                <div style="text-align: right;padding-bottom: 4px;">
+                <div style="text-align: end;padding-bottom: 4px;">
                     <h3>Complex data table</h3>
                     <f-pagination
                         :total-items="items.length"
@@ -235,7 +235,7 @@
         margin-bottom: 1rem;
 
         button {
-            margin-right: 4px;
+            margin-inline-end: 4px;
             margin-bottom: 4px;
         }
     }

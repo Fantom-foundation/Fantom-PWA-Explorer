@@ -57,10 +57,10 @@
 
         nav {
             ul {
-                text-align: right;
+                text-align: end;
                 li {
                     display: inline-block;
-                    margin-left: 4px;
+                    margin-inline-start: 4px;
 
                     @include links() {
                         color: var(--f-navigation-link-color);
@@ -89,8 +89,8 @@
                     li {
                         @include links() {
                             font-size: 0.9em;
-                            padding-left: 10px;
-                            padding-right: 10px;
+                            padding-inline-start: 10px;
+                            padding-inline-end: 10px;
                         }
                     }
                 }
@@ -104,8 +104,8 @@
                 ul {
                     li {
                         @include links() {
-                            padding-left: 5px;
-                            padding-right: 5px;
+                            padding-inline-start: 5px;
+                            padding-inline-end: 5px;
                         }
                     }
                 }
@@ -120,8 +120,8 @@
                     li {
                         @include links() {
                             font-size: 0.8em;
-                            padding-left: 2px;
-                            padding-right: 2px;
+                            padding-inline-start: 2px;
+                            padding-inline-end: 2px;
                         }
                     }
                 }
@@ -138,8 +138,8 @@
 
                         @include links() {
                             font-size: 1.5em;
-                            padding-left: 20px;
-                            padding-right: 20px;
+                            padding-inline-start: 20px;
+                            padding-inline-end: 20px;
                         }
                     }
                 }

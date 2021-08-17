@@ -2,14 +2,14 @@
     display: inline-flex;
     align-items: center;
     flex-wrap: nowrap;
-    margin-right: 8px;
+    margin-inline-end: 8px;
     font-weight: bold;
 
     .img {
         //display: inline-block;
         //vertical-align: middle;
         //overflow: hidden;
-        margin-right: 8px;
+        margin-inline-end: 8px;
 
         img, svg {
             width: auto;
