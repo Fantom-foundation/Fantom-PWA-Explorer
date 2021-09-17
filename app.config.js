@@ -11,22 +11,32 @@ const appConfig = {
         // list of providers. if one of them is unavailable, another is randomly picked
         providers: [
             {
-                http: 'https://xapi30.fantom.network/api',
+                http: 'https://xapi-nodea.fantom.network/',
                 // for subscriptions
                 ws: '',
             },
             {
-                http: 'https://xapi31.fantom.network/api',
+                http: 'https://xapi-nodeb.fantom.network/',
                 // for subscriptions
                 ws: '',
             },
             {
-                http: 'https://xapi36.fantom.network/api',
+                http: 'https://xapi-nodec.fantom.network/',
                 // for subscriptions
                 ws: '',
             },
             {
-                http: 'https://xapi37.fantom.network/api',
+                http: 'https://xapi-noded.fantom.network/',
+                // for subscriptions
+                ws: '',
+            },
+            {
+                http: 'https://xapi-nodee.fantom.network/',
+                // for subscriptions
+                ws: '',
+            },
+            {
+                http: 'https://xapi-nodef.fantom.network/',
                 // for subscriptions
                 ws: '',
             },
