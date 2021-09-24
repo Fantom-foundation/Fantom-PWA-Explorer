@@ -138,6 +138,24 @@
                         <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span>
                     </h2>
                 </template>
+                <template #erc20transactions>
+                    <h2>
+                        {{ $t('view_address_detail.erc20_transactions') }}
+                        <span v-if="dRecordsCount" class="f-records-count">({{ erc20RecordsCount }})</span>
+                    </h2>
+                </template>
+                <template #erc721transactions>
+                    <h2>
+                        {{ $t('view_address_detail.erc721_transactions') }}
+                        <span v-if="dRecordsCount" class="f-records-count">({{ erc721RecordsCount }})</span>
+                    </h2>
+                </template>
+                <template #erc1155transactions>
+                    <h2>
+                        {{ $t('view_address_detail.erc1155_transactions') }}
+                        <span v-if="dRecordsCount" class="f-records-count">({{ erc1155RecordsCount }})</span>
+                    </h2>
+                </template>
                 <template #assets>
                     <h2>
                         {{ $t('view_address_detail.assets') }}
@@ -158,6 +176,15 @@
                         :address-col="id"
                         @fetch-more="onFetchMore"
                     ></f-transaction-list>
+                </f-tab>
+                <f-tab title-slot="erc20transactions">
+                    <erc20-transation-list :address="id" :delay="100" @records-count="onErc20RecordsCount" />
+                </f-tab>
+                <f-tab title-slot="erc721transactions">
+                    <erc721-transation-list :address="id" :delay="110" @records-count="onErc721RecordsCount" />
+                </f-tab>
+                <f-tab title-slot="erc1155transactions">
+                    <erc1155-transation-list :address="id" :delay="120" @records-count="onErc1155RecordsCount" />
                 </f-tab>
                 <f-tab title-slot="assets">
                     <address-asset-list :tokens="tokens" :f-mint-account="fMintAccount" @records-count="onAssetsRecordsCount" />
@@ -184,9 +211,15 @@
     import AddressDelegationList from "@/data-tables/AddressDelegationList.vue";
     import AddressAssetList from "@/data-tables/AddressAssetList.vue";
     import FTMTokenValue from "@/components/core/FTMTokenValue/FTMTokenValue.vue";
+    import Erc20TransationList from "@/data-tables/Erc20TransationList.vue";
+    import Erc721TransationList from "@/data-tables/Erc721TransationList.vue";
+    import Erc1155TransationList from "@/data-tables/Erc1155TransationList.vue";
 
     export default {
         components: {
+            Erc1155TransationList,
+            Erc721TransationList,
+            Erc20TransationList,
             FTMTokenValue,
             AddressAssetList,
             AddressDelegationList,
@@ -305,6 +338,9 @@
                 /** @type {DefiToken[]} */
                 tokens: [],
                 dRecordsCount: 0,
+                erc20RecordsCount: 0,
+                erc721RecordsCount: 0,
+                erc1155RecordsCount: 0,
                 assetsRecordsCount: 0,
                 delegationsRecordsCount: 0,
                 dAccountByAddressError: '',
@@ -583,6 +619,18 @@
                 return FTMToUSD(WEIToFTM(_value), this.$store.state.tokenPrice);
             },
 
+            onErc20RecordsCount(_count) {
+                this.erc20RecordsCount = _count;
+            },
+
+            onErc721RecordsCount(_count) {
+                this.erc721RecordsCount = _count;
+            },
+
+            onErc1155RecordsCount(_count) {
+                this.erc1155RecordsCount = _count;
+            },
+
             onAssetsRecordsCount(_count) {
                 this.assetsRecordsCount = _count;
             },
@@ -652,6 +700,12 @@
         }
 
         > .f-card {
+        }
+
+        .f-tabs {
+            h2 {
+                font-size: 18px;
+            }
         }
     }
 </style>

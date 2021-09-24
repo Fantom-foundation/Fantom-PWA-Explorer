@@ -4,7 +4,7 @@
             <icon v-if="svgIcon" :data="svgIcon" original />
             <img v-else-if="token.logoUrl || token.logoURL" :src="token.logoUrl || token.logoURL" class="not-fluid" :alt="$defi.getTokenSymbol(token)" />
         </span>
-        <span>{{ $defi.getTokenSymbol(token) }}</span>
+        <span v-if="!noSymbol">{{ $defi.getTokenSymbol(token) }}</span>
     </div>
 </template>
 
@@ -37,6 +37,10 @@ export default {
             type: String,
             default: '40px',
         },
+        noSymbol: {
+            type: Boolean,
+            default: false,
+        }
     },
 
     data() {

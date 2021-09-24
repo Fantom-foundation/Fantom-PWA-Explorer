@@ -215,6 +215,16 @@ form {
     font-size: 0.6em;
 }
 
+.smalltoken {
+    display: flex;
+    align-items: center;
+    //justify-content: center;
+
+    .f-crypto-symbol {
+        margin: 0;
+    }
+}
+
 @include media-max($bp-large) {
     .margin-bottom-menu {
         margin-bottom: 30px;

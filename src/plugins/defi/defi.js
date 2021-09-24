@@ -825,7 +825,7 @@ export class DeFi {
         // const data = await this.apolloClient.query(query);
         const data = await fFetch.fetchGQLQuery(query, 'erc20Assets');
 
-        return data ? data.data.erc20Assets : [] || [];
+        return data && data.data ? data.data.erc20Assets : [] || [];
     }
 
     /**

@@ -35,6 +35,8 @@
     "hash": "Hash",
     "assets": "Assets",
     "asset": "Asset",
+    "token": "Token",
+    "token_id": "Token Id",
 
     "navigation": [
         {
@@ -132,6 +134,9 @@
         "delegated": "Delegated",
         "delegations": "Delegations",
         "transactions": "@:transactions",
+        "erc20_transactions": "ERC20 Token Txns",
+        "erc721_transactions": "ERC721 Token Txns",
+        "erc1155_transactions": "ERC1155 Token Txns",
         "pending_rewards": "Pending Rewards",
         "stashed_rewards": "Stashed Rewards",
         "claimed_rewards": "Claimed Rewards"
