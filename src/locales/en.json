@@ -134,9 +134,9 @@
         "delegated": "Delegated",
         "delegations": "Delegations",
         "transactions": "@:transactions",
-        "erc20_transactions": "ERC20 Token Txns",
-        "erc721_transactions": "ERC721 Token Txns",
-        "erc1155_transactions": "ERC1155 Token Txns",
+        "erc20_transactions": "ERC20 Txns",
+        "erc721_transactions": "ERC721 Txns",
+        "erc1155_transactions": "ERC1155 Txns",
         "pending_rewards": "Pending Rewards",
         "stashed_rewards": "Stashed Rewards",
         "claimed_rewards": "Claimed Rewards"
