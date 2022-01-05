@@ -197,7 +197,7 @@
                         }
 
                         if (remove.length > 0) {
-                            remove.sort().reverse();
+                            remove.sort(this.sortDesc)
                             remove.forEach((_idx) => {
                                 data.splice(_idx, 1);
                             })
@@ -318,6 +318,10 @@
         },
 
         methods: {
+            sortDesc(a, b) {
+                return b - a;
+            },
+
             WEIToFTM,
             timestampToDate,
             numToFixed,
