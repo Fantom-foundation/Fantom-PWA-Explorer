@@ -51,12 +51,12 @@
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-6 f-row-label">{{ column.label }}</div>
                         <div class="col break-word">
-                            <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
+<!--                            <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>-->
                             <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value | formatHash }}</router-link>
                         </div>
                     </div>
                     <template v-else>
-                        <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>
+<!--                        <div v-if="item.isOffline" class="offline">{{ $t('view_validator_list.offline') }}</div>-->
                         <router-link :to="{name: 'validator-detail', params: {address: value}}" :title="value">{{ value | formatHash }}</router-link>
                     </template>
                 </template>
@@ -126,6 +126,7 @@
                             stakerAddress
                             isOffline
                             isCheater
+                            isActive
                             createdTime
                             stake
                             totalStake
@@ -149,7 +150,8 @@
                     let data;
                     const offline = [];
                     const flagged = [];
-                    const remove = [];
+                    const inactive = [];
+                    let remove = [];
                     const tUnknown = this.$t('view_validator_list.unknown');
 
                     if (_key === 'stakers') {
@@ -178,6 +180,7 @@
                             }
                         });
 
+                        // offline validators
                         if (offline.length > 0) {
                             offline.forEach((_idx, _index) => {
                                 remove.push(_idx);
@@ -187,6 +190,7 @@
                             this.$emit('validator-list-offline', offline);
                         }
 
+                        // flagged validators
                         if (flagged.length > 0) {
                             flagged.forEach((_idx, _index) => {
                                 remove.push(_idx);
@@ -197,11 +201,22 @@
                         }
 
                         if (remove.length > 0) {
-                            remove.sort(this.sortDesc)
-                            remove.forEach((_idx) => {
-                                data.splice(_idx, 1);
-                            })
+                            this.removeItemsByIndices(data, remove);
+                        }
 
+                        // inactive validators
+                        remove = [];
+                        data.forEach((_item, _idx) => {
+                            if (!_item.isActive) {
+                                remove.push(_idx);
+                                inactive.push(cloneObject(data[_idx]));
+                            }
+                        });
+
+                        if (inactive.length > 0) {
+                            this.removeItemsByIndices(data, remove);
+
+                            this.$emit('validator-list-inactive', inactive);
                         }
 
                         this.dItems = data;
@@ -320,6 +335,13 @@
         methods: {
             sortDesc(a, b) {
                 return b - a;
+            },
+
+            removeItemsByIndices(_array = [], _indices = []) {
+                _indices.sort(this.sortDesc)
+                _indices.forEach((_idx) => {
+                    _array.splice(_idx, 1);
+                })
             },
 
             WEIToFTM,

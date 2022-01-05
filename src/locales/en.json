@@ -176,7 +176,8 @@
         "offline": "Offline",
         "unknown": "@:unknown",
         "downtime": "Downtime",
-        "flagged": "Flagged"
+        "flagged": "Flagged",
+        "inactive": "Inactive"
     },
     "view_assets": {
         "title": "@:assets",

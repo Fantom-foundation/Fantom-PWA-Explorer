@@ -103,26 +103,27 @@
                 @validator-list-totals="onValidatorListTotals"
                 @validator-list-offline="onValidatorListOffline"
                 @validator-list-flagged="onValidatorListFlagged"
+                @validator-list-inactive="onValidatorListInactive"
             >
             </f-validator-list>
+        </div>
+
+        <div class="f-subsection" v-if="dInactiveItems.length">
+            <h2 class="h1">{{ $t('view_validator_list.inactive') }} <span class="f-records-count">({{ dInactiveItems.length }})</span></h2>
+
+            <f-validator-list :items="dInactiveItems" />
         </div>
 
         <div class="f-subsection" v-if="dOfflineItems.length">
             <h2 class="h1">{{ $t('view_validator_list.offline') }} <span class="f-records-count">({{ dOfflineItems.length }})</span></h2>
 
-            <f-validator-list
-                :items="dOfflineItems"
-            >
-            </f-validator-list>
+            <f-validator-list :items="dOfflineItems" />
         </div>
 
         <div class="f-subsection" v-if="dFlaggedItems.length">
             <h2 class="h1">{{ $t('view_validator_list.flagged') }} <span class="f-records-count">({{ dFlaggedItems.length }})</span></h2>
 
-            <f-validator-list
-                :items="dFlaggedItems"
-            >
-            </f-validator-list>
+            <f-validator-list :items="dFlaggedItems" />
         </div>
     </div>
 </template>
@@ -211,6 +212,7 @@
                 dItems: [],
                 dOfflineItems: [],
                 dFlaggedItems: [],
+                dInactiveItems: [],
                 dValidatorsInfoError: '',
                 dTotals: {},
                 dTotalSupply: 0,
@@ -293,6 +295,10 @@
 
             onValidatorListFlagged(_flagged) {
                 this.dFlaggedItems = _flagged;
+            },
+
+            onValidatorListInactive(_inactive) {
+                this.dInactiveItems = _inactive;
             },
 
             WEIToFTM,
