@@ -74,9 +74,6 @@
                                     <f-intersection-observer :root-margin="`${infiniteScrollDistance}px 0px`" @entry="onEntry" class="f-loading-more">
                                         <pulse-loader color="#1969ff"></pulse-loader>
                                     </f-intersection-observer>
-<!--                                    <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
-                                        <pulse-loader color="#1969ff"></pulse-loader>
-                                    </div>-->
                                 </td>
                             </tr>
 
@@ -126,9 +123,6 @@
                         <f-intersection-observer :root-margin="`${infiniteScrollDistance}px 0px`" @entry="onEntry" class="f-loading-more">
                             <pulse-loader color="#1969ff"></pulse-loader>
                         </f-intersection-observer>
-<!--                        <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
-                            <pulse-loader color="#1969ff"></pulse-loader>
-                        </div>-->
                     </div>
 
                     <div v-if="loading && (!cItems.length || forceLoading)">
@@ -320,12 +314,6 @@ export default {
             dId: `tbl${this._uid}`,
             dCss: '',
             dPagination: {},
-            dObserveVisibilityOptions: {
-                callback: this.fetchMore,
-                intersection: {
-                    rootMargin: `${this.infiniteScrollDistance}px`,
-                },
-            },
             dVisibleColumnsNum: 0,
             // dItems: this.items
         };
@@ -681,14 +669,11 @@ export default {
             this.dPagination = cloneObject(_data.detail);
         },
 
+        /**
+         * @param {IntersectionObserverEntry} _entry
+         */
         onEntry(_entry) {
-            const visible = _entry.isIntersecting;
-
-            this.$emit('loader-visibility', visible);
-
-            if (visible) {
-                this.$emit('fetch-more');
-            }
+            this.fetchMore(_entry.isIntersecting);
         },
 
         /**
