@@ -5,7 +5,6 @@ import {apolloProvider, apolloClient} from "./plugins/apollo-provider.js";
 import i18n from './plugins/i18n';
 import './plugins/vue-timeago.js';
 import './plugins/vue-svgicon.js';
-import './plugins/vue-observe-visibility.js';
 import './plugins/vue-async-computed.js';
 import './plugins/dayjs.js';
 import {store} from "./store";

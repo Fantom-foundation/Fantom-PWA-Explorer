@@ -71,9 +71,12 @@
                         <tfoot>
                             <tr v-if="infiniteScroll && cItems.length" v-show="!disableInfiniteScroll">
                                 <td :colspan="dVisibleColumnsNum">
-                                    <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
+                                    <f-intersection-observer :root-margin="`${infiniteScrollDistance}px 0px`" @entry="onEntry" class="f-loading-more">
                                         <pulse-loader color="#1969ff"></pulse-loader>
-                                    </div>
+                                    </f-intersection-observer>
+<!--                                    <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
+                                        <pulse-loader color="#1969ff"></pulse-loader>
+                                    </div>-->
                                 </td>
                             </tr>
 
@@ -120,9 +123,12 @@
                     </div>
 
                     <div v-if="infiniteScroll && cItems.length" v-show="!disableInfiniteScroll">
-                        <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
+                        <f-intersection-observer :root-margin="`${infiniteScrollDistance}px 0px`" @entry="onEntry" class="f-loading-more">
                             <pulse-loader color="#1969ff"></pulse-loader>
-                        </div>
+                        </f-intersection-observer>
+<!--                        <div v-observe-visibility="dObserveVisibilityOptions" class="f-loading-more">
+                            <pulse-loader color="#1969ff"></pulse-loader>
+                        </div>-->
                     </div>
 
                     <div v-if="loading && (!cItems.length || forceLoading)">
@@ -150,9 +156,11 @@ import events from '../../../mixins/events.js';
 import FCard from '../FCard/FCard.vue';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 import { isAriaAction } from '@/utils/aria.js';
+import FIntersectionObserver from "@/components/core/FIntersectionObserver/FIntersectionObserver.vue";
 
 export default {
     components: {
+        FIntersectionObserver,
         FCard,
         FHeadStyle,
         FPagination,
@@ -241,7 +249,7 @@ export default {
          */
         infiniteScrollDistance: {
             type: Number,
-            default: 1100,
+            default: 800,
         },
 
         /**  */
@@ -671,6 +679,16 @@ export default {
          */
         onPageChange(_data) {
             this.dPagination = cloneObject(_data.detail);
+        },
+
+        onEntry(_entry) {
+            const visible = _entry.isIntersecting;
+
+            this.$emit('loader-visibility', visible);
+
+            if (visible) {
+                this.$emit('fetch-more');
+            }
         },
 
         /**
