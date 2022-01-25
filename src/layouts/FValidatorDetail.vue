@@ -31,7 +31,11 @@
 
                 <div class="row no-collapse">
                     <div class="col-4 f-row-label">{{ $t('view_validator_detail.address') }}</div>
-                    <div class="col"><div class="break-word">{{ address }}</div></div>
+                    <div class="col">
+                        <div class="break-word">
+                            <router-link :to="{name: 'address-detail', params: {id: address}}">{{ address }}</router-link>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row no-collapse">
