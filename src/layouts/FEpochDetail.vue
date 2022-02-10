@@ -81,7 +81,7 @@ export default {
             `,
             variables() {
                 return {
-                    number: `0x${parseInt(this.id).toString(16)}`
+                    id: `0x${parseInt(this.id).toString(16)}`
                 }
             },
             error(_error) {
