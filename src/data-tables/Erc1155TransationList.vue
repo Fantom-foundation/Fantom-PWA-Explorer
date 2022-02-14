@@ -10,7 +10,7 @@
             :disable-infinite-scroll="!pageInfo.hasNext"
             :mobile-view="cMobileView"
             infinite-scroll
-            first-m-v-column-width="6"
+            first-m-v-column-width="5"
             class="f-data-table-body-bg-color"
             @fetch-more="fetchMore"
         >
@@ -68,6 +68,7 @@ import FDataTable from '../components/core/FDataTable/FDataTable.vue';
 import {formatHexToInt, timestampToDate} from "@/filters.js";
 import {cloneObject, getNestedProp} from '@/utils';
 import gql from "graphql-tag";
+import {ERC1155_TRANSACTION_TYPE} from "@/constants/transaction-types.js";
 
 export default {
     name: 'Erc1155TransationList',
@@ -130,6 +131,15 @@ export default {
                         return parseInt(value, 16);
                     },
                     width: '100px',
+                },
+                {
+                    name: 'type',
+                    label: 'Type',
+                    itemProp: 'trx.trxType',
+                    width: '120px',
+                    formatter: (value) => {
+                        return this.$t(ERC1155_TRANSACTION_TYPE[value] || '');
+                    },
                 },
                 {
                     name: 'token',

@@ -10,7 +10,7 @@
             :disable-infinite-scroll="!pageInfo.hasNext"
             :mobile-view="cMobileView"
             infinite-scroll
-            first-m-v-column-width="6"
+            first-m-v-column-width="5"
             class="f-data-table-body-bg-color"
             @fetch-more="fetchMore"
         >
@@ -106,6 +106,7 @@ import gql from "graphql-tag";
 // import {WEIToFTM} from "@/utils/transactions.js";
 import FAccountTransactionAmount from "@/components/FAccountTransactionAmount.vue";
 import FTokenValue from "@/components/core/FTokenValue/FTokenValue.vue";
+import {ERC721_TRANSACTION_TYPE} from "@/constants/transaction-types.js";
 // import { stringSort } from '../utils/array-sorting.js';
 // import { formatNumberByLocale } from '../filters.js';
 
@@ -170,6 +171,15 @@ export default {
                         return parseInt(value, 16);
                     },
                     width: '100px',
+                },
+                {
+                    name: 'type',
+                    label: 'Type',
+                    itemProp: 'trx.trxType',
+                    width: '120px',
+                    formatter: (value) => {
+                        return this.$t(ERC721_TRANSACTION_TYPE[value] || '');
+                    },
                 },
                 {
                     name: 'token',
@@ -273,6 +283,7 @@ export default {
                                         amount
                                         timeStamp
                                         tokenId
+                                        trxType
                                         token {
                                             address
                                             name

@@ -37,6 +37,12 @@
     "asset": "Asset",
     "token": "Token",
     "token_id": "Token Id",
+    "transfer": "Transfer",
+    "mint": "Mint",
+    "burn": "Burn",
+    "approval": "Approval",
+    "approval_for_all": "Approval for all",
+    "other": "Other",
 
     "navigation": [
         {
