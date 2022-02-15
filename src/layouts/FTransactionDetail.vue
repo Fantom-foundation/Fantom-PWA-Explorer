@@ -85,10 +85,12 @@
                         <div class="col-4 f-row-label">{{ $t('view_transaction_detail.input_data') }}</div>
                         <div class="col"><div class="break-word input-data" v-show="cTransaction">{{  encodeURIComponent(cTransaction.inputData) }}</div></div>
                     </div>
-                    <div class="row no-collapse">
-                        <div class="col-4 f-row-label">{{ $t('view_transaction_detail.token_txs') }}</div>
-                    </div>
-                    <token-transactions-list v-if="cTransaction" :token-transactions="cTransaction.tokenTransactions" />
+                    <template v-if="cTransaction.tokenTransactions.length !== 0">
+                        <div class="row no-collapse">
+                            <div class="col-4 f-row-label">{{ $t('view_transaction_detail.token_txs') }}</div>
+                        </div>
+                        <token-transactions-list v-if="cTransaction" :token-transactions="cTransaction.tokenTransactions" />
+                    </template>
                 </template>
             </template>
             <template v-else>
