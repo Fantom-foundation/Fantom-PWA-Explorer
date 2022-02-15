@@ -71,7 +71,6 @@ export default {
 <style lang="scss">
 .token-transaction-item {
     display: flex;
-    margin-left: 200px;
     align-items: center;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -92,7 +91,6 @@ export default {
     .txType {
         color: var(--f-success-color);
     }
-
 
     .subrow {
         height: auto !important;
@@ -117,9 +115,5 @@ export default {
             }
         }
     }
-}
-
-.tokentxs {
-    margin-top: -20px;
 }
 </style>

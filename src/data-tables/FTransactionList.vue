@@ -540,9 +540,20 @@
     }
 </script>
 
-<style>
-.tokentxstd {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+<style lang="scss">
+.transaction-list-dt {
+
+    .tokentxstd {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .tokentxs {
+        margin-top: -20px;
+    }
+
+    .token-transaction-item {
+        margin-left: 200px;
+    }
 }
 </style>

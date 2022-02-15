@@ -126,7 +126,8 @@
         "gas_price": "Gas Price",
         "transaction_fee": "Transaction Fee",
         "input_data": "Input Data",
-        "nonce": "Nonce"
+        "nonce": "Nonce",
+        "token_txs": "Nested token transactions"
     },
     "view_address_detail": {
         "title": "Address",
