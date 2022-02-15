@@ -100,20 +100,5 @@ export default {
             vertical-align: top !important;
         }
     }
-
-    .mobile-item {
-        .tokentxs {
-            margin-top: 0;
-
-            .token-transaction-item {
-                line-height: 0.8;
-                margin-bottom: 16px;
-
-                a {
-                    max-width: 120px;
-                }
-            }
-        }
-    }
 }
 </style>

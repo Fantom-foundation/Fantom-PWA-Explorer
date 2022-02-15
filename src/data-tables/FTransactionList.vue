@@ -543,17 +543,32 @@
 <style lang="scss">
 .transaction-list-dt {
 
-    .tokentxstd {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-    }
-
     .tokentxs {
         margin-top: -20px;
     }
 
+    .tokentxs summary {
+        cursor: pointer;
+    }
+
     .token-transaction-item {
         margin-left: 200px;
+    }
+
+    .mobile-item {
+        .tokentxs {
+            margin-top: 0;
+
+            .token-transaction-item {
+                line-height: 0.8;
+                margin-bottom: 16px;
+                margin-left: 0;
+
+                a {
+                    max-width: 120px;
+                }
+            }
+        }
     }
 }
 </style>
