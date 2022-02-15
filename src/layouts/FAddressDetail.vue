@@ -289,6 +289,19 @@
                                             number
                                             timestamp
                                         }
+                                        tokenTransactions {
+                                            trxIndex
+                                            tokenAddress
+                                            tokenName
+                                            tokenSymbol
+                                            tokenType
+                                            tokenId
+                                            tokenDecimals
+                                            type
+                                            sender
+                                            recipient
+                                            amount
+                                        }
                                     }
                                 }
                             }

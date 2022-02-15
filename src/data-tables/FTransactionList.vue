@@ -136,6 +136,36 @@
                                 </template>
                             </template>
                 -->
+
+                <template #subrow="{ item, columns, visibleColumnsNum, style, tabindex, dtItemId, mobileView }">
+                    <template v-if="!mobileView">
+                        <tr
+                            v-if="filterApprovals(item.transaction.tokenTransactions).length > 0"
+                            :style="style"
+                            :tabindex="tabindex"
+                            :data-dt-item-id="dtItemId"
+                            class="subrow"
+                        >
+                            <td :colspan="visibleColumnsNum" class="tokentxstd">
+                                <div class="tokentxs">
+                                    <token-transactions-list
+                                        :token-transactions="filterApprovals(item.transaction.tokenTransactions)"
+                                        :address="addressCol"
+                                    />
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                    <template v-else>
+                        <details v-if="filterApprovals(item.transaction.tokenTransactions).length > 0" class="tokentxs">
+                            <summary>Details</summary>
+                            <token-transactions-list
+                                :token-transactions="filterApprovals(item.transaction.tokenTransactions)"
+                                :address="addressCol"
+                            />
+                        </details>
+                    </template>
+                </template>
             </f-data-table>
         </template>
 
@@ -153,12 +183,14 @@
     import {getNestedProp} from "../utils";
     import FAccountTransactionAmount from "../components/FAccountTransactionAmount.vue";
     import FTokenValue from "@/components/core/FTokenValue/FTokenValue.vue";
+    import TokenTransactionsList from "@/data-tables/TokenTransactionsList";
 
     export default {
         components: {
             FTokenValue,
             FAccountTransactionAmount,
-            FDataTable
+            FDataTable,
+            TokenTransactionsList,
         },
 
         props: {
@@ -245,6 +277,19 @@
                                     block {
                                         number
                                         timestamp
+                                    }
+                                    tokenTransactions {
+                                        trxIndex
+                                        tokenAddress
+                                        tokenName
+                                        tokenSymbol
+                                        tokenType
+                                        tokenId
+                                        tokenDecimals
+                                        type
+                                        sender
+                                        recipient
+                                        amount
                                     }
                                 }
                             }
@@ -483,6 +528,10 @@
                 }
             },
 
+            filterApprovals(tokenTransactions) {
+                return tokenTransactions.filter(tx => tx.type !== 'APPROVAL');
+            },
+
             WEIToFTM,
             timestampToDate,
             numToFixed,
@@ -490,3 +539,10 @@
         }
     }
 </script>
+
+<style>
+.tokentxstd {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+</style>
