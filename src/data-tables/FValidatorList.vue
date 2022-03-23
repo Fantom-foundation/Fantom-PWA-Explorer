@@ -96,6 +96,7 @@
     import {formatHexToInt, timestampToDate, numToFixed, formatNumberByLocale, clampDowntime} from "../filters.js";
     import {sortByHex, sortByLocaleString, sortByString} from "../utils/array-sorting.js";
     import {cloneObject} from "@/utils";
+    import {shuffle} from "@/utils/array.js";
 
     export default {
         components: {
@@ -156,6 +157,8 @@
 
                     if (_key === 'stakers') {
                         data = [..._data.data.stakers];
+
+                        shuffle(data);
 
                         data.forEach((_item, _idx) => {
                             // _item.total_staked = WEIToFTM(_item.stake) + WEIToFTM(_item.delegatedMe);
@@ -299,7 +302,7 @@
                         label: this.$t('view_validator_list.total_staked'),
                         formatter: _value => formatNumberByLocale(numToFixed(WEIToFTM(_value), 0), 0),
                         sortFunc: sortByHex,
-                        sortDir: 'desc',
+                        // sortDir: 'desc',
                         cssClass: 'align-end',
                     },
 /*
