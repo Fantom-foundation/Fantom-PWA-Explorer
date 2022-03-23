@@ -6,6 +6,7 @@
                 :items="dItems"
                 :mobile-view="cMobileView"
                 :loading="cLoading"
+                :code="code"
                 first-m-v-column-width="6"
                 fixed-header
                 class="f-data-table-body-bg-color"
@@ -115,7 +116,14 @@
                 default() {
                     return [];
                 }
-            }
+            },
+            /**
+             * Grid's code used for identification in local storage
+             */
+            code: {
+                type: String,
+                default: '',
+            },
         },
 
         apollo: {
