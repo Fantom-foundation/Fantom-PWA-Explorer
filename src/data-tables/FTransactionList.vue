@@ -140,7 +140,7 @@
                 <template #subrow="{ item, columns, visibleColumnsNum, style, tabindex, dtItemId, mobileView }">
                     <template v-if="!mobileView">
                         <tr
-                            v-if="filterApprovals(item.transaction.tokenTransactions).length > 0"
+                            v-if="filterApprovals(item.transaction && item.transaction.tokenTransactions).length > 0"
                             :style="style"
                             :tabindex="tabindex"
                             :data-dt-item-id="dtItemId"
@@ -157,7 +157,7 @@
                         </tr>
                     </template>
                     <template v-else>
-                        <details v-if="filterApprovals(item.transaction.tokenTransactions).length > 0" class="tokentxs">
+                        <details v-if="filterApprovals(item.transaction && item.transaction.tokenTransactions).length > 0" class="tokentxs">
                             <summary>Details</summary>
                             <token-transactions-list
                                 :token-transactions="filterApprovals(item.transaction.tokenTransactions)"
@@ -529,7 +529,7 @@
             },
 
             filterApprovals(tokenTransactions) {
-                return tokenTransactions.filter(tx => tx.type !== 'APPROVAL');
+                return (tokenTransactions || []).filter(tx => tx.type !== 'APPROVAL');
             },
 
             WEIToFTM,

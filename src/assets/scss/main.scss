@@ -225,6 +225,11 @@ form {
     }
 }
 
+.number {
+    font-family: sans-serif;
+    font-variant-numeric: tabular-nums;
+}
+
 @include media-max($bp-large) {
     .margin-bottom-menu {
         margin-bottom: 30px;

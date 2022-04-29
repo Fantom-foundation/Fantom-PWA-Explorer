@@ -93,6 +93,14 @@
                 </f-card>
             </div>
         </div>
+        <div class="row mat-5">
+            <div class="col">
+                <f-card class="half-padding">
+                    <h2 class="h3">Total FTM Burned</h2>
+                    <BurnedFTM />
+                </f-card>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -107,11 +115,13 @@
     import TransactionVolumes from "@/components/TransactionVolumes.vue";
     import FListbox from "@/components/core/FListbox/FListbox.vue";
     import {formatNumberByLocale} from "@/filters.js";
+    import BurnedFTM from "@/components/BurnedFTM.vue";
 
     export default {
         mixins: [pollingMixin],
 
         components: {
+            BurnedFTM,
             FListbox,
             TransactionVolumes,
             HomeTransactionList,
