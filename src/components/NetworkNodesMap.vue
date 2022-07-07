@@ -18,7 +18,6 @@ import WorldMap from "@/components/WorldMap/WorldMap.vue";
 import gql from "graphql-tag";
 import {COUNTRIES_BY_NAME} from "@/components/WorldMap/countries_by_name.js";
 import {formatNumberByLocale} from "@/filters.js";
-import {tmpResponse} from "@/components/WorldMap/tmp-response.js";
 
 export default {
     name: "NetworkNodesMap",
@@ -52,7 +51,6 @@ export default {
         async loadNetworkNodes() {
             const countries = COUNTRIES_BY_NAME();
             const nodes = await this.fetchNetworkNodes();
-            // const nodes = await this.getTMPNetworkNodes();
             const networkNodes = [];
 
             nodes.forEach(node => {
@@ -101,14 +99,6 @@ export default {
                 fetchPolicy: 'network-only',
                 // client: 'test'
             });
-
-            this.totalCount = this.formatNumber(data.data.networkNodesAggregated.totalCount);
-
-            return data.data.networkNodesAggregated.groups || [];
-        },
-
-        async getTMPNetworkNodes() {
-            const data = tmpResponse;
 
             this.totalCount = this.formatNumber(data.data.networkNodesAggregated.totalCount);
 
