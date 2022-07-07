@@ -234,4 +234,13 @@
             --flistbox-item-background-color: none;
         }
     }
+
+    .worldmap {
+        --worldmap-fill: #444C66;
+        --worldmap-stroke: #000;
+    }
+
+    .networknodesmap {
+        --networknodesmap-node-color: rgba(78, 136, 194, 0.8);
+    }
 }

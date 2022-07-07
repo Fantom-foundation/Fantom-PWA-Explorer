@@ -47,7 +47,7 @@ const appConfig = {
     //
     useTestnet: false,
     // use 'hash' mode in vue router
-    routerHashMode: false,
+    routerHashMode: true,
     // testnet config
     testnet: {
         // list of providers. if one of them is unavailable, another is randomly picked
@@ -72,7 +72,11 @@ const appConfig = {
         outputDir: "dist"
     },
     // downtime threshold in seconds. downtime values less than this threshold will be displayed as 0
-    downtimeThreshold: 10
+    downtimeThreshold: 10,
+    // feature flags
+    flags: {
+        networkNodesMap: true,
+    },
 };
 
 if (appConfig.useTestnet) {

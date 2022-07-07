@@ -93,6 +93,14 @@
                 </f-card>
             </div>
         </div>
+        <div v-if="showNetworkNodesMap" class="row mat-5">
+            <div class="col">
+                <f-card class="half-padding">
+                    <h2 class="h3">Network Nodes</h2>
+                    <network-nodes-map />
+                </f-card>
+            </div>
+        </div>
         <div class="row mat-5">
             <div class="col">
                 <f-card class="half-padding">
@@ -116,11 +124,14 @@
     import FListbox from "@/components/core/FListbox/FListbox.vue";
     import {formatNumberByLocale} from "@/filters.js";
     import BurnedFTM from "@/components/BurnedFTM.vue";
+    import appConfig from '../../app.config.js';
+    import NetworkNodesMap from "@/components/NetworkNodesMap.vue";
 
     export default {
         mixins: [pollingMixin],
 
         components: {
+            NetworkNodesMap,
             BurnedFTM,
             FListbox,
             TransactionVolumes,
@@ -156,6 +167,7 @@
                     accounts: 0,
                     transactions: 0,
                 },
+                showNetworkNodesMap: appConfig.flags.networkNodesMap,
             }
         },
 

@@ -22,7 +22,6 @@
         "dayjs": "^1.10.4",
         "eslint": "^6.8.0",
         "focus-visible": "^5.1.0",
-        "gl-matrix": "^3.4.3",
         "graphql": "^14.6.0",
         "graphql-tag": "^2.10.3",
         "lightweight-charts": "^3.3.0",
