@@ -4,6 +4,14 @@ const uppercaseCharsRE = /([A-Z])/;
 const camelSplitRE = /[ _-]+/;
 const kebabSplitRE = /([A-Z]|[ _-]+)/;
 
+export function clamp(value, min, max) {
+    if (min >= max) {
+        throw new Error(`'max' should be greater than 'min'`);
+    }
+
+    return Math.max(Math.min(value, max), min);
+}
+
 /**
  * @return {string}
  */

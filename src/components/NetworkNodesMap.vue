@@ -1,6 +1,6 @@
 <template>
     <div class="networknodesmap">
-        <h3><span class="number">{{ totalCount === 0 ? '-' : totalCount }}</span> <span class="nodes_label">nodes</span></h3>
+        <h3><span class="number">{{ totalCount === 0 ? '-' : totalCount }}</span> <span class="nodes_label">Nodes</span></h3>
         <WorldMap :markers="cNetworkNodes" enable-zooming reverse-zooming enable-panning>
             <template #marker="{ marker:node }">
                 <div class="networknodesmap_node" :style="getNodeStyle(node)">
@@ -18,6 +18,7 @@ import WorldMap from "@/components/WorldMap/WorldMap.vue";
 import gql from "graphql-tag";
 import {COUNTRIES_BY_NAME} from "@/components/WorldMap/countries_by_name.js";
 import {formatNumberByLocale} from "@/filters.js";
+import {clamp} from "@/utils/index.js";
 
 export default {
     name: "NetworkNodesMap",
@@ -116,9 +117,14 @@ export default {
         },
 
         startAnimation(networkNode) {
+            let waitMax = 6500;
+
+            let wait = Math.floor(((waitMax - networkNode.count * 2.8) / waitMax) * waitMax);
+            wait = clamp(wait, 500, waitMax);
+
             setTimeout(() => {
                 this.playAnimation(networkNode);
-            }, Math.floor(Math.random() * 6500) + 1000);
+            }, Math.floor(Math.random() * wait) + 500);
         },
 
         playAnimation(networkNode) {
@@ -140,12 +146,7 @@ export default {
             const maxCount = 360;
             let size = (node.count / maxCount) * maxSize;
 
-            if (size < minSize) {
-                size = minSize;
-            } else if (size > maxSize) {
-                size = maxSize;
-            }
-
+            size = clamp(size, minSize, maxSize)
             size = Math.floor(size);
 
             return size;
@@ -230,7 +231,8 @@ export default {
 
         .nodes_label {
             color: $light-gray-color;
-            font-size: 0.7em;
+            font-size: 1.125rem;
+            font-weight: bold;
         }
     }
 }
