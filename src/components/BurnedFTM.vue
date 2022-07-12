@@ -1,8 +1,7 @@
 <template>
     <div class="burnedftm">
         <div class="burnedftm_left">
-            <p class="burnedftm_amount number">{{ cTotalBurned }}</p>
-            <p class="burnedftm_amount_usd number">{{ totalBurnedUSD }}</p>
+            <p class="burnedftm_amount number">{{ cTotalBurned }} <span class="burnedftm_ftm">FTM</span></p>
         </div>
 
         <template v-if="blocks.length > 0">
@@ -64,10 +63,6 @@ export default {
         cTotalBurned() {
             return formatNumberByLocale(this.totalBurned, 0);
         },
-
-        totalBurnedUSD() {
-            return formatNumberByLocale(this.totalBurned * this.tokenPrice, 0, 'USD');
-        }
     },
 
     mounted() {
@@ -187,6 +182,11 @@ export default {
         font-size: 32px;
     }
 
+    &_ftm {
+        color: $light-gray-color;
+        font-size: 1.125rem;
+    }
+
     ul {
         flex: 1;
         display: flex;
@@ -250,7 +250,7 @@ export default {
         }
 
         &_amount {
-            font-size: 56px;
+            font-size: 50px;
             padding-bottom: 0;
         }
 
