@@ -62,6 +62,21 @@
                 </router-link>
             </div>
         </div>
+
+        <div v-if="showNetworkNodesMap" class="row mat-5">
+            <div class="col">
+                <f-card class="half-padding">
+                    <h2 class="h3">
+                        Fantom Mainnet Nodes
+                        <f-info window-closeable__ window-class="light" window-style="max-width: 350px;">
+                            All RPC, read-only and validator nodes synced to Fantom Opera Mainnet.
+                        </f-info>
+                    </h2>
+                    <network-nodes-map />
+                </f-card>
+            </div>
+        </div>
+
         <div class="row row-2-cols-lg equal-height mat-5">
             <div class="col">
                 <f-card class="half-padding">
@@ -93,14 +108,6 @@
                 </f-card>
             </div>
         </div>
-        <div v-if="showNetworkNodesMap" class="row mat-5">
-            <div class="col">
-                <f-card class="half-padding">
-                    <h2 class="h3">Network Nodes</h2>
-                    <network-nodes-map />
-                </f-card>
-            </div>
-        </div>
         <div class="row mat-5">
             <div class="col">
                 <f-card class="half-padding">
@@ -126,11 +133,13 @@
     import BurnedFTM from "@/components/BurnedFTM.vue";
     import appConfig from '../../app.config.js';
     import NetworkNodesMap from "@/components/NetworkNodesMap.vue";
+    import FInfo from "@/components/core/FInfo/FInfo.vue";
 
     export default {
         mixins: [pollingMixin],
 
         components: {
+            FInfo,
             NetworkNodesMap,
             BurnedFTM,
             FListbox,
@@ -272,6 +281,11 @@
                 margin-bottom: 0;
                 padding-inline-end: 16px;
             }
+        }
+
+        .f-info {
+            margin-top: -2px;
+            margin-inline-start: 8px;
         }
     }
 

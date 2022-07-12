@@ -1,6 +1,6 @@
 <template>
     <div class="networknodesmap">
-        <h3 class="number">{{ totalCount === 0 ? '-' : totalCount }}</h3>
+        <h3><span class="number">{{ totalCount === 0 ? '-' : totalCount }}</span> <span class="nodes_label">nodes</span></h3>
         <WorldMap :markers="cNetworkNodes" enable-zooming reverse-zooming enable-panning>
             <template #marker="{ marker:node }">
                 <div class="networknodesmap_node" :style="getNodeStyle(node)">
@@ -28,6 +28,7 @@ export default {
         return {
             networkNodes: [],
             totalCount: 0,
+            animationSpeed: 1000,
         }
     },
 
@@ -73,6 +74,8 @@ export default {
             });
 
             this.networkNodes = networkNodes;
+
+            this.animateNetworkNodes();
         },
 
         async fetchNetworkNodes(level = 'COUNTRY') {
@@ -105,6 +108,32 @@ export default {
             return data.data.networkNodesAggregated.groups || [];
         },
 
+        animateNetworkNodes() {
+            // this.startAnimation(this.networkNodes[0]);
+            this.networkNodes.forEach(node => {
+                this.startAnimation(node);
+            })
+        },
+
+        startAnimation(networkNode) {
+            setTimeout(() => {
+                this.playAnimation(networkNode);
+            }, Math.floor(Math.random() * 6500) + 1000);
+        },
+
+        playAnimation(networkNode) {
+            this.$set(networkNode, '_animation', `glow ${this.animationSpeed}ms ease-out`);
+
+            setTimeout(() => {
+                this.stopAnimation(networkNode);
+                this.startAnimation(networkNode);
+            }, this.animationSpeed);
+        },
+
+        stopAnimation(networkNode) {
+            this.$set(networkNode, '_animation', null);
+        },
+
         getNodeSize(node) {
             const maxSize = 44;
             const minSize = 10;
@@ -126,6 +155,7 @@ export default {
             return {
                 width: `${node._size}px`,
                 height: `${node._size}px`,
+                animation: node._animation,
             }
         },
 
@@ -138,8 +168,18 @@ export default {
 
 <style lang="scss">
 .networknodesmap {
-    --networknodesmap-node-color: rgba(99, 171, 243, 0.8);
+    --networknodesmap-node-color-rgb: 99, 171, 243;
+    --networknodesmap-node-color: rgba(var(--networknodesmap-node-color-rgb), 0.8);
 
+    @keyframes glow {
+        0% {
+            outline-width: 0;
+        }
+        100% {
+            outline-width: 10px;
+            outline-color: transparent;
+        }
+    }
 
     &_node {
         border-radius: 50%;
@@ -153,6 +193,7 @@ export default {
         justify-content: center;
         font-size: 12px;
         overflow: hidden;
+        outline: 0 solid rgba(var(--networknodesmap-node-color-rgb), 0.8);
 
         transition: all 250ms ease;
 
@@ -174,6 +215,7 @@ export default {
             height: 50px !important;
             transform: scale(2);
             border-radius: 4px;
+            animation: none;
 
             > span {
                 opacity: 1;
@@ -185,6 +227,19 @@ export default {
         font-weight: normal;
         text-align: center;
         font-size: 64px;
+
+        .nodes_label {
+            color: $light-gray-color;
+            font-size: 0.7em;
+        }
+    }
+}
+
+@include media-max($bp-medium) {
+    .networknodesmap {
+        h3 {
+            font-size: 40px;
+        }
     }
 }
 </style>

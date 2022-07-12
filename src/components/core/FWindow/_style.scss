@@ -132,5 +132,10 @@
                 //padding: var(--f-window-popover-body-padding-with-header);
             }
         }
+
+        &.light {
+            --f-window-popover-color: var(--f-doc-color);
+            --f-window-popover-background: #fff;
+        }
     }
 }

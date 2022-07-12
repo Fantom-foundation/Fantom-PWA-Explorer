@@ -5,6 +5,8 @@
                 <slot name="marker" :marker="marker"><div class="worldmap_marker"></div></slot>
             </div>
 
+            <slot></slot>
+
             <world-map-svg />
         </div>
     </div>
