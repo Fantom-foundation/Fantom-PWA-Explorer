@@ -68,7 +68,7 @@
                 <f-card class="half-padding">
                     <h2 class="h3">
                         Fantom Mainnet Nodes
-                        <f-info window-closeable__ window-class="light" window-style="max-width: 350px;">
+                        <f-info show-on-hover button-tooltip="" window-class="light" window-style="max-width: 350px;">
                             All RPC, read-only and validator nodes synced to Fantom Opera Mainnet.
                         </f-info>
                     </h2>

@@ -1,6 +1,6 @@
 <template>
     <span :id="id" class="f-info">
-        <span @click="onButtonClick">
+        <span @click="onButtonClick" @mouseenter="onMouseenter" @mouseleave="onMouseleave">
             <slot name="button">
                 <button class="no-style" :title="buttonTooltip">
                     <slot name="button-content">
@@ -54,6 +54,10 @@ export default {
             type: Number,
             default: 0,
         },
+        showOnHover: {
+            type: Boolean,
+            default: false,
+        },
         /** Window with header and close button. */
         windowCloseable: {
             type: Boolean,
@@ -94,7 +98,7 @@ export default {
     },
 
     methods: {
-        onButtonClick() {
+        showWindow() {
             if (!this.windowCreated) {
                 this.windowCreated = true;
 
@@ -103,6 +107,25 @@ export default {
                 });
             } else {
                 this.$refs.window.show();
+            }
+        },
+
+        onButtonClick() {
+            if (this.showOnHover) {
+                return;
+            }
+
+            this.showWindow();
+        },
+
+        onMouseenter() {
+            if (this.showOnHover) {
+                this.showWindow();
+            }
+        },
+        onMouseleave() {
+            if (this.showOnHover) {
+                this.$refs.window.hide();
             }
         },
     },
