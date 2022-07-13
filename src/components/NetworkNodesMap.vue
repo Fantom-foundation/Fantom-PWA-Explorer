@@ -174,11 +174,10 @@ export default {
 
     @keyframes glow {
         0% {
-            outline-width: 0;
+            box-shadow: 0 0 rgba(var(--networknodesmap-node-color-rgb), 1);
         }
         100% {
-            outline-width: 10px;
-            outline-color: transparent;
+            box-shadow: 0 0 0 7px transparent;
         }
     }
 
@@ -194,7 +193,6 @@ export default {
         justify-content: center;
         font-size: 12px;
         overflow: hidden;
-        outline: 0 solid rgba(var(--networknodesmap-node-color-rgb), 0.8);
 
         transition: all 250ms ease;
 
