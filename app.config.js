@@ -75,7 +75,7 @@ const appConfig = {
     downtimeThreshold: 10,
     // feature flags
     flags: {
-        networkNodesMap: true,
+        networkNodesMap: false,
     },
 };
 
