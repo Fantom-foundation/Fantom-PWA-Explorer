@@ -210,7 +210,7 @@
         "total_self_staked": "Total Self-Staked",
         "total_delegated": "Total Delegated",
         "total_staked": "Total Staked",
-        "daily_rewards": "Daily Rewards",
+        "daily_rewards": "Max Daily Rewards",
         "current_reward_rate": "Current Reward Rate",
         "total_supply": "Total Supply",
         "fee": "@:fee"
