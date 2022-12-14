@@ -93,8 +93,6 @@ export default {
             const data = await this.getRewardsEstimation(1000000);
 
             this.yApr = toInt(data.yearlyReward) / 1000000;
-            // this.yApr = 0.0639;
-            console.log(toInt(data.dailyReward), toInt(data.weeklyReward), toInt(data.monthlyReward), toInt(data.yearlyReward));
         },
 
         async getRewardsEstimation(amount = 1000000) {
@@ -102,9 +100,6 @@ export default {
                 query: gql`
                     query GetRewardsEstimation($amount:Long) {
                         estimateRewards(amount: $amount) {
-                            dailyReward
-                            weeklyReward
-                            monthlyReward
                             yearlyReward
                         }
                     }
