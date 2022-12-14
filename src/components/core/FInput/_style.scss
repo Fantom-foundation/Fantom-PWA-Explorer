@@ -4,24 +4,20 @@
     display: inline-block;
     vertical-align: middle;
 
-    .inp {
+    .f-inp {
+        position: relative;
         display: flex;
         align-items: center;
         align-content: center;
 
         input, textarea {
-            color: inherit;
             width: 100%;
             font-family: inherit;
             font-size: inherit;
             background: none;
             padding: 0;
             border: none;
-
-            &:focus {
-                box-shadow: none;
-                outline: none;
-            }
+            color: inherit;
 
             &:invalid {
                 box-shadow: none;
@@ -32,13 +28,13 @@
     }
 
     &.is-textarea {
-        .inp {
+        .f-inp {
             height: auto;
         }
     }
 
     &.prefix-slot {
-        .inp {
+        .f-inp {
             padding-inline-start: 0.25rem;
 
             input {
@@ -48,12 +44,31 @@
     }
 
     &.suffix-slot {
-        .inp {
+        .f-inp {
             padding-inline-end: 0.25rem;
 
             input {
                 padding-inline-end: 0.5rem;
             }
         }
+    }
+
+    &:not(.no-input-style) {
+        .f-inp {
+            input, textarea {
+                &:focus {
+                    box-shadow: none;
+                    outline: none;
+                }
+            }
+        }
+    }
+
+    &_charscounter {
+        position: absolute;
+        bottom: -24px;
+        right: 0;
+        //text-align: end;
+        color: $light-gray-color;
     }
 }

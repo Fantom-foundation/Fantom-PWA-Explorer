@@ -95,6 +95,15 @@
             <div class="query-error">{{ dValidatorsInfoError }}</div>
         </template>
 
+        <div v-if="showRewardsEstimation" class="f-subsection">
+            <h2 class="h1">Estimate your rewards</h2>
+            <div class="row f-data-layout equal-height no-vert-col-padding collapse-md">
+                <div class="col-6">
+                    <f-card><RewardsEstimation /></f-card>
+                </div>
+            </div>
+        </div>
+
         <div class="f-subsection">
             <h2 class="h1">{{ $t('view_validator_list.validators') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
 
@@ -136,9 +145,12 @@
     import FValidatorList from "../data-tables/FValidatorList.vue";
     import {formatHexToInt, formatNumberByLocale, numToFixed, timestampToDate} from "../filters.js";
     import web3utils from 'web3-utils';
+    import RewardsEstimation from "@/components/RewardsEstimation.vue";
+    import appConfig from '../../app.config.js';
 
     export default {
         components: {
+            RewardsEstimation,
             FValidatorList,
             FCard
         },
@@ -217,7 +229,8 @@
                 dValidatorsInfoError: '',
                 dTotals: {},
                 dTotalSupply: 0,
-                dRecordsCount: 0
+                dRecordsCount: 0,
+                showRewardsEstimation: appConfig.flags.rewardsEstimation,
             }
         },
 

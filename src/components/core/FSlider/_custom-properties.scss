@@ -1,0 +1,25 @@
+@import "../variables";
+
+.f-slider {
+    --f-slider-value: 10; /* Currect slider value in percentage */
+    --f-slider-labels-num: 0; /* Number of labels */
+
+    --f-slider-border-radius: 12px;
+
+    --f-slider-thumb-width: 24px;
+    --f-slider-thumb-height: 24px;
+    --f-slider-thumb-background-color: #fff;
+    --f-slider-thumb-border-radius: 50%;
+    --f-slider-thumb-box-shadow: 0 4px 8px 0 hsla(0,0%,39.2%,.28);
+    --f-slider-thumb-hover-background-color: #fff;
+    --f-slider-thumb-hover-box-shadow: 0 6px 12px 0 hsla(0,0%,39.2%,.32);
+
+    --f-slider-track-color: #e6e6e6;
+    --f-slider-track-height: 8px;
+
+    --f-slider-fill-bar-background-color: var(--f-primary-color);
+
+    --f-slider-label-color: inherit;
+    --f-slider-label-font-size: inherit;
+    --f-slider-label-font-weight: normal;
+}

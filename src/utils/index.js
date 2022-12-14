@@ -421,3 +421,15 @@ export function deepExtend(_out, ..._args) {
 
     return out;
 }
+
+/**
+ * @param {number} intValue
+ * @return {string}
+ */
+export function toHex(intValue) {
+    return `0x${intValue.toString(16)}`
+}
+
+export function toInt(hexValue) {
+    return parseInt(hexValue, 16)
+}

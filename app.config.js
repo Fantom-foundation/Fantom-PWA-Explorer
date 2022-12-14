@@ -76,6 +76,8 @@ const appConfig = {
     // feature flags
     flags: {
         networkNodesMap: false,
+        rewardsEstimation: true,
+        ftmVault: false,
     },
 };
 

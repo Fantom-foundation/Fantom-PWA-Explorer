@@ -1,9 +1,12 @@
 <template>
     <span :id="id" class="f-input" :class="classes" @click="onClick">
         <slot name="top" v-bind="slotProps">
-            <label :for="`${id}-f-inp`">{{ label }}</label>
+            <label :for="inputId">{{ label }}</label>
         </slot>
-        <span class="inp" :class="inpClasses">
+        <template v-if="disabledAsText && disabled">
+            {{ val }}
+        </template>
+        <span v-else class="f-inp" :class="inpClasses">
             <slot name="prefix"></slot>
             <template v-if="isTextarea">
                 <textarea
@@ -21,7 +24,7 @@
             </template>
             <template v-else>
                 <input
-                    :id="`${id}-f-inp`"
+                    :id="inputId"
                     ref="input"
                     v-bind="inputProps"
                     :value="val"
@@ -34,6 +37,7 @@
                 />
             </template>
             <slot name="suffix"></slot>
+            <span v-if="showCharsCounter" class="f-input_charscounter">{{ numChars }}/{{ maxlength }}</span>
         </span>
         <slot name="bottom" v-bind="slotProps"></slot>
     </span>
@@ -46,31 +50,47 @@ import { getUniqueId } from '../../../utils';
 import { eventBusMixin } from '../../../mixins/event-bus.js';
 
 export default {
+    name: 'FInput',
+
     mixins: [inputMixin, helpersMixin, eventBusMixin],
 
     props: {
-        // use textarea instead of input element
+        /** Use textarea instead of input element */
         isTextarea: {
             type: Boolean,
             default: false,
         },
-        // input type
+        /** Input type */
         type: {
             type: String,
             default: 'text',
         },
-        // custom validator function
+        /** Custom validator function */
         validator: {
             type: Function,
             default: null,
         },
-        // size of input, 'large' | 'small'
+        /** Size of input, 'large' | 'small' */
         fieldSize: {
             type: String,
             default: '',
         },
-        // validate on input event as well
+        /** Validate on input event as well */
         validateOnInput: {
+            type: Boolean,
+            default: false,
+        },
+        /** Show disabled input/textarea as plain text, not disabled input/textarea */
+        disabledAsText: {
+            type: Boolean,
+            default: false,
+        },
+        /** Don't style f-input as input field */
+        noInputStyle: {
+            type: Boolean,
+            default: false,
+        },
+        showCharsCounter: {
             type: Boolean,
             default: false,
         },
@@ -83,6 +103,8 @@ export default {
             hasFocus: false,
             errmsgslot: 'suffix',
             ariaDescribedBy: null,
+            inputId: `${this.id}-f-inp`,
+            numChars: 0,
         };
     },
 
@@ -93,6 +115,7 @@ export default {
                 'suffix-slot': this.hasSlot('suffix'),
                 'bottom-slot': this.hasSlot('bottom'),
                 'is-textarea': this.isTextarea,
+                'no-input-style': this.noInputStyle,
             };
         },
 
@@ -104,6 +127,7 @@ export default {
                 small: this.fieldSize === 'small',
                 readonly: this.readonly,
                 disabled: this.disabled,
+                inp: !this.noInputStyle,
             };
         },
 
@@ -123,6 +147,8 @@ export default {
             return {
                 showErrorMessage: this.isInvalid,
                 showInfoMessage: this.showInfoMessage,
+                inputId: this.inputId,
+                label: this.label,
             };
         },
 
@@ -133,12 +159,24 @@ export default {
 
     watch: {
         value(_val) {
+            const oldVal = this.val;
+
             this.val = _val;
+
+            if (this.validateOnInput && oldVal !== _val) {
+                this.validate();
+            }
         },
 
         isInvalid() {
             this.setAriaDescribedBy();
         },
+    },
+
+    created() {
+        if (this.showCharsCounter && !this.maxlength) {
+            throw new Error(`'maxlength' has to be set if 'showCharsCounter' is set`);
+        }
     },
 
     mounted() {
@@ -162,11 +200,13 @@ export default {
             }
 
             if (fMessage) {
-                // set custom error message
-                if (this.isInvalid) {
-                    eInput.setCustomValidity(fMessage.getMessage());
-                } else {
-                    eInput.setCustomValidity('');
+                if (eInput) {
+                    // set custom error message
+                    if (this.isInvalid) {
+                        eInput.setCustomValidity(fMessage.getMessage());
+                    } else {
+                        eInput.setCustomValidity('');
+                    }
                 }
 
                 const id = getUniqueId();
@@ -177,9 +217,16 @@ export default {
             }
         },
 
-        validate(_setError) {
+        async validate(_setError) {
             if (this.validator) {
-                this.isInvalid = !this.validator(this.val);
+                const result = this.validator(this.val);
+
+                if (result instanceof Promise) {
+                    const value = await result;
+                    this.isInvalid = !value;
+                } else {
+                    this.isInvalid = !result;
+                }
 
                 if (_setError) {
                     this.setAriaDescribedBy();
@@ -194,7 +241,7 @@ export default {
          * @return {null|*|Vue}
          */
         getFMessage(_type) {
-            const fMessages = this.findChildrenByName('f-message');
+            const fMessages = this.findChildrenByName('f-message', true);
             let fMessage = null;
 
             for (let i = 0, len1 = fMessages.length; i < len1; i++) {
@@ -211,8 +258,10 @@ export default {
          * @param {Event} _event
          */
         onClick(_event) {
-            if (_event.target !== this.$refs.input) {
-                this.$refs.input.focus();
+            const eInput = this.$refs.input;
+
+            if (eInput && _event.target !== eInput) {
+                eInput.focus();
             }
         },
 
@@ -221,10 +270,19 @@ export default {
          */
         onInput(_event) {
             this.val = _event.target.value;
+
+            /**
+             * Passthrough input event
+             * @type {Event}
+             */
             this.$emit('input', _event.target.value);
 
             if (this.validateOnInput) {
                 this.validate();
+            }
+
+            if (this.showCharsCounter) {
+                this.numChars = this.val.length;
             }
         },
 
@@ -234,10 +292,12 @@ export default {
 
         onFocus() {
             this.hasFocus = true;
+            this.$emit('focus');
         },
 
         onBlur() {
             this.hasFocus = false;
+            this.$emit('blur');
         },
     },
 };
