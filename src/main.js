@@ -14,8 +14,11 @@ import './registerServiceWorker'
 import 'focus-visible';
 import { DeFi } from './plugins/defi/defi.js';
 import { FFetch } from "@/plugins/ffetch.js";
+import {SFCConfig} from "@/utils/SFCConfig.js";
 
 Vue.config.productionTip = false;
+
+SFCConfig.setApolloClient(fantomApolloClient);
 
 Vue.use(DeFi, {
     // apolloClient,

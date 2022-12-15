@@ -213,7 +213,8 @@
         "daily_rewards": "Max Daily Rewards",
         "current_reward_rate": "Current Reward Rate",
         "total_supply": "Total Supply",
-        "fee": "@:fee"
+        "fee": "@:fee",
+        "estimate_your_rewards": "Estimate your rewards"
     },
     "view_validator_detail": {
         "title": "Validator detail",
@@ -278,5 +279,14 @@
         "total_base_reward": "Total Base Reward",
         "total_fee": "Total Fee",
         "total_tx_reward": "Total Tx Reward"
+    },
+    "rewards_estimation": {
+        "your_stake": "Your stake",
+        "locking_for": "Locking it for",
+        "days": "days",
+        "min_lock": "min lock",
+        "max_lock": "max lock",
+        "estimated_rewards": "Your estimated rewards",
+        "current_apr": "Current APR"
     }
 }

@@ -116,6 +116,14 @@
                 </f-card>
             </div>
         </div>
+        <div v-if="showFTMVault" class="row mat-5">
+            <div class="col">
+                <f-card class="half-padding">
+                    <h2 class="h3">The Ecosystem Vault </h2>
+                    <FTMVault />
+                </f-card>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -134,11 +142,13 @@
     import appConfig from '../../app.config.js';
     import NetworkNodesMap from "@/components/NetworkNodesMap.vue";
     import FInfo from "@/components/core/FInfo/FInfo.vue";
+    import FTMVault from "@/components/FTMVault.vue";
 
     export default {
         mixins: [pollingMixin],
 
         components: {
+            FTMVault,
             FInfo,
             NetworkNodesMap,
             BurnedFTM,
@@ -177,6 +187,7 @@
                     transactions: 0,
                 },
                 showNetworkNodesMap: appConfig.flags.networkNodesMap,
+                showFTMVault: appConfig.flags.ftmVault,
             }
         },
 

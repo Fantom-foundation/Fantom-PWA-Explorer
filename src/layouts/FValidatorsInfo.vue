@@ -96,7 +96,7 @@
         </template>
 
         <div v-if="showRewardsEstimation" class="f-subsection">
-            <h2 class="h1">Estimate your rewards</h2>
+            <h2 class="h1">{{ $t('view_validators_info.estimate_your_rewards') }}</h2>
             <div class="row f-data-layout equal-height no-vert-col-padding collapse-md">
                 <div class="col-6">
                     <f-card><RewardsEstimation /></f-card>
