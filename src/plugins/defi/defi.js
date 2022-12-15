@@ -32,7 +32,7 @@ export class DeFi {
      * @param {{apolloClient: ApolloClient}} _options
      */
     constructor(_options) {
-        this.apolloClient = _options.apolloClient;
+        this.apolloClient = _options.fantomApolloClient;
         /** Liquidation collateral ratio. */
         this.liqCollateralRatio = 1.5;
         /** Minimal collateral ratio. */
@@ -589,6 +589,7 @@ export class DeFi {
      * @return {Promise<DefiSettings>}
      */
     async fetchSettings() {
+        console.log('???', this.apolloClient);
         const data = await this.apolloClient.query({
             query: gql`
                 query DefiSettings {
