@@ -94,7 +94,6 @@
         "latest_blocks": "Latest Blocks",
         "latest_transactions": "Latest Transactions",
         "view_all_transactions": "View all transactions",
-        "daily_transactions": "Daily Transactions",
         "total_ftm_burned": "Total FTM Burned",
         "vault": "The Ecosystem Vault",
         "back_to_home": "@:back_to_home"
@@ -301,5 +300,16 @@
     },
     "daily_fees": {
         "label": "Daily TX Fees"
+    },
+    "transaction_volumes": {
+        "label": "Daily Transactions"
+    },
+    "date_n": {
+        "week": "{n} Week",
+        "weeks": "{n} Weeks",
+        "month": "{n} Month",
+        "months": "{n} Months",
+        "year": "{n} Year",
+        "years": "{n} Years"
     }
 }

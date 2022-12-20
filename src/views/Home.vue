@@ -100,11 +100,7 @@
         <div class="row equal-height mat-5">
             <div class="col">
                 <f-card class="half-padding">
-                    <div class="chart_label">
-                        <h2 class="h3" id="txv">{{ $t('view_home.daily_transactions') }}</h2>
-                        <f-listbox v-model="txVolumesResolution" :focus-item-on-focus="true" :data="txVolumesResolutions" labeled-by="txv" horizontal />
-                    </div>
-                    <transaction-volumes :resolution="txVolumesResolution" />
+                    <TransactionVolumes resolution="3m" />
                 </f-card>
             </div>
         </div>
@@ -150,7 +146,6 @@
     import AnimatedNumber from "animated-number-vue";
     import {pollingMixin} from "@/mixins/polling.js";
     import TransactionVolumes from "@/components/TransactionVolumes.vue";
-    import FListbox from "@/components/core/FListbox/FListbox.vue";
     import {formatNumberByLocale} from "@/filters.js";
     import BurnedFTM from "@/components/BurnedFTM.vue";
     import appConfig from '../../app.config.js';
@@ -170,7 +165,6 @@
             FInfo,
             NetworkNodesMap,
             BurnedFTM,
-            FListbox,
             TransactionVolumes,
             HomeTransactionList,
             HomeBlockList,

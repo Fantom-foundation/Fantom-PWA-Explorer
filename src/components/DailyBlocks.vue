@@ -1,8 +1,8 @@
 <template>
     <div class="dailyblocks">
         <div class="chart_label">
-            <h2 class="h3">{{ $t('daily_blocks.label') }}</h2>
-            <ChartResolutions :value="resolution" @change="onChartResolutionsChange" />
+            <h2 class="h3" id="dailyblocks_l">{{ $t('daily_blocks.label') }}</h2>
+            <ChartResolutions :value="resolution" labeled-by="dailyblocks_l" @change="onChartResolutionsChange" />
         </div>
         <FLightweightCharts
             :series="dailyBlocksSeries"

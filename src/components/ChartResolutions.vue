@@ -21,19 +21,19 @@ export default {
             default() {
                 return [
                     {
-                        label: '2 Weeks',
+                        label: this.$t('date_n.weeks', { n: 2 }),
                         value: '14d',
                     },
                     {
-                        label: '1 Month',
+                        label: this.$t('date_n.month', { n: 1 }),
                         value: '1m',
                     },
                     {
-                        label: '3 Months',
+                        label: this.$t('date_n.months', { n: 3 }),
                         value: '3m',
                     },
                     {
-                        label: '1 Year',
+                        label: this.$t('date_n.year', { n: 1 }),
                         value: '1y',
                     },
                 ]

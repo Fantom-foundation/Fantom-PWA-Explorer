@@ -1,5 +1,9 @@
 <template>
     <div class="transactionvolumes">
+        <div class="chart_label">
+            <h2 class="h3" id="transactionvolumes_l">{{ $t('transaction_volumes.label') }}</h2>
+            <ChartResolutions :value="resolution" labeled-by="transactionvolumes_l" @change="onChartResolutionsChange" />
+        </div>
         <f-lightweight-charts
             :series="txVolumeSeries"
             series-type="area"
@@ -24,20 +28,21 @@
 </template>
 
 <script>
+import ChartResolutions from "@/components/ChartResolutions.vue";
 import FLightweightCharts from "@/components/core/FLightweightCharts/FLightweightCharts.vue";
-import dayjs from "dayjs";
-import {getDayjsUnitByShortcut, parseTimeCode} from "@/utils/time.js";
+import {getDateByTimecode} from "@/utils/time.js";
 import gql from "graphql-tag";
 
 export default {
     name: "TransactionVolumes",
 
-    components: {FLightweightCharts},
+    components: {ChartResolutions, FLightweightCharts},
 
     props: {
+        /** Default resolution */
         resolution: {
             type: String,
-            default: '14d',
+            default: '14d'
         }
     },
 
@@ -47,27 +52,11 @@ export default {
         }
     },
 
-    watch: {
-        resolution: {
-            handler(_value) {
-                this.loadTxVolumes(this.getateByTimecode(_value));
-            },
-            immediate: true,
-        }
+    mounted() {
+        this.loadTxVolumes(getDateByTimecode(this.resolution));
     },
 
     methods: {
-        /**
-         * @param {string} [_timeCode]
-         * return {string} Date in `YYYY-MM-DD` format.
-         */
-        getateByTimecode(_timeCode = '1y') {
-            const now = dayjs().utc();
-            const timeCode = parseTimeCode(_timeCode);
-
-            return now.subtract(timeCode.value, getDayjsUnitByShortcut(timeCode.unit)).format('YYYY-MM-DD');
-        },
-
         async loadTxVolumes(_from = null, _to = null) {
             const txVolumes = await this.fetchTxVolumes(_from, _to);
 
@@ -100,6 +89,9 @@ export default {
             return data.data.trxVolume || [];
         },
 
+        onChartResolutionsChange(value) {
+            this.loadTxVolumes(getDateByTimecode(value));
+        }
     }
 }
 </script>
