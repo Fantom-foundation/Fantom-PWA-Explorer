@@ -67,7 +67,7 @@
             <div class="col">
                 <f-card class="half-padding">
                     <h2 class="h3">
-                        Fantom Mainnet Nodes
+                        {{ $t('view_home.fantom_mainnet_nodes') }}
                         <f-info show-on-hover button-tooltip="" window-class="light" window-style="max-width: 350px;">
                             All RPC, read-only and validator nodes synced to Fantom Opera Mainnet.
                         </f-info>
@@ -80,7 +80,7 @@
         <div class="row row-2-cols-lg equal-height mat-5">
             <div class="col">
                 <f-card class="half-padding">
-                    <h2 class="h3">Latest Blocks</h2>
+                    <h2 class="h3">{{ $t('view_home.latest_blocks') }}</h2>
                     <home-block-list :items="blocksData" :hidden-columns="['time', 'fee']" :items-per-page="10" class="home-table" />
                     <router-link :to="{name: 'blocks'}" class="btn small secondary" style="width: 100%;">
                         View all blocks
@@ -89,10 +89,10 @@
             </div>
             <div class="col">
                 <f-card class="half-padding">
-                    <h2 class="h3">Latest Transactions</h2>
+                    <h2 class="h3">{{ $t('view_home.latest_transactions') }}</h2>
                     <home-transaction-list :items="blocksData" :hidden-columns="['gasUsed']" :items-per-page="5" class="home-table" />
                     <router-link :to="{name: 'transactions'}" class="btn small secondary" style="width: 100%;">
-                        View all transactions
+                        {{ $t('view_home.view_all_transactions') }}
                     </router-link>
                 </f-card>
             </div>
@@ -101,7 +101,7 @@
             <div class="col">
                 <f-card class="half-padding">
                     <div class="txvolumes_label">
-                        <h2 class="h3" id="txv">Daily Transactions</h2>
+                        <h2 class="h3" id="txv">{{ $t('view_home.daily_transactions') }}</h2>
                         <f-listbox v-model="txVolumesResolution" :focus-item-on-focus="true" :data="txVolumesResolutions" labeled-by="txv" horizontal />
                     </div>
                     <transaction-volumes :resolution="txVolumesResolution" />
@@ -111,7 +111,7 @@
         <div class="row mat-5">
             <div class="col">
                 <f-card class="half-padding">
-                    <h2 class="h3">Total FTM Burned</h2>
+                    <h2 class="h3">{{ $t('view_home.total_ftm_burned') }}</h2>
                     <BurnedFTM />
                 </f-card>
             </div>
@@ -119,7 +119,7 @@
         <div v-if="showFTMVault" class="row mat-5">
             <div class="col">
                 <f-card class="half-padding">
-                    <h2 class="h3">The Ecosystem Vault </h2>
+                    <h2 class="h3">{{ $t('view_home.vault') }} </h2>
                     <FTMVault />
                 </f-card>
             </div>
