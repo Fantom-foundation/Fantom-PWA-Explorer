@@ -100,11 +100,18 @@
         <div class="row equal-height mat-5">
             <div class="col">
                 <f-card class="half-padding">
-                    <div class="txvolumes_label">
+                    <div class="chart_label">
                         <h2 class="h3" id="txv">{{ $t('view_home.daily_transactions') }}</h2>
                         <f-listbox v-model="txVolumesResolution" :focus-item-on-focus="true" :data="txVolumesResolutions" labeled-by="txv" horizontal />
                     </div>
                     <transaction-volumes :resolution="txVolumesResolution" />
+                </f-card>
+            </div>
+        </div>
+        <div v-if="showDailyBlocks" class="row mat-5">
+            <div class="col">
+                <f-card class="half-padding">
+                    <DailyBlocks resolution="3m" />
                 </f-card>
             </div>
         </div>
@@ -143,11 +150,13 @@
     import NetworkNodesMap from "@/components/NetworkNodesMap.vue";
     import FInfo from "@/components/core/FInfo/FInfo.vue";
     import FTMVault from "@/components/FTMVault.vue";
+    import DailyBlocks from "@/components/DailyBlocks.vue";
 
     export default {
         mixins: [pollingMixin],
 
         components: {
+            DailyBlocks,
             FTMVault,
             FInfo,
             NetworkNodesMap,
@@ -188,6 +197,7 @@
                 },
                 showNetworkNodesMap: appConfig.flags.networkNodesMap,
                 showFTMVault: appConfig.flags.ftmVault,
+                showDailyBlocks: appConfig.flags.dailyBlocks,
             }
         },
 
@@ -279,19 +289,6 @@
         .home-table {
             margin-bottom: 16px;
             height: 300px;
-        }
-
-        .txvolumes_label {
-            display: flex;
-            flex-wrap: wrap;
-            //gap: 16px;
-            align-items: center;
-            margin-bottom: 4px;
-
-            h2 {
-                margin-bottom: 0;
-                padding-inline-end: 16px;
-            }
         }
 
         .f-info {

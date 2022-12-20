@@ -295,5 +295,8 @@
         "max_lock": "max lock",
         "estimated_rewards": "Your estimated rewards",
         "current_apr": "Current APR"
+    },
+    "daily_blocks": {
+        "label": "Daily Blocks"
     }
 }

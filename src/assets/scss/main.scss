@@ -230,6 +230,20 @@ form {
     font-variant-numeric: tabular-nums;
 }
 
+.chart_label {
+    display: flex;
+    flex-wrap: wrap;
+    //gap: 16px;
+    align-items: center;
+    margin-bottom: 4px;
+
+    h2 {
+        margin-bottom: 0;
+        padding-inline-end: 16px;
+    }
+}
+
+
 @include media-max($bp-large) {
     .margin-bottom-menu {
         margin-bottom: 30px;

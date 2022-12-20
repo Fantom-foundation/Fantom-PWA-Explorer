@@ -67,3 +67,15 @@ export function getTimeSpan(_code, _ends, _utc = true) {
 export function nowDJS() {
     return dayjs();
 }
+
+export function getDateByTimecode(_timeCode = '1y') {
+    const now = dayjs().utc();
+    const timeCode = parseTimeCode(_timeCode);
+    const date = now.subtract(timeCode.value, getDayjsUnitByShortcut(timeCode.unit));
+
+    return date.format('YYYY-MM-DD');
+}
+
+export function getISODateByTimecode(_timeCode = '1y') {
+    return `${getDateByTimecode(_timeCode)}T00:00:00Z`;
+}
