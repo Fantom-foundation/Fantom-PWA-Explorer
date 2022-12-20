@@ -298,5 +298,8 @@
     },
     "daily_blocks": {
         "label": "Daily Blocks"
+    },
+    "daily_fees": {
+        "label": "Daily TX Fees"
     }
 }

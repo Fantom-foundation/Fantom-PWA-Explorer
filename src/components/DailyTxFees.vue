@@ -1,7 +1,7 @@
 <template>
-    <div class="dailyblocks">
+    <div class="dailyfees">
         <div class="chart_label">
-            <h2 class="h3">{{ $t('daily_blocks.label') }}</h2>
+            <h2 class="h3">{{ $t('daily_fees.label') }}</h2>
             <ChartResolutions :value="resolution" @change="onChartResolutionsChange" />
         </div>
         <FLightweightCharts
@@ -23,7 +23,7 @@ import {getISODateByTimecode} from "@/utils/time.js";
 import {reverseSeries} from "@/utils/chart.js";
 
 export default {
-    name: "DailyBlocks",
+    name: "DailyTxFees",
 
     components: {FLightweightCharts, ChartResolutions},
 
@@ -42,30 +42,30 @@ export default {
     },
 
     mounted() {
-        this.loadDailyBlocks(getISODateByTimecode(this.resolution));
+        this.loadDailyTxFees(getISODateByTimecode(this.resolution));
     },
 
     methods: {
-        async loadDailyBlocks(from = null, to = null) {
-            let dailyBlocks = await this.fetchDailyBlocks(from, to);
+        async loadDailyTxFees(from = null, to = null) {
+            let dailyBlocks = await this.fetchDailyTxFees(from, to);
 
             dailyBlocks = dailyBlocks.map((item) => {
                 return {
                     time: item.date.toString(),
-                    value: item.blocksCount,
+                    value: item.feeFTM,
                 };
             });
 
             this.dailyBlocksSeries = reverseSeries(dailyBlocks);
         },
 
-        async fetchDailyBlocks(from = null, to = null) {
+        async fetchDailyTxFees(from = null, to = null) {
             const data = await this.$apollo.query({
                 query: gql`
                     query DailyFeeFlow($from:Time, $to:Time) {
                         dailyFeeFlow(from: $from, to: $to) {
                             date
-                            blocksCount
+                            feeFTM
                         }
                     }
                 `,
@@ -80,7 +80,7 @@ export default {
         },
 
         onChartResolutionsChange(value) {
-            this.loadDailyBlocks(getISODateByTimecode(value));
+            this.loadDailyTxFees(getISODateByTimecode(value));
         }
     }
 }

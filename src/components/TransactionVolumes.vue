@@ -7,6 +7,7 @@
             :fit-content="true"
             :height="280"
             :options="{ handleScroll: false,handleScale: false }"
+            :series-options="{ priceLineVisible: false, priceFormat: { type: 'price', precision: 0, minMove: 1 } }"
         />
         <!--                    <f-lightweight-charts
             ref="chart"

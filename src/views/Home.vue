@@ -115,6 +115,13 @@
                 </f-card>
             </div>
         </div>
+        <div v-if="showDailyTxFees" class="row mat-5">
+            <div class="col">
+                <f-card class="half-padding">
+                    <DailyTxFees resolution="3m" />
+                </f-card>
+            </div>
+        </div>
         <div class="row mat-5">
             <div class="col">
                 <f-card class="half-padding">
@@ -151,11 +158,13 @@
     import FInfo from "@/components/core/FInfo/FInfo.vue";
     import FTMVault from "@/components/FTMVault.vue";
     import DailyBlocks from "@/components/DailyBlocks.vue";
+    import DailyTxFees from "@/components/DailyTxFees.vue";
 
     export default {
         mixins: [pollingMixin],
 
         components: {
+            DailyTxFees,
             DailyBlocks,
             FTMVault,
             FInfo,
@@ -198,6 +207,7 @@
                 showNetworkNodesMap: appConfig.flags.networkNodesMap,
                 showFTMVault: appConfig.flags.ftmVault,
                 showDailyBlocks: appConfig.flags.dailyBlocks,
+                showDailyTxFees: appConfig.flags.dailyTxFees,
             }
         },
 
