@@ -78,8 +78,8 @@ const appConfig = {
         networkNodesMap: false,
         rewardsEstimation: true,
         ftmVault: false,
-        dailyBlocks: false,
-        dailyTxFees: false,
+        dailyBlocks: true,
+        dailyTxFees: true,
     },
 };
 
