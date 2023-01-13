@@ -77,7 +77,7 @@ const appConfig = {
     flags: {
         networkNodesMap: false,
         rewardsEstimation: true,
-        ftmVault: false,
+        ftmVault: true,
         dailyBlocks: true,
         dailyTxFees: true,
     },
