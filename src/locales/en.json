@@ -304,6 +304,11 @@
     "transaction_volumes": {
         "label": "Daily Transactions"
     },
+    "ftmVault": {
+        "available": "Available",
+        "collected": "Collected",
+        "paidOut": "Paid Out"
+    },
     "date_n": {
         "week": "{n} Week",
         "weeks": "{n} Weeks",

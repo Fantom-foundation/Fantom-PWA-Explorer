@@ -111,9 +111,9 @@ export default {
         },
 
         onButtonClick() {
-            if (this.showOnHover) {
+            /*if (this.showOnHover) {
                 return;
-            }
+            }*/
 
             this.showWindow();
         },

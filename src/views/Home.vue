@@ -118,19 +118,27 @@
                 </f-card>
             </div>
         </div>
+        <div v-if="showFTMVault" class="row mat-5">
+            <div class="col">
+                <f-card class="half-padding">
+                    <h2 class="h3">
+                        {{ $t('view_home.vault') }}
+                        <f-info show-on-hover button-tooltip="" window-class="light" window-style="max-width: 350px;">
+                            The Ecosystem Vault collects <span class="number">10%</span> of all transaction fees paid to the network.
+                            Applicants can claim the funds by creating a Fantom Governance proposal, with a
+                            <span class="number">55%</span> approval and quorum rate. <br />
+                            Anyone can apply, <strong>Let's build!</strong>
+                        </f-info>
+                    </h2>
+                    <FTMVault />
+                </f-card>
+            </div>
+        </div>
         <div class="row mat-5">
             <div class="col">
                 <f-card class="half-padding">
                     <h2 class="h3">{{ $t('view_home.total_ftm_burned') }}</h2>
                     <BurnedFTM />
-                </f-card>
-            </div>
-        </div>
-        <div v-if="showFTMVault" class="row mat-5">
-            <div class="col">
-                <f-card class="half-padding">
-                    <h2 class="h3">{{ $t('view_home.vault') }} </h2>
-                    <FTMVault />
                 </f-card>
             </div>
         </div>
