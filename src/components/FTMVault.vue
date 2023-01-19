@@ -52,13 +52,13 @@ export default {
         this.updateCollected();
         this.updateAvailable();
 
-        /*this._polling.start(
+        this._polling.start(
             'update-ftm-vault-collected',
             () => {
                 this.updateCollected();
             },
             10000
-        );*/
+        );
 
         this._polling.start(
             'update-ftm-vault-available',
@@ -71,10 +71,10 @@ export default {
 
     methods: {
         async updateCollected() {
-            // this.collected = await this.getFtmTreasuryTotalAmount();
+            this.collected = await this.getFtmTreasuryTotalAmount();
 
             // tmp
-            this.collected = this.available;
+            // this.collected = this.available;
         },
 
         async updateAvailable() {
