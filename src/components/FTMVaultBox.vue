@@ -5,7 +5,7 @@
             <span class="number">{{ cAmount }}</span> <span class="vaultbox_amount_currency">FTM</span>
         </p>
         <p class="vaultbox_amount_usd number" data-testid="amount_usd">
-            <FTMTokenValue :value="cAmountUSD" with-price-currency :decimals="0" />
+            <FTMTokenValue :value="cAmountUSD" with-price-currency no-currency :decimals="0" />
         </p>
     </FCard>
 </template>
