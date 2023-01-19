@@ -72,16 +72,10 @@ export default {
     methods: {
         async updateCollected() {
             this.collected = await this.getFtmTreasuryTotalAmount();
-
-            // tmp
-            // this.collected = this.available;
         },
 
         async updateAvailable() {
             this.available = await this.getAvailable();
-
-            // tmp
-            // this.collected = this.available;
         },
 
         /**
