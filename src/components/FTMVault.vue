@@ -81,7 +81,7 @@ export default {
             this.available = await this.getAvailable();
 
             // tmp
-            this.collected = this.available;
+            // this.collected = this.available;
         },
 
         /**
