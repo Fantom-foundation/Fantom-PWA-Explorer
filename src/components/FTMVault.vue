@@ -57,7 +57,7 @@ export default {
             () => {
                 this.updateCollected();
             },
-            10000
+            9000
         );
 
         this._polling.start(
@@ -65,7 +65,7 @@ export default {
             () => {
                 this.updateAvailable();
             },
-            10000
+            10500
         );
     },
 

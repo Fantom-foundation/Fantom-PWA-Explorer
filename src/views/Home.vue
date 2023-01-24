@@ -223,7 +223,7 @@
                 () => {
                     this.updateChainState();
                 },
-                3300
+                5800
             );
         },
 

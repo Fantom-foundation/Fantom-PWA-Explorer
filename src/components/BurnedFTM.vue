@@ -73,7 +73,7 @@ export default {
             () => {
                 this.update();
             },
-            3300
+            5300
         );
     },
 
