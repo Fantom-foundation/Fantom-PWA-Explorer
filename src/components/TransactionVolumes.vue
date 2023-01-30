@@ -53,7 +53,9 @@ export default {
     },
 
     mounted() {
-        this.loadTxVolumes(getDateByTimecode(this.resolution));
+        setTimeout(() => {
+            this.loadTxVolumes(getDateByTimecode(this.resolution));
+        }, 1050);
     },
 
     methods: {

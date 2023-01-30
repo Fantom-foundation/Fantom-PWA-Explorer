@@ -66,7 +66,9 @@ export default {
     },
 
     mounted() {
-        this.update();
+        setTimeout(() => {
+            this.update();
+        }, 3050);
 
         this._polling.start(
             'update-burned-ftm',

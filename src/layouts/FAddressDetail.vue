@@ -178,13 +178,13 @@
                     ></f-transaction-list>
                 </f-tab>
                 <f-tab title-slot="erc20transactions">
-                    <erc20-transation-list :address="id" :delay="100" @records-count="onErc20RecordsCount" />
+                    <erc20-transation-list :address="id" :delay="1050" @records-count="onErc20RecordsCount" />
                 </f-tab>
                 <f-tab title-slot="erc721transactions">
-                    <erc721-transation-list :address="id" :delay="110" @records-count="onErc721RecordsCount" />
+                    <erc721-transation-list :address="id" :delay="2050" @records-count="onErc721RecordsCount" />
                 </f-tab>
                 <f-tab title-slot="erc1155transactions">
-                    <erc1155-transation-list :address="id" :delay="120" @records-count="onErc1155RecordsCount" />
+                    <erc1155-transation-list :address="id" :delay="2250" @records-count="onErc1155RecordsCount" />
                 </f-tab>
                 <f-tab title-slot="assets">
                     <address-asset-list :tokens="tokens" :f-mint-account="fMintAccount" @records-count="onAssetsRecordsCount" />
@@ -500,12 +500,12 @@
 
             setTimeout(() => {
                 this.initDeFi();
-            }, 500);
+            }, 400);
 
             // postpone delegations loading
             setTimeout(() => {
                 this.loadDelegations = true;
-            }, 1400);
+            }, 2400);
         },
 
         methods: {

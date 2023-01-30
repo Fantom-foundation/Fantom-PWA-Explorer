@@ -42,7 +42,9 @@ export default {
     },
 
     mounted() {
-        this.loadDailyTxFees(getISODateByTimecode(this.resolution));
+        setTimeout(() => {
+            this.loadDailyTxFees(getISODateByTimecode(this.resolution));
+        }, 1550);
     },
 
     methods: {

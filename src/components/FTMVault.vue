@@ -49,8 +49,11 @@ export default {
     },
 
     mounted() {
-        this.updateCollected();
-        this.updateAvailable();
+        setTimeout(() => {
+            this.updateCollected();
+            this.updateAvailable();
+
+        }, 2050);
 
         this._polling.start(
             'update-ftm-vault-collected',

@@ -42,7 +42,9 @@ export default {
     },
 
     mounted() {
-        this.loadDailyBlocks(getISODateByTimecode(this.resolution));
+        setTimeout(() => {
+            this.loadDailyBlocks(getISODateByTimecode(this.resolution));
+        }, 1050);
     },
 
     methods: {
