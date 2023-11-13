@@ -1,34 +1,29 @@
 <template>
     <footer class="f-footer">
         <div class="narrow-container">
-            <div class="row align-items-center">
-                <div class="col align-center-sm"><f-social-media-links></f-social-media-links></div>
-                <div class="col align-center-sm align-end">
-                    <a href="https://fantom.foundation/" target="_blank" rel="nofollow">©2022 Fantom Foundation</a>
-                </div>
-            </div>
+            <social-media-links />
         </div>
     </footer>
 </template>
 
 <script>
-    import FSocialMediaLinks from "../components/FSocialMediaLinks.vue";
+    import SocialMediaLinks from "@/components/SocialMediaLinks.vue";
 
     export default {
         components: {
-            FSocialMediaLinks
+            SocialMediaLinks,
         }
     }
 </script>
 
 <style lang="scss">
     .f-footer {
-        --f-footer-background-color: #{$theme-color};
-        --f-footer-link-color: #{$secondary-color-lighter};
+        //--f-footer-background-color: #{$theme-color};
+        --f-footer-link-color: #{$theme-color};
 
         color: #fff;
-        background-color: var(--f-footer-background-color);
-        min-height: 64px;
+        //background-color: var(--f-footer-background-color);
+        //min-height: 64px;
 
         .narrow-container {
             padding-top: 8px;
@@ -42,12 +37,12 @@
 
         @include links() {
             color: var(--f-footer-link-color);
-            transition: color $transition-length ease;
+            transition: opacity $transition-length ease;
         }
 
         a:not(.btn):hover {
-            color: #fff;
             text-decoration: none;
+            opacity: 0.5;
         }
     }
 </style>

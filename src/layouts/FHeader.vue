@@ -3,7 +3,7 @@
         <div class="narrow-container">
             <div class="row no-collapse align-items-center">
                 <div class="col-2">
-                    <router-link to="/" class="logo" :aria-label="$t('view_home.back_to_home')"><img src="/fantom-logo.svg" alt="" class="not-fluid"></router-link>
+                    <router-link to="/" class="logo" :aria-label="$t('view_home.back_to_home')"><img src="/fantom-logo.svg" alt="Fantom logo" class="not-fluid logo-white"><img src="/fantom-logo-blue.svg" alt="Fantom logo" class="not-fluid logo-blue"></router-link>
                 </div>
                 <div class="col right-col">
                     <f-navigation
@@ -216,6 +216,10 @@
                 margin-bottom: 0 !important;
                 transition: opacity $transition-length ease;
             }
+
+            &-blue {
+                display: none;
+            }
         }
 
         .f-hamburger-switch {
@@ -289,6 +293,20 @@
         &.drawer-on {
             .f-drawer {
                 transform: translateX(0);
+            }
+        }
+    }
+
+    .dark-theme {
+        .f-header {
+            .logo {
+                &-blue {
+                    display: block;
+                }
+
+                &-white {
+                    display: none;
+                }
             }
         }
     }

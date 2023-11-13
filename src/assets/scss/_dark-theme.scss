@@ -1,13 +1,13 @@
 :root.dark-theme {
     //--f-primary-color: #286FF6;
 
-    --f-dark-color: #222431;
-    --f-darker-color: #2C2E3F;
-    --f-darker-color-2: #33364a;
+    --f-dark-color: #111112;
+    --f-darker-color: #222223;
+    --f-darker-color-2: #313030;
     //--f-darker-color-3: #41455e;
-    --f-darker-color-3: #3e425b;
-    --f-darker-color-4: #252736;
-    --f-lighter-color: #8997b1;
+    --f-darker-color-3: #494949;
+    --f-darker-color-4: #2d2d2e;
+    --f-lighter-color: #808080;
 
     --f-orange-color: #F8782A;
     --f-orange-color-darker: #de6b26;
@@ -40,7 +40,7 @@
 
     .f-footer {
         --f-footer-background-color: var(--f-darker-color);
-        --f-footer-link-color: var(--f-lighter-color);
+        --f-footer-link-color: #fff;
     }
 
     .f-social-media-links {
@@ -93,7 +93,7 @@
     }
 
     .f-window-overlay, .f-overlay {
-        --f-overlay-background-color: rgba(43, 50, 77, 0.8);
+        --foverlay-background-color: rgba(80, 80, 80, 0.3);
     }
 
     --f-select-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 448 512"><path style="fill: rgb(146,153,166);" d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"/></svg>');
