@@ -5,15 +5,15 @@
         </div>
 
         <template v-if="blocks.length > 0">
-            <ul class="no-markers">
-                <li v-for="block in blocks" :key="block.blockNumber" class="burnedftm_block" :class="{ 'burnedftm_block-animate': block.__animate__ }">
+            <ul class="no-markers" @click="onClick">
+                <li v-for="block in blocks" :key="block.blockNumber" class="burnedftm_block" :class="{ 'burnedftm_block-animate': block.__animate__ }" :data-blocknumber="formatHexToInt(block.blockNumber)">
                     <div class="burnedftm_block_burned number">
                         <span class="fsvgicon">
                             <icon
                                 data="@/assets/svg/fire.svg"
                                 width="20"
                                 height="20"
-                                color="#ff711f"
+                                color="#1969ff"
                                 aria-hidden="true"
                             />
                         </span>
@@ -21,7 +21,6 @@
                     </div>
                     <div class="burnedftm_block_info">
                         Block {{ formatHexToInt(block.blockNumber) }} <br />
-                        <timeago :datetime="timestampToDate(block.timestamp)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
                     </div>
                 </li>
             </ul>
@@ -34,6 +33,7 @@ import {pollingMixin} from "@/mixins/polling.js";
 import gql from "graphql-tag";
 import {cloneObject, defer} from "@/utils/index.js";
 import {formatHexToInt, formatNumberByLocale, timestampToDate} from "@/filters.js";
+import {getAttr} from "@/utils/DOM.js";
 
 export default {
     name: "BurnedFTM",
@@ -44,7 +44,7 @@ export default {
         /** Maximum amount of displayed blocks */
         maxBlocks: {
             type: Number,
-            default: 5,
+            default: 3,
         },
     },
 
@@ -157,6 +157,15 @@ export default {
             return data.data && data.data.ftmBurnedTotalAmount || 0;
         },
 
+        onClick(event) {
+            const li = event.target.closest('li');
+            const blockNumber = parseInt(li ? getAttr(li, 'data-blocknumber') : '')
+
+            if (!isNaN(blockNumber)) {
+                this.$router.push({name: 'block-detail', params: {id: blockNumber}})
+            }
+        },
+
         timestampToDate,
         formatHexToInt,
     }
@@ -167,6 +176,7 @@ export default {
 .burnedftm {
     --burnedftm-transition-length: 610ms;
     --burnedftm-border-color: #e6e6e6;
+    --burnedftm-block-hover-color: var(--f-color-primary-2, #ebf2ff);
 
     display: flex;
     align-items: center;
@@ -205,6 +215,11 @@ export default {
         opacity: 0;
         padding: 10px 15px;
         transition: opacity var(--burnedftm-transition-length) ease;
+        cursor: pointer;
+
+        &:hover {
+            background: var(--burnedftm-block-hover-color);
+        }
 
         &-animate {
             opacity: 1;

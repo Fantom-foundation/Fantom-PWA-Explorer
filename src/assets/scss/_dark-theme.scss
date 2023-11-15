@@ -135,6 +135,7 @@
 
     .burnedftm {
         --burnedftm-border-color: var(--f-darker-color-3);
+        --burnedftm-block-hover-color: var(--f-darker-color-2);
     }
 
     .f-slider {
@@ -228,7 +229,7 @@
         --flistbox-item-color: #fff;
         --flistbox-item-hover-color: #fff;
         --flistbox-item-background-color: var(--f-darker-color-2);
-        --flistbox-item-hover-background-color: var(--f-darker-color-3);
+        --flistbox-item-hover-background-color: var(--f-darker-color-2);
         --flistbox-item-selected-background-color: var(--f-darker-color-3);
 
         &-horizontal {
