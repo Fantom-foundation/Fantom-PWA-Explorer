@@ -38,8 +38,9 @@
     display: flex;
     justify-content: space-between;
 
-    margin-top: -20px;
-    padding: 0 20px 20px !important;
+    margin-top: 20px;
+    padding: 40px 20px 60px !important;
+    border-top: 1px solid var(--f-darker-color-3);
 
     &_label {
         padding-left: 10px;
