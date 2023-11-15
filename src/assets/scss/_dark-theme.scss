@@ -33,9 +33,10 @@
     }
 
     .f-header {
-        --f-header-background-color: var(--f-darker-color);
+        --f-header-background-color: var(--f-dark-color);
         --f-header-link-color: var(--f-lighter-color);
-        border-bottom: 1px solid var(--f-dark-color);
+        --f-header-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
+        border-bottom: 1px solid var(--f-darker-color);
     }
 
     .f-footer {

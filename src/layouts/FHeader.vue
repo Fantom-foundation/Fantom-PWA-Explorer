@@ -186,6 +186,7 @@
 <style lang="scss">
     .f-header {
         --f-header-background-color: #{$theme-color};
+        --f-header-box-shadow: none;
         --f-header-link-color: #{$secondary-color-lighter};
 
         /*position: -webkit-sticky;*/
@@ -199,6 +200,7 @@
         background-color: var(--f-header-background-color);
         transition: height $transition-length ease;
         border-bottom: 1px solid transparent;
+        box-shadow: var(--f-header-box-shadow);
 
         .narrow-container {
             padding-top: 0;
