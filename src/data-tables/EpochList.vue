@@ -62,7 +62,7 @@
 import FDataTable from "../components/core/FDataTable/FDataTable.vue";
 import gql from "graphql-tag";
 import { WEIToFTM } from "../utils/transactions.js";
-import {timestampToDate, formatHexToInt, formatDate } from "../filters.js";
+import {timestampToDate, formatHexToInt, formatDate, formatDuration} from "../filters.js";
 import {cloneObject} from "@/utils";
 import FTokenValue from "@/components/core/FTokenValue/FTokenValue.vue";
 
@@ -97,6 +97,7 @@ export default {
                         edges {
                             epoch {
                                 id
+                                duration
                                 endTime
                                 epochFee
                             }
@@ -159,6 +160,13 @@ export default {
                     label: this.$t('epoch.end_time'),
                     itemProp: 'epoch.endTime',
                     formatter: (_value) => formatDate(timestampToDate(_value)),
+                    width: '340px'
+                },
+                {
+                    name: 'duration',
+                    label: this.$t('epoch.duration'),
+                    itemProp: 'epoch.duration',
+                    formatter: (_value) => formatDuration(formatHexToInt(_value)),
                     width: '340px'
                 },
                 /*{

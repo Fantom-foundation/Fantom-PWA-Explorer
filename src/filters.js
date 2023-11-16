@@ -134,9 +134,10 @@ export function formatDuration(_value) {
         timestamp = formatHexToInt(_value);
     }
 
+    const hours = parseInt(timestamp / 3600) % 60;
 
     if (timestamp) {
-        return `${parseInt(timestamp / 3600) % 60}h ${parseInt(timestamp / 60) % 60}m ${timestamp % 60}s`;
+        return `${hours > 0 ? hours + 'h ' : ''}${parseInt(timestamp / 60) % 60}m ${timestamp % 60}s`;
     }
 
     return '';

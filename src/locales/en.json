@@ -282,6 +282,7 @@
         "detail_title": "Epoch Detail",
         "epoch": "Epoch",
         "end_time": "End Time",
+        "duration": "Duration",
         "total_base_reward": "Total Base Reward",
         "total_fee": "Total Fee",
         "total_tx_reward": "Total Tx Reward"
