@@ -34,6 +34,13 @@
                             </div>
                         </div>
 
+
+                        <div class="row no-collapse">
+                            <div class="col-5 f-row-label">{{ $t('view_validators_info.total_supply') }}</div>
+                            <div class="col">
+                                <div v-show="dTotalSupply">{{ formatNumberByLocale(numToFixed(dTotalSupply, 0)) }} FTM</div>
+                            </div>
+                        </div>
 <!--
                         <div class="row no-collapse">
                             <div class="col-5 f-row-label">{{ $t('view_validators_info.current_reward_rate') }}</div>
@@ -44,48 +51,10 @@
 -->
                     </f-card>
                 </div>
-                <div class="col">
+                <div v-if="showRewardsEstimation" class="col">
                     <f-card>
-                        <h2>{{ $t('view_validators_info.last_epoch') }}</h2>
-
-                        <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.epoch_number') }}</div>
-                            <div class="col">
-                                <div v-show="'id' in cEpoch">{{ cEpoch.id | formatHexToInt }}</div>
-                            </div>
-                        </div>
-
-                        <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.end_time') }}</div>
-                            <div class="col">
-                                <div v-show="'endTime' in cEpoch">
-                                    <timeago :datetime="timestampToDate(cEpoch.endTime)" :auto-update="1" :converter-options="{addSuffix: true}"></timeago>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.duration') }}</div>
-                            <div class="col">
-                                <div v-show="'duration' in cEpoch && cEpoch.duration">
-                                    {{ formatHexToInt(cEpoch.duration) | formatDuration }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.fee') }}</div>
-                            <div class="col">
-                                <div v-show="'epochFee' in cEpoch">{{  WEIToFTM(cEpoch.epochFee) }} FTM</div>
-                            </div>
-                        </div>
-
-                        <div class="row no-collapse">
-                            <div class="col-5 f-row-label">{{ $t('view_validators_info.total_supply') }}</div>
-                            <div class="col">
-                                <div v-show="dTotalSupply">{{ formatNumberByLocale(numToFixed(dTotalSupply, 0)) }} FTM</div>
-                            </div>
-                        </div>
+                        <h2>{{ $t('view_validators_info.estimate_your_rewards') }}</h2>
+                        <RewardsEstimation />
                     </f-card>
                 </div>
             </div>
@@ -95,6 +64,7 @@
             <div class="query-error">{{ dValidatorsInfoError }}</div>
         </template>
 
+<!--
         <div v-if="showRewardsEstimation" class="f-subsection">
             <h2 class="h1">{{ $t('view_validators_info.estimate_your_rewards') }}</h2>
             <div class="row f-data-layout equal-height no-vert-col-padding collapse-md">
@@ -103,6 +73,7 @@
                 </div>
             </div>
         </div>
+-->
 
         <div class="f-subsection">
             <h2 class="h1">{{ $t('view_validator_list.validators') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
