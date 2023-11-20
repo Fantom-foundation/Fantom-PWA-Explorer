@@ -187,7 +187,8 @@ export default {
     }
 
     &_amount {
-        font-size: 64px;
+        font-size: 44px;
+        font-weight: bold;
     }
 
     &_amount_usd {
