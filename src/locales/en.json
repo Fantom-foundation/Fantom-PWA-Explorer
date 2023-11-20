@@ -190,7 +190,8 @@
         "unknown": "@:unknown",
         "downtime": "Downtime",
         "flagged": "Flagged",
-        "inactive": "Inactive"
+        "inactive": "Inactive",
+        "inMaintenance": "In Maintenance"
     },
     "view_assets": {
         "title": "@:assets",

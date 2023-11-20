@@ -85,6 +85,7 @@
                 @validator-list-offline="onValidatorListOffline"
                 @validator-list-flagged="onValidatorListFlagged"
                 @validator-list-inactive="onValidatorListInactive"
+                @validator-list-inmaintenance="onValidatorListInMaintenance"
             >
             </f-validator-list>
         </div>
@@ -93,6 +94,12 @@
             <h2 class="h1">{{ $t('view_validator_list.inactive') }} <span class="f-records-count">({{ dInactiveItems.length }})</span></h2>
 
             <f-validator-list :items="dInactiveItems" code="inactive-validators" />
+        </div>
+
+        <div class="f-subsection" v-if="dInMaintenanceItems.length">
+            <h2 class="h1">{{ $t('view_validator_list.inMaintenance') }} <span class="f-records-count">({{ dInMaintenanceItems.length }})</span></h2>
+
+            <f-validator-list :items="dInMaintenanceItems" code="inmaintenance-validators" />
         </div>
 
         <div class="f-subsection" v-if="dOfflineItems.length">
@@ -197,6 +204,7 @@
                 dOfflineItems: [],
                 dFlaggedItems: [],
                 dInactiveItems: [],
+                dInMaintenanceItems: [],
                 dValidatorsInfoError: '',
                 dTotals: {},
                 dTotalSupply: 0,
@@ -284,6 +292,10 @@
 
             onValidatorListInactive(_inactive) {
                 this.dInactiveItems = _inactive;
+            },
+
+            onValidatorListInMaintenance(items) {
+                this.dInMaintenanceItems = items;
             },
 
             WEIToFTM,

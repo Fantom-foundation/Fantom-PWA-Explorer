@@ -159,7 +159,8 @@
                     let data;
                     const offline = [];
                     const flagged = [];
-                    const inactive = [];
+                    // const inactive = [];
+                    const inMaintenance = [];
                     let remove = [];
                     const tUnknown = this.$t('view_validator_list.unknown');
 
@@ -182,7 +183,7 @@
                                 _item.stakerInfo.name = tUnknown;
                             }
 
-                            if (_item.isOffline && !_item.isCheater) {
+                            if (!_item.isActive && !_item.isCheater) {
                                 offline.push(_idx);
                             }
 
@@ -215,7 +216,23 @@
                             this.removeItemsByIndices(data, remove);
                         }
 
+                        // in maintenance validators
+                        remove = [];
+                        data.forEach((_item, _idx) => {
+                            if (_item.isActive && _item.isOffline && !_item.isCheater) {
+                                remove.push(_idx);
+                                inMaintenance.push(cloneObject(data[_idx]));
+                            }
+                        });
+
+                        if (inMaintenance.length > 0) {
+                            this.removeItemsByIndices(data, remove);
+
+                            this.$emit('validator-list-inmaintenance', inMaintenance);
+                        }
+
                         // inactive validators
+/*
                         remove = [];
                         data.forEach((_item, _idx) => {
                             if (!_item.isActive) {
@@ -229,6 +246,7 @@
 
                             this.$emit('validator-list-inactive', inactive);
                         }
+*/
 
                         this.dItems = data;
 
