@@ -5,15 +5,12 @@
         display: flex;
         list-style-type: none;
         //border-bottom: var(--f-tabs-border-width) solid var(--f-tabs-border-color);
-        overflow: hidden;
-        overflow-x: auto;
 
         li {
             position: relative;
             top: var(--f-tabs-border-width);
-            padding: 8px 16px;
+            padding: var(--f-tabs-tab-padding);
             cursor: pointer;
-            white-space: nowrap;
         }
     }
 
@@ -27,7 +24,8 @@
                 font-family: var(--f-tabs-font-family);
                 font-size: var(--f-tabs-font-size);
                 font-weight: var(--f-tabs-font-weight);
-                border-bottom: var(--f-tabs-border-width) solid var(--f-tabs-border-color);
+                border-bottom: var(--f-tabs-border-width) solid transparent;
+                //border-bottom: var(--f-tabs-border-width) solid var(--f-tabs-border-color);
 
                 &:hover, &:focus {
                     //background-color: #ddd;
