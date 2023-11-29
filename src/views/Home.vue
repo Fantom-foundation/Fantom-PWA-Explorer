@@ -125,9 +125,8 @@
                         {{ $t('view_home.vault') }}
                         <f-info show-on-hover button-tooltip="" window-class="light" window-style="max-width: 350px;">
                             The Ecosystem Vault collects <span class="number">10%</span> of all transaction fees paid to the network.
-                            Applicants can claim the funds by creating a Fantom Governance proposal, with a
-                            <span class="number">55%</span> approval and quorum rate. <br />
-                            Anyone can apply, <strong>Let's build!</strong>
+                            The next phase of the Vault is coming soon!
+                            Stay tuned and meanwhile explore the successes of its most recent distribution winners.
                         </f-info>
                     </h2>
                     <FTMVault />
@@ -137,7 +136,15 @@
         <div class="row mat-5">
             <div class="col">
                 <f-card class="half-padding">
-                    <h2 class="h3">{{ $t('view_home.total_ftm_burned') }}</h2>
+                    <h2 class="h3">
+                        {{ $t('view_home.total_ftm_burned') }}
+                        <f-info show-on-hover button-tooltip="" window-class="light" window-style="max-width: 350px;">
+                            <span class="number">70%</span> of the fees paid to the network
+                            are allocated to validators; <span class="number">15%</span> supports the <strong>GasM</strong> program,
+                            <span class="number">10%</span> bolsters the <strong>Ecosystem Vault</strong>, and the remaining
+                            <span class="number">5%</span> is permanently burnt.
+                        </f-info>
+                    </h2>
                     <BurnedFTM />
                 </f-card>
             </div>
