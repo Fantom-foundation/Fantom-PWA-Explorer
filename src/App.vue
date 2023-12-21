@@ -16,6 +16,7 @@
             <f-breakpoint value="1100px" code="validator-list-dt-mobile-view"></f-breakpoint>
         </f-breakpoints>
         <f-aria-alert />
+        <BlurEffect />
     </div>
 </template>
 
@@ -26,11 +27,13 @@
     import FFooter from "./layouts/FFooter.vue";
     import gql from 'graphql-tag';
     import FAriaAlert from "./components/core/FAriaAlert/FAriaAlert.vue";
+    import BlurEffect from "@/components/BlurEffect.vue";
 
     export default {
         name: 'App',
 
         components: {
+            BlurEffect,
             FAriaAlert,
             FBreakpoint,
             FBreakpoints,

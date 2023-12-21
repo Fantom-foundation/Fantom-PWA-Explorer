@@ -51,6 +51,7 @@
                                         :name="`column-${col.name}`"
                                         :value="getItemPropValue(item, col)"
                                         :item="item"
+                                        :col="col"
                                     >
                                         {{ getItemPropValue(item, col) }}
                                     </slot>

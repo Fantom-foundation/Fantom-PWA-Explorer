@@ -1,44 +1,65 @@
 <template>
-    <div class="homeblocklist">
-        <transition enter-active-class="fadelong-enter-active">
-            <f-data-table
-                v-show="show"
-                :columns="dColumns"
-                :items="dItems"
-                :disable-infinite-scroll="!dHasNext"
-                :loading="cLoading"
-                fixed-header
-                f-card-off
-                mobile-view
-                height="300px"
-                v-bind="{...$attrs, ...$props}"
-                class="f-data-table-body-bg-color"
-            >
-                <template v-slot:column-block="{ value, column }">
-                    <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}</div>
-                        <div class="col">
-                            <router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link>
-                        </div>
-                    </div>
-                    <template v-else>
-                        <router-link :to="{name: 'block-detail', params: {id: value}}" :title="value">{{value}}</router-link>
-                    </template>
-                </template>
+    <div class="homeblocklist animlist">
+        <f-data-table
+            v-show="show"
+            :columns="dColumns"
+            :items="dItems"
+            :disable-infinite-scroll="!dHasNext"
+            :loading="cLoading"
+            fixed-header
+            f-card-off
+            action-on-row
+            @row-action="onRowAction"
+            v-bind="{...$attrs, ...$props}"
+            class="f-data-table-body-bg-color"
+        >
+            <template #header><span></span></template>
 
-                <template v-slot:column-age="{ value, column }">
-                    <div v-if="column" class="row no-collapse no-vert-col-padding">
-                        <div class="col-4 f-row-label">{{ column.label }}</div>
-                        <div class="col">
-                            <timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
-                        </div>
+            <template v-slot:column-block="{ value, column, col }">
+                <div v-if="column" class="row no-collapse no-vert-col-padding">
+                    <div class="col-4 f-row-label">{{ column.label }}</div>
+                    <div class="col">
+                        {{ value }}
                     </div>
-                    <template v-else>
-                        <timeago :datetime="timestampToDate(value)" :auto-update="5" :converter-options="{includeSeconds: true}"></timeago>
-                    </template>
+                </div>
+                <template v-else>
+                    <div class="animlist_label">
+                        {{ col.label }} &rsaquo;
+                    </div>
+                    <span>{{ value }}</span>
                 </template>
-            </f-data-table>
-        </transition>
+            </template>
+
+            <template v-slot:column-age="{ value, column, col }">
+                <div v-if="column" class="row no-collapse no-vert-col-padding">
+                    <div class="col-4 f-row-label">{{ column.label }}</div>
+                    <div class="col">
+                        <timeago :datetime="timestampToDate(value)" :auto-update="1" :converter-options="{includeSeconds: true}"></timeago>
+                    </div>
+                </div>
+                <template v-else>
+                    <div class="animlist_label">
+                        {{ col.label }}
+                    </div>
+                    <span>
+                        <timeago :datetime="timestampToDate(value)" :auto-update="5" :converter-options="{includeSeconds: true}"></timeago>
+                    </span>
+                </template>
+            </template>
+
+            <template v-slot:column-transaction_count="{ value, column, col }">
+                <div v-if="column" class="row no-collapse no-vert-col-padding">
+                    <div class="col-4 f-row-label">{{ column.label }}</div>
+                    <div class="col"> {{ value }} </div>
+                </div>
+                <template v-else>
+                    <div class="animlist_label">
+                        {{ col.label }}
+                    </div>
+                    <span>{{ value }}</span>
+                </template>
+            </template>
+        </f-data-table>
     </div>
 </template>
 
@@ -50,6 +71,17 @@ import {timestampToDate} from "@/filters.js";
 import gql from "graphql-tag";
 import {cloneObject} from "@/utils";
 import {pollingMixin} from "@/mixins/polling.js";
+import {GridRowsAnimation} from "@/utils/GridRowsAnimation.js";
+
+const rowsAnimation = new GridRowsAnimation({
+    itemIdPropName: 'id',
+    rowsSelector: '.homeblocklist [data-dt-item-id="ITEM_ID"]',
+    animationOptions: {
+        translateX: ['-60%', 0],
+        opacity: [0, 1],
+        duration: 250,
+    },
+});
 
 export default {
     name: "HomeBlockList",
@@ -90,14 +122,12 @@ export default {
     },
 
     methods: {
-        async updateItems(_animate) {
+        async updateItems() {
             this.dItems = await this.fetchData();
 
-            if (_animate) {
-                this.show = false;
-
-                this.$nextTick(() => {this.show = true;});
-            }
+            setTimeout(() => {
+                rowsAnimation.animate(this.dItems);
+            }, 1);
         },
 
         /**
@@ -136,6 +166,10 @@ export default {
             });
 
             return cloneObject(data.data && data.data.blocks && data.data.blocks.edges ? data.data.blocks.edges : []);
+        },
+
+        onRowAction(item) {
+            this.$router.push({name: 'block-detail', params: {id: item.block.number}})
         },
 
         WEIToFTM,

@@ -77,26 +77,26 @@
             </div>
         </div>
 
-        <div class="row row-2-cols-lg equal-height mat-5">
-            <div class="col">
-                <f-card class="half-padding">
-                    <h2 class="h3">{{ $t('view_home.latest_blocks') }}</h2>
-                    <home-block-list :items="blocksData" :hidden-columns="['time', 'fee']" :items-per-page="10" class="home-table" />
+        <div class="view-home_block">
+            <h2 class="h3">{{ $t('view_home.latest_blocks') }}</h2>
+            <home-block-list :items="blocksData" :hidden-columns="['time', 'fee']" :items-per-page="4" class="home-table" />
+            <!--
                     <router-link :to="{name: 'blocks'}" class="btn small secondary" style="width: 100%;">
                         View all blocks
                     </router-link>
-                </f-card>
-            </div>
-            <div class="col">
-                <f-card class="half-padding">
-                    <h2 class="h3">{{ $t('view_home.latest_transactions') }}</h2>
-                    <home-transaction-list :items="blocksData" :hidden-columns="['gasUsed']" :items-per-page="5" class="home-table" />
-                    <router-link :to="{name: 'transactions'}" class="btn small secondary" style="width: 100%;">
-                        {{ $t('view_home.view_all_transactions') }}
-                    </router-link>
-                </f-card>
-            </div>
+            -->
         </div>
+
+        <div class="view-home_block">
+            <h2 class="h3">{{ $t('view_home.latest_transactions') }}</h2>
+            <home-transaction-list :items="blocksData" :hidden-columns="['gasUsed']" :items-per-page="4" class="home-table" />
+<!--
+            <router-link :to="{name: 'transactions'}" class="btn small secondary" style="width: 100%;">
+                {{ $t('view_home.view_all_transactions') }}
+            </router-link>
+-->
+        </div>
+
         <div class="row equal-height mat-5">
             <div class="col">
                 <f-card class="half-padding">
@@ -104,6 +104,7 @@
                 </f-card>
             </div>
         </div>
+
         <div v-if="showDailyBlocks" class="row mat-5">
             <div class="col">
                 <f-card class="half-padding">
@@ -111,6 +112,7 @@
                 </f-card>
             </div>
         </div>
+
         <div v-if="showDailyTxFees" class="row mat-5">
             <div class="col">
                 <f-card class="half-padding">
@@ -276,6 +278,13 @@
 
 <style lang="scss">
     .view-home {
+        &_block {
+            h2 {
+                margin-top: 20px;
+                margin-bottom: 0;
+            }
+        }
+
         .f-search-box {
             width: 100%;
             padding: 8px 0 40px 0;
@@ -306,8 +315,8 @@
         }
 
         .home-table {
-            margin-bottom: 16px;
-            height: 300px;
+            //margin-bottom: 16px;
+            //height: 300px;
         }
 
         .f-info {
@@ -326,6 +335,12 @@
 
     @include media-max($bp-small) {
         .view-home {
+            &_block {
+                h2 {
+                    margin-bottom: 8px;
+                }
+            }
+
             .home-block {
                 min-height: 136px;
 
