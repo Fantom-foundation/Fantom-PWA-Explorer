@@ -76,9 +76,13 @@
 -->
 
         <div class="f-subsection">
-            <h2 class="h1">{{ $t('view_validator_list.validators') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span></h2>
+            <h2 class="h1" @click="onValidatorsHeadingClick('validators')">
+                {{ $t('view_validator_list.validators') }} <span v-if="dRecordsCount" class="f-records-count">({{ dRecordsCount }})</span>
+                <icon data="@/assets/svg/angle-right.svg" color="#999" class="rtl-mirror" :class="{ 'icon-down': validatorsOpen}" width="24" height="24"></icon>
+            </h2>
 
             <f-validator-list
+                v-show="validatorsOpen"
                 code="validators"
                 @records-count="onRecordsCount"
                 @validator-list-totals="onValidatorListTotals"
@@ -91,27 +95,39 @@
         </div>
 
         <div class="f-subsection" v-if="dInactiveItems.length">
-            <h2 class="h1">{{ $t('view_validator_list.inactive') }} <span class="f-records-count">({{ dInactiveItems.length }})</span></h2>
+            <h2 class="h1" @click="onValidatorsHeadingClick('inactive-validators')">
+                {{ $t('view_validator_list.inactive') }} <span class="f-records-count">({{ dInactiveItems.length }})</span>
+                <icon data="@/assets/svg/angle-right.svg" color="#999" class="rtl-mirror" :class="{ 'icon-down': inactiveValidatorsOpen}" width="24" height="24"></icon>
+            </h2>
 
-            <f-validator-list :items="dInactiveItems" code="inactive-validators" />
+            <f-validator-list v-show="inactiveValidatorsOpen" :items="dInactiveItems" code="inactive-validators" />
         </div>
 
         <div class="f-subsection" v-if="dInMaintenanceItems.length">
-            <h2 class="h1">{{ $t('view_validator_list.inMaintenance') }} <span class="f-records-count">({{ dInMaintenanceItems.length }})</span></h2>
+            <h2 class="h1" @click="onValidatorsHeadingClick('inmaintenance-validators')">
+                {{ $t('view_validator_list.inMaintenance') }} <span class="f-records-count">({{ dInMaintenanceItems.length }})</span>
+                <icon data="@/assets/svg/angle-right.svg" color="#999" class="rtl-mirror" :class="{ 'icon-down': inMaintenanceValidatorsOpen}" width="24" height="24"></icon>
+            </h2>
 
-            <f-validator-list :items="dInMaintenanceItems" code="inmaintenance-validators" />
+            <f-validator-list v-show="inMaintenanceValidatorsOpen" :items="dInMaintenanceItems" code="inmaintenance-validators" />
         </div>
 
         <div class="f-subsection" v-if="dOfflineItems.length">
-            <h2 class="h1">{{ $t('view_validator_list.offline') }} <span class="f-records-count">({{ dOfflineItems.length }})</span></h2>
+            <h2 class="h1" @click="onValidatorsHeadingClick('offline-validators')">
+                {{ $t('view_validator_list.offline') }} <span class="f-records-count">({{ dOfflineItems.length }})</span>
+                <icon data="@/assets/svg/angle-right.svg" color="#999" class="rtl-mirror" :class="{ 'icon-down': offlineValidatorsOpen}" width="24" height="24"></icon>
+            </h2>
 
-            <f-validator-list :items="dOfflineItems" code="offline-validators" />
+            <f-validator-list v-show="offlineValidatorsOpen" :items="dOfflineItems" code="offline-validators" />
         </div>
 
         <div class="f-subsection" v-if="dFlaggedItems.length">
-            <h2 class="h1">{{ $t('view_validator_list.flagged') }} <span class="f-records-count">({{ dFlaggedItems.length }})</span></h2>
+            <h2 class="h1" @click="onValidatorsHeadingClick('flagged-validators')">
+                {{ $t('view_validator_list.flagged') }} <span class="f-records-count">({{ dFlaggedItems.length }})</span>
+                <icon data="@/assets/svg/angle-right.svg" color="#999" class="rtl-mirror" :class="{ 'icon-down': flaggedValidatorsOpen}" width="24" height="24"></icon>
+            </h2>
 
-            <f-validator-list :items="dFlaggedItems" code="flagged-validators" />
+            <f-validator-list v-show="flaggedValidatorsOpen" :items="dFlaggedItems" code="flagged-validators" />
         </div>
     </div>
 </template>
@@ -210,6 +226,11 @@
                 dTotalSupply: 0,
                 dRecordsCount: 0,
                 showRewardsEstimation: appConfig.flags.rewardsEstimation,
+                validatorsOpen: true,
+                inactiveValidatorsOpen: false,
+                inMaintenanceValidatorsOpen: true,
+                offlineValidatorsOpen: false,
+                flaggedValidatorsOpen: false,
             }
         },
 
@@ -298,6 +319,26 @@
                 this.dInMaintenanceItems = items;
             },
 
+            onValidatorsHeadingClick(code) {
+                switch (code) {
+                    case 'validators':
+                        this.validatorsOpen = !this.validatorsOpen;
+                        break;
+                    case 'inactive-validators':
+                        this.inactiveValidatorsOpen = !this.inactiveValidatorsOpen;
+                        break;
+                    case 'inmaintenance-validators':
+                        this.inMaintenanceValidatorsOpen = !this.inMaintenanceValidatorsOpen;
+                        break;
+                    case 'offline-validators':
+                        this.offlineValidatorsOpen = !this.offlineValidatorsOpen;
+                        break;
+                    case 'flagged-validators':
+                        this.flaggedValidatorsOpen = !this.flaggedValidatorsOpen;
+                        break;
+                }
+            },
+
             WEIToFTM,
             timestampToDate,
             formatHexToInt,
@@ -306,3 +347,21 @@
         }
     }
 </script>
+
+<style lang="scss">
+.f-validators-info {
+    .f-subsection {
+        h2 {
+            cursor: pointer;
+
+            svg {
+                margin-left: 6px;
+            }
+        }
+    }
+
+    .icon-down {
+        transform: rotate(90deg);
+    }
+}
+</style>
