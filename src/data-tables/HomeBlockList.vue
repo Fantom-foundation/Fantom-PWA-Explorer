@@ -13,8 +13,6 @@
             v-bind="{...$attrs, ...$props}"
             class="f-data-table-body-bg-color"
         >
-            <template #header><span></span></template>
-
             <template v-slot:column-block="{ value, column, col }">
                 <div v-if="column" class="row no-collapse no-vert-col-padding">
                     <div class="col-4 f-row-label">{{ column.label }}</div>
@@ -67,7 +65,7 @@
 import FBlockList from "@/data-tables/FBlockList.vue";
 import FDataTable from "@/components/core/FDataTable/FDataTable.vue";
 import {WEIToFTM} from "@/utils/transactions.js";
-import {timestampToDate} from "@/filters.js";
+import {formatHexToInt, timestampToDate} from "@/filters.js";
 import gql from "graphql-tag";
 import {cloneObject} from "@/utils";
 import {pollingMixin} from "@/mixins/polling.js";
@@ -96,7 +94,28 @@ export default {
 
     data() {
         return {
-            ...FBlockList.data.call(this),
+            dItems: [],
+            dHasNext: false,
+            dColumns: [
+                {
+                    name: 'block',
+                    label: this.$t('view_block_list.block'),
+                    itemProp: 'block.number',
+                    formatter: formatHexToInt,
+                    width: '160px'
+                },
+                {
+                    name: 'age',
+                    label: this.$t('view_block_list.age'),
+                    itemProp: 'block.timestamp'
+                },
+                {
+                    name: 'transaction_count',
+                    label: this.$t('view_block_list.transaction_count'),
+                    itemProp: 'block.transactionCount',
+                    width: '140px'
+                }
+            ],
             show: true,
         }
     },
@@ -112,6 +131,9 @@ export default {
     },
 
     mounted() {
+        // this.dColumns[4].width = '100px';
+        // console.log(JSON.stringify(this.dColumns[4]));
+
         this._polling.start(
             'update-blocks',
             () => {

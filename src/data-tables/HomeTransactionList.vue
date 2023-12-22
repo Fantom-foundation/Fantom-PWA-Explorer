@@ -15,8 +15,6 @@
                 v-bind="{...$attrs, ...$props}"
                 class="f-data-table-body-bg-color"
             >
-                <template #header><span></span></template>
-
                 <template v-slot:column-hash="{ value, column, col }">
                     <div v-if="column" class="row no-collapse no-vert-col-padding">
                         <div class="col-5 f-row-label">{{ column.label }}</div>
@@ -81,7 +79,7 @@ const rowsAnimation = new GridRowsAnimation({
     itemIdPropName: 'id',
     rowsSelector: '.hometransactionlist [data-dt-item-id="ITEM_ID"]',
     animationOptions: {
-        translateX: ['-60%', 0],
+        translateX: ['60%', 0],
         opacity: [0, 1],
         duration: 250,
     },
@@ -143,8 +141,8 @@ export default {
                     formatter: _value => {
                         return formatNumberByLocale(numToFixed(WEIToFTM(_value), 2), 2)
                     },
+                    width: '130px',
 /*
-                    width: '150px',
                     css: {
                         textAlign: 'right'
                     }

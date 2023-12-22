@@ -8,6 +8,10 @@
         table {
             border-collapse: separate;
             border-spacing: 0 6px;
+
+            thead {
+                display: none;
+            }
         }
 
         tr {

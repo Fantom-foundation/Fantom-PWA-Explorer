@@ -77,25 +77,31 @@
             </div>
         </div>
 
-        <div class="view-home_block">
-            <h2 class="h3">{{ $t('view_home.latest_blocks') }}</h2>
-            <home-block-list :items="blocksData" :hidden-columns="['time', 'fee']" :items-per-page="4" class="home-table" />
-            <!--
-                    <router-link :to="{name: 'blocks'}" class="btn small secondary" style="width: 100%;">
-                        View all blocks
-                    </router-link>
-            -->
+        <div class="row row-2-cols-lg equal-height mat-5 view-home_latesblocks">
+            <div class="col">
+                <div class="view-home_block">
+                    <h2 class="h3">
+                        {{ $t('view_home.latest_blocks') }}
+                        <router-link :to="{name: 'blocks'}">
+                            View all blocks
+                        </router-link>
+                    </h2>
+                    <home-block-list :items="blocksData" :items-per-page="4" class="home-table" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="view-home_block">
+                    <h2 class="h3">
+                        {{ $t('view_home.latest_transactions') }}
+                        <router-link :to="{name: 'transactions'}">
+                            {{ $t('view_home.view_all_transactions') }}
+                        </router-link>
+                    </h2>
+                    <home-transaction-list :items="blocksData" :items-per-page="4" class="home-table" />
+                </div>
+            </div>
         </div>
 
-        <div class="view-home_block">
-            <h2 class="h3">{{ $t('view_home.latest_transactions') }}</h2>
-            <home-transaction-list :items="blocksData" :hidden-columns="['gasUsed']" :items-per-page="4" class="home-table" />
-<!--
-            <router-link :to="{name: 'transactions'}" class="btn small secondary" style="width: 100%;">
-                {{ $t('view_home.view_all_transactions') }}
-            </router-link>
--->
-        </div>
 
         <div class="row equal-height mat-5">
             <div class="col">
@@ -279,9 +285,18 @@
 <style lang="scss">
     .view-home {
         &_block {
+            margin-bottom: -16px;
+
             h2 {
-                margin-top: 20px;
-                margin-bottom: 0;
+                display: flex;
+                justify-content: space-between;
+                margin-top: 8px;
+                margin-bottom: 4px;
+
+                a {
+                    font-size: 14px;
+                    font-weight: normal;
+                }
             }
         }
 
@@ -322,6 +337,18 @@
         .f-info {
             margin-top: -2px;
             margin-inline-start: 8px;
+        }
+    }
+
+    @include media-max(1150px) {
+        .view-home {
+            &_latesblocks {
+                flex-direction: column;
+
+                > .col {
+                    max-width: 100%;
+                }
+            }
         }
     }
 
