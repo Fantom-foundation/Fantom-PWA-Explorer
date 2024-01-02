@@ -33,7 +33,8 @@ export class GridRowsAnimation {
                     easing: 'easeInOutQuad',
                     duration: 250,
                     // delay: 1000,
-                    delay: animeEs.stagger(60, { direction: 'reverse' }),
+                    delay: animeEs.stagger(60, {}),
+                    // delay: animeEs.stagger(60, { direction: 'reverse' }),
                     ...this._animationOptions,
                     begin: () => {
                         this._blurClass('add', targets);
@@ -49,7 +50,7 @@ export class GridRowsAnimation {
     _getNewItems(items) {
         const itemIdPropName = this._itemIdPropName;
         let newItems = [];
-        const nItems = items.map((item) => item[itemIdPropName]);
+        const nItems = items.map((item) => typeof itemIdPropName === 'function' ? itemIdPropName(item) : item[itemIdPropName]);
         const prevItems = this._prevItems;
 
         if (prevItems.length === 0) {

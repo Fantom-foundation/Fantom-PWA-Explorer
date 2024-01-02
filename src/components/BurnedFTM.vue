@@ -1,8 +1,8 @@
 <template>
     <div class="burnedftm">
-        <div class="burnedftm_left">
+        <FCard class="burnedftm_left">
             <p class="burnedftm_amount number">{{ cTotalBurned }} <span class="burnedftm_ftm">FTM</span></p>
-        </div>
+        </FCard>
 
         <template v-if="blocks.length > 0">
             <ul class="no-markers" @click="onClick">
@@ -31,12 +31,25 @@
 <script>
 import {pollingMixin} from "@/mixins/polling.js";
 import gql from "graphql-tag";
-import {cloneObject, defer} from "@/utils/index.js";
+import {cloneObject} from "@/utils/index.js";
 import {formatHexToInt, formatNumberByLocale, timestampToDate} from "@/filters.js";
 import {getAttr} from "@/utils/DOM.js";
+import {GridRowsAnimation} from "@/utils/GridRowsAnimation.js";
+import FCard from "@/components/core/FCard/FCard.vue";
+
+const rowsAnimation = new GridRowsAnimation({
+    itemIdPropName(item) { return formatHexToInt(item.blockNumber)},
+    rowsSelector: '.burnedftm [data-blocknumber="ITEM_ID"]',
+    animationOptions: {
+        translateX: ['60%', 0],
+        opacity: [0, 1],
+        duration: 250,
+    },
+});
 
 export default {
     name: "BurnedFTM",
+    components: {FCard},
 
     mixins: [pollingMixin],
 
@@ -103,6 +116,11 @@ export default {
         },
 
         animateBlocks(numBlocks, blocks) {
+            setTimeout(() => {
+                rowsAnimation.animate(blocks);
+            }, 1);
+
+/*
             defer(() => {
                 const blocksLen = blocks.length;
 
@@ -116,6 +134,7 @@ export default {
                     this.$set(blocks[i], '__animate__', true);
                 }
             }, 30);
+*/
         },
 
         /**
@@ -179,11 +198,15 @@ export default {
     --burnedftm-block-hover-color: var(--f-color-primary-2, #ebf2ff);
 
     display: flex;
-    align-items: center;
+    gap: 16px;
+    //align-items: center;
 
     &_left {
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         flex: 0.8;
+        //border-radius: 16px;
     }
 
     &_amount {
@@ -213,10 +236,16 @@ export default {
     &_block {
         display: flex;
         align-items: center;
-        opacity: 0;
+        //opacity: 0;
         padding: 10px 15px;
-        transition: opacity var(--burnedftm-transition-length) ease;
+        //transition: opacity var(--burnedftm-transition-length) ease;
         cursor: pointer;
+
+        opacity: 0;
+        transform: translateX(-60%);
+        background: #fff;
+        border: 1px solid #f0f0f0;
+        border-radius: 8px;
 
         &:hover {
             background: var(--burnedftm-block-hover-color);
@@ -248,7 +277,8 @@ export default {
         }
 
         + .burnedftm_block {
-            border-top: 1px solid var(--burnedftm-border-color);
+            margin-top: 8px;
+            //border-top: 1px solid var(--burnedftm-border-color);
         }
     }
 }
@@ -256,6 +286,7 @@ export default {
 @include media-max($bp-medium) {
     .burnedftm {
         flex-direction: column;
+        gap: 0;
 
         &_left {
             flex: none;
@@ -274,6 +305,26 @@ export default {
 
         &_amount_usd {
             font-size: 28px;
+        }
+    }
+}
+
+
+:root.dark-theme {
+    .burnedftm {
+        /*
+        &_left {
+            background: var(--f-darker-color);
+        }
+        */
+
+        &_block {
+            background: var(--f-darker-color);
+            border: none;
+
+            &:hover {
+                background: var(--f-darker-color-2);
+            }
         }
     }
 }
