@@ -58,10 +58,12 @@ export default {
     display: flex;
     flex-direction: column;
 
+    /*
     &.f-card {
         box-shadow: none;
         background: var(--vaultbox-background-color);
     }
+    */
 
     h3 {
         font-size: var(--vaultbox-font-size);
@@ -89,7 +91,7 @@ export default {
 
 :root.dark-theme {
     .vaultbox {
-        --vaultbox-background-color: var(--f-darker-color-2);
+        --vaultbox-background-color: var(--f-darker-color);
     }
 }
 </style>

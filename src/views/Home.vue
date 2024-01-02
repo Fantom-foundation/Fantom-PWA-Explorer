@@ -1,135 +1,129 @@
 <template>
-    <div class="view-home narrow-container">
-        <div class="row">
-            <div class="col-8 offset-2 col-10-lg offset-1-lg col-12-sm no-offset-sm">
-                <f-search-box></f-search-box>
+    <div class="view-home">
+        <div class="narrow-container">
+            <div class="row">
+                <div class="col-8 offset-2 col-10-lg offset-1-lg col-12-sm no-offset-sm">
+                    <f-search-box></f-search-box>
+                </div>
             </div>
-        </div>
 
-        <div class="row row-2-cols-lg no-collapse equal-height">
-            <div class="col">
-                <router-link :to="{name: 'blocks'}" class="no-effect">
-                    <f-card class="home-block" hover>
-                        <h2 class="h3">{{ $t('view_home.blocks') }} <icon data="@/assets/svg/angle-right.svg" color="#999"></icon></h2>
+            <div class="row row-2-cols-lg no-collapse equal-height">
+                <div class="col">
+                    <router-link :to="{name: 'blocks'}" class="no-effect">
+                        <f-card class="home-block" hover>
+                            <h2 class="h3">{{ $t('view_home.blocks') }} <icon data="@/assets/svg/angle-right.svg" color="#999"></icon></h2>
+                            <div class="num">
+                                <animated-number
+                                    :value="chainState.blocks | formatHexToInt"
+                                    :formatValue="formatNum"
+                                    :duration="numAnimationDuration"
+                                />
+                            </div>
+                        </f-card>
+                    </router-link>
+                </div>
+                <div class="col">
+                    <router-link :to="{name: 'staking'}" class="no-effect">
+                        <f-card class="home-block" hover>
+                            <h2 class="h3">{{ $t('view_home.validators') }} <icon data="@/assets/svg/angle-right.svg" color="#999"></icon></h2>
+                            <div class="num">
+                                <animated-number
+                                    :value="chainState.validators | formatHexToInt"
+                                    :formatValue="formatNum"
+                                    :duration="numAnimationDuration"
+                                />
+                            </div>
+                        </f-card>
+                    </router-link>
+                </div>
+                <div class="col">
+                    <f-card class="home-block">
+                        <h2 class="h3">{{ $t('view_home.accounts') }}</h2>
                         <div class="num">
                             <animated-number
-                                :value="chainState.blocks | formatHexToInt"
+                                :value="chainState.accounts | formatHexToInt"
                                 :formatValue="formatNum"
                                 :duration="numAnimationDuration"
                             />
                         </div>
                     </f-card>
-                </router-link>
+                </div>
+                <div class="col">
+                    <router-link :to="{name: 'transactions'}" class="no-effect">
+                        <f-card class="home-block" hover>
+                            <h2 class="h3">{{ $t('view_home.transactions') }} <icon data="@/assets/svg/angle-right.svg" color="#999"></icon></h2>
+                            <div class="num">
+                                <animated-number
+                                    :value="chainState.transactions | formatHexToInt"
+                                    :formatValue="formatNum"
+                                    :duration="numAnimationDuration"
+                                />
+                            </div>
+                        </f-card>
+                    </router-link>
+                </div>
             </div>
-            <div class="col">
-                <router-link :to="{name: 'staking'}" class="no-effect">
-                    <f-card class="home-block" hover>
-                        <h2 class="h3">{{ $t('view_home.validators') }} <icon data="@/assets/svg/angle-right.svg" color="#999"></icon></h2>
-                        <div class="num">
-                            <animated-number
-                                :value="chainState.validators | formatHexToInt"
-                                :formatValue="formatNum"
-                                :duration="numAnimationDuration"
-                            />
-                        </div>
+
+            <div v-if="showNetworkNodesMap" class="row mat-5">
+                <div class="col">
+                    <f-card class="half-padding">
+                        <h2 class="h3">
+                            {{ $t('view_home.fantom_mainnet_nodes') }}
+                            <f-info show-on-hover button-tooltip="" window-class="light" window-style="max-width: 350px;">
+                                All RPC, read-only and validator nodes synced to Fantom Opera Mainnet.
+                            </f-info>
+                        </h2>
+                        <network-nodes-map />
                     </f-card>
-                </router-link>
+                </div>
             </div>
-            <div class="col">
-                <f-card class="home-block">
-                    <h2 class="h3">{{ $t('view_home.accounts') }}</h2>
-                    <div class="num">
-                        <animated-number
-                            :value="chainState.accounts | formatHexToInt"
-                            :formatValue="formatNum"
-                            :duration="numAnimationDuration"
-                        />
+
+            <div class="row row-2-cols-lg equal-height mat-5 view-home_latestblocks">
+                <div class="col">
+                    <div class="view-home_block">
+                        <h2 class="h3">
+                            {{ $t('view_home.latest_blocks') }}
+                            <router-link :to="{name: 'blocks'}">
+                                All blocks
+                            </router-link>
+                        </h2>
+                        <home-block-list :items="blocksData" :items-per-page="4" class="home-table" />
                     </div>
-                </f-card>
-            </div>
-            <div class="col">
-                <router-link :to="{name: 'transactions'}" class="no-effect">
-                    <f-card class="home-block" hover>
-                        <h2 class="h3">{{ $t('view_home.transactions') }} <icon data="@/assets/svg/angle-right.svg" color="#999"></icon></h2>
-                        <div class="num">
-                            <animated-number
-                                :value="chainState.transactions | formatHexToInt"
-                                :formatValue="formatNum"
-                                :duration="numAnimationDuration"
-                            />
-                        </div>
-                    </f-card>
-                </router-link>
-            </div>
-        </div>
-
-        <div v-if="showNetworkNodesMap" class="row mat-5">
-            <div class="col">
-                <f-card class="half-padding">
-                    <h2 class="h3">
-                        {{ $t('view_home.fantom_mainnet_nodes') }}
-                        <f-info show-on-hover button-tooltip="" window-class="light" window-style="max-width: 350px;">
-                            All RPC, read-only and validator nodes synced to Fantom Opera Mainnet.
-                        </f-info>
-                    </h2>
-                    <network-nodes-map />
-                </f-card>
-            </div>
-        </div>
-
-        <div class="row row-2-cols-lg equal-height mat-5 view-home_latesblocks">
-            <div class="col">
-                <div class="view-home_block">
-                    <h2 class="h3">
-                        {{ $t('view_home.latest_blocks') }}
-                        <router-link :to="{name: 'blocks'}">
-                            View all blocks
-                        </router-link>
-                    </h2>
-                    <home-block-list :items="blocksData" :items-per-page="4" class="home-table" />
+                </div>
+                <div class="col">
+                    <div class="view-home_block">
+                        <h2 class="h3">
+                            {{ $t('view_home.latest_transactions') }}
+                            <router-link :to="{name: 'transactions'}">
+                                {{ $t('view_home.view_all_transactions') }}
+                            </router-link>
+                        </h2>
+                        <home-transaction-list :items="blocksData" :items-per-page="4" class="home-table" />
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="view-home_block">
-                    <h2 class="h3">
-                        {{ $t('view_home.latest_transactions') }}
-                        <router-link :to="{name: 'transactions'}">
-                            {{ $t('view_home.view_all_transactions') }}
-                        </router-link>
-                    </h2>
-                    <home-transaction-list :items="blocksData" :items-per-page="4" class="home-table" />
-                </div>
-            </div>
-        </div>
 
 
-        <div class="row equal-height mat-5">
-            <div class="col">
-                <f-card class="half-padding">
+            <div class="row equal-height mat-5">
+                <div class="col">
                     <TransactionVolumes resolution="3m" />
-                </f-card>
+                </div>
             </div>
-        </div>
 
-        <div v-if="showDailyBlocks" class="row mat-5">
-            <div class="col">
-                <f-card class="half-padding">
+            <div v-if="showDailyBlocks" class="row mat-5">
+                <div class="col">
                     <DailyBlocks resolution="3m" />
-                </f-card>
+                </div>
             </div>
-        </div>
 
-        <div v-if="showDailyTxFees" class="row mat-5">
-            <div class="col">
-                <f-card class="half-padding">
+            <div v-if="showDailyTxFees" class="row mat-5">
+                <div class="col">
                     <DailyTxFees resolution="3m" />
-                </f-card>
+                </div>
             </div>
-        </div>
-        <div v-if="showFTMVault" class="row mat-5">
-            <div class="col">
-                <f-card class="half-padding">
-                    <h2 class="h3">
+            <div v-if="showFTMVault" class="row mat-5">
+                <div class="col">
+                    <h2 class="h3 home_h2">
                         {{ $t('view_home.vault') }}
                         <f-info show-on-hover button-tooltip="" window-class="light" window-style="max-width: 350px;">
                             The Ecosystem Vault collects <span class="number">10%</span> of all transaction fees paid to the network.
@@ -138,13 +132,11 @@
                         </f-info>
                     </h2>
                     <FTMVault />
-                </f-card>
+                </div>
             </div>
-        </div>
-        <div class="row mat-5">
-            <div class="col">
-                <f-card class="half-padding">
-                    <h2 class="h3">
+            <div class="row mat-5">
+                <div class="col">
+                    <h2 class="h3 home_h2">
                         {{ $t('view_home.total_ftm_burned') }}
                         <f-info show-on-hover button-tooltip="" window-class="light" window-style="max-width: 350px;">
                             <span class="number">70%</span> of the fees paid to the network
@@ -154,7 +146,7 @@
                         </f-info>
                     </h2>
                     <BurnedFTM />
-                </f-card>
+                </div>
             </div>
         </div>
     </div>
@@ -284,6 +276,8 @@
 
 <style lang="scss">
     .view-home {
+        overflow-x: hidden;
+
         &_block {
             margin-bottom: -16px;
 
@@ -298,6 +292,14 @@
                     font-weight: normal;
                 }
             }
+        }
+
+        &_latestblocks {
+           margin-bottom: 16px;
+        }
+
+        .home_h2 {
+            margin-bottom: 12px;
         }
 
         .f-search-box {
@@ -342,7 +344,7 @@
 
     @include media-max(1150px) {
         .view-home {
-            &_latesblocks {
+            &_latestblocks {
                 flex-direction: column;
 
                 > .col {

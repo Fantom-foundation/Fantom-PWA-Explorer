@@ -126,7 +126,7 @@ export default {
     width: 100%;
 
     display: flex;
-    gap: 20px;
+    gap: 16px;
 
     > * {
         flex: 1;

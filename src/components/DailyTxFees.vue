@@ -4,14 +4,16 @@
             <h2 class="h3" id="dailyfees_l">{{ $t('daily_fees.label') }}</h2>
             <ChartResolutions :value="resolution" labeled-by="dailyfees_l" @change="onChartResolutionsChange" />
         </div>
-        <FLightweightCharts
-            :series="dailyBlocksSeries"
-            series-type="area"
-            :fit-content="true"
-            :height="280"
-            :options="{ handleScroll: false,handleScale: false }"
-            :series-options="{ priceLineVisible: false, priceFormat: { type: 'price', precision: 0, minMove: 1 } }"
-        />
+        <FCard class="chart_card half-padding">
+            <FLightweightCharts
+                :series="dailyBlocksSeries"
+                series-type="area"
+                :fit-content="true"
+                :height="280"
+                :options="{ handleScroll: false,handleScale: false }"
+                :series-options="{ priceLineVisible: false, priceFormat: { type: 'price', precision: 0, minMove: 1 } }"
+            />
+        </FCard>
     </div>
 </template>
 
@@ -21,11 +23,12 @@ import FLightweightCharts from "@/components/core/FLightweightCharts/FLightweigh
 import gql from "graphql-tag";
 import {getISODateByTimecode} from "@/utils/time.js";
 import {reverseSeries} from "@/utils/chart.js";
+import FCard from "@/components/core/FCard/FCard.vue";
 
 export default {
     name: "DailyTxFees",
 
-    components: {FLightweightCharts, ChartResolutions},
+    components: {FCard, FLightweightCharts, ChartResolutions},
 
     props: {
         /** Default resolution */

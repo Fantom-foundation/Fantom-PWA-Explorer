@@ -237,12 +237,17 @@ form {
     flex-wrap: wrap;
     //gap: 16px;
     align-items: center;
-    margin-bottom: 4px;
+    justify-content: space-between;
+    margin-bottom: 8px;
 
     h2 {
         margin-bottom: 0;
         padding-inline-end: 16px;
     }
+}
+
+.chart_card {
+    min-height: 320px;
 }
 
 

@@ -4,15 +4,17 @@
             <h2 class="h3" id="transactionvolumes_l">{{ $t('transaction_volumes.label') }}</h2>
             <ChartResolutions :value="resolution" labeled-by="transactionvolumes_l" @change="onChartResolutionsChange" />
         </div>
-        <f-lightweight-charts
-            :series="txVolumeSeries"
-            series-type="area"
-            __time-to-timestamp
-            :fit-content="true"
-            :height="280"
-            :options="{ handleScroll: false,handleScale: false }"
-            :series-options="{ priceLineVisible: false, priceFormat: { type: 'price', precision: 0, minMove: 1 } }"
-        />
+        <FCard class="chart_card half-padding">
+            <f-lightweight-charts
+                :series="txVolumeSeries"
+                series-type="area"
+                __time-to-timestamp
+                :fit-content="true"
+                :height="280"
+                :options="{ handleScroll: false,handleScale: false }"
+                :series-options="{ priceLineVisible: false, priceFormat: { type: 'price', precision: 0, minMove: 1 } }"
+            />
+        </FCard>
         <!--                    <f-lightweight-charts
             ref="chart"
             :series="txVolumeSeries"
@@ -32,11 +34,12 @@ import ChartResolutions from "@/components/ChartResolutions.vue";
 import FLightweightCharts from "@/components/core/FLightweightCharts/FLightweightCharts.vue";
 import {getDateByTimecode} from "@/utils/time.js";
 import gql from "graphql-tag";
+import FCard from "@/components/core/FCard/FCard.vue";
 
 export default {
     name: "TransactionVolumes",
 
-    components: {ChartResolutions, FLightweightCharts},
+    components: {FCard, ChartResolutions, FLightweightCharts},
 
     props: {
         /** Default resolution */
