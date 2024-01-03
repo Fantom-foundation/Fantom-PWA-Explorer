@@ -87,7 +87,7 @@
                                 All blocks
                             </router-link>
                         </h2>
-                        <home-block-list :items="blocksData" :items-per-page="4" class="home-table" />
+                        <home-block-list :items="blocksData" :items-per-page="5" class="home-table" />
                     </div>
                 </div>
                 <div class="col">
@@ -98,7 +98,7 @@
                                 {{ $t('view_home.view_all_transactions') }}
                             </router-link>
                         </h2>
-                        <home-transaction-list :items="blocksData" :items-per-page="4" class="home-table" />
+                        <home-transaction-list :items="blocksData" :items-per-page="5" class="home-table" />
                     </div>
                 </div>
             </div>
