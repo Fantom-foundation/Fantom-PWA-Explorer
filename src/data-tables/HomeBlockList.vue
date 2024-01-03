@@ -139,7 +139,7 @@ export default {
             () => {
                 this.updateItems(true);
             },
-            4800
+            3500
         );
     },
 

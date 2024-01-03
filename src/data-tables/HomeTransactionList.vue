@@ -164,16 +164,18 @@ export default {
     },
 
     mounted() {
-        this._polling.start(
-            'update-transactions',
-            () => {
-                if (!this._updatingTxs) {
-                    this._updatingTxs = true;
-                    this.updateItems(true);
-                }
-            },
-            3300
-        );
+        setTimeout(() => {
+            this._polling.start(
+                'update-transactions',
+                () => {
+                    if (!this._updatingTxs) {
+                        this._updatingTxs = true;
+                        this.updateItems(true);
+                    }
+                },
+                3500
+            );
+        }, 1750);
     },
 
     methods: {
