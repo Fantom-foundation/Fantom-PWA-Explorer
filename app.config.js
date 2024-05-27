@@ -30,56 +30,6 @@ const appConfig = {
                 // for subscriptions
                 ws: '',
             },
-            {
-                http: 'https://xapi-nodee.fantom.network/',
-                // for subscriptions
-                ws: '',
-            },
-            {
-                http: 'https://xapi-nodef.fantom.network/',
-                // for subscriptions
-                ws: '',
-            },
-            {
-                http: 'https://xapi-nodeg.fantom.network/',
-                // for subscriptions
-                ws: '',
-            },
-            {
-                http: 'https://xapi-nodeh.fantom.network/',
-                // for subscriptions
-                ws: '',
-            },
-            {
-                http: 'https://xapi-nodei.fantom.network/',
-                // for subscriptions
-                ws: '',
-            },
-            {
-                http: 'https://xapi-nodej.fantom.network/',
-                // for subscriptions
-                ws: '',
-            },
-            {
-                http: 'https://xapi-nodek.fantom.network/',
-                // for subscriptions
-                ws: '',
-            },
-            {
-                http: 'https://xapi-nodel.fantom.network/',
-                // for subscriptions
-                ws: '',
-            },
-            {
-                http: 'https://xapi-nodem.fantom.network/',
-                // for subscriptions
-                ws: '',
-            },
-            {
-                http: 'https://xapi-noden.fantom.network/',
-                // for subscriptions
-                ws: '',
-            },
         ],
         // index into providers array of default provider or 'random' - takes index randomly
         defaultProviderIndex: "random"
