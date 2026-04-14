@@ -48,6 +48,7 @@
                         </div>
                     </f-card>
                 </div>
+<!--
                 <div class="col">
                     <router-link :to="{name: 'transactions'}" class="no-effect">
                         <f-card class="home-block" hover>
@@ -62,6 +63,7 @@
                         </f-card>
                     </router-link>
                 </div>
+-->
             </div>
 
             <div v-if="showNetworkNodesMap" class="row mat-5">
